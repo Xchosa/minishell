@@ -1,0 +1,4 @@
+*.o
+libft_shell/*.o
+minishell
+*.swp
