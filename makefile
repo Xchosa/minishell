@@ -9,8 +9,6 @@ CFLAGS		= -Wall -Wextra -Werror -g -I inc/
 
 LIBFT := ./libft/libft.a
 
-
-
 SOURCE_DIR = ./src
 GARBAGE_DIR := ./src/garbage_collector
 PARSE_DIR = ./src/parser
@@ -34,7 +32,7 @@ OBJ 	= $(addprefix $(OBJ_DIR)/, $(MY_SOURCES:.c=.o))
 
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -o $@ $(LIB)
+	@$(CC) $(CFLAGS) $(OBJ) -o $@
 
 $(OBJ_DIR)/%.o: %.c $(HEADERS) | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -42,17 +40,21 @@ $(OBJ_DIR)/%.o: %.c $(HEADERS) | $(OBJ_DIR)
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
+$(LIBFT):
+	make -C ./libft
+
 
 debug: -Wall -Wextra -Werror -g -I inc/ -fsanitize=address
 
 
 clean:
 	@rm -rf $(OBJ_DIR)
-
+	make -C libft fclean
 
 fclean: clean
 	@rm -f $(NAME)
 	@rm -rf $(OBJ_DIR)
+	make -C libft fclean
 
 
 re: fclean

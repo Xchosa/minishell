@@ -1,4 +1,11 @@
-*.o
-libft_shell/*.o
+*.vscode/
+**/*.o
+**/*.out
+*.txt
+*.DS_Store
+.obj
+.objects
+*.vscode
+libft/*.o
 minishell
 *.swp
