@@ -24,6 +24,14 @@ typedef struct s_file_list
 }	t_file_list;
 
 
+typedef struct s_cmd_node
+{
+	char				**cmd; // option and args
+	// t_type		type; // type of token
+	struct s_cmd_node	*next;
+
+}	t_cmd_node;
+
 typedef struct s_cmd_list
 {
 	t_cmd_node	*head;
@@ -33,13 +41,6 @@ typedef struct s_cmd_list
 
 // singular linked list
 
-typedef struct s_cmd_node
-{
-	char		**cmd; // option and args
-	// t_type		type; // type of token
-	struct s_cmd_node *next;
-
-}	t_cmd_node;
 
 // meta struct auf die immer zugegriffen wird 
 
