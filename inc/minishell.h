@@ -44,3 +44,4 @@ typedef struct s_cmd_node
 // meta struct auf die immer zugegriffen wird 
 
 
+#endif
