@@ -22,17 +22,20 @@ VPATH = $(SOURCE_DIR):$(PARSE_DIR):$(EXECUTER_DIR_DIR):$(INC_DIR)
 # ---------- Subjects ---------- #
 MY_SOURCES = \
 		main.c \
-		check_arg.c
+		tty.c \
+		tokeniser.c
 
-HEADERS = minishell.h
+HEADERS = \
+		minishell.h \
+		parser.h
 
 # ---------- Objects ---------- #
 OBJ 	= $(addprefix $(OBJ_DIR)/, $(MY_SOURCES:.c=.o))
 
 
 
-$(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -lreadline -o $@
+$(NAME): $(OBJ) $(LIBFT)
+	@$(CC) $(CFLAGS) $(OBJ) -lreadline -o $@ $(LIBFT)
 
 $(OBJ_DIR)/%.o: %.c $(HEADERS) | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@

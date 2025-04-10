@@ -6,11 +6,13 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/10 10:44:47 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:27:44 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
+
 
 
 int	main(int argc, char **argv, char **envp)
@@ -18,37 +20,26 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	(void) argc;
 	(void) envp;
+	bool	tty_shell;
 	
+	tty_shell = false;
 	char *line;
-
+	
+	line = NULL;
 
 	if(isatty(STDIN_FILENO))
 	{
-		while(1)
-		{
-		// command holen
-		line = readline("Paul's coole bash: ");
-		add_history(line);
-		}
+		interactive_shell_tty(argc, argv, envp, line);
+		tty_shell = true;
 	}
-		else 
-			printf("get_next_history callen\n");
-	
-	tokeniser(line);
-	
+	else
+		non_interactive_shell(argc, argv, envp, line);
+	// write form terminal into line (interaktiv oder aktiv )
+	// line = get_input_from_tty_or_not(argc, argv, line);
+
 	// 1. laxxen
 	// 2. parsen
 	// 3. executen
-
-
-	
-	// if tty_shell
-	// history clearen 
-	//destroy_shell()
-	printf("main function");
-}
-
-bool tokeniser (char *line)
-{
-	
+	if (tty_shell == true)
+		printf("clean history function + destroy shell");
 }

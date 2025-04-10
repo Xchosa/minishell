@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 10:27:49 by poverbec          #+#    #+#             */
-/*   Updated: 2025/03/13 13:06:24 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:11:29 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <limits.h>
 # include <stdarg.h>
 # include <fcntl.h>
+# include "get_next_line/get_next_line.h"
+# include "printf/ft_printf.h"
 
 typedef struct s_list
 {
@@ -78,5 +80,7 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+
+// char *get_next_line(int fd);
 
 #endif
