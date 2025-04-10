@@ -32,7 +32,7 @@ OBJ 	= $(addprefix $(OBJ_DIR)/, $(MY_SOURCES:.c=.o))
 
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -o $@
+	@$(CC) $(CFLAGS) $(OBJ) -lreadline -o $@
 
 $(OBJ_DIR)/%.o: %.c $(HEADERS) | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
