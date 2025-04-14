@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:32:26 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/14 11:26:09 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:51:43 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,40 +35,6 @@ what is awk
 
 */
 
-void loop_until_space_or_operator(char **line)
-{
-	while(*line)
-	{
-		if(ft_strchr("\t\n\v\f\r" , **line) == NULL)
-			break;
-		(*line)++;
-	}
-}
-
-// char *create_nodes()
-// {
-	
-// }
-
-bool match_typ(char *line)
-{
-	int i;
-
-	i = 0;
-	// e.g. ls <infile| wc -l > out
-	while(*line)
-	{
-		// skip whitespaces
-		loop_until_space_or_operator(&line);
-		printf("line skipped: %s \n", line);
-		break;
-		// typ txt ls (value) // 
-		// create_nodes(line, ); // cmd_node mit typ und value 
-		
-		
-	}
-	return (true);
-}
 
 bool	wrong_use_pipe_and_redirection(char *line)
 {
@@ -88,8 +54,6 @@ bool	wrong_use_pipe_and_redirection(char *line)
 bool	lexer(char *line)
 {
 	if (wrong_use_pipe_and_redirection(line) == false)
-		return (false);
-	if (match_typ(line) == false)
 		return (false);
 	return (true);
 }
