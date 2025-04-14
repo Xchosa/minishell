@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:26:42 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/14 16:34:36 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:45:56 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,12 @@ t_type *get_token_type(char *content)
 		return(Redirect_output);
 	if (content[i] == '<')
 		return(Redirect_input);
-	if (content[i] == 34) // " 
+	if (content[i] == '"') // " 
 		return (Quote);
-	if (content[i] == 39) // '
+	if (content[i] == '\'') // '
 		return(Quote);
-	// heredoc?
+	// heredoc == <<  
+	 // 
 	else
 		return(TEXT);
 	
