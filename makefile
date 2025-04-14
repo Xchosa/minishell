@@ -13,17 +13,19 @@ SOURCE_DIR = ./src
 GARBAGE_DIR := ./src/garbage_collector
 PARSE_DIR = ./src/parser
 EXECUTER_DIR = ./src/executer
+LEXER_DIR = ./src/lexer
 INC_DIR = inc
 OBJ_DIR = obj
 
-VPATH = $(SOURCE_DIR):$(PARSE_DIR):$(EXECUTER_DIR_DIR):$(INC_DIR)
+VPATH = $(SOURCE_DIR):$(PARSE_DIR)::$(LEXER_DIR)$(EXECUTER_DIR_DIR):$(INC_DIR)
 
 
 # ---------- Subjects ---------- #
 MY_SOURCES = \
 		main.c \
 		tty.c \
-		tokeniser.c
+		tokeniser.c \
+		lexer.c
 
 HEADERS = \
 		minishell.h \

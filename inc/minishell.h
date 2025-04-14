@@ -34,11 +34,11 @@ typedef struct s_file_list
 	ssize_t		size;
 }	t_file_list;
 
-
+// muss syntax checken for invailid
 typedef struct s_cmd_node
 {
-	char				**cmd; // option and args
-	//t_type				type; // type of token
+	char				**cmd; // option and args (e.g. ls)
+	t_type				type; // type of token	(text)
 	struct s_cmd_node	*next;
 
 }	t_cmd_node;
