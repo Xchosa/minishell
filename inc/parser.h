@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/15 13:57:26 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:34:26 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,32 @@ typedef enum s_type
 	PIPE, // 1
 	Redirect_input, // 2
 	Redirect_output, //
-	Quote, // 3 (like " ")
+	S_Quote,
+	D_Quote, // 3 (like " ")
+	
 }	t_type;
 
 
 
 typedef struct s_token
 {
-	char 			**token;
+	char 			*token;// **weil eigenes envp erweitert werden muss
 	t_type 			token_type;
 	struct s_token 	*next;
 	
 }	t_token;
+
+// parser dann in in zwei dim array
+// zuordnen was zusammen gehoert
+
+// ls <infile -l >outfile -a
+typedef struct s_cmd
+{
+	char 			**cmd_arg;// **weil eigenes envp erweitert werden muss
+	t_type 			token_type;
+	struct s_cmd 	*next;
+	
+}	t_cmd;
 
 
 
@@ -56,10 +70,10 @@ void		non_interactive_shell(int argc, char **argv, char **envp, char *line);
 // lexer
 bool		lexer(char *line);
 bool		wrong_use_pipe_and_redirection(char *line);
-void		loop_until_space_or_operator(char **line);
+void 		skip_whitespace(char **line);
 
 // tokeniser
-bool 		tokeniser (char *line);
+t_token 	*tokeniser (char *line);
 char		*get_token(char *content);
 t_type		get_token_type(char *content);
 t_token		*tokenlast(t_token *lst);
@@ -69,9 +83,6 @@ t_token		*tokenlstnew(char	*content);
 
 void		iter_tokenlst(t_token *lst, void (*f)(t_token *));
 void		print_tokenlst(t_token *data);
-
-
-
 
 
 

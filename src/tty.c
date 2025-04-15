@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/15 10:57:36 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:10:43 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	(void) argv;
 	(void) argc;
 	(void) envp;
+	t_token *token_lst;
 	while(1)
 	{
 		// command holen
@@ -50,11 +51,12 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 			printf("fehler lexer");
 			return ;
 		}
-		if (tokeniser(line)== false)
+		token_lst = tokeniser(line);
 		{
 			printf("tokeniser broken\n");
 		}
 	}
+	//free(line);
 }
 
 void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)

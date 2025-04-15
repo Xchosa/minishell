@@ -25,8 +25,9 @@ MY_SOURCES = \
 		main.c \
 		tty.c \
 		tokeniser.c \
+		tokeniser_print.c \
 		lexer.c \
-		shell_config.c
+		shell_config.c 
 
 HEADERS = \
 		minishell.h \
