@@ -6,17 +6,13 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/14 16:27:08 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/15 10:57:53 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 
-t_config* get_config(void) {
-	static t_config config;
-	return &config;
-}
 
 int	main(int argc, char **argv, char **envp)
 {

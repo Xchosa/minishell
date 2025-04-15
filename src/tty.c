@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/14 11:07:22 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/15 10:57:36 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ what is awk
 
 
 */
-
 
 void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 {
