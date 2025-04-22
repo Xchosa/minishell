@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/15 10:57:53 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/22 13:13:53 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int argc, char **argv, char **envp)
 
 	// 1. laxxen
 	// 2. parsen
+			// tree 
 	// 3. executen
 	if (tty_shell == true)
 		printf("clean history function + destroy shell");

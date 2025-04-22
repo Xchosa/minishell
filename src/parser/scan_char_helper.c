@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:51:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/22 09:52:57 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:37:20 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@ void skip_whitespace(char **line)
 bool	check_for_divider(char c)
 {
 	if (ft_strncmp ("|", &c, 1) == 0)
-		return (false);
+		return (true);
 	if (ft_strncmp (" ", &c, 1) == 0)
-		return (false);
+		return (true);
 	if (ft_strncmp ("<", &c, 1) == 0)
-		return (false);
+		return (true);
 	if (ft_strncmp (">", &c, 1) == 0)
-		return (false);
+		return (true);
 	if (ft_strncmp (";", &c, 1) == 0)
-		return (false);
-	return (true);
+		return (true);
+	return (false);
 }
 
 char	*update_line(char *line)
@@ -44,11 +44,39 @@ char	*update_line(char *line)
 	int	i;
 
 	i = 0;
-	while (line[i] != '\0')
+	if (*line && !ft_isalnum(*line)) {
+        return (line + 1);
+    }
+	while (*line && ft_isalnum(*line))
+        line++;
+	return	(&line[i]);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*newstr;
+	size_t	i;
+	size_t	j;
+	size_t	strlen_s1;
+	size_t	strlen_s2;
+
+	strlen_s1 = ft_strlen(s1);
+	strlen_s2 = ft_strlen(s2);
+	i = 0;
+	j = 0;
+	newstr = (char *)malloc(((strlen_s1 + strlen_s2 + 1) * (sizeof(char))));
+	if (newstr == NULL)
+		return (NULL);
+	while (i < strlen_s1)
 	{
-		if (check_for_divider(line[i])== false)
-			break;
+		newstr[i] = s1[i];
 		i++;
 	}
-	return	(&line[i]);
+	while (j < strlen_s2)
+	{
+		newstr[i + j] = s2[j];
+		j++;
+	}
+	newstr[i + j] = '\0';
+	return (newstr);
 }

@@ -6,12 +6,37 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:26:42 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/22 10:08:40 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:42:56 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "minishell.h"
+
+char 	*ft_charjoin(char const *dst, char const src_char)
+{
+	char	*newstr;
+	size_t	i;	
+	size_t	strlen_dst;
+
+	i = 0;
+	
+	strlen_dst = ft_strlen(dst);
+
+	newstr = (char *)malloc(((strlen_dst + 2) * (sizeof(char))));
+	if (newstr == NULL)
+		return (NULL);
+	while (i < strlen_dst)
+	{
+		newstr[i] = dst[i];
+		i++;
+	}
+	newstr[i] = src_char;
+	newstr[i + 1] = '\0';
+	// printf("newstr: %s \n", newstr);
+	return (newstr);
+}
+
 
 char* get_token(char *content)
 {
@@ -22,20 +47,29 @@ char* get_token(char *content)
 	i = 0;
 	new_token =ft_strdup("");
 	// tmp_token = NULL;
-	while (content[i] != '\0')
+	while (content[i] != '\0' && check_for_divider(content[i]) == false)
 	{
 		if (ft_isalnum(content[i]) != 0)
 		{	
-			tmp_token = ft_strjoin(new_token, &content[i]);
+			tmp_token = ft_charjoin(new_token, content[i]);
             free(new_token);
             new_token = tmp_token;
 		}
-		else if (check_for_divider(content[i]) == false)
-			break ;
+		else if (check_for_divider(content[i +1 ]) == true)
+			return (new_token);
 		i++;
 	}
+	while (content[i] != '\0' &&  check_for_divider(content[i]) == true)
+	{
+		tmp_token = ft_charjoin( new_token, content[i]);
+		free(new_token);
+        new_token = tmp_token;
+		i++;
+	}
+	// printf("divider2: %s \n", &content[i]);
 	return(new_token);
 }
+
 
 t_type get_token_type(char *content)
 {
@@ -48,7 +82,7 @@ t_type get_token_type(char *content)
 		return(Redirect_output);
 	if (content[i] == '<')
 	{
-		if (content[i++] == '<') // i + 1 ?
+		if (content[i+1] == '<') // i + 1 ?
 			return (here_doc);
 		else
 			return (Redirect_input);
@@ -131,7 +165,6 @@ t_token *tokeniser(char *line)
 		new_token = create_token(line);
 		tokenadd_back(&token_lst, new_token);
 		line = update_line(line);
-		// printf("line: %s\n", line);
 	}
 	
 	iter_tokenlst(token_lst, &print_tokenlst);

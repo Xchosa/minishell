@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/15 16:10:43 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:04:37 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,16 @@ void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)
 	(void) argc;
 	(void) envp;
 	
+	t_token *token_lst;
 	printf("in the non interactive shell\n");
 	line = get_next_line(STDIN_FILENO);
 	if(lexer(line) == false)
 	{
 		printf("fehler lexer");
 		return ;
+	}
+	token_lst = tokeniser(line);
+	{
+		printf("tokeniser broken\n");
 	}
 }
