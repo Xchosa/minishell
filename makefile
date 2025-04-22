@@ -24,6 +24,7 @@ VPATH = $(SOURCE_DIR):$(PARSE_DIR)::$(LEXER_DIR)$(EXECUTER_DIR_DIR):$(INC_DIR)
 MY_SOURCES = \
 		main.c \
 		tty.c \
+		scan_char_helper.c \
 		tokeniser.c \
 		tokeniser_print.c \
 		lexer.c \

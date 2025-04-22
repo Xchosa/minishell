@@ -6,38 +6,12 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:26:42 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/15 17:44:50 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/22 10:08:40 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "minishell.h"
-
-
-void skip_whitespace(char **line)
-{
-	while(*line)
-	{
-		if(ft_strchr("\t\n\v\f\r " , **line) == NULL)
-			break;
-		(*line)++;
-	}
-}
-
-bool	check_for_divider(char c)
-{
-	if (ft_strncmp ("|", &c, 1) == 0)
-		return (false);
-	if (ft_strncmp (" ", &c, 1) == 0)
-		return (false);
-	if (ft_strncmp ("<", &c, 1) == 0)
-		return (false);
-	if (ft_strncmp (">", &c, 1) == 0)
-		return (false);
-	if (ft_strncmp (";", &c, 1) == 0)
-		return (false);
-	return (true);
-}
 
 char* get_token(char *content)
 {
@@ -53,18 +27,8 @@ char* get_token(char *content)
 		if (ft_isalnum(content[i]) != 0)
 		{	
 			tmp_token = ft_strjoin(new_token, &content[i]);
-            
-            // Free the old string
             free(new_token);
-            
-            // Update new_token to point to the new string
             new_token = tmp_token;
-			
-			
-			// tmp_token = new_token;
-			// free(new_token);
-			// new_token = ft_strjoin(tmp_token, &content[i]);
-			// free(tmp_token);
 		}
 		else if (check_for_divider(content[i]) == false)
 			break ;
@@ -83,15 +47,17 @@ t_type get_token_type(char *content)
 	if (content[i] == '>')
 		return(Redirect_output);
 	if (content[i] == '<')
-		return(Redirect_input);
+	{
+		if (content[i++] == '<') // i + 1 ?
+			return (here_doc);
+		else
+			return (Redirect_input);
+	}
 	if (content[i] == '"') // " 
 		return (D_Quote);
 	if (content[i] == '\'') // '
 		return(S_Quote);
-	// heredoc == <<  
-	 // 
-	else
-		return(TEXT);
+	return(TEXT);
 	
 }
 
@@ -141,7 +107,7 @@ t_token	*tokenlstnew(char	*content)
 	t_token	*token;
 
 	skip_whitespace(&content);
-	token = malloc (sizeof(t_token));
+	// token = malloc (sizeof(t_token));// allocate in create_token too...
 	token = create_token(content);
 	if(!token)
 		return (NULL);
@@ -149,36 +115,25 @@ t_token	*tokenlstnew(char	*content)
 	return (token);
 }
 
-char	*update_line(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] != '\0')
-	{
-		if (check_for_divider(line[i])== false)
-			break;
-		i++;
-	}
-	return	(&line[i]);
-}
 
 t_token *tokeniser(char *line)
 {
 	t_token *new_token;
 	t_token *token_lst;
+	if (!line || *line == '\0')
+		return(NULL);
 	token_lst = tokenlstnew(line);
 	if (!token_lst)
-		return (false);
+		return (NULL);
 	while(*line)
 	{
 		skip_whitespace(&line);
 		new_token = create_token(line);
 		tokenadd_back(&token_lst, new_token);
 		line = update_line(line);
-		printf("line: %s\n", line);
+		// printf("line: %s\n", line);
 	}
 	
-	// iter_tokenlst(token_lst, &print_tokenlst);
+	iter_tokenlst(token_lst, &print_tokenlst);
 	return (token_lst);
 }

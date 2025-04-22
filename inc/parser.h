@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/15 17:34:26 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/22 10:04:43 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef enum s_type
 	PIPE, // 1
 	Redirect_input, // 2
 	Redirect_output, //
+	here_doc,
 	S_Quote,
 	D_Quote, // 3 (like " ")
 	
@@ -80,6 +81,8 @@ t_token		*tokenlast(t_token *lst);
 void		tokenadd_back(t_token **lst, t_token *new_token);
 t_token		*create_token(char *content);
 t_token		*tokenlstnew(char	*content);
+bool		check_for_divider(char c);
+char		*update_line(char *line);
 
 void		iter_tokenlst(t_token *lst, void (*f)(t_token *));
 void		print_tokenlst(t_token *data);
