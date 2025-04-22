@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scan_char_helper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:51:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/22 15:37:20 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/22 16:14:16 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ char	*update_line(char *line)
 	int	i;
 
 	i = 0;
-	if (*line && !ft_isalnum(*line)) {
-        return (line + 1);
-    }
+	while (*line && check_for_divider(*line) == true && *line != ' ') 
+        line++;
 	while (*line && ft_isalnum(*line))
         line++;
 	return	(&line[i]);

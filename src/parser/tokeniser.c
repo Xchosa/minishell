@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokeniser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:26:42 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/22 15:42:56 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/22 16:15:47 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ char* get_token(char *content)
             free(new_token);
             new_token = tmp_token;
 		}
-		else if (check_for_divider(content[i +1 ]) == true)
+		if (check_for_divider(content[i +1 ]) == true)
 			return (new_token);
 		i++;
 	}
-	while (content[i] != '\0' &&  check_for_divider(content[i]) == true)
+	while (content[i] != '\0' &&  check_for_divider(content[i]) == true && content[i] != ' ')
 	{
 		tmp_token = ft_charjoin( new_token, content[i]);
 		free(new_token);
@@ -159,6 +159,7 @@ t_token *tokeniser(char *line)
 	token_lst = tokenlstnew(line);
 	if (!token_lst)
 		return (NULL);
+	line = update_line(line);
 	while(*line)
 	{
 		skip_whitespace(&line);
