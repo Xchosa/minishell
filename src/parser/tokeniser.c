@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokeniser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:26:42 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/22 16:15:47 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:36:40 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,9 @@ char* get_token(char *content)
 	
 	i = 0;
 	new_token =ft_strdup("");
-	// tmp_token = NULL;
 	while (content[i] != '\0' && check_for_divider(content[i]) == false)
 	{
-		if (ft_isalnum(content[i]) != 0)
+		if (ft_isalnum(content[i]) != 0 || ft_strnstr("\r\n\v\t ", &content[i], 1) != NULL)
 		{	
 			tmp_token = ft_charjoin(new_token, content[i]);
             free(new_token);
@@ -66,10 +65,16 @@ char* get_token(char *content)
         new_token = tmp_token;
 		i++;
 	}
-	// printf("divider2: %s \n", &content[i]);
 	return(new_token);
 }
 
+//int	special_char_
+
+// wenn double quote " h " a" l"
+// h a l 
+
+// " 'al; "
+// sobald " " alles darin als string 
 
 t_type get_token_type(char *content)
 {
