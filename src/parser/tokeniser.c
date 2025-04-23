@@ -58,7 +58,6 @@ char* get_token(char *content)
 			return (new_token);
 		i++;
 	}
-	// while(char_is_alpha_nbr_and_no_whitespace(content[i]) == true)
 	while (check_for_divider(content[i]) == true)
 	{
 		tmp_token = ft_charjoin( new_token, content[i]);
@@ -71,14 +70,14 @@ char* get_token(char *content)
 
 //&& content[i] != ' ')
 
-// echo <hello
-
+//To do: 
+// sobald " " alles darin als string 
 
 // wenn double quote " h " a" l"
 // h a l 
 
 // " 'al; "
-// sobald " " alles darin als string 
+
 
 t_type get_token_type(char *content)
 {
