@@ -42,7 +42,7 @@ bool	wrong_use_pipe_and_redirection(char *line)
 	int size;
 	
 	i = 0;
-	if ((line[0] == '|')|| (line[0] == '<') || (line[0] == '>') || (line[0] == ';'))
+	if ((line[i] == '|')|| (line[i] == '<') || (line[i] == '>') || (line[i] == ';'))
 		return (false);
 	size = ft_strlen(line);
 	if (line [size -1] == '|')

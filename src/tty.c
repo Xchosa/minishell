@@ -35,6 +35,22 @@ what is awk
 
 */
 
+// void	free_lst(t_token **token_lst, void (*del)(void *))
+// {
+// 	t_token_lst	*tmp
+// 	f(!token_lst)
+// 		return(Null)
+// 	while(token_lst != NULL)
+// 	{
+// 		tmp = (*token_lst)-> next;
+// 		del(*token_lst)-> char;
+// 		free(*token_lst);
+// 		token_lst = tmp;
+// 	}
+// 	*token_lst = NULL;
+// }
+
+
 void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 {
 	(void) argv;
@@ -53,10 +69,12 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		}
 		token_lst = tokeniser(line);
 		{
-			printf("tokeniser broken\n");
+			iter_tokenlst(token_lst, &print_tokenlst);
 		}
 	}
-	//free(line);
+	// free_lst(token_lst, del());
+
+	
 }
 
 void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)
@@ -75,6 +93,6 @@ void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)
 	}
 	token_lst = tokeniser(line);
 	{
-		printf("tokeniser broken\n");
+		iter_tokenlst(token_lst, &print_tokenlst);
 	}
 }

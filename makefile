@@ -14,6 +14,7 @@ GARBAGE_DIR := ./src/garbage_collector
 PARSE_DIR = ./src/parser
 EXECUTER_DIR = ./src/executer
 LEXER_DIR = ./src/lexer
+DEBUG_DIR = debug_dir
 INC_DIR = inc
 OBJ_DIR = obj
 
@@ -52,7 +53,8 @@ $(LIBFT):
 	make -C ./libft
 
 
-debug: -Wall -Wextra -Werror -g -I inc/ -fsanitize=address
+debug: -Wall -Wextra -Werror -g -I inc/ -fsanitize=
+
 
 
 clean:

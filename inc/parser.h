@@ -72,6 +72,8 @@ void		non_interactive_shell(int argc, char **argv, char **envp, char *line);
 bool		lexer(char *line);
 bool		wrong_use_pipe_and_redirection(char *line);
 void 		skip_whitespace(char **line);
+bool		find_divider_until_whitespace_or_eof(char c);
+bool		char_is_alpha_nbr_and_no_whitespace(char c);
 
 // tokeniser
 t_token 	*tokeniser (char *line);

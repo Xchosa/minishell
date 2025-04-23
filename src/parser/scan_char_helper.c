@@ -28,13 +28,34 @@ bool	check_for_divider(char c)
 {
 	if (ft_strncmp ("|", &c, 1) == 0)
 		return (true);
-	if (ft_strncmp (" ", &c, 1) == 0)
-		return (true);
+	// if (ft_strncmp (" ", &c, 1) == 0)
+	// 	return (true);
 	if (ft_strncmp ("<", &c, 1) == 0)
 		return (true);
 	if (ft_strncmp (">", &c, 1) == 0)
 		return (true);
 	if (ft_strncmp (";", &c, 1) == 0)
+		return (true);
+	return (false);
+}
+
+
+bool	(find_divider_until_whitespace_or_eof(char c)) // true
+{
+	if (c == '\0') // if end of line true 
+		return (false);
+	if (ft_strnstr("\r\n\v\t ", &c, 1) != false) // if space true
+		return (false);
+	if (check_for_divider(c) == true)// if | true return true
+		return (true);
+	return (false);
+}
+
+bool	char_is_alpha_nbr_and_no_whitespace(char c)
+{
+	if (ft_isalnum(c) == true)
+		return (true);
+	if (ft_strnstr("\r\n\v\t ", &c, 1) != NULL)
 		return (true);
 	return (false);
 }
@@ -49,33 +70,4 @@ char	*update_line(char *line)
 	while (*line && ft_isalnum(*line))
         line++;
 	return	(&line[i]);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*newstr;
-	size_t	i;
-	size_t	j;
-	size_t	strlen_s1;
-	size_t	strlen_s2;
-
-	strlen_s1 = ft_strlen(s1);
-	strlen_s2 = ft_strlen(s2);
-	i = 0;
-	j = 0;
-	newstr = (char *)malloc(((strlen_s1 + strlen_s2 + 1) * (sizeof(char))));
-	if (newstr == NULL)
-		return (NULL);
-	while (i < strlen_s1)
-	{
-		newstr[i] = s1[i];
-		i++;
-	}
-	while (j < strlen_s2)
-	{
-		newstr[i + j] = s2[j];
-		j++;
-	}
-	newstr[i + j] = '\0';
-	return (newstr);
 }

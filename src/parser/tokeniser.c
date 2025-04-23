@@ -48,7 +48,7 @@ char* get_token(char *content)
 	new_token =ft_strdup("");
 	while (content[i] != '\0' && check_for_divider(content[i]) == false)
 	{
-		if (ft_isalnum(content[i]) != 0 || ft_strnstr("\r\n\v\t ", &content[i], 1) != NULL)
+		if (char_is_alpha_nbr_and_no_whitespace(content[i]))
 		{	
 			tmp_token = ft_charjoin(new_token, content[i]);
             free(new_token);
@@ -58,7 +58,8 @@ char* get_token(char *content)
 			return (new_token);
 		i++;
 	}
-	while (content[i] != '\0' &&  check_for_divider(content[i]) == true && content[i] != ' ')
+	// while(char_is_alpha_nbr_and_no_whitespace(content[i]) == true)
+	while (check_for_divider(content[i]) == true)
 	{
 		tmp_token = ft_charjoin( new_token, content[i]);
 		free(new_token);
@@ -68,7 +69,10 @@ char* get_token(char *content)
 	return(new_token);
 }
 
-//int	special_char_
+//&& content[i] != ' ')
+
+// echo <hello
+
 
 // wenn double quote " h " a" l"
 // h a l 
@@ -87,7 +91,7 @@ t_type get_token_type(char *content)
 		return(Redirect_output);
 	if (content[i] == '<')
 	{
-		if (content[i+1] == '<') // i + 1 ?
+		if (content[i+1] == '<')
 			return (here_doc);
 		else
 			return (Redirect_input);
@@ -172,7 +176,6 @@ t_token *tokeniser(char *line)
 		tokenadd_back(&token_lst, new_token);
 		line = update_line(line);
 	}
-	
-	iter_tokenlst(token_lst, &print_tokenlst);
 	return (token_lst);
 }
+

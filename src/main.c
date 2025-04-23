@@ -14,32 +14,43 @@
 #include "parser.h"
 
 
-int	main(int argc, char **argv, char **envp)
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	(void) argv;
+// 	(void) argc;
+// 	(void) envp;
+// 	bool	tty_shell;
+	
+// 	tty_shell = false;
+// 	char *line;
+	
+// 	line = NULL;
+
+// 	if(isatty(STDIN_FILENO))
+// 	{
+// 		interactive_shell_tty(argc, argv, envp, line);
+// 		tty_shell = true;
+// 	}
+// 	else
+// 		non_interactive_shell(argc, argv, envp, line);
+// 	// write form terminal into line (interaktiv oder aktiv )
+// 	// line = get_input_from_tty_or_not(argc, argv, line);
+
+// 	// 1. laxxen
+// 	// 2. parsen
+// 			// tree 
+// 	// 3. executen
+// 	if (tty_shell == true)
+// 		printf("clean history function + destroy shell");
+// }
+
+int main()
 {
-	(void) argv;
-	(void) argc;
-	(void) envp;
-	bool	tty_shell;
-	
-	tty_shell = false;
-	char *line;
-	
-	line = NULL;
+    t_token *token_lst;
+    char *line = "hello< echo|hello << wow";
 
-	if(isatty(STDIN_FILENO))
+    token_lst = tokeniser(line);
 	{
-		interactive_shell_tty(argc, argv, envp, line);
-		tty_shell = true;
+		iter_tokenlst(token_lst, &print_tokenlst);
 	}
-	else
-		non_interactive_shell(argc, argv, envp, line);
-	// write form terminal into line (interaktiv oder aktiv )
-	// line = get_input_from_tty_or_not(argc, argv, line);
-
-	// 1. laxxen
-	// 2. parsen
-			// tree 
-	// 3. executen
-	if (tty_shell == true)
-		printf("clean history function + destroy shell");
 }
