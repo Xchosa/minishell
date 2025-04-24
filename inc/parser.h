@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/24 10:14:51 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:23:33 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,13 @@ void		non_interactive_shell(int argc, char **argv, char **envp, char *line);
 // lexer
 bool		lexer(char *line);
 bool		wrong_use_pipe_and_redirection(char *line);
+bool		uneven_S_and_D_Quotes(char *line);
+
+// tokeniser
 void 		skip_whitespace(char **line);
 bool		find_divider_until_whitespace_or_eof(char c);
 bool		char_is_alpha_nbr_and_no_whitespace(char c);
 
-// tokeniser
 t_token 	*tokeniser (char *line);
 char		*get_token(char *content);
 t_type		get_token_type(char *content);
@@ -83,11 +85,15 @@ t_token		*tokenlast(t_token *lst);
 void		tokenadd_back(t_token **lst, t_token *new_token);
 
 t_token		*create_token(char *content);
-t_token		*quote_case(char **line);
+t_token		*d_quote_case(char **line);
+t_token		*s_quote_case(char **line);
+t_token		*create_token_with_quote_case(char **line);
 t_token		*tokenlstnew(char	*content);
-bool		check_for_divider(char c);
+bool		check_for_divider_with_space(char c);
+bool		check_for_divider_without_space(char c);
 char		*update_line(char *line);
-char		*update_line_with_quotes(char *line);
+char		*update_line_unitl_d_quotes(char *line);
+char		*update_line_unitl_s_quotes(char *line);
 char 		*ft_charjoin(char const *dst, char const src_char);
 
 void		iter_tokenlst(t_token *lst, void (*f)(t_token *));

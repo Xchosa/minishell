@@ -27,6 +27,8 @@ MY_SOURCES = \
 		tty.c \
 		scan_char_helper.c \
 		tokeniser.c \
+		handle_quotes.c \
+		update_line.c \
 		tokeniser_print.c \
 		lexer.c \
 		shell_config.c 

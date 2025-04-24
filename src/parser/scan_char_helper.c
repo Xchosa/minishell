@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:51:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/24 13:22:43 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:24:51 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,24 @@ void skip_whitespace(char **line)
 	}
 }
 
-bool	check_for_divider(char c)
+bool	check_for_divider_without_space(char c)
 {
 	if (ft_strncmp ("|", &c, 1) == 0)
 		return (true);
-	// if (ft_strncmp (" ", &c, 1) == 0)
-	// 	return (true);
+	if (ft_strncmp ("<", &c, 1) == 0)
+		return (true);
+	if (ft_strncmp (">", &c, 1) == 0)
+		return (true);
+	if (ft_strncmp (";", &c, 1) == 0)
+		return (true);
+	return (false);
+}
+bool	check_for_divider_with_space(char c)
+{
+	if (ft_strncmp ("|", &c, 1) == 0)
+		return (true);
+	if (ft_strncmp (" ", &c, 1) == 0)
+		return (true);
 	if (ft_strncmp ("<", &c, 1) == 0)
 		return (true);
 	if (ft_strncmp (">", &c, 1) == 0)
@@ -69,7 +81,7 @@ bool	find_divider_until_whitespace_or_eof(char c) // true
 		return (false);
 	if (ft_strnstr("\r\n\v\t ", &c, 1) != false) // if space true
 		return (false);
-	if (check_for_divider(c) == true)// if | true return true
+	if (check_for_divider_without_space(c) == true)// if | true return true
 		return (true);
 	return (false);
 }
@@ -83,40 +95,4 @@ bool	char_is_alpha_nbr_and_no_whitespace(char c)
 	return (false);
 }
 
-char	*update_line(char *line)
-{
-	int	i;
 
-	i = 0;
-	skip_whitespace(&line);
-	if(ft_strncmp( "\"", line, 1) == 0)
-	{
-		line++;
-		while(ft_strncmp( "\"", line, 1) != 0) // update until ""
- 		{
- 			line++;
-	 	}
-		line++;
-		return (&line[i]); // i unnoetig
-	}
-	// old function
-	while (*line && check_for_divider(*line) == true && *line != ' ') 
-        line++;
-	while (*line && ft_isalnum(*line))
-        line++;
-	return	(&line[i]);
-}
-
-
-// char	*update_line_with_quotes(char *line)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	(*line)++
-// 	while(ft_strncmp( "\"", &line[i+1], 1 == 0))
-// 	{
-// 		line++;
-// 	}
-// 	return(&line[i]);
-// }

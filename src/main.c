@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/24 13:23:42 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:27:38 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,35 @@
 // 		printf("clean history function + destroy shell");
 // }
 
+
+
+
 int main()
 {
     t_token *token_lst;
-    // char *line = "hello< echo|hello << wow";
-	char *line = "\"hello< \"echo|hello << wow hello";
+    // char *line = "wow hello";
+	// char *line = " hello << wow hello";
+	// char *line = "\"hello< \"echo|hello << wow hello";
+	// char *line = "\'hello< \'echo|hello << wow hello";
+	char *line = "\"hello '< \"echo|hello << wow hello";// sollte valid sein
+	// char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
+	// char *line = "\"hello< echo|hello << wow hello"; // nicht valid
 	
     token_lst = tokeniser(line);
 	{
 		iter_tokenlst(token_lst, &print_tokenlst);
 	}
 }
+
+// no need to handle:
+/*
+echo "hallo
+dquote> jhfhdj
+dquote> "
+hallo
+jhfhdj
+*/ 
+
+
+// here doc 
+/// "heredoc>" und dann readline fkt abruf -  string ablesen bis der string danach kommt 
