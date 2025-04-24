@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:51:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/24 11:29:23 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/24 13:22:43 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,16 @@ char	*update_line(char *line)
 
 	i = 0;
 	skip_whitespace(&line);
-	if(ft_strncmp( "\"", line, 1 == 0))
-		{
-			(*line)++;
-			while(ft_strncmp( "\"", line, 1 != 0)) // update until ""
- 			{
- 				line++;
-		 	}
-			line++;
-			return (&line[i]); // i unnoetig
-		}
+	if(ft_strncmp( "\"", line, 1) == 0)
+	{
+		line++;
+		while(ft_strncmp( "\"", line, 1) != 0) // update until ""
+ 		{
+ 			line++;
+	 	}
+		line++;
+		return (&line[i]); // i unnoetig
+	}
 	// old function
 	while (*line && check_for_divider(*line) == true && *line != ' ') 
         line++;
