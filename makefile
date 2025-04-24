@@ -31,6 +31,7 @@ MY_SOURCES = \
 		lexer.c \
 		shell_config.c 
 
+
 HEADERS = \
 		minishell.h \
 		parser.h

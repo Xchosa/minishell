@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:26:42 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/22 17:36:40 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:23:20 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,30 +126,43 @@ t_token	*tokenlstnew(char	*content)
 	t_token	*token;
 
 	skip_whitespace(&content);
-	// if "" fkt to create node until next ""
-	// if (*content == "\"") // falsch
-	// muss in create_token q case handeln und line updaten
-	
-	token = create_token(content);
+	if (ft_strncmp("\"", content, 1) == 0)
+		token = quote_case(&content);
+	else
+		token = create_token(content);
 	if(!token)
 		return (NULL);
 	token->next = 0;
 	return (token);
 }
 
-void	quote_case(char **line)
+t_token	*quote_case(char **line)
 {
 	int i;
+	char *tmp_token;
+	t_token *new_token;
 
 	i = 0;
-	if((line[i])== "\"")
+	new_token = malloc (sizeof(t_token));
+	if(!new_token)
+	return (NULL);
+	new_token->token =ft_strdup("\"");
+	(*line)++;
+	while((*line)[i] != '"')
 	{
-		while(line[i+1] != "\"" )
-		{
-
-		}
+		tmp_token = ft_charjoin( new_token->token, (*line)[i]);
+		free(new_token->token);
+        new_token->token = tmp_token;
+		i++;
 	}
-	return;
+	tmp_token = ft_charjoin(new_token->token, (*line)[i]);
+	free(new_token->token);
+    new_token->token = tmp_token;
+	i++;
+	
+	// *line += i;
+	new_token->token_type = TEXT;
+	return (new_token);
 }
 
 t_token *tokeniser(char *line)
@@ -161,10 +174,13 @@ t_token *tokeniser(char *line)
 	token_lst = tokenlstnew(line);
 	if (!token_lst)
 		return (NULL);
-	line = update_line(line);
+	line = update_line(line); // needs to update until next \" if it points to a \" 
 	while(*line)
 	{
 		skip_whitespace(&line);
+		// if (ft_strncmp("\"", &line, 1) == 0)
+		// 	new_token = quote_case(line);
+		// else
 		new_token = create_token(line);
 		tokenadd_back(&token_lst, new_token);
 		line = update_line(line);

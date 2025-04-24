@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:32:26 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/15 17:01:29 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:14:09 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ what is awk
 
 
 */
-
+// fumction to check if there is uneven nbr of \" 
 
 bool	wrong_use_pipe_and_redirection(char *line)
 {

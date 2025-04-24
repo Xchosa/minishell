@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/22 13:13:53 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:19:40 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@
 int main()
 {
     t_token *token_lst;
-    char *line = "hello< echo|hello << wow";
-
+    // char *line = "hello< echo|hello << wow";
+	char *line = "\"hello< \"echo|hello << wow hello";
+	
     token_lst = tokeniser(line);
 	{
 		iter_tokenlst(token_lst, &print_tokenlst);

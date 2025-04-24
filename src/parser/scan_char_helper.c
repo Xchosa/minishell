@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scan_char_helper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:51:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/22 16:14:16 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:29:23 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char 	*ft_charjoin(char const *dst, char const src_char)
 	return (newstr);
 }
 
-bool	(find_divider_until_whitespace_or_eof(char c)) // true
+bool	find_divider_until_whitespace_or_eof(char c) // true
 {
 	if (c == '\0') // if end of line true 
 		return (false);
@@ -88,9 +88,35 @@ char	*update_line(char *line)
 	int	i;
 
 	i = 0;
+	skip_whitespace(&line);
+	if(ft_strncmp( "\"", line, 1 == 0))
+		{
+			(*line)++;
+			while(ft_strncmp( "\"", line, 1 != 0)) // update until ""
+ 			{
+ 				line++;
+		 	}
+			line++;
+			return (&line[i]); // i unnoetig
+		}
+	// old function
 	while (*line && check_for_divider(*line) == true && *line != ' ') 
         line++;
 	while (*line && ft_isalnum(*line))
         line++;
 	return	(&line[i]);
 }
+
+
+// char	*update_line_with_quotes(char *line)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	(*line)++
+// 	while(ft_strncmp( "\"", &line[i+1], 1 == 0))
+// 	{
+// 		line++;
+// 	}
+// 	return(&line[i]);
+// }

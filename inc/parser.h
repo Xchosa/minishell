@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/22 10:04:43 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:14:51 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,14 @@ char		*get_token(char *content);
 t_type		get_token_type(char *content);
 t_token		*tokenlast(t_token *lst);
 void		tokenadd_back(t_token **lst, t_token *new_token);
+
 t_token		*create_token(char *content);
+t_token		*quote_case(char **line);
 t_token		*tokenlstnew(char	*content);
 bool		check_for_divider(char c);
 char		*update_line(char *line);
+char		*update_line_with_quotes(char *line);
+char 		*ft_charjoin(char const *dst, char const src_char);
 
 void		iter_tokenlst(t_token *lst, void (*f)(t_token *));
 void		print_tokenlst(t_token *data);
