@@ -52,9 +52,9 @@ int main()
     t_token *token_lst;
     // char *line = "wow hello";
 	// char *line = " hello << wow hello";
-	// char *line = "\"hello< \"echo|hello << wow hello";
+	char *line = "\"hello\'< \"echo|\'hello world\'<< wow hello";
 	// char *line = "\'hello< \'echo|hello << wow hello";
-	char *line = "\"hello '< \"echo|hello << wow hello";// sollte valid sein
+	// char *line = "\"hello '< \"echo|hello << wow hello";// sollte valid sein
 	// char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
 	// char *line = "\"hello< echo|hello << wow hello"; // nicht valid
 	
@@ -64,8 +64,6 @@ int main()
 	}
 }
 
-// to do:
-// handle quotes in the middle of the string
 
 // no need to handle:
 /*

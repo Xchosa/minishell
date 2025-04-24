@@ -140,7 +140,7 @@ t_token *tokeniser(char *line)
 		// if (ft_strncmp("\"", &line, 1) == 0)
 		// 	new_token = quote_case(line);
 		// else
-		new_token = create_token(line);
+		new_token = create_token_with_quote_case(&line);
 		tokenadd_back(&token_lst, new_token);
 		line = update_line(line);
 	}

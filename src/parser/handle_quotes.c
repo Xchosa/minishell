@@ -24,7 +24,7 @@ t_token	*d_quote_case(char **line)
 	if(!new_token)
 	return (NULL);
 	new_token->token =ft_strdup("");
-	(*line)++;
+	i++;// soll hoch iterieren aber nicht line veraendern
 	while((*line)[i] != '"')
 	{
 		tmp_token = ft_charjoin( new_token->token, (*line)[i]);
@@ -32,10 +32,6 @@ t_token	*d_quote_case(char **line)
         new_token->token = tmp_token;
 		i++;
 	}
-	tmp_token = ft_charjoin(new_token->token, (*line)[i]);
-	free(new_token->token);
-    new_token->token = tmp_token;
-	i++;
 	new_token->token_type = TEXT;
 	return (new_token);
 }
@@ -51,7 +47,7 @@ t_token	*s_quote_case(char **line)
 	if(!new_token)
 	return (NULL);
 	new_token->token =ft_strdup("");
-	(*line)++;
+	i++;
 	while((*line)[i] != '\'')
 	{
 		tmp_token = ft_charjoin( new_token->token, (*line)[i]);
@@ -59,10 +55,6 @@ t_token	*s_quote_case(char **line)
         new_token->token = tmp_token;
 		i++;
 	}
-	tmp_token = ft_charjoin(new_token->token, (*line)[i]);
-	free(new_token->token);
-    new_token->token = tmp_token;
-	i++;
 	new_token->token_type = TEXT;
 	return (new_token);
 }

@@ -34,10 +34,8 @@ char	*update_line_unitl_s_quotes(char *line)
 
 char	*update_line(char *line)
 {
-	int	i;
 	bool flag;
 
-	i = 0;
 	flag = false;
 	skip_whitespace(&line);
 	if (ft_strncmp( "\"", line, 1) == 0)
