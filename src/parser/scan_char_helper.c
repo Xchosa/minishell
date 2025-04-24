@@ -39,6 +39,29 @@ bool	check_for_divider(char c)
 	return (false);
 }
 
+char 	*ft_charjoin(char const *dst, char const src_char)
+{
+	char	*newstr;
+	size_t	i;	
+	size_t	strlen_dst;
+
+	i = 0;
+	
+	strlen_dst = ft_strlen(dst);
+
+	newstr = (char *)malloc(((strlen_dst + 2) * (sizeof(char))));
+	if (newstr == NULL)
+		return (NULL);
+	while (i < strlen_dst)
+	{
+		newstr[i] = dst[i];
+		i++;
+	}
+	newstr[i] = src_char;
+	newstr[i + 1] = '\0';
+	// printf("newstr: %s \n", newstr);
+	return (newstr);
+}
 
 bool	(find_divider_until_whitespace_or_eof(char c)) // true
 {
