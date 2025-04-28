@@ -51,6 +51,17 @@ bool	check_for_divider_with_space(char c)
 	return (false);
 }
 
+
+bool	not_single_divider(char c)
+{
+	if (ft_strncmp ("<", &c, 1) == 0)
+		return (true);
+	if (ft_strncmp (">", &c, 1) == 0)
+		return (true);
+	return (false);
+}
+
+
 char 	*ft_charjoin(char const *dst, char const src_char)
 {
 	char	*newstr;

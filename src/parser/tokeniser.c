@@ -39,6 +39,8 @@ char* get_token(char *content)
 		tmp_token = ft_charjoin( new_token, content[i]);
 		free(new_token);
         new_token = tmp_token;
+		if(not_single_divider(content[i])== false )
+			return(new_token);
 		i++;
 	}
 	return(new_token);
@@ -55,7 +57,12 @@ t_type get_token_type(char *content)
 	if(content[i] == '|')
 		return(PIPE);
 	if (content[i] == '>')
-		return(Redirect_output);
+	{
+		if (content[i+1] == '>')
+			return (Redirect_output_append_mode);
+		else
+			return(Redirect_output);
+	}
 	if (content[i] == '<')
 	{
 		if (content[i+1] == '<')
@@ -133,13 +140,11 @@ t_token *tokeniser(char *line)
 	token_lst = tokenlstnew(line);
 	if (!token_lst)
 		return (NULL);
-	line = update_line(line); // needs to update until next \" if it points to a \" 
+	line = update_line(line);  
 	while(*line)
 	{
+
 		skip_whitespace(&line);
-		// if (ft_strncmp("\"", &line, 1) == 0)
-		// 	new_token = quote_case(line);
-		// else
 		new_token = create_token_with_quote_case(&line);
 		tokenadd_back(&token_lst, new_token);
 		line = update_line(line);

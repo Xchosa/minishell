@@ -32,8 +32,9 @@ typedef enum s_type
 {
 	TEXT, // 0
 	PIPE, // 1
-	Redirect_input, // 2
+	Redirect_input, // 2 
 	Redirect_output, //
+	Redirect_output_append_mode,
 	here_doc,
 	S_Quote,
 	D_Quote, // 3 (like " ")
@@ -70,8 +71,11 @@ void		non_interactive_shell(int argc, char **argv, char **envp, char *line);
 
 // lexer
 bool		lexer(char *line);
+int			count_up_strings(char *line);
 bool		wrong_use_pipe_and_redirection(char *line);
-bool		uneven_S_and_D_Quotes(char *line);
+bool		check_for_correct_double_divider(char *line);
+bool    	check_for_correct_single_divider(char *line);
+
 
 // tokeniser
 void 		skip_whitespace(char **line);
@@ -99,8 +103,10 @@ char 		*ft_charjoin(char const *dst, char const src_char);
 void		iter_tokenlst(t_token *lst, void (*f)(t_token *));
 void		print_tokenlst(t_token *data);
 
-
-
+//here_doc
+void		check_here_doc_and_take_exit_word(t_token *token_lst);
+bool		not_single_divider(char c);
+bool		pipe_or_simec(char c);
 
 
 #endif

@@ -31,6 +31,8 @@ MY_SOURCES = \
 		update_line.c \
 		tokeniser_print.c \
 		lexer.c \
+		lexer_helper.c \
+		count_strings_up.c \
 		shell_config.c 
 
 

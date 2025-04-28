@@ -64,11 +64,13 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		add_history(line);
 		if(lexer(line) == false)
 		{
-			printf("fehler lexer");
+			printf("fehler lexer: \n");
+			printf("%s\n", line);
 			return ;
 		}
 		token_lst = tokeniser(line);
 		{
+			check_here_doc_and_take_exit_word(token_lst);
 			iter_tokenlst(token_lst, &print_tokenlst);
 		}
 	}
@@ -84,11 +86,12 @@ void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)
 	(void) envp;
 	
 	t_token *token_lst;
-	printf("in the non interactive shell\n");
+	printf("in the non interactive shell: \n");
 	line = get_next_line(STDIN_FILENO);
 	if(lexer(line) == false)
 	{
-		printf("fehler lexer");
+		printf("fehler lexer\n");
+		printf("%s\n", line);
 		return ;
 	}
 	token_lst = tokeniser(line);

@@ -32,6 +32,17 @@ char	*update_line_unitl_s_quotes(char *line)
 }
 
 
+bool	pipe_or_simec(char c)
+{
+	if (ft_strncmp ("|", &c, 1) == 0)
+		return (true);
+	if (ft_strncmp (" ", &c, 1) == 0)
+		return (true);
+	if (ft_strncmp (";", &c, 1) == 0)
+		return (true);
+	return (false);
+}
+
 char	*update_line(char *line)
 {
 	bool flag;
@@ -44,6 +55,11 @@ char	*update_line(char *line)
 		return(update_line_unitl_s_quotes(line));
 	while (*line && check_for_divider_with_space(*line) == true)
 	{
+		if(pipe_or_simec(*line)== true)
+		{
+			line++;
+			return(line);
+		}
 		line++;
 		flag = true;
 	}
