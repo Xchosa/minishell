@@ -50,8 +50,8 @@
 int main()
 {
     t_token *token_lst;
-    char *line = "wow \' hallo \" world \' dfohello";
-	// char *line = " hello |<< wow hello";
+    //char *line = "wow \' hallo \" world \' dfohello";
+	char *line = " hello << wow hello";
 	// char *line = "echo>>|hello world << wow hello";
 	// char *line = "\'hello< \'echo|hello << wow hello";
 	// char *line = "\"hello '< \"echo|hello << wow hello";// sollte valid sein
