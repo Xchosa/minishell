@@ -63,12 +63,10 @@ int main()
 		printf("\n fehler_lexer\n\n");
 		return(1);
 	}
-	
     token_lst = tokeniser(line);
 	{
 		check_here_doc_and_take_exit_word(token_lst);
 		iter_tokenlst(token_lst, &print_tokenlst);
-
 	}
 }
 
