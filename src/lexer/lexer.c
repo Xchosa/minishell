@@ -60,6 +60,8 @@ bool	lexer(char *line)
 				return (false);
 			i++;
 		}
+		if(line[i]== '\0')
+			break;
 		i++;
 	}
 	return (true);
