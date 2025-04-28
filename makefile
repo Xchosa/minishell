@@ -27,6 +27,7 @@ MY_SOURCES = \
 		tty.c \
 		scan_char_helper.c \
 		tokeniser.c \
+		heredoc.c \
 		handle_quotes.c \
 		update_line.c \
 		tokeniser_print.c \

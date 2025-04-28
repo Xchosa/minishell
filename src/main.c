@@ -50,8 +50,8 @@
 int main()
 {
     t_token *token_lst;
-    char *line = "wow \' hallo \" world \' dfo \"hello";
-	// char *line = " hello << wow hello";
+    //char *line = "wow \' hallo \" world \' dfo \"hello";
+	char *line = " hello <<wow hello";
 	// char *line = "echo>>|hello world << wow hello";
 	// char *line = "\'hello< \'echo|hello << wow hello";
 	// char *line = "\"hello '< \"echo|hello << wow hello";// sollte valid sein
@@ -66,7 +66,9 @@ int main()
 	
     token_lst = tokeniser(line);
 	{
+		check_here_doc_and_take_exit_word(token_lst);
 		iter_tokenlst(token_lst, &print_tokenlst);
+
 	}
 }
 
