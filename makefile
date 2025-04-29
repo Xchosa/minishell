@@ -14,6 +14,7 @@ GARBAGE_DIR := ./src/garbage_collector
 PARSE_DIR = ./src/parser
 EXECUTER_DIR = ./src/executer
 LEXER_DIR = ./src/lexer
+DEBUG_DIR = debug_dir
 INC_DIR = inc
 OBJ_DIR = obj
 
@@ -26,9 +27,15 @@ MY_SOURCES = \
 		tty.c \
 		scan_char_helper.c \
 		tokeniser.c \
+		heredoc.c \
+		handle_quotes.c \
+		update_line.c \
 		tokeniser_print.c \
 		lexer.c \
+		lexer_helper.c \
+		count_strings_up.c \
 		shell_config.c 
+
 
 HEADERS = \
 		minishell.h \
@@ -52,7 +59,8 @@ $(LIBFT):
 	make -C ./libft
 
 
-debug: -Wall -Wextra -Werror -g -I inc/ -fsanitize=address
+debug: -Wall -Wextra -Werror -g -I inc/ -fsanitize=
+
 
 
 clean:

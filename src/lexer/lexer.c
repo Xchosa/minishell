@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:32:26 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/15 17:01:29 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/24 13:44:35 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,41 +18,51 @@ Lexer overview
 check for valid input 
 e.g. | < > at end, double or beginning
 
-handle ' ""
+handle single and doulble quotes 
+single quoutes within a double quote string is a normal text no 
+error and the other way around
 trim spaces form start and AND inbetween 
 if not the same as previous one 
 - only then save in history 
 (check what is fkt add_history doing)
  (echo    ls does save spaces , ls     -al does not)
 
+
 check (empty) input (file) check for outfile
 
 get some bash cmds to test 
 
-every token one node 
-what is awk
 
 
 */
+// fumction to check if there is uneven nbr of 
+// /* 
 
-
-bool	wrong_use_pipe_and_redirection(char *line)
-{
-	int i;
-	int size;
-	
-	i = 0;
-	if ((line[0] == '|')|| (line[0] == '<') || (line[0] == '>') || (line[0] == ';'))
-		return (false);
-	size = ft_strlen(line);
-	if (line [size -1] == '|')
-		return (false);
-	return(true);
-}
 
 bool	lexer(char *line)
 {
-	if (wrong_use_pipe_and_redirection(line) == false)
-		return (false);
+	int i;
+
+	i = 0;
+	if (wrong_use_pipe_and_redirection(line)== false)
+		return(false);
+	while(line[i])
+	{
+		while(line[i])
+		{
+			if (count_up_strings(line + i) >= 0)
+				i += count_up_strings(line + i);
+			else
+				return(false);
+			if (check_for_correct_double_divider(line +i) == false)
+				return (false);
+			if (check_for_correct_single_divider(line + i) == false)
+				return (false);
+			i++;
+		}
+		if(line[i]== '\0')
+			break;
+		i++;
+	}
 	return (true);
 }

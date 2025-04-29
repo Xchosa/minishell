@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/22 10:04:43 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:23:33 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ typedef enum s_type
 {
 	TEXT, // 0
 	PIPE, // 1
-	Redirect_input, // 2
+	Redirect_input, // 2 
 	Redirect_output, //
+	Redirect_output_append_mode,
 	here_doc,
 	S_Quote,
 	D_Quote, // 3 (like " ")
@@ -70,25 +71,42 @@ void		non_interactive_shell(int argc, char **argv, char **envp, char *line);
 
 // lexer
 bool		lexer(char *line);
+int			count_up_strings(char *line);
 bool		wrong_use_pipe_and_redirection(char *line);
-void 		skip_whitespace(char **line);
+bool		check_for_correct_double_divider(char *line);
+bool    	check_for_correct_single_divider(char *line);
+
 
 // tokeniser
+void 		skip_whitespace(char **line);
+bool		find_divider_until_whitespace_or_eof(char c);
+bool		char_is_alpha_nbr_and_no_whitespace(char c);
+
 t_token 	*tokeniser (char *line);
 char		*get_token(char *content);
 t_type		get_token_type(char *content);
 t_token		*tokenlast(t_token *lst);
 void		tokenadd_back(t_token **lst, t_token *new_token);
+
 t_token		*create_token(char *content);
+t_token		*d_quote_case(char **line);
+t_token		*s_quote_case(char **line);
+t_token		*create_token_with_quote_case(char **line);
 t_token		*tokenlstnew(char	*content);
-bool		check_for_divider(char c);
+bool		check_for_divider_with_space(char c);
+bool		check_for_divider_without_space(char c);
 char		*update_line(char *line);
+char		*update_line_unitl_d_quotes(char *line);
+char		*update_line_unitl_s_quotes(char *line);
+char 		*ft_charjoin(char const *dst, char const src_char);
 
 void		iter_tokenlst(t_token *lst, void (*f)(t_token *));
 void		print_tokenlst(t_token *data);
 
-
-
+//here_doc
+void		check_here_doc_and_take_exit_word(t_token *token_lst);
+bool		not_single_divider(char c);
+bool		pipe_or_simec(char c);
 
 
 #endif

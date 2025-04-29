@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/15 16:10:43 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:04:37 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,22 @@ what is awk
 
 */
 
+// void	free_lst(t_token **token_lst, void (*del)(void *))
+// {
+// 	t_token_lst	*tmp
+// 	f(!token_lst)
+// 		return(Null)
+// 	while(token_lst != NULL)
+// 	{
+// 		tmp = (*token_lst)-> next;
+// 		del(*token_lst)-> char;
+// 		free(*token_lst);
+// 		token_lst = tmp;
+// 	}
+// 	*token_lst = NULL;
+// }
+
+
 void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 {
 	(void) argv;
@@ -48,15 +64,19 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		add_history(line);
 		if(lexer(line) == false)
 		{
-			printf("fehler lexer");
+			printf("fehler lexer: \n");
+			printf("%s\n", line);
 			return ;
 		}
 		token_lst = tokeniser(line);
 		{
-			printf("tokeniser broken\n");
+			check_here_doc_and_take_exit_word(token_lst);
+			iter_tokenlst(token_lst, &print_tokenlst);
 		}
 	}
-	//free(line);
+	// free_lst(token_lst, del());
+
+	
 }
 
 void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)
@@ -65,11 +85,17 @@ void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)
 	(void) argc;
 	(void) envp;
 	
-	printf("in the non interactive shell\n");
+	t_token *token_lst;
+	printf("in the non interactive shell: \n");
 	line = get_next_line(STDIN_FILENO);
 	if(lexer(line) == false)
 	{
-		printf("fehler lexer");
+		printf("fehler lexer\n");
+		printf("%s\n", line);
 		return ;
+	}
+	token_lst = tokeniser(line);
+	{
+		iter_tokenlst(token_lst, &print_tokenlst);
 	}
 }
