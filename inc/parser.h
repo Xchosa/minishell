@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/24 16:23:33 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:15:02 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@
 
 
 
-t_bash *get_bash(void);
+// t_bash *get_bash(void);
 
-typedef struct s_bash
-{
+// typedef struct s_bash
+// {
 	
-}
+// } 
 
 // laxxer ==> lexical analyser
 typedef enum s_type
@@ -50,7 +50,7 @@ typedef enum s_type
 	
 }	t_type;
 
-
+// nach prios sortieren < > enum  
 
 typedef struct s_token
 {
@@ -66,13 +66,36 @@ typedef struct s_token
 // ls <infile -l >outfile -a
 typedef struct s_cmd
 {
-	char 			**cmd_arg;// **weil eigenes envp erweitert werden muss
-	t_type 			token_type;
+	t_list		*args; // **weil eigenes envp erweitert werden muss // e.g. echo abc cyz
+	t_list 		*redirs; /// e.g. outfile.txt // auf void pointer von t_list
 	struct s_cmd 	*next;
 	
 }	t_cmd;
 
+// libft_struct
+// typedef struct s_list
+// {
+// 	void			*content;
+// 	struct s_list	*next;
+// }					t_list;
 
+
+typedef enum s_redirtype
+{
+	IN,
+	OUT,
+	APPEND,
+	skip,
+}	t_redirtype;
+
+typedef struct s_redirs
+{
+	t_redirtype *Redirtype;
+	char 		*file;
+} t_redirs;
+
+
+// 
 
 // get input 
 void		interactive_shell_tty(int argc, char **argv, char **envp, char *line);
@@ -88,6 +111,7 @@ bool    	check_for_correct_single_divider(char *line);
 
 // tokeniser
 void 		skip_whitespace(char **line);
+bool		skip_whitespace_and_eof(char **line);
 bool		find_divider_until_whitespace_or_eof(char c);
 bool		char_is_alpha_nbr_and_no_whitespace(char c);
 
@@ -114,6 +138,8 @@ void		print_tokenlst(t_token *data);
 
 //here_doc
 void		check_here_doc_and_take_exit_word(t_token *token_lst);
+char		*cpy_str_space_deli(const char *src);
+size_t		strlen_until_space(const char *s);
 bool		not_single_divider(char c);
 bool		pipe_or_simec(char c);
 

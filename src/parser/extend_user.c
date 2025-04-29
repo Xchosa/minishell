@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bash_config.c                                      :+:      :+:    :+:   */
+/*   extend_user.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 10:57:23 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/29 09:21:33 by poverbec         ###   ########.fr       */
+/*   Created: 2025/04/29 09:33:22 by poverbec          #+#    #+#             */
+/*   Updated: 2025/04/29 09:35:03 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+
+// vor dem execute 
+// aber nach dem tokensier
 
 
 
-// t_bash	*get_bash(void)
-// {
-// 	static t_bash	bash;
+// bash-3.2$ echo $USER
+// poverbec
 
-// 	return (&bash);
-// }
 
-// void	init_bash(t_bash *bash, char **envp)
-// {
-// 	get_config
-// 	//config->token_lst = NULL;
-// 	char **bash_envp;
-// }
-
-// // cpy envp in bash_envp
-// char **cpychar_arr(char **dest, char** src)
-// {
-//     int i;
-//     while()
-//     // zweite reihe auch null
-// }
+// poverbec@3-E-23 minishell % echo 'Hallo $USER '
+// Hallo $USER
+// poverbec@3-E-23 minishell % echo "Hallo $USER"
+// Hallo poverbec

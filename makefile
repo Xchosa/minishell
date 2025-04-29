@@ -34,7 +34,7 @@ MY_SOURCES = \
 		lexer.c \
 		lexer_helper.c \
 		count_strings_up.c \
-		shell_config.c 
+		bash_config.c 
 
 
 HEADERS = \

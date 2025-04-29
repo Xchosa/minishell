@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:51:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/24 16:24:51 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:36:08 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,33 @@ void skip_whitespace(char **line)
 		(*line)++;
 	}
 }
+
+bool skip_whitespace_and_eof(char **line)
+{
+	bool not_eof;
+	not_eof = true;
+	while(**line != '\0')
+	{
+		if(ft_strchr("\t\n\v\f\r " , **line) == NULL)
+			break;
+		(*line)++;
+	}
+	if(**line == '\0')
+	{
+		return(not_eof = false);
+	}
+	return(not_eof);
+	
+}
+// bool skip_whitespace_and_eof(char **line)
+// {
+//     // Skip all whitespace characters
+//     while(**line != '\0' && ft_strchr("\t\n\v\f\r ", **line) != NULL)
+//         (*line)++;
+    
+//     // Return false if we reached the end of string, true otherwise
+//     return (**line != '\0');
+
 
 bool	check_for_divider_without_space(char c)
 {

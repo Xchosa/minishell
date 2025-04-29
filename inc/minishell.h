@@ -16,7 +16,9 @@
 # include "parser.h"
 
 
-// // List of redirection
+
+
+// List of redirection
 // typedef struct s_file_node
 // {
 // 	char				*filname;
@@ -38,7 +40,8 @@
 // typedef struct s_cmd_node
 // {
 // 	char				**cmd; // option and args (e.g. ls)
-// 	t_type				type; // type of token	(text)
+// 	t_type				type; // type of token	(text)// cmd oder build in
+// 	t_file_list 		*file_list; 
 // 	struct s_cmd_node	*next;
 
 // }	t_cmd_node;
