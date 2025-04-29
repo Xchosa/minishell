@@ -73,15 +73,19 @@ int main()
 }
 
 
-// no need to handle:
 /*
-echo "hallo
-dquote> jhfhdj
-dquote> "
-hallo
-jhfhdj
-*/ 
+sturcts
+	pipecmd
+	listcmd
+	backcmd
+	execcmd
+	redircmd
 
+constructor functions
+	pipecmd
+	listcmd
+	backcmd
+	execcmd
+	redircmd
 
-// here doc 
-/// "heredoc>" und dann readline fkt abruf -  string ablesen bis der string danach kommt 
+*/

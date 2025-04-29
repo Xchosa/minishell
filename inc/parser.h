@@ -27,15 +27,24 @@
 // 	// ...
 // } t_config;
 
+
+
+t_bash *get_bash(void);
+
+typedef struct s_bash
+{
+	
+}
+
 // laxxer ==> lexical analyser
 typedef enum s_type
 {
 	TEXT, // 0
 	PIPE, // 1
 	Redirect_input, // 2 
-	Redirect_output, //
-	Redirect_output_append_mode,
-	here_doc,
+	Redirect_output, // 
+	Redirect_output_append_mode,// >>
+	here_doc,// <<
 	S_Quote,
 	D_Quote, // 3 (like " ")
 	

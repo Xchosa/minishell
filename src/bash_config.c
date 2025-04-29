@@ -13,16 +13,25 @@
 #include "minishell.h"
 
 
-// t_config* get_config(void)
-// {
-// 	static t_config config ;
-// 	return (&config);
-// }
 
+t_bash	*get_bash(void)
+{
+	static t_bash	bash;
 
-// void	init_config(t_config *config, char **envp)
-// {
-// 	get_config
-// 	//config->token_lst = NULL;
-// 	(void)envp;
-// }
+	return (&bash);
+}
+
+void	init_bash(t_bash *bash, char **envp)
+{
+	get_config
+	//config->token_lst = NULL;
+	char **bash_envp;
+}
+
+// cpy envp in bash_envp
+char **cpychar_arr(char **dest, char** src)
+{
+    int i;
+    while()
+    // zweite reihe auch null
+}
