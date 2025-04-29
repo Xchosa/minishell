@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/29 15:57:28 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:48:52 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int main()
     t_token *token_lst;
     // char *line = "wow \' hallo \" world \' dfo hello";
 	// char *line = "wow hello  "; fixed
-	char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
+	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
 	// char *line = "hello world  <<   \"wow hello\" "; // fehler gerade
-	// char *line = "\'hello< hello\'echo| ls hello l <wow hello";
+	char *line = "\'hello< hello\'echo| ls hello l <wow hello";
 	// char *line = "\"hello '< \"echo|hello << wow hello";// sollte valid sein
 	// char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
 	// char *line = "\"hello< echo|hello << wow hello"; // nicht valid

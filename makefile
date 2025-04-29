@@ -39,7 +39,8 @@ MY_SOURCES = \
 
 HEADERS = \
 		minishell.h \
-		parser.h
+		parser.h \
+		executer.h
 
 # ---------- Objects ---------- #
 OBJ 	= $(addprefix $(OBJ_DIR)/, $(MY_SOURCES:.c=.o))
