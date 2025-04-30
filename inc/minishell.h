@@ -14,12 +14,21 @@
 
 //# include "parser.h"
 
+#define REDIRECT_INPUT 1 // <
+#define REDIRECT_OUTPUT 2 // >
+#define HER_DOC 3 // <<
+#define APPEND 4 // >>
+
+#define BUILDIN 1
+#define EXECUTE 2
+
+
 //List of redirection
 typedef struct s_file_node
 {
 	// holing name of redirecting file
-	int					redir_type; // 1. "infile" 2. outfile
-	char				*filname; // "hello"
+	int					redir_type; // 1. < "infile" 2.  > outfile 3. <<her_doc 4. >> append_outfile
+	char				*filename; // "hello"
 	struct s_file_node	*next; // NULL
 }	t_file_node;
 
@@ -30,6 +39,7 @@ typedef struct s_file_list
 	t_file_node	*tail;
 	ssize_t		size;
 }	t_file_list;	
+
 
 // muss syntax checken for invailid
 typedef struct s_cmd_node

@@ -37,12 +37,14 @@ MY_SOURCES = \
 		count_strings_up.c \
 		bash_config.c \
 		print_cmd_lst.c \
+		debug.c
 
 
 HEADERS = \
 		minishell.h \
 		parser.h \
-		executer.h
+		executer.h \
+		debug.h
 
 # ---------- Objects ---------- #
 OBJ 	= $(addprefix $(OBJ_DIR)/, $(MY_SOURCES:.c=.o))

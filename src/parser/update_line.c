@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 15:57:07 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/24 16:27:06 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:44:18 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ bool	pipe_or_simec(char c)
 	return (false);
 }
 
+int special_charcter_no_divider(char c)
+{
+	if (c == '-')
+	{
+		return (1);
+	}
+	return (0);
+}
+
+
 char	*update_line(char *line)
 {
 	bool flag;
@@ -65,7 +75,7 @@ char	*update_line(char *line)
 	}
 	if( flag == false)
 	{
-		while (*line && ft_isalnum(*line))
+		while (*line && (ft_isalnum(*line) || special_charcter_no_divider(*line)))
 			line++;
 	}
 	return	(line);

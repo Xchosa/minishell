@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/30 11:33:14 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:26:38 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,13 @@ typedef struct s_token
 	
 }	t_token;
 
+// redir_type 
+// infile <
+// outfile >
+// heredoc <<
+// outfile append >>
+
+
 
 // get input 
 void		interactive_shell_tty(int argc, char **argv, char **envp, char *line);
@@ -107,6 +114,7 @@ char		*cpy_str_space_deli(const char *src);
 size_t		strlen_until_space(const char *s);
 bool		not_single_divider(char c);
 bool		pipe_or_simec(char c);
+int 		special_charcter_no_divider(char c);
 
 // cmd_list
 
@@ -114,7 +122,7 @@ bool		pipe_or_simec(char c);
 void	print_cmd_lst(t_cmd_list *cmd_lst);
 void	iter_cmdlst(t_cmd_list *cmd_lst, void (*f)(t_cmd_node*));
 
-
+void	process_token(t_token *current_token, t_cmd_list *cmd_list);
 #endif
 
 
