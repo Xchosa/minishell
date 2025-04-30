@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/29 16:48:52 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/30 11:18:32 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,19 @@
 // gc_malloc in einer linked list copieren
 // am ende von oben nach unten freen;
 
+
+void   leaks(void)
+{
+    printf("\n");
+    system("leaks minishelll: \n");
+}
+
 int main()
 {
 	
     t_token *token_lst;
-	t_cmd_list *cmd_lst;
+	// t_cmd_list *cmd_lst;
+	atexit(leaks);
     // char *line = "wow \' hallo \" world \' dfo hello";
 	// char *line = "wow hello  "; fixed
 	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
@@ -74,7 +82,7 @@ int main()
 		check_here_doc_and_take_exit_word(token_lst);
 		iter_tokenlst(token_lst, &print_tokenlst);
 	}
-	cmd_lst = init_cmd_lst(token_lst);
+	// cmd_lst = init_cmd_lst(token_lst);
 	
 }
 
