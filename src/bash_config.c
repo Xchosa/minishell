@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_config.c                                     :+:      :+:    :+:   */
+/*   bash_config.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 10:57:23 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/15 17:00:27 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/29 09:21:33 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-// t_config* get_config(void)
+
+// t_bash	*get_bash(void)
 // {
-// 	static t_config config ;
-// 	return (&config);
+// 	static t_bash	bash;
+
+// 	return (&bash);
 // }
 
-
-// void	init_config(t_config *config, char **envp)
+// void	init_bash(t_bash *bash, char **envp)
 // {
 // 	get_config
 // 	//config->token_lst = NULL;
-// 	(void)envp;
+// 	char **bash_envp;
+// }
+
+// // cpy envp in bash_envp
+// char **cpychar_arr(char **dest, char** src)
+// {
+//     int i;
+//     while()
+//     // zweite reihe auch null
 // }

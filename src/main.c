@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/24 16:42:19 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:48:52 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,13 @@
 
 int main()
 {
+	// - nimmt nicht
     t_token *token_lst;
-    //char *line = "wow \' hallo \" world \' dfo \"hello";
-	char *line = " hello <<wow hello";
-	// char *line = "echo>>|hello world << wow hello";
-	// char *line = "\'hello< \'echo|hello << wow hello";
+    // char *line = "wow \' hallo \" world \' dfo hello";
+	// char *line = "wow hello  "; fixed
+	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
+	// char *line = "hello world  <<   \"wow hello\" "; // fehler gerade
+	char *line = "\'hello< hello\'echo| ls hello l <wow hello";
 	// char *line = "\"hello '< \"echo|hello << wow hello";// sollte valid sein
 	// char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
 	// char *line = "\"hello< echo|hello << wow hello"; // nicht valid
@@ -72,16 +74,27 @@ int main()
 	}
 }
 
+//char** cmd = char* token
+// ls -l -a | grep a
+// das ordnen der tokens - dafur ist der baum da 
+// eine token liste und keine cmd liste?
+// muss cmd schon geordnet sein?
+// ls >infile -l
 
-// no need to handle:
+
 /*
-echo "hallo
-dquote> jhfhdj
-dquote> "
-hallo
-jhfhdj
-*/ 
+sturcts
+	pipecmd
+	listcmd
+	backcmd
+	execcmd
+	redircmd
 
+constructor functions
+	pipecmd
+	listcmd
+	backcmd
+	execcmd
+	redircmd
 
-// here doc 
-/// "heredoc>" und dann readline fkt abruf -  string ablesen bis der string danach kommt 
+*/

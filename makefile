@@ -34,12 +34,13 @@ MY_SOURCES = \
 		lexer.c \
 		lexer_helper.c \
 		count_strings_up.c \
-		shell_config.c 
+		bash_config.c 
 
 
 HEADERS = \
 		minishell.h \
-		parser.h
+		parser.h \
+		executer.h
 
 # ---------- Objects ---------- #
 OBJ 	= $(addprefix $(OBJ_DIR)/, $(MY_SOURCES:.c=.o))

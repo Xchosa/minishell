@@ -16,42 +16,48 @@
 # include "parser.h"
 
 
-// // List of redirection
-// typedef struct s_file_node
-// {
-// 	char				*filname;
-// 	// holing name of redirecting file
-// 	int					redir_type;
-// 	struct s_file_node	*next; 
-// }	t_file_node;
+// meta struct command liste 
+// poiter to first cmd and last command 
+// sizse how often got forked
+typedef struct s_cmd_list
+{
+	t_cmd_node	*head;
+	t_cmd_node	*tail;
+	ssize_t		size;
+}	t_cmd_list;
+
+// muss syntax checken for invailid
+typedef struct s_cmd_node
+{
+	int					cmd_type; // buildin oder execute
+	char				**cmd; // echo hallo NULL
+	t_file_list 		*file_list;
+	struct s_cmd_node	*next;
+
+}	t_cmd_node;
 
 
-// //meta struct list 
-// typedef struct s_file_list
-// {
-// 	t_file_node	*head;
-// 	t_file_node	*tail;
-// 	ssize_t		size;
-// }	t_file_list;
+//meta struct list 
+typedef struct s_file_list
+{
+	t_file_node	*head;
+	t_file_node	*tail;
+	ssize_t		size;
+}	t_file_list;
 
-// // muss syntax checken for invailid
-// typedef struct s_cmd_node
-// {
-// 	char				**cmd; // option and args (e.g. ls)
-// 	t_type				type; // type of token	(text)
-// 	struct s_cmd_node	*next;
 
-// }	t_cmd_node;
+//List of redirection
+typedef struct s_file_node
+{
+	// holing name of redirecting file
+	int					redir_type; // "infile"
+	char				*filname; // "hello"
+	struct s_file_node	*next; // NULL
+}	t_file_node;
 
-// // meta struct command liste 
-// // poiter to first cmd and last command 
-// // sizse how often got forked
-// typedef struct s_cmd_list
-// {
-// 	t_cmd_node	*head;
-// 	t_cmd_node	*tail;
-// 	ssize_t		size;
-// }	t_cmd_list;
+
+
+
 
 // // singular linked list
 

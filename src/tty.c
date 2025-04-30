@@ -60,7 +60,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	while(1)
 	{
 		// command holen
-		line = readline("Paul's coole bash: ");
+		line = readline("Paul's coole bash:$ ");
 		add_history(line);
 		if(lexer(line) == false)
 		{

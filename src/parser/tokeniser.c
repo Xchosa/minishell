@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:26:42 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/24 16:32:07 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:28:53 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,9 @@ t_token *tokeniser(char *line)
 	while(*line)
 	{
 
-		skip_whitespace(&line);
+		//skip_whitespace(&line);
+		if (skip_whitespace_and_eof(&line) == false)
+			break;
 		new_token = create_token_with_quote_case(&line);
 		tokenadd_back(&token_lst, new_token);
 		line = update_line(line);
