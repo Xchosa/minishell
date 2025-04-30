@@ -1,44 +1,53 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   executer.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 15:27:00 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/30 11:02:00 by tschulle         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../inc/parser.h"
 #include "../../inc/minishell.h"
 #include <stdio.h>
 
-int	main(void)
-{
-	t_cmd test_list;
-	test_list.cmd_arg = ft_split("ls -la", ' ');
-	test_list.token_type = 0;
-	t_cmd test_list2;
-	//test_list.next = NULL;
-	test_list.next = &test_list2;
-	test_list2.cmd_arg = ft_split("|", ' ');
-	test_list2.token_type = 1;
-	t_cmd test_list3;
-	test_list2.next = &test_list3;
-	test_list3.cmd_arg = ft_split("grep a1", ' ');
-	test_list3.token_type = 0;
-	t_cmd test_list4;
-	test_list3.next = &test_list4;
-	test_list4.cmd_arg = ft_split("|", ' ');
-	test_list4.token_type = 1;
-	t_cmd test_list5;
-	test_list4.next = &test_list5;
-	test_list5.cmd_arg = ft_split("wc  -l", ' ');
-	test_list5.token_type = 0;
 
-	print_ast(&test_list);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// int	main(void)
+// {
+// 	t_cmd test_list;
+// 	test_list.cmd_arg = ft_split("ls -la", ' ');
+// 	test_list.token_type = 0;
+// 	t_cmd test_list2;
+// 	//test_list.next = NULL;
+// 	test_list.next = &test_list2;
+// 	test_list2.cmd_arg = ft_split("|", ' ');
+// 	test_list2.token_type = 1;
+// 	t_cmd test_list3;
+// 	test_list2.next = &test_list3;
+// 	test_list3.cmd_arg = ft_split("grep a1", ' ');
+// 	test_list3.token_type = 0;
+// 	t_cmd test_list4;
+// 	test_list3.next = &test_list4;
+// 	test_list4.cmd_arg = ft_split("|", ' ');
+// 	test_list4.token_type = 1;
+// 	t_cmd test_list5;
+// 	test_list4.next = &test_list5;
+// 	test_list5.cmd_arg = ft_split("wc  -l", ' ');
+// 	test_list5.token_type = 0;
+// 	print_ast(&test_list);
+// }
 // void	print_indent(t_cmd *cmds, int indent_level)
 // {
 // 	if (cmds->token_type == PIPE)
@@ -46,11 +55,9 @@ int	main(void)
 // 	while (indent_level-- > 0)
 // 		printf("%s", "\t");
 // }
-
 // int	has_pipes(t_cmd *cmds)
 // {
 // 	int count;
-
 // 	count = 0;
 // 	while (cmds != NULL)
 // 	{
@@ -60,11 +67,9 @@ int	main(void)
 // 	}
 // 	return (count);
 // }
-
 // void	print_cmd(t_cmd *cmds, int indent_level)
 // {
 // 	int i;
-
 // 	i = 0;
 // 	print_indent(cmds, indent_level);
 // 	if (cmds->cmd_arg != NULL)
@@ -83,11 +88,9 @@ int	main(void)
 // 		printf("\\");
 // 	printf("\n");
 // }
-
 // void	print_ast(t_cmd *cmds)
 // {
 // 	int level;
-
 // 	level = has_pipes(cmds);
 // 	print_cmd(cmds, level);
 // 	if (cmds->next != NULL)
