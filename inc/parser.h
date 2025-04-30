@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/29 15:15:02 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/30 11:33:14 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PARSER_H
 
 # include "minishell.h"
+
 # include <stdio.h>
 # include <unistd.h>
 # include <stdbool.h>
@@ -60,42 +61,6 @@ typedef struct s_token
 	
 }	t_token;
 
-// parser dann in in zwei dim array
-// zuordnen was zusammen gehoert
-
-// ls <infile -l >outfile -a
-typedef struct s_cmd
-{
-	t_list		*args; // **weil eigenes envp erweitert werden muss // e.g. echo abc cyz
-	t_list 		*redirs; /// e.g. outfile.txt // auf void pointer von t_list
-	struct s_cmd 	*next;
-	
-}	t_cmd;
-
-// libft_struct
-// typedef struct s_list
-// {
-// 	void			*content;
-// 	struct s_list	*next;
-// }					t_list;
-
-
-typedef enum s_redirtype
-{
-	IN,
-	OUT,
-	APPEND,
-	skip,
-}	t_redirtype;
-
-typedef struct s_redirs
-{
-	t_redirtype *Redirtype;
-	char 		*file;
-} t_redirs;
-
-
-// 
 
 // get input 
 void		interactive_shell_tty(int argc, char **argv, char **envp, char *line);
@@ -143,5 +108,43 @@ size_t		strlen_until_space(const char *s);
 bool		not_single_divider(char c);
 bool		pipe_or_simec(char c);
 
+// cmd_list
+
+//print cmd_lst
+void	print_cmd_lst(t_cmd_list *cmd_lst);
+void	iter_cmdlst(t_cmd_list *cmd_lst, void (*f)(t_cmd_node*));
+
 
 #endif
+
+
+
+// typedef struct s_cmd
+// {
+// 	t_list		*args; // **weil eigenes envp erweitert werden muss // e.g. echo abc cyz
+// 	t_list 		*redirs; /// e.g. outfile.txt // auf void pointer von t_list
+// 	struct s_cmd 	*next;
+	
+// }	t_cmd;
+
+// // libft_struct
+// // typedef struct s_list
+// // {
+// // 	void			*content;
+// // 	struct s_list	*next;
+// // }					t_list;
+
+
+// typedef enum s_redirtype
+// {
+// 	IN,
+// 	OUT,
+// 	APPEND,
+// 	skip,
+// }	t_redirtype;
+
+// typedef struct s_redirs
+// {
+// 	t_redirtype *Redirtype;
+// 	char 		*file;
+// } t_redirs;

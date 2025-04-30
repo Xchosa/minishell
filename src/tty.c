@@ -6,12 +6,12 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/22 14:04:37 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/04/30 11:24:35 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+#include "parser.h"
 
 /*
 Lexer overview
