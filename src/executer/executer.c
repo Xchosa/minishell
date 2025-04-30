@@ -1,6 +1,61 @@
-#include "../../inc/parser.h"
-#include "../../inc/minishell.h"
-#include <stdio.h>
+#include "../../inc/executer.h"
+
+ft_open_pipes(int **i)
+{
+	
+}
+
+
+void	ft_execute_node(t_cmd_node	*cmd_node)
+{
+	
+}
+
+void	ft_execute(t_cmd_list *cmd_list)
+{
+	t_cmd_node	*current;
+	int pid;
+	int fd[cmd_list->size][2];
+
+	if (cmd_list->size == 1 && cmd_list->head->cmd_type == 1)
+		return ; // sonderfall ohne fork; warum?
+	current = cmd_list->head;
+	if (cmd_list->size > 1)
+	ft_open_pipes(fd);
+	while (current != NULL)
+	{
+		pid = fork();
+		if (pid == 0)
+			ft_execute_node(current);
+		else
+			wait;
+		current = current->next;
+	}
+}
+
+int	main()
+{
+	t_cmd_list	cmd_list;
+	t_cmd_node	cmd_node1;
+	t_file_list	file_list;
+	t_file_node	file_node1;
+
+	cmd_list.head = &cmd_node1;
+	cmd_list.tail = NULL;
+	cmd_list.size = 1;
+	cmd_node1.cmd_type = 2;
+	cmd_node1.cmd = ft_split("cat", ' ');
+	cmd_node1.file_list = &file_list;
+	cmd_node1.next = NULL;
+	file_list.head = &file_node1;
+	file_list.tail = NULL;
+	file_list.size = 1;
+	file_node1.redir_type = 0;
+	file_node1.filename = "test";
+	file_node1.next = NULL;
+	ft_execute(&cmd_list);
+	return (0);
+}
 
 
 
@@ -19,11 +74,9 @@
 
 
 
-
-
-
-
-
+// #include "../../inc/parser.h"
+// #include "../../inc/minishell.h"
+// #include <stdio.h>
 // int	main(void)
 // {
 // 	t_cmd test_list;

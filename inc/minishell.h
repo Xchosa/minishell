@@ -19,7 +19,7 @@ typedef struct s_file_node
 {
 	// holing name of redirecting file
 	int					redir_type; // 1. "infile" 2. outfile
-	char				*filname; // "hello"
+	char				*filename; // "hello"
 	struct s_file_node	*next; // NULL
 }	t_file_node;
 
