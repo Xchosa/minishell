@@ -33,7 +33,6 @@ typedef struct s_cmd_node
 	char				**cmd; // echo hallo NULL
 	t_file_list 		*file_list;
 	struct s_cmd_node	*next;
-
 }	t_cmd_node;
 
 

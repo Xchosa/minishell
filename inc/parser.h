@@ -64,35 +64,6 @@ typedef struct s_token
 // zuordnen was zusammen gehoert
 
 // ls <infile -l >outfile -a
-typedef struct s_cmd
-{
-	t_list		*args; // **weil eigenes envp erweitert werden muss // e.g. echo abc cyz
-	t_list 		*redirs; /// e.g. outfile.txt // auf void pointer von t_list
-	struct s_cmd 	*next;
-	
-}	t_cmd;
-
-// libft_struct
-// typedef struct s_list
-// {
-// 	void			*content;
-// 	struct s_list	*next;
-// }					t_list;
-
-
-typedef enum s_redirtype
-{
-	IN,
-	OUT,
-	APPEND,
-	skip,
-}	t_redirtype;
-
-typedef struct s_redirs
-{
-	t_redirtype *Redirtype;
-	char 		*file;
-} t_redirs;
 
 
 // 
@@ -145,3 +116,35 @@ bool		pipe_or_simec(char c);
 
 
 #endif
+
+
+
+// typedef struct s_cmd
+// {
+// 	t_list		*args; // **weil eigenes envp erweitert werden muss // e.g. echo abc cyz
+// 	t_list 		*redirs; /// e.g. outfile.txt // auf void pointer von t_list
+// 	struct s_cmd 	*next;
+	
+// }	t_cmd;
+
+// // libft_struct
+// // typedef struct s_list
+// // {
+// // 	void			*content;
+// // 	struct s_list	*next;
+// // }					t_list;
+
+
+// typedef enum s_redirtype
+// {
+// 	IN,
+// 	OUT,
+// 	APPEND,
+// 	skip,
+// }	t_redirtype;
+
+// typedef struct s_redirs
+// {
+// 	t_redirtype *Redirtype;
+// 	char 		*file;
+// } t_redirs;
