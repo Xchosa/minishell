@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/30 14:48:06 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:31:13 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,12 @@ void   leaks(void)
     system("leaks minishelll: \n");
 }
 
-int main()
+int main(int argc, char **envp)
 {
 	
     t_token *token_lst;
 	// t_cmd_list *cmd_lst;
+	t_bash *bash;
 	atexit(leaks);
     char *line = "wow \' hallo \" world \' dfo hello";
 	//char *line = "wow ls -la hello  ";
@@ -71,16 +72,25 @@ int main()
 	// char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
 	// char *line = "\"hello< echo|hello << wow hello"; // nicht valid
 	
-	if(lexer(line) == false)
+	if (lexer(line) == false)
 	{
 		printf("\n fehler_lexer\n\n");
-		return(1);
+		return (1);
 	}
+	if (init_bash(envp, argc)== false)
+		return(1);
 	
     token_lst = tokeniser(line);
 	{
-		check_here_doc_and_take_exit_word(token_lst);
+		// check_here_doc_and_take_exit_word(token_lst);
+		// check if export first node  after g= -> tokenise next node "  echo ls -al" 
+		// 
+		
 		iter_tokenlst(token_lst, &print_tokenlst);
+
+		bash = get_bash();
+		printf("\nenv:\n");
+		ft_print_array(bash->env);
 	}
 	//cmd_lst = init_cmd_lst(token_lst);
 	

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/30 15:26:38 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:11:16 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,22 @@
 # include <stdbool.h>
 # include <errno.h>
 
-// t_config* get_config(void);
 
-// typedef struct s_config
-// {
-// 	t_token **token_lst;
-// 	// ...
-// } t_config;
 
 
 
 // t_bash *get_bash(void);
 
-// typedef struct s_bash
-// {
+typedef struct s_bash
+{
+	char **env;
 	
-// } 
+} t_bash;
+
+char		**cpychar_arr(char** src);
+bool		init_bash(char **env, int argc);
+t_bash		*get_bash(void);
+void 		ft_print_array(char **src);
 
 // laxxer ==> lexical analyser
 typedef enum s_type
@@ -66,6 +66,11 @@ typedef struct s_token
 // outfile >
 // heredoc <<
 // outfile append >>
+
+
+
+
+
 
 
 
@@ -119,7 +124,7 @@ int 		special_charcter_no_divider(char c);
 // cmd_list
 
 //print cmd_lst
-void	print_cmd_lst(t_cmd_list *cmd_lst);
+void	print_cmd_lst(t_cmd_node *cmd_nodes);
 void	iter_cmdlst(t_cmd_list *cmd_lst, void (*f)(t_cmd_node*));
 
 void	process_token(t_token *current_token, t_cmd_list *cmd_list);

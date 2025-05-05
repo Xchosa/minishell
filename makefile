@@ -37,6 +37,8 @@ MY_SOURCES = \
 		count_strings_up.c \
 		bash_config.c \
 		print_cmd_lst.c \
+		tokens_list_to_cmd.c \
+		tokens_to_export.c \
 		debug.c
 
 
