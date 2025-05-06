@@ -1,4 +1,5 @@
 #include "../../inc/executer.h"
+#include <unistd.h>
 
  void	ft_open_pipes(int fd[][2], t_cmd_list *cmd_list)
  {
@@ -141,15 +142,23 @@ void	ft_first_pipe(int fd[][2])
 	close(fd[0][0]);
 	if (dup2(fd[0][1], STDOUT_FILENO) < 0)
 		return;
+	close (fd[0][1]);
+}
 
+void	ft_last_pipe(int fd [][2])
+{
+	close (fd[0][1]);
+	if (dup2(fd[0][0], STDIN_FILENO) < 0)
+		return ;
+	close (fd[0][0]);
 }
 
 void	ft_manage_pipes(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2])
 {
 	if (cmd_node == cmd_list->head)
 		ft_first_pipe(fd);
-// 	else if (cmd_node == cmd_list->tail)
-// 		ft_last_pipe(fd);
+	else if (cmd_node == cmd_list->tail)
+ 		ft_last_pipe(fd);
 // 	else
 // 		ft_middle_pipe(fd);
 }
@@ -179,15 +188,56 @@ void	ft_execute(t_cmd_list *cmd_list,char **envp)
 	 	ft_open_pipes(fd, cmd_list);
 	while (current != NULL)
 	{
+		ft_printf("here");
 		pid = fork();
 		if (pid == 0)
 			ft_execute_node(cmd_list, current, fd, envp);
-		else
-			wait(0);
+		close(fd[0][1]); // zweimal hier?
+		close(fd[0][0]);
+		wait(0);
 		current = current->next;
 	}
 }
 
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_cmd_list	cmd_list;
+	t_cmd_node	cmd_node1;
+	t_cmd_node	cmd_node2;
+	t_file_list	file_list1;
+	t_file_list file_list2;
+	t_file_node file_node1;
+
+	(void)argc;
+	(void)argv;
+	cmd_list.head = &cmd_node1;
+	cmd_list.tail = &cmd_node2;
+	cmd_list.size = 2;
+	cmd_node1.cmd_type = 2;
+	cmd_node1.cmd = ft_split("tail -n 1", ' ');
+	cmd_node1.file_list = &file_list1;
+	cmd_node1.next = &cmd_node2;
+	file_list1.head = &file_node1;
+	file_list1.tail = NULL;
+	file_list1.size = 1;
+	file_node1.filename = "Eingabe";
+	file_node1.next = NULL;
+	file_node1.redir_type = 1;
+	cmd_node2.cmd_type = 2;
+	cmd_node2.cmd = ft_split("wc", ' ');
+	cmd_node2.file_list= &file_list2;
+	cmd_node2.next = NULL;
+	file_list2.head = NULL; //&file_node5;
+	file_list2.size = 0;
+	file_list2.tail = NULL;
+
+	ft_execute(&cmd_list, envp);
+	return (0);
+}
+
+
+/*
 int	main(int argc, char **argv, char **envp)
 {
 	t_cmd_list	cmd_list;
@@ -204,7 +254,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	cmd_list.head = &cmd_node1;
-	cmd_list.tail = NULL;
+	cmd_list.tail = &cmd_node2;
 	cmd_list.size = 2;
 	cmd_node1.cmd_type = 2;
 	cmd_node1.cmd = ft_split("tail -n 1", ' ');
@@ -233,100 +283,7 @@ int	main(int argc, char **argv, char **envp)
 	file_list2.size = 0;
 	file_list2.tail = NULL;
 
-	
 	ft_execute(&cmd_list, envp);
 	return (0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// #include "../../inc/parser.h"
-// #include "../../inc/minishell.h"
-// #include <stdio.h>
-// int	main(void)
-// {
-// 	t_cmd test_list;
-// 	test_list.cmd_arg = ft_split("ls -la", ' ');
-// 	test_list.token_type = 0;
-// 	t_cmd test_list2;
-// 	//test_list.next = NULL;
-// 	test_list.next = &test_list2;
-// 	test_list2.cmd_arg = ft_split("|", ' ');
-// 	test_list2.token_type = 1;
-// 	t_cmd test_list3;
-// 	test_list2.next = &test_list3;
-// 	test_list3.cmd_arg = ft_split("grep a1", ' ');
-// 	test_list3.token_type = 0;
-// 	t_cmd test_list4;
-// 	test_list3.next = &test_list4;
-// 	test_list4.cmd_arg = ft_split("|", ' ');
-// 	test_list4.token_type = 1;
-// 	t_cmd test_list5;
-// 	test_list4.next = &test_list5;
-// 	test_list5.cmd_arg = ft_split("wc  -l", ' ');
-// 	test_list5.token_type = 0;
-// 	print_ast(&test_list);
-// }
-// void	print_indent(t_cmd *cmds, int indent_level)
-// {
-// 	if (cmds->token_type == PIPE)
-// 		indent_level--;
-// 	while (indent_level-- > 0)
-// 		printf("%s", "\t");
-// }
-// int	has_pipes(t_cmd *cmds)
-// {
-// 	int count;
-// 	count = 0;
-// 	while (cmds != NULL)
-// 	{
-// 		if (cmds->token_type == PIPE)
-// 			count++;
-// 		cmds = cmds->next;
-// 	}
-// 	return (count);
-// }
-// void	print_cmd(t_cmd *cmds, int indent_level)
-// {
-// 	int i;
-// 	i = 0;
-// 	print_indent(cmds, indent_level);
-// 	if (cmds->cmd_arg != NULL)
-// 	{
-// 		while (cmds->cmd_arg[i] != 0)
-// 		{
-// 			printf("%s ", cmds->cmd_arg[i]);
-// 			i++;
-// 		}
-// 	}
-// 	printf("\n");
-// 	print_indent(cmds, indent_level.);
-// 	if (cmds->token_type != PIPE && indent_level  > 0)
-// 		printf("/");
-// 	else  
-// 		printf("\\");
-// 	printf("\n");
-// }
-// void	print_ast(t_cmd *cmds)
-// {
-// 	int level;
-// 	level = has_pipes(cmds);
-// 	print_cmd(cmds, level);
-// 	if (cmds->next != NULL)
-// 		print_ast(cmds->next);
-// }
+*/
