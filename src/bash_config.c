@@ -29,7 +29,7 @@ bool	init_bash(char **env, int argc)
 	if (argc == 1)
 	{
 		bash->env = cpychar_arr(env);
-		if(!bash)
+		if(!bash->env)
 			return(false);
 	//config->token_lst = NULL;
 	}
@@ -38,21 +38,35 @@ bool	init_bash(char **env, int argc)
 }
 
 // cpy envp in bash_envp
+//  rows counts until 1 only 
+// see copilot
 char **cpychar_arr(char** src)
 {
     int i;
 	int rows;
 	char **cpy_env;
+
+	char *t3 = src[0];
+	char *y4 = src[1];
+	char *t4 = src[2];
+	char *i5 = src[4];
 	
+	printf("%s\n", t3);
+	printf("%s\n", y4);
+	printf("%s\n", t4);
+	printf("%s\n", i5);
+
+	rows = 0;
+	while(src[rows] != NULL)
+		rows++;
+	cpy_env = (char **)malloc(sizeof(char*) * (rows + 1));
 	i = 0;
-	rows = ft_strlen(*src);
-	cpy_env = (char **)malloc(sizeof(char*) * rows);
-    while(src[i])
+    while(i < rows || src[i])
 	{
 		cpy_env[i] = ft_strdup(src[i]);
 		i++;
 	}
-	cpy_env[i]= ft_strdup(src[i]);
+	cpy_env[i]= NULL;
 	return(cpy_env);
 }
 

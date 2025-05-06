@@ -56,17 +56,17 @@ void   leaks(void)
     system("leaks minishelll: \n");
 }
 
-int main(int argc, char **envp)
+int main(int argc, char **env)
 {
 	
     t_token *token_lst;
 	// t_cmd_list *cmd_lst;
 	t_bash *bash;
 	atexit(leaks);
-    char *line = "wow \' hallo \" world \' dfo hello";
+    // char *line = "wow \' hallo \" world \' dfo hello";
 	//char *line = "wow ls -la hello  ";
 	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
-	// char *line = "hello world  <<   \"wow hello\" "; // fehler gerade
+	char *line = "hello world  <<   \"wow hello\" "; // fehler gerade
 	// char *line = "\'hello< -hello\'echo| ls -l hello l <wow hello";
 	// char *line = "\"hello '< \"echo|hello << wow hello";// sollte valid sein
 	// char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
@@ -77,7 +77,7 @@ int main(int argc, char **envp)
 		printf("\n fehler_lexer\n\n");
 		return (1);
 	}
-	if (init_bash(envp, argc)== false)
+	if (init_bash(env, argc)== false)
 		return(1);
 	
     token_lst = tokeniser(line);

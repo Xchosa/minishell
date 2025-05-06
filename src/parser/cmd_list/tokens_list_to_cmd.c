@@ -33,6 +33,7 @@ void process_token(t_token *current_token, t_cmd_list *cmd_list)
 {
 	//t_cmd_list *tmp_list;
 	t_token *tmp_token;
+	(void )tmp_token;
 	//t_cmd_node tmp_cmd_node;
 	(void )cmd_list;
 	tmp_token = current_token;
@@ -60,11 +61,9 @@ t_cmd_list	*init_cmd_list(t_token *token_list)
 {
 	t_cmd_list *cmd_list;
 	t_token		*current_token;
-	int i;
-	
 	
 	cmd_list = cmd_list_to_NULL();
-	i = 0;
+	
 	current_token = token_list;
 	while(current_token->next)
 	{
