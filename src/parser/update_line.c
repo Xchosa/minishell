@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 15:57:07 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/30 14:44:18 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:20:19 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ bool	pipe_or_simec(char c)
 int special_charcter_no_divider(char c)
 {
 	if (c == '-')
-	{
 		return (1);
-	}
+	if (c == '=')
+		return (1);
 	return (0);
 }
 

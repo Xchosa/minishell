@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/05 16:11:16 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/06 12:07:31 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,26 @@ typedef struct s_bash
 	
 } t_bash;
 
+
 char		**cpychar_arr(char** src);
 bool		init_bash(char **env, int argc);
 t_bash		*get_bash(void);
 void 		ft_print_array(char **src);
 
-// laxxer ==> lexical analyser
+typedef struct s_exit_codes
+{
+	int ec_sucess;
+	int ec_abort_z;
+	int ec_failure;
+	int syntax_failure;
+	
+	int last_exit_code; // update after every runexit
+	
+} t_exit_codes;
+
+t_bash		*get_exit_codes(void);
+bool		init_exit_codes(int argc);
+
 typedef enum s_type
 {
 	TEXT, // 0
@@ -48,6 +62,7 @@ typedef enum s_type
 	here_doc,// <<
 	S_Quote,
 	D_Quote, // 3 (like " ")
+	EXPORT,
 	
 }	t_type;
 

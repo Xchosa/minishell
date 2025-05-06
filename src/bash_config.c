@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 10:57:23 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/05 15:48:02 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:44:37 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,8 @@ bool	init_bash(char **env, int argc)
 		bash->env = cpychar_arr(env);
 		if(!bash->env)
 			return(false);
-	//config->token_lst = NULL;
 	}
 	return (true);
-	
 }
 
 // cpy envp in bash_envp
@@ -46,16 +44,6 @@ char **cpychar_arr(char** src)
 	int rows;
 	char **cpy_env;
 
-	char *t3 = src[0];
-	char *y4 = src[1];
-	char *t4 = src[2];
-	char *i5 = src[4];
-	
-	printf("%s\n", t3);
-	printf("%s\n", y4);
-	printf("%s\n", t4);
-	printf("%s\n", i5);
-
 	rows = 0;
 	while(src[rows] != NULL)
 		rows++;
@@ -64,6 +52,15 @@ char **cpychar_arr(char** src)
     while(i < rows || src[i])
 	{
 		cpy_env[i] = ft_strdup(src[i]);
+		// if(!cpy_env[i])
+		// {
+		// 	while(i > 0)
+		// 	{
+		// 		free(cpy_env[i]);
+		// 		i--;
+		// 	}
+		// return(NULL);
+		//}
 		i++;
 	}
 	cpy_env[i]= NULL;

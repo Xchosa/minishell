@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/05 15:31:13 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/06 12:21:31 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,36 +56,49 @@ void   leaks(void)
     system("leaks minishelll: \n");
 }
 
-int main(int argc, char **env)
+void check_export_for_2nd_tokenise(t_token *token_lst)
+{
+	if(ft_strncmp("export", token_lst->token, 6) == 0)
+	{
+		
+	}
+}
+
+
+int main(int argc, char **argv, char **env)
 {
 	
     t_token *token_lst;
+	(void)argv;
 	// t_cmd_list *cmd_lst;
 	t_bash *bash;
 	atexit(leaks);
     // char *line = "wow \' hallo \" world \' dfo hello";
-	//char *line = "wow ls -la hello  ";
+	char *line = "export h=poverbec";
 	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
-	char *line = "hello world  <<   \"wow hello\" "; // fehler gerade
+	// char *line = "export h=\"echo hello test\" "; // fehler gerade
 	// char *line = "\'hello< -hello\'echo| ls -l hello l <wow hello";
 	// char *line = "\"hello '< \"echo|hello << wow hello";// sollte valid sein
 	// char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
 	// char *line = "\"hello< echo|hello << wow hello"; // nicht valid
 	
+	if (init_bash(env, argc)== false || (init_exit_codes(argc) == false))
+		return(1);
+	
 	if (lexer(line) == false)
 	{
+		exit_code->last_exit_code = exit_code->syntax_failure; // chat gpt fragen wie function updaten. // 
+		// fuer richtige main funtion:  soll dann aber weiter in ./minishell bleiben 
 		printf("\n fehler_lexer\n\n");
 		return (1);
 	}
-	if (init_bash(env, argc)== false)
-		return(1);
 	
     token_lst = tokeniser(line);
 	{
 		// check_here_doc_and_take_exit_word(token_lst);
 		// check if export first node  after g= -> tokenise next node "  echo ls -al" 
 		// 
-		
+		// check_export_for_2nd_tokenise(token_lst);
 		iter_tokenlst(token_lst, &print_tokenlst);
 
 		bash = get_bash();
