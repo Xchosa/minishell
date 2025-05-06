@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/06 12:07:31 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:09:21 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@
 # include <errno.h>
 
 
-
+#define syntax_failure 258
+#define ec_sucess 0
+#define ec_abort_z 146
+#define ec_failure 127
+#define invalid_identifer 1
 
 
 // t_bash *get_bash(void);
@@ -39,18 +43,13 @@ t_bash		*get_bash(void);
 void 		ft_print_array(char **src);
 
 typedef struct s_exit_codes
-{
-	int ec_sucess;
-	int ec_abort_z;
-	int ec_failure;
-	int syntax_failure;
-	
+{	
 	int last_exit_code; // update after every runexit
 	
 } t_exit_codes;
 
-t_bash		*get_exit_codes(void);
-bool		init_exit_codes(int argc);
+t_exit_codes	*get_exit_codes(void);
+bool			init_exit_codes(int argc);
 
 typedef enum s_type
 {
@@ -62,7 +61,7 @@ typedef enum s_type
 	here_doc,// <<
 	S_Quote,
 	D_Quote, // 3 (like " ")
-	EXPORT,
+	EXPORT, // export dffdf="echo hello" <<here_doc // should work
 	
 }	t_type;
 

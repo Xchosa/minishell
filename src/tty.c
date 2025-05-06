@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/30 11:24:35 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:45:20 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,14 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		add_history(line);
 		if(lexer(line) == false)
 		{
-			printf("fehler lexer: \n");
+			get_exit_codes()->last_exit_code = ec_syntax_failure;
+			printf("syntax Error: \n");
 			printf("%s\n", line);
 			return ;
 		}
 		token_lst = tokeniser(line);
 		{
-			check_here_doc_and_take_exit_word(token_lst);
+			// check_here_doc_and_take_exit_word(token_lst);
 			iter_tokenlst(token_lst, &print_tokenlst);
 		}
 	}
@@ -90,7 +91,8 @@ void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)
 	line = get_next_line(STDIN_FILENO);
 	if(lexer(line) == false)
 	{
-		printf("fehler lexer\n");
+		get_exit_codes()->last_exit_code = ec_syntax_failure;
+		printf("syntax Error: \n");
 		printf("%s\n", line);
 		return ;
 	}

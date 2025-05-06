@@ -22,7 +22,6 @@
 #define BUILDIN 1
 #define EXECUTE 2
 
-
 //List of redirection
 typedef struct s_file_node
 {

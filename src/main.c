@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/06 12:21:31 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:09:17 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 // 	char *line;
 	
 // 	line = NULL;
+//	t_bash *bash;
+// 	t_exit_codes *exit_code;
+//	if (init_bash(env, argc)== false || (init_exit_codes(argc) == false))
+//		return(1);
 
 // 	if(isatty(STDIN_FILENO))
 // 	{
@@ -56,14 +60,8 @@ void   leaks(void)
     system("leaks minishelll: \n");
 }
 
-void check_export_for_2nd_tokenise(t_token *token_lst)
-{
-	if(ft_strncmp("export", token_lst->token, 6) == 0)
-	{
-		
-	}
-}
-
+// handle: 
+//  echo test $? 
 
 int main(int argc, char **argv, char **env)
 {
@@ -87,18 +85,20 @@ int main(int argc, char **argv, char **env)
 	
 	if (lexer(line) == false)
 	{
-		exit_code->last_exit_code = exit_code->syntax_failure; // chat gpt fragen wie function updaten. // 
-		// fuer richtige main funtion:  soll dann aber weiter in ./minishell bleiben 
-		printf("\n fehler_lexer\n\n");
+		get_exit_codes()->last_exit_code = syntax_failure;
+		printf("\n syntax error \n");
 		return (1);
 	}
+	if (lexer_valid_ident(line) == false)
+	{
+		printf("\n invalid identifer");
+		return(1);
+	}
+
 	
     token_lst = tokeniser(line);
 	{
-		// check_here_doc_and_take_exit_word(token_lst);
-		// check if export first node  after g= -> tokenise next node "  echo ls -al" 
-		// 
-		// check_export_for_2nd_tokenise(token_lst);
+		// check_here_doc_and_take_exit_word(token_lst);;
 		iter_tokenlst(token_lst, &print_tokenlst);
 
 		bash = get_bash();

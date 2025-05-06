@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:32:26 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/06 12:12:25 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:18:17 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ get some bash cmds to test
 bool	lexer(char *line)
 {
 	int i;
-
+	bool syntax;
+	
+	syntax = true;
 	i = 0;
-	if (wrong_use_pipe_and_redirection(line)== false)
-		return(false);
+	syntax = wrong_use_pipe_and_redirection(line);
 	while(line[i])
 	{
 		while(line[i])
@@ -64,5 +65,64 @@ bool	lexer(char *line)
 			break;
 		i++;
 	}
-	return (true);
+	return (syntax);
+}
+
+bool	lexer_valid_ident(char *line)
+{
+	int i;
+	bool valid_ident;
+	
+	valid_ident = true;
+	i = 0;
+	{
+		while(line[i])
+		{
+			skip_whitespace(&line);
+			if(export_case(&line) == false)
+			{
+				get_exit_codes()->last_exit_code = invalid_identifer;
+				return (valid_ident = false);
+			}
+		}
+	}
+	return (valid_ident);
+}
+// handle case:     export    g4h="echo test"
+// bash-3.2$     export    g4g=echo test
+// bash-3.2$ echo $?
+// 0
+// bash-3.2$     export    4gh='echo test'
+// bash: export: `4gh=echo test': not a valid identifier
+// bash-3.2$     export    gh='echo test'
+// bash-3.2$ echo $gh
+// echo test
+// bash-3.2$ echo $g4g
+// echo
+
+bool export_case(char *line)
+{
+	int i;
+
+	i = 0;
+	if(ft_strncmp("export", line, 6) == 0)
+		line + 6;
+	else
+		return (true);
+	skip_whitespace(&line);
+	if (ft_isalpha(line[i]) != true)
+		return (false);
+	line++;
+	while(ft_strncmp("=", *line, 1) != 0)
+	{
+		if(ft_isalnum(line[i]) != true)
+			return(false);
+		line++;
+	}
+	line++;
+	// sind nach dem = 
+	
+	
+	
+	
 }
