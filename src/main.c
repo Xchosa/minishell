@@ -89,11 +89,11 @@ int main(int argc, char **argv, char **env)
 		printf("\n syntax error \n");
 		return (1);
 	}
-	if (lexer_valid_ident(line) == false)
-	{
-		printf("\n invalid identifer");
-		return(1);
-	}
+	// if (lexer_valid_ident(line) == false) // lexer seperate testen
+	// {
+	// 	printf("not a valid identifier/n");
+	// 	return(1);
+	// }
 
 	
     token_lst = tokeniser(line);

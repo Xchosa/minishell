@@ -135,6 +135,21 @@ bool		not_single_divider(char c);
 bool		pipe_or_simec(char c);
 int 		special_charcter_no_divider(char c);
 
+// export tokenise 
+void		tokeniser_for_export(t_token *token_lst, char *line);
+bool 		handle_export_and_tokenise(t_token *token_lst,char *line);
+bool		check_for_export_divider(char c);
+char*		handle_dividers_in_export(char *content);
+char*		get_token_export_output(char *content);
+bool		check_divider_and_d_quotes_eof(char *line);
+char*		update_export_output_line(char *line);
+t_token*	create_token_export_output(char **line, t_token *token_lst);
+char*		get_export_token(char *content);
+char*		update_export_line(char *line);
+t_token*	create_export_token(char *content);
+t_token*	create_token_q_case_and_export(char **line, t_token *token_lst);
+bool		d_quote_case_no_div(char *line);
+
 // cmd_list
 
 //print cmd_lst

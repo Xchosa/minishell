@@ -12,6 +12,7 @@ LIBFT := ./libft/libft.a
 SOURCE_DIR = ./src
 GARBAGE_DIR := ./src/garbage_collector
 PARSE_DIR = ./src/parser
+EXPORT_DIR = ./src/parser/export_case
 CMD_LIST_DIR = ./src/parser/cmd_list
 EXECUTER_DIR = ./src/executer
 LEXER_DIR = ./src/lexer
@@ -19,7 +20,7 @@ DEBUG_DIR = debug_dir
 INC_DIR = inc
 OBJ_DIR = obj
 
-VPATH = $(SOURCE_DIR):$(PARSE_DIR)::$(LEXER_DIR):$(CMD_LIST_DIR)$(EXECUTER_DIR_DIR):$(INC_DIR)
+VPATH = $(SOURCE_DIR):$(PARSE_DIR)::$(LEXER_DIR):$(CMD_LIST_DIR):$(EXPORT_DIR)$(EXECUTER_DIR_DIR):$(INC_DIR)
 
 
 # ---------- Subjects ---------- #
@@ -33,6 +34,7 @@ MY_SOURCES = \
 		update_line.c \
 		tokeniser_print.c \
 		lexer.c \
+		lexer_identifer.c \
 		lexer_helper.c \
 		count_strings_up.c \
 		bash_config.c \
@@ -40,6 +42,7 @@ MY_SOURCES = \
 		print_cmd_lst.c \
 		tokens_list_to_cmd.c \
 		tokens_to_export.c \
+		tokens_export_output.c \
 		debug.c
 
 

@@ -64,7 +64,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		add_history(line);
 		if(lexer(line) == false)
 		{
-			get_exit_codes()->last_exit_code = ec_syntax_failure;
+			get_exit_codes()->last_exit_code = syntax_failure;
 			printf("syntax Error: \n");
 			printf("%s\n", line);
 			return ;
@@ -91,7 +91,7 @@ void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)
 	line = get_next_line(STDIN_FILENO);
 	if(lexer(line) == false)
 	{
-		get_exit_codes()->last_exit_code = ec_syntax_failure;
+		get_exit_codes()->last_exit_code = syntax_failure;
 		printf("syntax Error: \n");
 		printf("%s\n", line);
 		return ;

@@ -139,7 +139,7 @@ t_token *tokeniser(char *line)
 	token_lst = tokenlstnew(line);
 	if (!token_lst)
 		return (NULL);
-		line = update_line(line);  
+	line = update_line(line);  
 	if (handle_export_and_tokenise(token_lst,line) == false)
 			return(token_lst);
 	while(*line)

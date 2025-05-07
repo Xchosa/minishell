@@ -14,12 +14,25 @@ char* get_export_token(char *content)
 	new_token =ft_strdup("");
 	while (ft_strncmp("=", *content, 1) != 0)
 	{
-		// lexer fischt alle export 6h="echo test" heraus
+		tmp_token = ft_charjoin(new_token, content[i]);
+        free(new_token);
+        new_token = tmp_token;// lexer fischt alle export 6h="echo test" heraus
 		i++;
 	}
+	return (new_token)
+	//
 
 }
 
+char *update_export_line(char *line)
+{
+	while((ft_strncmp("=", *line, 1) != 0))
+	{
+		line++;
+	}
+	line++
+	return (line);
+}
 
 t_token *create_export_token(char *content)
 {
@@ -52,46 +65,5 @@ t_token *create_token_q_case_and_export(char **line, t_token *token_lst)
 }
 
 
-void tokeniser_for_export(t_token *token_lst, char *line)
-{
-	t_token *new_token;
-	while(*line)
-	{
-		if (skip_whitespace_and_eof(&line) == false)
-			break;
-		new_token = create_token_q_case_and_export(&line, token_lst);
-		tokenadd_back(&token_lst, new_token);
-		line = update_export_line(line);
-	}
-}
-
-
-bool handle_export_and_tokenise(t_token *token_lst,char *line)
-{
-	if(ft_strncmp("export", token_lst->token, 6) == 0)
-	{
-		tokeniser_for_export(token_lst, line);
-		return (false);
-	}
-	return (true);
-}
-
-
-// export g="ls -al"
-// $g
-// now should print env of ls -al 
-// es muss noch mal getokenised werden
-
-
-//export h="echo test"
-// $g
-
-// druckt test 
-// tokens echo und test 
-
-// export m=echo test
-// $m 
-
-// druckt empty line 
 
 
