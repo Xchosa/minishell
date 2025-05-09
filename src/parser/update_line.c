@@ -51,7 +51,15 @@ int special_charcter_no_divider(char c)
 		return (1);
 	return (0);
 }
-
+char	*update_line_until_space(char *line)
+{
+	line++;
+    while (*line && ft_strncmp(" ", line, 1) != 0)
+    {
+        line++;
+    }
+    return (line);
+}
 
 char	*update_line(char *line)
 {
@@ -63,6 +71,8 @@ char	*update_line(char *line)
 		return(update_line_unitl_d_quotes(line));
 	if (ft_strncmp( "\'", line, 1) == 0)
 		return(update_line_unitl_s_quotes(line));
+	if ((ft_strncmp( "$'", line, 1) == 0))
+		return(update_line_until_space(line));
 	while (*line && check_for_divider_with_space(*line) == true)
 	{
 		if(pipe_or_simec(*line)== true)

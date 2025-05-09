@@ -24,7 +24,7 @@ void skip_whitespace(char **line)
 	}
 }
 
-bool skip_whitespace_and_eof(char **line)
+bool skip_whitespace_and_check_for_eof(char **line)
 {
 	bool not_eof;
 	not_eof = true;

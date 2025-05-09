@@ -54,14 +54,29 @@
 // am ende von oben nach unten freen;
 
 
-void   leaks(void)
-{
-    printf("\n");
-    system("leaks minishelll: \n");
-}
+// void   leaks(void)
+// {
+//     printf("\n");
+//     system("leaks minishelll: \n");
+// }
 
 // handle: 
 //  echo test $? 
+
+bool print_error_message(char *line)
+{
+	int error;
+	bool exit_minishell;
+	exit_minishell = true;
+	error = get_exit_codes()->last_exit_code;
+	if (error == invalid_identifier)
+		(printf("minishell: '%s': not a valid identifier", line));
+	if (error == syntax_failure)
+		(printf("minishell: '%s': syntax failure ", line));
+	if (error == ec_sucess)
+		return(exit_minishell = false);
+	return(exit_minishell);
+}
 
 int main(int argc, char **argv, char **env)
 {
@@ -70,9 +85,11 @@ int main(int argc, char **argv, char **env)
 	(void)argv;
 	// t_cmd_list *cmd_lst;
 	t_bash *bash;
-	atexit(leaks);
+	//atexit(leaks);
     // char *line = "wow \' hallo \" world \' dfo hello";
-	char *line = "export h=poverbec";
+	//char *line = "export h=echo echo=hello world=\"cat makefile\" hello";
+	//char *line = "export $USEr";
+	char *line = "export var=\"cat Makefile | grep <\" ";
 	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
 	// char *line = "export h=\"echo hello test\" "; // fehler gerade
 	// char *line = "\'hello< -hello\'echo| ls -l hello l <wow hello";
@@ -86,24 +103,29 @@ int main(int argc, char **argv, char **env)
 	if (lexer(line) == false)
 	{
 		get_exit_codes()->last_exit_code = syntax_failure;
-		printf("\n syntax error \n");
-		return (1);
+		print_error_message(line);
+		return(1);
 	}
+
 	// if (lexer_valid_ident(line) == false) // lexer seperate testen
 	// {
-	// 	printf("not a valid identifier/n");
+	// 	print_error_message(line);
 	// 	return(1);
 	// }
 
 	
     token_lst = tokeniser(line);
+	// handle_export(token_lst);
 	{
 		// check_here_doc_and_take_exit_word(token_lst);;
 		iter_tokenlst(token_lst, &print_tokenlst);
-
 		bash = get_bash();
-		printf("\nenv:\n");
-		ft_print_array(bash->env);
+		(void)bash;
+		if((print_error_message(line)) == true)
+			return(1);
+			
+		// printf("\nenv:\n");
+		// ft_print_array(bash->env);
 	}
 	//cmd_lst = init_cmd_lst(token_lst);
 	

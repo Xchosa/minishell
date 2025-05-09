@@ -48,7 +48,7 @@ char* get_token_export_output(char *content)
 
     i = 0;
 	new_token =ft_strdup("");
-    while (content[i] != '\"' && check_for_divider_with_space(content[i]) == false))
+    while (content[i] != '\"' && check_for_divider_with_space(content[i]) == false)
     {
         if (char_is_alpha_nbr_and_no_whitespace(content[i]))
 		{	
@@ -68,16 +68,16 @@ char* get_token_export_output(char *content)
 
 bool check_divider_and_d_quotes_eof(char *line)
 {
-    int i;
+	int i;
 
-    i = 0
-    if(line[i] == '\0')
+	i = 0;
+    if (*line == '\0')
         return (false);
-    if(check_for_divider_with_space(*line) == true)
+    if (check_for_divider_with_space(line[i]) == true)
         return (false);
-    if(ft_strncmp( "\"", line, 1) == 0)
-        return (false)
-    return (true);
+    if (ft_strncmp( "\"", line, 1) == 0)
+        return (false);
+    return (i);
 }
 
 
@@ -87,7 +87,7 @@ char *update_export_output_line(char *line)
 
 	flag = false;
 	skip_whitespace(&line);
-    while (check_divider_and_d_quotes_eof(*line) == true)
+    while (check_divider_and_d_quotes_eof(line) == true)
 	{
 		if(pipe_or_simec(*line)== true)
 		{
@@ -105,16 +105,21 @@ char *update_export_output_line(char *line)
 	return	(line);
 }
 
+// wenn export - dann token_lst in seperate static function
+// erstmal seperate tokenliste laden
+// soll ja erst aufgerufen werden wenn token mit spezifischen namen eigegeben wird sonst einfach eine /n ausdrucken 
 
-t_token *create_token_export_output(char **line, t_token *token_lst)
+
+// if cmd_node head = export - save cmd list in static function
+t_token *create_token_export_output(char *line)
 {
     t_token *new_token;
 	
 	new_token = malloc (sizeof(t_token));
 	if(!new_token)
 		return (NULL);
-	new_token->token  = get_token_export_output(content);
-	new_token->token_type = get_token_type(content);
+	new_token->token  = get_token_export_output(line);
+	new_token->token_type = get_token_type(line);
 	new_token->next = NULL;
 	return (new_token);
 }

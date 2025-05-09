@@ -65,6 +65,10 @@ t_token *create_token_with_quote_case(char **line)
 		return(d_quote_case(line));
 	if ((ft_strncmp("\'", *line, 1) == 0))
 		return(s_quote_case(line));
+	if ((ft_strncmp("$?", *line, 2) == 0))
+		return(call_exit_token(line));
+	if ((ft_strncmp("$", *line, 1) == 0))
+		return(call_saved_export_var(line));
 	else
 		return(create_token(*line));
 }

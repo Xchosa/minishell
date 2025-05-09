@@ -20,7 +20,7 @@ DEBUG_DIR = debug_dir
 INC_DIR = inc
 OBJ_DIR = obj
 
-VPATH = $(SOURCE_DIR):$(PARSE_DIR)::$(LEXER_DIR):$(CMD_LIST_DIR):$(EXPORT_DIR)$(EXECUTER_DIR_DIR):$(INC_DIR)
+VPATH = $(SOURCE_DIR):$(PARSE_DIR):$(LEXER_DIR):$(CMD_LIST_DIR):$(EXPORT_DIR):$(EXECUTER_DIR):$(INC_DIR)
 
 
 # ---------- Subjects ---------- #
@@ -43,6 +43,9 @@ MY_SOURCES = \
 		tokens_list_to_cmd.c \
 		tokens_to_export.c \
 		tokens_export_output.c \
+		export_tokeniser.c \
+		handle_export.c \
+		handle_dollar.c \
 		debug.c
 
 

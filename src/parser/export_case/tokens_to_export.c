@@ -12,25 +12,25 @@ char* get_export_token(char *content)
 	
 	i = 0;
 	new_token =ft_strdup("");
-	while (ft_strncmp("=", *content, 1) != 0)
+	while (ft_strncmp("=", content, 1) != 0)
 	{
 		tmp_token = ft_charjoin(new_token, content[i]);
         free(new_token);
         new_token = tmp_token;// lexer fischt alle export 6h="echo test" heraus
 		i++;
 	}
-	return (new_token)
+	return (new_token);
 	//
 
 }
 
 char *update_export_line(char *line)
 {
-	while((ft_strncmp("=", *line, 1) != 0))
+	while((ft_strncmp("=", line, 1) != 0))
 	{
 		line++;
 	}
-	line++
+	line++;
 	return (line);
 }
 
@@ -61,7 +61,7 @@ t_token *create_token_q_case_and_export(char **line, t_token *token_lst)
 		return(create_export_token(*line));
 	}
 	else
-		return (create_token(*line))
+		return (create_token(*line));
 }
 
 

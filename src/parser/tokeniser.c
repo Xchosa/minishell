@@ -73,7 +73,9 @@ t_type get_token_type(char *content)
 	if (content[i] == '\"') // " // quotes in seperate function with export
 		return (D_Quote);
 	if (content[i] == '\'') // '
-		return(S_Quote);
+		return (S_Quote);
+	if(ft_strncmp( "export", content, 1) == 0)
+		return (EXPORT);
 	return(TEXT);
 }
 
@@ -95,11 +97,13 @@ void	tokenadd_back(t_token **lst, t_token *new_token)
 	if (*lst == NULL)
 	{
 		*lst = new_token;
+		new_token->head = new_token;
 		return ;
 	}
 	else
 	{
 		last_node = tokenlast(*lst);
+		new_token->head = (*lst)->head;
 		last_node->next = new_token;
 	}
 }
@@ -127,6 +131,7 @@ t_token	*tokenlstnew(char	*content)
 	if(!token)
 		return (NULL);
 	token->next = 0;
+	token->head = token;
 	return (token);
 }
 
@@ -140,12 +145,10 @@ t_token *tokeniser(char *line)
 	if (!token_lst)
 		return (NULL);
 	line = update_line(line);  
-	if (handle_export_and_tokenise(token_lst,line) == false)
-			return(token_lst);
 	while(*line)
 	{
-		if (skip_whitespace_and_eof(&line) == false)
-			break;
+		if (skip_whitespace_and_check_for_eof(&line) == false)
+			return(token_lst);
 		new_token = create_token_with_quote_case(&line);
 		tokenadd_back(&token_lst, new_token);
 		line = update_line(line);
@@ -153,3 +156,9 @@ t_token *tokeniser(char *line)
 	return (token_lst);
 }
 
+// functioniert nicht / pruefen nach erster node / da zu viele cases
+// if (check_for_export(token_lst)== true)
+	// {
+	// 	token_lst = tokeniser_for_export(token_lst,line);
+	// 	return(token_lst);
+	// }
