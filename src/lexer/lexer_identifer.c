@@ -65,30 +65,35 @@ bool	only_one_cmd(char *line)
     return(true);
 }
 // leider komplett falsch
+// besser:
+// tokens vor dem splitten durch gehen 
 bool export_case(char *line)
 {
 	if(ft_strncmp("export", line, 6) == 0)
 		line += 6;
 	else
 		return (true);
-	skip_whitespace(&line);
-	if (ft_isalpha(*line) != true)
-		return (false);
-	line++;
-	while(ft_strncmp("=", line, 1) != 0)
+	while(line)
 	{
-		if(ft_isalnum(*line) != true)
-			return(false);
+		skip_whitespace(&line);
+		if (ft_isalpha(*line) != true)
+			return (false);
 		line++;
-	}
-	line++;// / sind nach dem g= 
-	if(ft_strncmp("\"", line, 1) != 0)
+		while(*line && ft_strncmp("=", line, 1) != 0 )
 		{
-			if(d_quote_case_no_div(line) != true)// nimmt alles ausser devider
+			if(ft_isalnum(*line) != true)
 				return(false);
+			line++;
 		}
-	if(only_one_cmd(line) != true) // nimmt nur erstes wort , fur tokeniser
-		return(false);// abwegen was im export tokeniser gemacht werden sollte
+		line++;// / sind nach dem g= 
+		if(ft_strncmp("\"", line, 1) != 0)
+			{
+				if(d_quote_case_no_div(line) != true)// nimmt alles ausser devider
+					return(false);
+			}
+		if(only_one_cmd(line) != true) // nimmt nur erstes wort , fur tokeniser
+			return(false);// abwegen was im export tokeniser gemacht werden sollte
+	}
 	return(true);
 }
 

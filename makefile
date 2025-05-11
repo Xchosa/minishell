@@ -42,8 +42,6 @@ MY_SOURCES = \
 		print_cmd_lst.c \
 		tokens_list_to_cmd.c \
 		tokens_to_export.c \
-		tokens_export_output.c \
-		export_tokeniser.c \
 		handle_export.c \
 		handle_dollar.c \
 		debug.c

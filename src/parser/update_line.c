@@ -40,6 +40,9 @@ bool	pipe_or_simec(char c)
 		return (true);
 	if (ft_strncmp (";", &c, 1) == 0)
 		return (true);
+	if (ft_strncmp ("=", &c, 1) == 0)
+		return (true);
+	
 	return (false);
 }
 
@@ -47,8 +50,8 @@ int special_charcter_no_divider(char c)
 {
 	if (c == '-')
 		return (1);
-	if (c == '=')
-		return (1);
+	// if (c == '=') export change
+	// 	return (1);
 	return (0);
 }
 char	*update_line_until_space(char *line)

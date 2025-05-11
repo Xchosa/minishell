@@ -86,15 +86,16 @@ int main(int argc, char **argv, char **env)
 	// t_cmd_list *cmd_lst;
 	t_bash *bash;
 	//atexit(leaks);
-    // char *line = "wow \' hallo \" world \' dfo hello";
+	// char *line = "wow -l";
 	//char *line = "export h=echo echo=hello world=\"cat makefile\" hello";
 	//char *line = "export $USEr";
-	char *line = "export var=\"cat Makefile | grep <\" ";
+	char *line = "export \"Var1\"=\"hello var1\" var2=world var=\"cat Makefile | grep <\"";
+	//char *line = "export Var1=hello var=\"cat Makefile | grep <\" ";
 	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
 	// char *line = "export h=\"echo hello test\" "; // fehler gerade
-	// char *line = "\'hello< -hello\'echo| ls -l hello l <wow hello";
+	//char *line = "\'hello< -hello\'echo| ls -l hello l <<wow hello";
 	// char *line = "\"hello '< \"echo|hello << wow hello";// sollte valid sein
-	// char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
+	//char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
 	// char *line = "\"hello< echo|hello << wow hello"; // nicht valid
 	
 	if (init_bash(env, argc)== false || (init_exit_codes(argc) == false))
@@ -115,7 +116,9 @@ int main(int argc, char **argv, char **env)
 
 	
     token_lst = tokeniser(line);
-	// handle_export(token_lst);
+	iter_tokenlst(token_lst, &print_tokenlst);
+	printf("export_list:\n\n");
+	handle_export(token_lst);
 	{
 		// check_here_doc_and_take_exit_word(token_lst);;
 		iter_tokenlst(token_lst, &print_tokenlst);

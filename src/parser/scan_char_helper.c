@@ -75,6 +75,10 @@ bool	check_for_divider_with_space(char c)
 		return (true);
 	if (ft_strncmp (";", &c, 1) == 0)
 		return (true);
+	if (ft_strncmp ("\"", &c, 1) == 0)
+		return (true);
+	if (ft_strncmp ("=", &c, 1) == 0)
+		return (true);
 	return (false);
 }
 
@@ -130,9 +134,9 @@ bool	char_is_alpha_nbr_and_no_whitespace(char c)
 		return (true);
 	if (ft_strnstr("\r\n\v\t ", &c, 1) != NULL)
 		return (true);
-	if (ft_strnstr("-", &c, 1) != NULL)
+	if (ft_strncmp ("-", &c, 1) == 0)
 		return (true);
-	if ((ft_strnstr("=", &c, 1) != NULL))
+	if (ft_strncmp ("=", &c, 1) == 0)
 		return (true);
 	return (false);
 }

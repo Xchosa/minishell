@@ -61,9 +61,11 @@ typedef enum s_type
 	here_doc,// <<
 	S_Quote,
 	D_Quote, // (like " ")
-	EXPORT, // export dffdf="echo hello" <<here_doc // should work
+	EXPORT, // export
+	Export_var, // from export hallo="ls -l" -> 'hallo' = Export_var  | ls -l normal TEXT
 	CALL_EXIT, // $?
-	CALL_SAVED_VAR, // $hello   
+	CALL_SAVED_VAR, // $hello   e.g -holds 'world' or holds nothing
+	Error// node invalid
 
 }	t_type;
 
@@ -149,8 +151,13 @@ bool		not_single_divider(char c);
 bool		pipe_or_simec(char c);
 int 		special_charcter_no_divider(char c);
 
+void	delete_token(t_token *delete_token);
 // export tokenise 
 t_token*	tokeniser_for_export(t_token *token_lst, char *line);
+t_token*	equal_case(char **line);
+t_token*	split_token_in_sub_token(t_token *current_token);
+t_token*	create_token_splited(char *content);
+void																																																				handle_export(t_token *token_lst);
 bool		check_for_export(t_token *token_lst);
 bool		check_for_export_divider(char c);
 char*		handle_dividers_in_export(char *content);

@@ -59,6 +59,21 @@ t_token	*s_quote_case(char **line)
 	return (new_token);
 }
 
+
+t_token	*equal_case(char **line)
+{
+	t_token *new_token;
+
+	new_token = malloc (sizeof(t_token));
+	if(!new_token)
+	return (NULL);
+	new_token->token =ft_strdup("=");
+	new_token->token_type = EXPORT;
+	(void)line;
+	// (line)++;
+	return (new_token);
+}
+
 t_token *create_token_with_quote_case(char **line)
 {
 	if (ft_strncmp("\"", *line, 1) == 0)
@@ -69,6 +84,8 @@ t_token *create_token_with_quote_case(char **line)
 		return(call_exit_token(line));
 	if ((ft_strncmp("$", *line, 1) == 0))
 		return(call_saved_export_var(line));
+	if ((ft_strncmp("=", *line, 1) == 0))
+		return(equal_case(line));
 	else
 		return(create_token(*line));
 }
