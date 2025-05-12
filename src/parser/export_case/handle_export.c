@@ -36,7 +36,6 @@ bool check_for_equal_sign(t_token *current_token)
     {
         if (ft_strncmp ("=", &current_token->token[i], 1) == 0)
 		    return (true);
-
         i++;
     }
     return(false);

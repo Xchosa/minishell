@@ -19,7 +19,7 @@
 #define HER_DOC 3 // <<
 #define APPEND 4 // >>
 
-#define BUILDIN 1
+#define BUILTIN 1
 #define EXECUTE 2
 
 //List of redirection

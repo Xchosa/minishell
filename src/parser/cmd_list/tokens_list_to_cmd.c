@@ -22,9 +22,10 @@ t_cmd_list *cmd_list_to_NULL(void)
 
 int choose_cmd_type(char *token_str)
 {
-	
 	if(ft_strncmp("echo" , token_str, ft_strlen(token_str)) == 0)
-		return (BUILDIN);
+		return (BUILTIN);
+	if(ft_strncmp("env" , token_str, ft_strlen(token_str)) == 0)
+		return (BUILTIN);
 	else
 		return 0;
 }

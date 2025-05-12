@@ -88,8 +88,8 @@ int main(int argc, char **argv, char **env)
 	//atexit(leaks);
 	// char *line = "wow -l";
 	//char *line = "export h=echo echo=hello world=\"cat makefile\" hello";
-	//char *line = "export $USEr";
-	char *line = "export \"Var1\"=\"hello var1\" var2=world var=\"cat Makefile | grep <\"";
+	// char *line = "echo $hallo";
+	char *line = "export \"Var1\"=\"hello var1\"     var2=world     var3=\"cat Makefile | grep <\"";
 	//char *line = "export Var1=hello var=\"cat Makefile | grep <\" ";
 	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
 	// char *line = "export h=\"echo hello test\" "; // fehler gerade
@@ -127,8 +127,8 @@ int main(int argc, char **argv, char **env)
 		if((print_error_message(line)) == true)
 			return(1);
 			
-		// printf("\nenv:\n");
-		// ft_print_array(bash->env);
+		printf("\nenv:\n");
+		ft_print_array(bash->env);
 	}
 	//cmd_lst = init_cmd_lst(token_lst);
 	

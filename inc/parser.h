@@ -37,11 +37,6 @@ typedef struct s_bash
 } t_bash;
 
 
-char		**cpychar_arr(char** src);
-bool		init_bash(char **env, int argc);
-t_bash		*get_bash(void);
-void 		ft_print_array(char **src);
-
 typedef struct s_exit_codes
 {	
 	int last_exit_code; // update after every runexit
@@ -87,10 +82,11 @@ typedef struct s_token
 // heredoc <<
 // outfile append >>
 
-
-
-
-
+// t_bash functions
+char		**cpychar_arr(char** src);
+bool		init_bash(char **env, int argc);
+t_bash		*get_bash(void);
+void 		ft_print_array(char **src);
 
 
 
