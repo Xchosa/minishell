@@ -76,38 +76,41 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	if (cmd_list->size > 1)
 		close(fd[i - 1][0]);
 }
-int	main(int argc, char **argv, char **envp)
-{
-	t_cmd_list	cmd_list;
-	t_cmd_node	cmd_node1;
-	t_file_list	file_list1;
-	t_file_node file_node1;
-	t_file_node file_node2;
-	t_file_node	file_node3;
 
-	(void)argc;
-	(void)argv;
-	cmd_list.head = &cmd_node1;
-	cmd_list.tail = NULL;
-	cmd_list.size = 1;
-	cmd_node1.cmd_type = 2;
-	cmd_node1.cmd = ft_split("head -n 5", ' ');
-	cmd_node1.file_list = &file_list1;
-	cmd_node1.next = NULL;
-	file_list1.head = &file_node1;
-	file_list1.tail = NULL;
-	file_list1.size = 3;
-	file_node1.filename = "eingabe";
-	file_node1.next = &file_node2;
-	file_node1.redir_type = 1;
-	file_node2.filename = "ausgabe";
-	file_node2.next = &file_node3;
-	file_node2.redir_type = 2;
-	file_node3.filename = "ausgabe2";
-	file_node3.redir_type = 3;
-	file_node3.next = NULL;
-ft_execute(&cmd_list, envp);
-}
+
+//test fuer append
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_cmd_list	cmd_list;
+// 	t_cmd_node	cmd_node1;
+// 	t_file_list	file_list1;
+// 	t_file_node file_node1;
+// 	t_file_node file_node2;
+// 	t_file_node	file_node3;
+
+// 	(void)argc;
+// 	(void)argv;
+// 	cmd_list.head = &cmd_node1;
+// 	cmd_list.tail = NULL;
+// 	cmd_list.size = 1;
+// 	cmd_node1.cmd_type = 2;
+// 	cmd_node1.cmd = ft_split("head -n 5", ' ');
+// 	cmd_node1.file_list = &file_list1;
+// 	cmd_node1.next = NULL;
+// 	file_list1.head = &file_node1;
+// 	file_list1.tail = NULL;
+// 	file_list1.size = 3;
+// 	file_node1.filename = "eingabe";
+// 	file_node1.next = &file_node2;
+// 	file_node1.redir_type = 1;
+// 	file_node2.filename = "ausgabe";
+// 	file_node2.next = &file_node3;
+// 	file_node2.redir_type = 2;
+// 	file_node3.filename = "ausgabe2";
+// 	file_node3.redir_type = 3;
+// 	file_node3.next = NULL;
+// ft_execute(&cmd_list, envp);
+// }
 
 
 //test for priority of pipes vs redirects;
@@ -180,7 +183,7 @@ ft_execute(&cmd_list, envp);
 // 	file_list1.head = &file_node1;
 // 	file_list1.tail = NULL;
 // 	file_list1.size = 1;
-// 	file_node1.filename = "Eingabe";
+// 	file_node1.filename = "eingabe";
 // 	file_node1.next = NULL;
 // 	file_node1.redir_type = 1;
 // 	cmd_node2.cmd_type = 2;
@@ -216,49 +219,49 @@ ft_execute(&cmd_list, envp);
 // }
 
 //test for multiple in and out
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_cmd_list	cmd_list;
-// 	t_cmd_node	cmd_node1;
-// 	t_cmd_node	cmd_node2;
-// 	t_file_list	file_list1;
-// 	t_file_list file_list2;
-// 	t_file_node	file_node1;
-// 	t_file_node file_node2;
-// 	t_file_node file_node3;
-// 	t_file_node file_node4;
-// 	t_file_node	file_node5;
-// 	(void)argc;
-// 	(void)argv;
-// 	cmd_list.head = &cmd_node1;
-// 	cmd_list.tail = &cmd_node2;
-// 	cmd_list.size = 2;
-// 	cmd_node1.cmd_type = 2;
-// 	cmd_node1.cmd = ft_split("tail -n 1", ' ');
-// 	cmd_node1.file_list = &file_list1;
-// 	cmd_node1.next = &cmd_node2;
-// 	file_list1.head = &file_node1;
-// 	file_list1.tail = NULL;
-// 	file_list1.size = 4;
-// 	file_node1.redir_type = 1;
-// 	file_node1.filename = "test";
-// 	file_node1.next = &file_node2;
-// 	file_node2.filename = "ausgabe";
-// 	file_node2.redir_type = 2;
-// 	file_node2.next = &file_node3;
-// 	file_node3.filename = "eingabe";
-// 	file_node3.redir_type = 1;
-// 	file_node3.next = &file_node4;
-// 	file_node4.filename = "ausgabe2";
-// 	file_node4.redir_type = 2;
-// 	file_node4.next = NULL;
-// 	cmd_node2.cmd_type = 2;
-// 	cmd_node2.cmd = ft_split("wc", ' ');
-// 	cmd_node2.file_list= &file_list2;
-// 	cmd_node2.next = NULL;
-// 	file_list2.head = NULL; //&file_node5;
-// 	file_list2.size = 0;
-// 	file_list2.tail = NULL;
-// 	ft_execute(&cmd_list, envp);
-// 	return (0);
-// }
+int	main(int argc, char **argv, char **envp)
+{
+	t_cmd_list	cmd_list;
+	t_cmd_node	cmd_node1;
+	t_cmd_node	cmd_node2;
+	t_file_list	file_list1;
+	t_file_list file_list2;
+	t_file_node	file_node1;
+	t_file_node file_node2;
+	t_file_node file_node3;
+	t_file_node file_node4;
+	t_file_node	file_node5;
+	(void)argc;
+	(void)argv;
+	cmd_list.head = &cmd_node1;
+	cmd_list.tail = &cmd_node2;
+	cmd_list.size = 2;
+	cmd_node1.cmd_type = 2;
+	cmd_node1.cmd = ft_split("tail -n 1", ' ');
+	cmd_node1.file_list = &file_list1;
+	cmd_node1.next = &cmd_node2;
+	file_list1.head = &file_node1;
+	file_list1.tail = NULL;
+	file_list1.size = 4;
+	file_node1.redir_type = 1;
+	file_node1.filename = "test";
+	file_node1.next = &file_node2;
+	file_node2.filename = "ausgabe";
+	file_node2.redir_type = 2;
+	file_node2.next = &file_node3;
+	file_node3.filename = "eingabe";
+	file_node3.redir_type = 1;
+	file_node3.next = &file_node4;
+	file_node4.filename = "ausgabe2";
+	file_node4.redir_type = 2;
+	file_node4.next = NULL;
+	cmd_node2.cmd_type = 2;
+	cmd_node2.cmd = ft_split("wc", ' ');
+	cmd_node2.file_list= &file_list2;
+	cmd_node2.next = NULL;
+	file_list2.head = NULL; //&file_node5;
+	file_list2.size = 0;
+	file_list2.tail = NULL;
+	ft_execute(&cmd_list, envp);
+	return (0);
+}
