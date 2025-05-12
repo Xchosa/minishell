@@ -11,15 +11,24 @@
 /* ************************************************************************** */
 
 #include "../../inc/executer.h"
+#include "../../inc/minishell.h"
+
 #include <unistd.h>
+#include "builtins.c"
 #include "pipex.c"
 #include "redirect.c"
 #include "manage_pipes.c"
 
-void	ft_execute_builtin(t_cmd_node *cmd_node)
+void	ft_execute_builtin(t_cmd_node *cmd_node, char **envp)
 {
-	(void) cmd_node;
-	ft_printf("i am in builtin execution");
+	if (ft_strncmp("echo", cmd_node->cmd[0], 4) == 0)
+		ft_echo(cmd_node);
+	if (ft_strncmp("pwd", cmd_node->cmd[0], 3) == 0)
+		ft_pwd(envp);
+	if (ft_strncmp("env", cmd_node->cmd[0], 3) == 0)
+		ft_env(envp);
+	if (ft_strncmp("cd", cmd_node->cmd[0], 2) == 0)
+		ft_cd(cmd_node, envp);
 }
 
 void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
@@ -41,10 +50,10 @@ void	ft_execute_node(
 	if (cmd_list->size > 1)
 		ft_manage_pipes(cmd_list, cmd_node, fd);
 	ft_manage_redirections(cmd_node, fd);
-	if (cmd_node->cmd_type == 2)
+	if (cmd_node->cmd_type == EXECUTE)
 		ft_execute_command(cmd_node, envp);
-	else if (cmd_node->cmd_type == 1)
-		ft_execute_builtin(cmd_node);
+	else if (cmd_node->cmd_type == BUILTIN)
+		ft_execute_builtin(cmd_node, envp);
 }
 
 void	ft_execute(t_cmd_list *cmd_list, char **envp)
@@ -76,6 +85,97 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	if (cmd_list->size > 1)
 		close(fd[i - 1][0]);
 }
+
+//test fuer cd
+int	main(int argc, char **argv, char **envp)
+{
+	t_cmd_list	cmd_list;
+	t_cmd_node	cmd_node1;
+	t_file_list	file_list1;
+
+	(void)argc;
+	(void)argv;
+	cmd_list.head = &cmd_node1;
+	cmd_list.tail = NULL;
+	cmd_list.size = 1;
+	cmd_node1.cmd_type = BUILTIN;
+	cmd_node1.cmd = ft_split("cd /home/thilo/projects/philo", ' ');
+	cmd_node1.file_list = &file_list1;
+	cmd_node1.next = NULL;
+	file_list1.head = NULL;
+	file_list1.tail = NULL;
+	file_list1.size = 0;
+ft_execute(&cmd_list, envp);
+}
+
+
+//main fuer builtin env
+//int	main(int argc, char **argv, char **envp)
+// {
+// 	t_cmd_list	cmd_list;
+// 	t_cmd_node	cmd_node1;
+// 	t_file_list	file_list1;
+
+// 	(void)argc;
+// 	(void)argv;
+// 	cmd_list.head = &cmd_node1;
+// 	cmd_list.tail = NULL;
+// 	cmd_list.size = 1;
+// 	cmd_node1.cmd_type = BUILTIN;
+// 	cmd_node1.cmd = ft_split("env", ' ');
+// 	cmd_node1.file_list = &file_list1;
+// 	cmd_node1.next = NULL;
+// 	file_list1.head = NULL;
+// 	file_list1.tail = NULL;
+// 	file_list1.size = 0;
+// ft_execute(&cmd_list, envp);
+// }
+
+
+//main fuer builtin pwd
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_cmd_list	cmd_list;
+// 	t_cmd_node	cmd_node1;
+// 	t_file_list	file_list1;
+
+// 	(void)argc;
+// 	(void)argv;
+// 	cmd_list.head = &cmd_node1;
+// 	cmd_list.tail = NULL;
+// 	cmd_list.size = 1;
+// 	cmd_node1.cmd_type = BUILTIN;
+// 	cmd_node1.cmd = ft_split("pwd", ' ');
+// 	cmd_node1.file_list = &file_list1;
+// 	cmd_node1.next = NULL;
+// 	file_list1.head = NULL;
+// 	file_list1.tail = NULL;
+// 	file_list1.size = 0;
+// ft_execute(&cmd_list, envp);
+// }
+
+//test fuer builtin echo
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_cmd_list	cmd_list;
+// 	t_cmd_node	cmd_node1;
+// 	t_file_list	file_list1;
+
+// 	(void)argc;
+// 	(void)argv;
+// 	cmd_list.head = &cmd_node1;
+// 	cmd_list.tail = NULL;
+// 	cmd_list.size = 1;
+// 	cmd_node1.cmd_type = BUILTIN;
+// 	char *buf[] = {"echo", "-n", "halo", "welt", "ein langer string in einer zeile", NULL};
+// 	cmd_node1.cmd = buf;
+// 	cmd_node1.file_list = &file_list1;
+// 	cmd_node1.next = NULL;
+// 	file_list1.head = NULL;
+// 	file_list1.tail = NULL;
+// 	file_list1.size = 0;
+// ft_execute(&cmd_list, envp);
+// }
 
 
 //test fuer append
@@ -218,50 +318,50 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 // 	return (0);
 // }
 
-//test for multiple in and out
-int	main(int argc, char **argv, char **envp)
-{
-	t_cmd_list	cmd_list;
-	t_cmd_node	cmd_node1;
-	t_cmd_node	cmd_node2;
-	t_file_list	file_list1;
-	t_file_list file_list2;
-	t_file_node	file_node1;
-	t_file_node file_node2;
-	t_file_node file_node3;
-	t_file_node file_node4;
-	t_file_node	file_node5;
-	(void)argc;
-	(void)argv;
-	cmd_list.head = &cmd_node1;
-	cmd_list.tail = &cmd_node2;
-	cmd_list.size = 2;
-	cmd_node1.cmd_type = 2;
-	cmd_node1.cmd = ft_split("tail -n 1", ' ');
-	cmd_node1.file_list = &file_list1;
-	cmd_node1.next = &cmd_node2;
-	file_list1.head = &file_node1;
-	file_list1.tail = NULL;
-	file_list1.size = 4;
-	file_node1.redir_type = 1;
-	file_node1.filename = "test";
-	file_node1.next = &file_node2;
-	file_node2.filename = "ausgabe";
-	file_node2.redir_type = 2;
-	file_node2.next = &file_node3;
-	file_node3.filename = "eingabe";
-	file_node3.redir_type = 1;
-	file_node3.next = &file_node4;
-	file_node4.filename = "ausgabe2";
-	file_node4.redir_type = 2;
-	file_node4.next = NULL;
-	cmd_node2.cmd_type = 2;
-	cmd_node2.cmd = ft_split("wc", ' ');
-	cmd_node2.file_list= &file_list2;
-	cmd_node2.next = NULL;
-	file_list2.head = NULL; //&file_node5;
-	file_list2.size = 0;
-	file_list2.tail = NULL;
-	ft_execute(&cmd_list, envp);
-	return (0);
-}
+// //test for multiple in and out
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_cmd_list	cmd_list;
+// 	t_cmd_node	cmd_node1;
+// 	t_cmd_node	cmd_node2;
+// 	t_file_list	file_list1;
+// 	t_file_list file_list2;
+// 	t_file_node	file_node1;
+// 	t_file_node file_node2;
+// 	t_file_node file_node3;
+// 	t_file_node file_node4;
+// 	t_file_node	file_node5;
+// 	(void)argc;
+// 	(void)argv;
+// 	cmd_list.head = &cmd_node1;
+// 	cmd_list.tail = &cmd_node2;
+// 	cmd_list.size = 2;
+// 	cmd_node1.cmd_type = 2;
+// 	cmd_node1.cmd = ft_split("tail -n 1", ' ');
+// 	cmd_node1.file_list = &file_list1;
+// 	cmd_node1.next = &cmd_node2;
+// 	file_list1.head = &file_node1;
+// 	file_list1.tail = NULL;
+// 	file_list1.size = 4;
+// 	file_node1.redir_type = 1;
+// 	file_node1.filename = "test";
+// 	file_node1.next = &file_node2;
+// 	file_node2.filename = "ausgabe";
+// 	file_node2.redir_type = 2;
+// 	file_node2.next = &file_node3;
+// 	file_node3.filename = "eingabe";
+// 	file_node3.redir_type = 1;
+// 	file_node3.next = &file_node4;
+// 	file_node4.filename = "ausgabe2";
+// 	file_node4.redir_type = 2;
+// 	file_node4.next = NULL;
+// 	cmd_node2.cmd_type = 2;
+// 	cmd_node2.cmd = ft_split("wc", ' ');
+// 	cmd_node2.file_list= &file_list2;
+// 	cmd_node2.next = NULL;
+// 	file_list2.head = NULL; //&file_node5;
+// 	file_list2.size = 0;
+// 	file_list2.tail = NULL;
+// 	ft_execute(&cmd_list, envp);
+// 	return (0);
+// }
