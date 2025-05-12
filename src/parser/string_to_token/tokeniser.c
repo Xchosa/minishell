@@ -30,7 +30,7 @@ char* get_token(char *content)
             free(new_token);
             new_token = tmp_token;
 		}
-		if (check_for_divider_with_space(content[i +1 ]) == true)
+		if (check_for_divider_with_space(content[i +1 ]) == true)// decide export or not
 			return (new_token);
 		i++;
 	}
@@ -74,7 +74,7 @@ t_type get_token_type(char *content)
 		return (D_Quote);
 	if (content[i] == '\'') // '
 		return (S_Quote);
-	if(ft_strncmp( "export", content, 1) == 0)
+	if(ft_strncmp( "export", content, 6) == 0)
 		return (EXPORT);
 	return(TEXT);
 }
@@ -127,7 +127,7 @@ t_token	*tokenlstnew(char	*content)
 	t_token	*token;
 
 	skip_whitespace(&content);
-	token = create_token_with_quote_case(&content);
+	token = create_first_token(&content);
 	if(!token)
 		return (NULL);
 	token->next = 0;
@@ -144,14 +144,14 @@ t_token *tokeniser(char *line)
 	token_lst = tokenlstnew(line);
 	if (!token_lst)
 		return (NULL);
-	line = update_line(line);  
+	line = update_line(line,token_lst);  
 	while(*line)
 	{
 		if (skip_whitespace_and_check_for_eof(&line) == false)
 			return(token_lst);
-		new_token = create_token_with_quote_case(&line);
+		new_token = create_token_with_quote_case(&line, token_lst);
 		tokenadd_back(&token_lst, new_token);
-		line = update_line(line);
+		line = update_line(line, token_lst);
 	}
 	return (token_lst);
 }

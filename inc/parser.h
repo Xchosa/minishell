@@ -48,19 +48,19 @@ bool			init_exit_codes(int argc);
 
 typedef enum s_type
 {
-	TEXT, // 0
-	PIPE, // 1
-	Redirect_input, // 2 
-	Redirect_output, // 
-	Redirect_output_append_mode,// >>
-	here_doc,// <<
-	S_Quote,
-	D_Quote, // (like " ")
-	EXPORT, // export
-	Export_var, // from export hallo="ls -l" -> 'hallo' = Export_var  | ls -l normal TEXT
-	CALL_EXIT, // $?
-	CALL_SAVED_VAR, // $hello   e.g -holds 'world' or holds nothing
-	Error// node invalid
+	TEXT = 0, // 0
+	PIPE = 1, // 1
+	Redirect_input = 3, // 2 
+	Redirect_output = 4, // 
+	Redirect_output_append_mode = 5,// >>
+	here_doc = 6,// <<
+	S_Quote = 7,
+	D_Quote = 8, // (like " ")
+	EXPORT = 9, // export
+	Export_var =10, // from export hallo="ls -l" -> 'hallo' = Export_var  | ls -l normal TEXT
+	CALL_EXIT = 11, // $?
+	CALL_SAVED_VAR = 12, // $hello   e.g -holds 'world' or holds nothing
+	Error =13,// node invalid
 
 }	t_type;
 
@@ -122,20 +122,26 @@ t_token		*tokenlast(t_token *lst);
 void		tokenadd_back(t_token **lst, t_token *new_token);
 
 t_token		*create_token(char *content);
+t_token 	*create_first_token(char **line);
 t_token		*d_quote_case(char **line);
 t_token		*s_quote_case(char **line);
 t_token		*call_exit_token(char **line);
 t_token		*call_saved_export_var(char **line);
-t_token		*create_token_with_quote_case(char **line);
+t_token 	*create_token_with_quote_case(char **line, t_token *token);
 t_token		*tokenlstnew(char	*content);
 bool		check_for_divider_with_space(char c);
 bool		check_for_divider_without_space(char c);
-char		*update_line(char *line);
+
+
+//update line
+char		*update_line(char *line, t_token *token);
+char 		*handle_special_characters(char *line);
+char 		*handle_export_token(char *line);
+char 		*handle_regular_token(char *line);
 char		*update_line_unitl_d_quotes(char *line);
 char		*update_line_unitl_s_quotes(char *line);
 char		*update_line_until_space(char *line);
 char 		*ft_charjoin(char const *dst, char const src_char);
-
 void		iter_tokenlst(t_token *lst, void (*f)(t_token *));
 void		print_tokenlst(t_token *data);
 
@@ -145,15 +151,19 @@ char		*cpy_str_space_deli(const char *src);
 size_t		strlen_until_space(const char *s);
 bool		not_single_divider(char c);
 bool		pipe_or_simec(char c);
-int 		special_charcter_no_divider(char c);
+int 		special_char_no_divider(char c);
+int			special_char_no_divider_no_eq(char c);
 
-void	delete_token(t_token *delete_token);
+void		delete_token(t_token *delete_token);
 // export tokenise 
 t_token*	tokeniser_for_export(t_token *token_lst, char *line);
 t_token*	equal_case(char **line);
 t_token*	split_token_in_sub_token(t_token *current_token);
 t_token*	create_token_splited(char *content);
-void																																																				handle_export(t_token *token_lst);
+char*		get_token_equal_as_div(char *content);
+t_token*	create_token_equal_as_div(char *content);
+bool		check_for_div_with_space_and_eq(char c);
+void		handle_export(t_token *token_lst);
 bool		check_for_export(t_token *token_lst);
 bool		check_for_export_divider(char c);
 char*		handle_dividers_in_export(char *content);
@@ -174,6 +184,9 @@ void	print_cmd_lst(t_cmd_node *cmd_nodes);
 void	iter_cmdlst(t_cmd_list *cmd_lst, void (*f)(t_cmd_node*));
 
 void	process_token(t_token *current_token, t_cmd_list *cmd_list);
+int		check_for_execute(char *token_str);
+int		check_for_builtin(char *token_str);
+int		choose_cmd_type(t_token *curr_token);
 #endif
 
 

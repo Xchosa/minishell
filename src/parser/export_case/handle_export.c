@@ -92,24 +92,22 @@ void handle_export(t_token *token_lst)
     t_token *node_to_delete;
     t_token *new_tokens;
     current_token = token_lst;
-    
+    if(current_token->head->token_type != EXPORT)
+        return;
     while(current_token->next)
     {
-        if(current_token->head->token_type==EXPORT)
+        if(check_for_equal_sign(current_token->next)== true)
         {
-            if(check_for_equal_sign(current_token->next)== true)
-            {
-                current_token->token_type= Export_var; // var1
-                current_token = current_token->next; // =
-                node_to_delete = current_token->next;// echo world
-                new_tokens = split_token_in_sub_token(current_token->next);
-                delete_token(node_to_delete);
-                current_token->next = new_tokens; // aber der next->pointer von world ist leer
-                current_token = current_token->next;
-            } 
-        }
-        current_token = current_token->next;// zwei nodes weiter wenn node gesplitted wurde
+            current_token->token_type= Export_var; // var1
+            current_token = current_token->next; // =
+            node_to_delete = current_token->next;// echo world
+            new_tokens = split_token_in_sub_token(current_token->next);
+            delete_token(node_to_delete);
+            current_token->next = new_tokens; // aber der next->pointer von world ist leer
+        } 
+        current_token = current_token->next;
     }
+    current_token = current_token->next;// zwei nodes weiter wenn node gesplitted wurde
 }
 
     // wenn invalid_identiver 

@@ -83,13 +83,14 @@ int main(int argc, char **argv, char **env)
 	
     t_token *token_lst;
 	(void)argv;
-	// t_cmd_list *cmd_lst;
+	//t_cmd_list *cmd_lst;
 	t_bash *bash;
 	//atexit(leaks);
-	// char *line = "wow -l";
+	char *line = "echo -l world=hello"; // = wird falsch gehandelt
 	//char *line = "export h=echo echo=hello world=\"cat makefile\" hello";
-	// char *line = "echo $hallo";
-	char *line = "export \"Var1\"=\"hello var1\"     var2=world     var3=\"cat Makefile | grep <\"";
+	//char *line = "echo $hallo";
+	
+	// char *line = "export \"Var1\"=\"hello var1\"     var2=world     var3=\"cat Makefile | grep <\"";
 	//char *line = "export Var1=hello var=\"cat Makefile | grep <\" ";
 	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
 	// char *line = "export h=\"echo hello test\" "; // fehler gerade
@@ -124,12 +125,13 @@ int main(int argc, char **argv, char **env)
 		iter_tokenlst(token_lst, &print_tokenlst);
 		bash = get_bash();
 		(void)bash;
-		if((print_error_message(line)) == true)
-			return(1);
+		// if((print_error_message(line)) == true)
+		// 	return(1);
 			
-		printf("\nenv:\n");
-		ft_print_array(bash->env);
+		// printf("\nenv:\n");
+		// ft_print_array(bash->env);
 	}
 	//cmd_lst = init_cmd_lst(token_lst);
+
 	
 }

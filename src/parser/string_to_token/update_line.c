@@ -13,24 +13,6 @@
 #include "parser.h"
 #include "minishell.h"
 
-char	*update_line_unitl_d_quotes(char *line)
-{
-	line++;
-	while(ft_strncmp( "\"", line, 1) != 0)
- 		line++;
-	line++;
-	return (line);
-}
-
-char	*update_line_unitl_s_quotes(char *line)
-{
-	line++;
-	while(ft_strncmp( "\'", line, 1) != 0)
-		line++;
-	line++;
-	return (line);
-}
-
 
 bool	pipe_or_simec(char c)
 {
@@ -42,54 +24,66 @@ bool	pipe_or_simec(char c)
 		return (true);
 	if (ft_strncmp ("=", &c, 1) == 0)
 		return (true);
-	
 	return (false);
 }
 
-int special_charcter_no_divider(char c)
+int special_char_no_divider(char c)
 {
 	if (c == '-')
 		return (1);
-	// if (c == '=') export change
-	// 	return (1);
+	if (c == '=')
+	 	return (1);
 	return (0);
 }
-char	*update_line_until_space(char *line)
+int special_char_no_divider_no_eq(char c)
 {
-	line++;
-    while (*line && ft_strncmp(" ", line, 1) != 0)
+	if (c == '-')
+		return (1);
+	return (0);
+}
+
+char *handle_dividers(char *line, bool *flag)
+{
+    while (*line && check_for_divider_with_space(*line) == true)
     {
+        if (pipe_or_simec(*line) == true)
+        {
+            line++;
+            return (line);
+        }
         line++;
+        *flag = true;
     }
     return (line);
 }
 
-char	*update_line(char *line)
+char *handle_export_token(char *line)
 {
-	bool flag;
+    while (*line && (ft_isalnum(*line) || special_char_no_divider_no_eq(*line)))
+        line++;
+    return (line);
+}
 
-	flag = false;
-	skip_whitespace(&line);
-	if (ft_strncmp( "\"", line, 1) == 0)
-		return(update_line_unitl_d_quotes(line));
-	if (ft_strncmp( "\'", line, 1) == 0)
-		return(update_line_unitl_s_quotes(line));
-	if ((ft_strncmp( "$'", line, 1) == 0))
-		return(update_line_until_space(line));
-	while (*line && check_for_divider_with_space(*line) == true)
-	{
-		if(pipe_or_simec(*line)== true)
-		{
-			line++;
-			return(line);
-		}
-		line++;
-		flag = true;
-	}
-	if( flag == false)
-	{
-		while (*line && (ft_isalnum(*line) || special_charcter_no_divider(*line)))
-			line++;
-	}
-	return	(line);
+char *handle_regular_token(char *line)
+{
+    while (*line && (ft_isalnum(*line) || special_char_no_divider(*line)))
+        line++;
+    return (line);
+}
+
+char *update_line(char *line, t_token *token)
+{
+    bool flag = false;
+    char *updated_line;
+
+    skip_whitespace(&line);
+    updated_line = handle_special_characters(line);
+    if (updated_line)
+        return (updated_line);
+    line = handle_dividers(line, &flag);
+    if (token->head->token_type == EXPORT)
+        return (handle_export_token(line));
+    if (flag == false)
+        line = handle_regular_token(line);
+    return (line);
 }

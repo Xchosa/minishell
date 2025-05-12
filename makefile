@@ -12,6 +12,7 @@ LIBFT := ./libft/libft.a
 SOURCE_DIR = ./src
 GARBAGE_DIR := ./src/garbage_collector
 PARSE_DIR = ./src/parser
+TOKEN_DIR = ./src/parser/string_to_token
 EXPORT_DIR = ./src/parser/export_case
 CMD_LIST_DIR = ./src/parser/cmd_list
 EXECUTER_DIR = ./src/executer
@@ -20,7 +21,7 @@ DEBUG_DIR = debug_dir
 INC_DIR = inc
 OBJ_DIR = obj
 
-VPATH = $(SOURCE_DIR):$(PARSE_DIR):$(LEXER_DIR):$(CMD_LIST_DIR):$(EXPORT_DIR):$(EXECUTER_DIR):$(INC_DIR)
+VPATH = $(SOURCE_DIR):$(PARSE_DIR):$(TOKEN_DIR):$(LEXER_DIR):$(CMD_LIST_DIR):$(EXPORT_DIR):$(EXECUTER_DIR):$(INC_DIR)
 
 
 # ---------- Subjects ---------- #
@@ -32,6 +33,7 @@ MY_SOURCES = \
 		heredoc.c \
 		handle_quotes.c \
 		update_line.c \
+		update_line_helper.c \
 		tokeniser_print.c \
 		lexer.c \
 		lexer_identifer.c \
@@ -39,11 +41,15 @@ MY_SOURCES = \
 		count_strings_up.c \
 		bash_config.c \
 		exit_codes_config.c \
-		print_cmd_lst.c \
-		tokens_list_to_cmd.c \
 		tokens_to_export.c \
+		create_export_tokens.c \
 		handle_export.c \
 		handle_dollar.c \
+		tokens_list_to_cmd.c \
+		init_cmd_nodes.c \
+		define_cmd_typ.c \
+		print_cmd_lst.c \
+		tokens_to_cmd.c \
 		debug.c
 
 
