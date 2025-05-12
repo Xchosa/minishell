@@ -133,28 +133,3 @@ int main(int argc, char **argv, char **env)
 	//cmd_lst = init_cmd_lst(token_lst);
 	
 }
-
-//char** cmd = char* token
-// ls -l -a | grep a
-// das ordnen der tokens - dafur ist der baum da 
-// eine token liste und keine cmd liste?
-// muss cmd schon geordnet sein?
-// ls >infile -l
-
-
-/*
-sturcts
-	pipecmd
-	listcmd
-	backcmd
-	execcmd
-	redircmd
-
-constructor functions
-	pipecmd
-	listcmd
-	backcmd
-	execcmd
-	redircmd
-
-*/
