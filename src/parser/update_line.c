@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 15:57:07 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/24 16:27:06 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:20:19 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,28 @@ bool	pipe_or_simec(char c)
 		return (true);
 	if (ft_strncmp (";", &c, 1) == 0)
 		return (true);
+	if (ft_strncmp ("=", &c, 1) == 0)
+		return (true);
+	
 	return (false);
+}
+
+int special_charcter_no_divider(char c)
+{
+	if (c == '-')
+		return (1);
+	// if (c == '=') export change
+	// 	return (1);
+	return (0);
+}
+char	*update_line_until_space(char *line)
+{
+	line++;
+    while (*line && ft_strncmp(" ", line, 1) != 0)
+    {
+        line++;
+    }
+    return (line);
 }
 
 char	*update_line(char *line)
@@ -53,6 +74,8 @@ char	*update_line(char *line)
 		return(update_line_unitl_d_quotes(line));
 	if (ft_strncmp( "\'", line, 1) == 0)
 		return(update_line_unitl_s_quotes(line));
+	if ((ft_strncmp( "$'", line, 1) == 0))
+		return(update_line_until_space(line));
 	while (*line && check_for_divider_with_space(*line) == true)
 	{
 		if(pipe_or_simec(*line)== true)
@@ -65,7 +88,7 @@ char	*update_line(char *line)
 	}
 	if( flag == false)
 	{
-		while (*line && ft_isalnum(*line))
+		while (*line && (ft_isalnum(*line) || special_charcter_no_divider(*line)))
 			line++;
 	}
 	return	(line);

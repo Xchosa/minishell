@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:51:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/29 15:36:08 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:11:13 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void skip_whitespace(char **line)
 	}
 }
 
-bool skip_whitespace_and_eof(char **line)
+bool skip_whitespace_and_check_for_eof(char **line)
 {
 	bool not_eof;
 	not_eof = true;
@@ -74,6 +74,10 @@ bool	check_for_divider_with_space(char c)
 	if (ft_strncmp (">", &c, 1) == 0)
 		return (true);
 	if (ft_strncmp (";", &c, 1) == 0)
+		return (true);
+	if (ft_strncmp ("\"", &c, 1) == 0)
+		return (true);
+	if (ft_strncmp ("=", &c, 1) == 0)
 		return (true);
 	return (false);
 }
@@ -129,6 +133,10 @@ bool	char_is_alpha_nbr_and_no_whitespace(char c)
 	if (ft_isalnum(c) == true)
 		return (true);
 	if (ft_strnstr("\r\n\v\t ", &c, 1) != NULL)
+		return (true);
+	if (ft_strncmp ("-", &c, 1) == 0)
+		return (true);
+	if (ft_strncmp ("=", &c, 1) == 0)
 		return (true);
 	return (false);
 }

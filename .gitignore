@@ -1,11 +1,3 @@
-
-**/*.o
-**/*.out
-*.txt
-*.DS_Store
-.obj
-.objects
-*.vscode
-libft/*.o
-minishell
-*.swp
+.vscode
+*.o
+libft.a

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:26:42 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/29 15:28:53 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:25:06 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,13 @@ t_type get_token_type(char *content)
 		else
 			return (Redirect_input);
 	}
-	if (content[i] == '\"') // " 
+	if (content[i] == '\"') // " // quotes in seperate function with export
 		return (D_Quote);
 	if (content[i] == '\'') // '
-		return(S_Quote);
+		return (S_Quote);
+	if(ft_strncmp( "export", content, 1) == 0)
+		return (EXPORT);
 	return(TEXT);
-	
 }
 
 t_token*	tokenlast(t_token *lst)
@@ -96,11 +97,13 @@ void	tokenadd_back(t_token **lst, t_token *new_token)
 	if (*lst == NULL)
 	{
 		*lst = new_token;
+		new_token->head = new_token;
 		return ;
 	}
 	else
 	{
 		last_node = tokenlast(*lst);
+		new_token->head = (*lst)->head;
 		last_node->next = new_token;
 	}
 }
@@ -128,6 +131,7 @@ t_token	*tokenlstnew(char	*content)
 	if(!token)
 		return (NULL);
 	token->next = 0;
+	token->head = token;
 	return (token);
 }
 
@@ -143,10 +147,8 @@ t_token *tokeniser(char *line)
 	line = update_line(line);  
 	while(*line)
 	{
-
-		//skip_whitespace(&line);
-		if (skip_whitespace_and_eof(&line) == false)
-			break;
+		if (skip_whitespace_and_check_for_eof(&line) == false)
+			return(token_lst);
 		new_token = create_token_with_quote_case(&line);
 		tokenadd_back(&token_lst, new_token);
 		line = update_line(line);
@@ -154,3 +156,9 @@ t_token *tokeniser(char *line)
 	return (token_lst);
 }
 
+// functioniert nicht / pruefen nach erster node / da zu viele cases
+// if (check_for_export(token_lst)== true)
+	// {
+	// 	token_lst = tokeniser_for_export(token_lst,line);
+	// 	return(token_lst);
+	// }
