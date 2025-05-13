@@ -16,10 +16,10 @@
 
 #define REDIRECT_INPUT 1 // <
 #define REDIRECT_OUTPUT 2 // >
-#define HER_DOC 3 // <<
+#define HERE_DOC 3 // <<
 #define APPEND 4 // >>
 
-#define BUILTIN 1
+//#define BUILTIN 1
 #define EXECUTE 2
 
 //List of redirection

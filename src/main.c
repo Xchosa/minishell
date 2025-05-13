@@ -83,13 +83,13 @@ int main(int argc, char **argv, char **env)
 	
     t_token *token_lst;
 	(void)argv;
-	//t_cmd_list *cmd_lst;
+	t_cmd_list *cmd_lst;
 	t_bash *bash;
 	//atexit(leaks);
-	char *line = "echo -l world=hello"; // = wird falsch gehandelt
+	//char *line = "echo -l world=hello"; // = wird falsch gehandelt
 	//char *line = "export h=echo echo=hello world=\"cat makefile\" hello";
 	//char *line = "echo $hallo";
-	
+	char *line = "echo test wc world >outfile";
 	// char *line = "export \"Var1\"=\"hello var1\"     var2=world     var3=\"cat Makefile | grep <\"";
 	//char *line = "export Var1=hello var=\"cat Makefile | grep <\" ";
 	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
@@ -120,6 +120,10 @@ int main(int argc, char **argv, char **env)
 	iter_tokenlst(token_lst, &print_tokenlst);
 	printf("export_list:\n\n");
 	handle_export(token_lst);
+	// search_in_static_env_for saved_var e.g. echo $hello -> 'echo' "test world" 
+	// only then put them in cmd_list.. 
+	// same for $USER , check if '$USER' or "$USER"
+	// muesste in handle_quotes_s_quotes und d_quotes direkt so von der env abgerufen werden. 
 	{
 		// check_here_doc_and_take_exit_word(token_lst);;
 		iter_tokenlst(token_lst, &print_tokenlst);
@@ -131,7 +135,8 @@ int main(int argc, char **argv, char **env)
 		// printf("\nenv:\n");
 		// ft_print_array(bash->env);
 	}
-	//cmd_lst = init_cmd_lst(token_lst);
+	cmd_lst = init_cmd_list(token_lst);
+	iter_cmd_lst(cmd_lst, &print_cmd_lst);
 
 	
 }

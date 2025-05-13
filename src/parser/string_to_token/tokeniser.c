@@ -59,7 +59,7 @@ t_type get_token_type(char *content)
 	if (content[i] == '>')
 	{
 		if (content[i+1] == '>')
-			return (Redirect_output_append_mode);
+			return (Append);
 		else
 			return(Redirect_output);
 	}

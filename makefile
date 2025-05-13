@@ -45,11 +45,12 @@ MY_SOURCES = \
 		create_export_tokens.c \
 		handle_export.c \
 		handle_dollar.c \
-		tokens_list_to_cmd.c \
-		init_cmd_nodes.c \
-		define_cmd_typ.c \
 		print_cmd_lst.c \
-		tokens_to_cmd.c \
+		define_cmd_typ.c \
+		init_cmd_nodes.c \
+		token_redir_to_cmd.c \
+		tokens_list_to_cmd.c \
+		tokens_text_to_cmd.c \
 		debug.c
 
 
