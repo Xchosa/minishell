@@ -52,15 +52,6 @@ char **cpychar_arr(char** src)
     while(i < rows || src[i])
 	{
 		cpy_env[i] = ft_strdup(src[i]);
-		// if(!cpy_env[i])
-		// {
-		// 	while(i > 0)
-		// 	{
-		// 		free(cpy_env[i]);
-		// 		i--;
-		// 	}
-		// return(NULL);
-		//}
 		i++;
 	}
 	cpy_env[i]= NULL;

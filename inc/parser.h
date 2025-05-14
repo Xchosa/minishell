@@ -26,6 +26,7 @@
 #define ec_abort_z 146
 #define ec_failure 127
 #define invalid_identifier 1
+#define stopped 148
 
 
 // t_bash *get_bash(void);
@@ -164,6 +165,13 @@ int 		special_char_no_divider(char c);
 int			special_char_no_divider_no_eq(char c);
 
 void		delete_token(t_token *delete_token);
+
+//	get export saved variables
+void 		extend_saved_export_var(t_token *token_lst);
+bool		extend_env(t_token *token_lst);
+char**		extend_env_with_str(char** src, char *token);
+char* 		get_var_from_env(char **src, char *token_no_dollar);
+
 // export tokenise 
 t_token*	tokeniser_for_export(t_token *token_lst, char *line);
 t_token*	equal_case(char **line);

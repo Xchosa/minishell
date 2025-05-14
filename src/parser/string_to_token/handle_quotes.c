@@ -33,6 +33,10 @@ t_token	*d_quote_case(char **line)
 		i++;
 	}
 	new_token->token_type = TEXT;
+	if((ft_strncmp("$", new_token->token, 1) == 0))
+		new_token->token_type = CALL_SAVED_VAR;
+	if((ft_strncmp("$?", new_token->token, 2) == 0))
+		new_token->token_type = CALL_EXIT;
 	return (new_token);
 }
 
@@ -68,7 +72,7 @@ t_token	*equal_case(char **line)
 	if(!new_token)
 		return (NULL);
 	new_token->token =ft_strdup("=");
-	new_token->token_type = EXPORT;
+	new_token->token_type = Export_var;
 	(void)line;
 	// (line)++;
 	return (new_token);

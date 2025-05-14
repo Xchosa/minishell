@@ -93,10 +93,12 @@ void handle_export(t_token *token_lst)
     t_token *new_tokens;
     current_token = token_lst;
     if(current_token->head->token_type != EXPORT)
+    // falsch wenn if(token->tokentype = CALL_SAVED_VAR)
+    // dann aus env rufen und tokenisen
         return;
     while(current_token->next)
     {
-        if(check_for_equal_sign(current_token->next)== true)
+        if(check_for_equal_sign(current_token->next)== true)// 
         {
             current_token->token_type= Export_var; // var1
             current_token = current_token->next; // =

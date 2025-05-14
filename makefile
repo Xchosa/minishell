@@ -44,6 +44,8 @@ MY_SOURCES = \
 		tokens_to_export.c \
 		create_export_tokens.c \
 		handle_export.c \
+		extend_token_from_bash.c \
+		parse_token_to_bash.c \
 		handle_dollar.c \
 		print_cmd_lst.c \
 		define_cmd_typ.c \
