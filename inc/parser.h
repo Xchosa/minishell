@@ -171,11 +171,11 @@ void 		extend_saved_export_var(t_token *token_lst);
 bool		extend_env(t_token *token_lst);
 char**		extend_env_with_str(char** src, char *token);
 char* 		get_var_from_env(char **src, char *token_no_dollar);
-
+void		change_spelling_USER_to_USERNAME(char *saved_var_without_$);
 // export tokenise 
 t_token*	tokeniser_for_export(t_token *token_lst, char *line);
 t_token*	equal_case(char **line);
-t_token*	split_token_in_sub_token(t_token *current_token);
+t_token*	split_token_in_sub_token(t_token *current_token, t_token *chain);
 t_token*	create_token_splited(char *content);
 char*		get_token_equal_as_div(char *content);
 t_token*	create_token_equal_as_div(char *content);
@@ -206,7 +206,7 @@ t_file_list*	file_list_to_NULL(void);
 t_cmd_list*		init_cmd_list(t_token *token_list);
 
 t_cmd_node*		process_token(t_token *curr_token);
-void			process_token_type_Text(t_token *curren_token,t_cmd_node *cmd_node);
+t_token* 		process_token_type_Text(t_token *curr_token,t_cmd_node *cmd_node);
 void 			append_token_char(t_cmd_node *cmd_node, t_token *currjj_token);
 char 			**cpy_token_char(char *token);
 int				check_for_execute(char *token_str);
@@ -214,7 +214,7 @@ int				check_for_builtin(char *token_str);
 int				choose_cmd_type(t_token *curr_token);
 
 //fill_file_list
-t_file_node*	process_token_type_redir(t_token *curr_token);
+t_file_node*	process_token_type_redir(t_token **curr_token);
 t_file_node* 	create_redirect_append_file_node(t_token *curr_token);
 t_file_node* 	create_redirect_heredoc_file_node(t_token *curr_token);
 t_file_node* 	create_redirect_input_file_node(t_token *curr_token);

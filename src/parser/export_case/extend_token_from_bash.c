@@ -28,15 +28,18 @@ char* get_var_from_env(char **src, char *token_no_dollar)
     int j;
     char *new_token;
 	char *tmp_token;
+    char *original_token;
     
+    original_token = ft_strjoin("$", token_no_dollar);
 	i = 0;
     j = ft_strlen(token_no_dollar);
 	while(src[i])
 	{
 		if((ft_strncmp(src[i], token_no_dollar, j) == 0))
         {
+            printf("%d  :%s\n", i, src[i]);
             token_no_dollar++;
-
+            j++;
             new_token =ft_strdup("");
             while((src[i])[j] != '\0')
 	        {
@@ -49,10 +52,16 @@ char* get_var_from_env(char **src, char *token_no_dollar)
         }
 		i++;
 	}
-    return(NULL);
-    // normal bash does nothing or echo returns empty line 
+    return(original_token);
 }
-
+// 
+// if(ft_strncmp("USER", saved_var_without_$, 4) == 0)
+//         change_spelling_USER_to_USERNAME(saved_var_without_$);
+// void change_spelling_USER_to_USERNAME(char *saved_var_without_$)
+// {
+//     free(saved_var_without_$);
+//     saved_var_without_$ = ft_strdup("USERNAME");
+// }
 
 
 void extend_saved_export_var(t_token *token_lst)
@@ -61,7 +70,7 @@ void extend_saved_export_var(t_token *token_lst)
     t_bash *bash;
     
     bash = get_bash(); 
-    while(token_lst->next)
+    while(token_lst)
     {
         if(token_lst->token_type == CALL_SAVED_VAR)
         {
@@ -69,6 +78,8 @@ void extend_saved_export_var(t_token *token_lst)
             free(token_lst->token);
             token_lst->token = get_var_from_env(bash->env,saved_var_without_$);
             free(saved_var_without_$);
+            if(token_lst->next == NULL)
+                return;
         }
         token_lst = token_lst->next;
     }

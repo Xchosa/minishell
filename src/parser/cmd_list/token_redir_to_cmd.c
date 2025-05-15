@@ -7,7 +7,7 @@ t_file_node* create_redirect_output_file_node(t_token *curr_token)
     new_file_node = malloc(sizeof(t_cmd_node));
 	if (!new_file_node)
 		return (NULL);
-    curr_token->next = curr_token;
+    curr_token = curr_token->next;
 	new_file_node->redir_type = REDIRECT_OUTPUT;
 	new_file_node->filename = ft_strdup(curr_token->token);
     return(new_file_node);
@@ -45,21 +45,22 @@ t_file_node* create_append_file_node(t_token *curr_token)
     curr_token->next = curr_token;
 	new_file_node->redir_type = APPEND;
 	new_file_node->filename = ft_strdup(curr_token->token);
-    return(new_file_node);
+	return(new_file_node);
 }
 
-t_file_node*	process_token_type_redir(t_token *curr_token)
+t_file_node*	process_token_type_redir(t_token **curr_token)
 {
 	t_file_node  *new_file_node;
 
-	if(curr_token->token_type == Redirect_input)
-		new_file_node = create_redirect_input_file_node(curr_token);
-    if (curr_token->token_type == Redirect_output)
-        new_file_node = create_redirect_output_file_node(curr_token);
-    if (curr_token->token_type == here_doc)
-        new_file_node = create_heredoc_file_node(curr_token);
-    if (curr_token->token_type == Append)
-        new_file_node = create_append_file_node(curr_token);
+	if((*curr_token)->token_type == Redirect_input)
+		new_file_node = create_redirect_input_file_node(*curr_token);
+    if ((*curr_token)->token_type == Redirect_output)
+        new_file_node = create_redirect_output_file_node(*curr_token);
+    if ((*curr_token)->token_type == here_doc)
+        new_file_node = create_heredoc_file_node(*curr_token);
+    if ((*curr_token)>token_type == Append)
+        new_file_node = create_append_file_node(*curr_token);
     new_file_node->next = new_file_node;
+	*curr_token = (*curr_token)->next->next;
     return (new_file_node);
 }

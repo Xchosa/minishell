@@ -57,23 +57,38 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	(void) argc;
 	(void) envp;
 	t_token *token_lst;
+	t_bash *bash;
+	t_exit_codes *exit_code;
+	// (void)bash;
+	(void)exit_code;
+
 	while(1)
 	{
 		// command holen
-		line = readline("Paul's coole bash:$ ");
+		line = readline("minishell:$ ");
 		add_history(line);
-		if(lexer(line) == false)
-		{
-			get_exit_codes()->last_exit_code = syntax_failure;
-			printf("syntax Error: \n");
-			printf("%s\n", line);
-			return ;
-		}
+		// if(lexer(line) == false)
+		// {
+		// 	get_exit_codes()->last_exit_code = syntax_failure;
+		// 	print_error_message(line);
+		// 	return ;
+		//;}
+		bash = get_bash();
+		(void)bash;
 		token_lst = tokeniser(line);
-		{
-			// check_here_doc_and_take_exit_word(token_lst);
-			iter_tokenlst(token_lst, &print_tokenlst);
-		}
+		iter_tokenlst(token_lst, &print_tokenlst);
+		if(extend_env(token_lst)== true)
+			{
+				printf("\nenv extended:\n");
+				ft_print_array(bash->env);
+				continue ;
+			}
+		printf("\n$var from env:\n");
+		extend_saved_export_var(token_lst);
+		iter_tokenlst(token_lst, &print_tokenlst);
+		// printf("saved var_string tokenised");
+		// handle_export(token_lst);
+		//iter_tokenlst(token_lst, &print_tokenlst);
 	}
 	// free_lst(token_lst, del());
 

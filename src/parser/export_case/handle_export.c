@@ -46,7 +46,7 @@ bool check_for_equal_sign(t_token *current_token)
 
 // B1 B2 B3 
 // hello var oder cat Makefile
-t_token *split_token_in_sub_token(t_token *current_token)
+t_token *split_token_in_sub_token(t_token *current_token, t_token *chain)
 {
     t_token *sub_token;
     t_token *head_subtoken;
@@ -60,7 +60,7 @@ t_token *split_token_in_sub_token(t_token *current_token)
     head_subtoken= sub_token;
     while(sub_token->next)
         sub_token = sub_token->next;
-    sub_token->next = main_token_lst;
+    sub_token->next = chain;
     return (head_subtoken);
 }
 
@@ -86,30 +86,66 @@ void delete_token(t_token *delete_token)
     free(delete_token);
 }
 
+// static bool check_for_whitespace(char *str)
+// {
+//     int i;
+
+//     i = 0;
+//     while(str[i])
+//     {
+//         if(ft_strchr("\t\n\v\f\r " , *str[i]) == NULL)
+// 		    return (true);
+//     }
+//     return (false);
+// }
+
+// static bool check_multi_tok_in_call_saved_var(t_token *token_lst)
+// {
+//     t_token *current_token;
+//     seperate_token bool;
+//     token_lst = current_token;
+
+//     while(current_token && current_token->next)
+//     {
+//         if(current_token->token_type == CALL_SAVED_VAR)
+//         {
+//             if(current_token->next)
+//             {
+//                 current_token= current_token->next;
+//                 if (check_for_whitespace(current_token->token) == true)
+//                     return(seperate_token = true);
+//             }
+//         }
+//     }
+// }
+
+
 void handle_export(t_token *token_lst)
 {
-    t_token *current_token;
     t_token *node_to_delete;
+    t_token *node_to_jump_after;
     t_token *new_tokens;
-    current_token = token_lst;
-    if(current_token->head->token_type != EXPORT)
-    // falsch wenn if(token->tokentype = CALL_SAVED_VAR)
-    // dann aus env rufen und tokenisen
-        return;
-    while(current_token->next)
+
+    while(token_lst && token_lst->next)
     {
-        if(check_for_equal_sign(current_token->next)== true)// 
+        if(token_lst->token_type == CALL_SAVED_VAR)
         {
-            current_token->token_type= Export_var; // var1
-            current_token = current_token->next; // =
-            node_to_delete = current_token->next;// echo world
-            new_tokens = split_token_in_sub_token(current_token->next);
+            node_to_delete = token_lst->next;// "echo world"
+            if(token_lst->next->next)
+                node_to_jump_after = NULL;
+            else
+                node_to_jump_after = token_lst->next->next;
+            new_tokens = split_token_in_sub_token(token_lst->next, node_to_jump_after);
             delete_token(node_to_delete);
-            current_token->next = new_tokens; // aber der next->pointer von world ist leer
-        } 
-        current_token = current_token->next;
+            token_lst->next = new_tokens; // aber der next->pointer von world ist leer
+            while(token_lst && token_lst->next && node_to_jump_after != NULL)
+            {
+                if(token_lst != node_to_jump_after)
+                    token_lst= token_lst->next;
+            }
+        }
+        token_lst = token_lst->next;// zwei nodes weiter wenn node gesplitted wurde
     }
-    current_token = current_token->next;// zwei nodes weiter wenn node gesplitted wurde
 }
 
     // wenn invalid_identiver 

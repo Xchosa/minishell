@@ -24,3 +24,18 @@ bool	init_exit_codes(int argc)
 	}
 	return (true);
 }
+
+bool print_error_message(char *line)
+{
+	int error;
+	bool exit_minishell;
+	exit_minishell = true;
+	error = get_exit_codes()->last_exit_code;
+	if (error == invalid_identifier)
+		(printf("minishell: '%s': not a valid identifier", line));
+	if (error == syntax_failure)
+		(printf("minishell: '%s': syntax failure ", line));
+	if (error == ec_sucess)
+		return(exit_minishell = false);
+	return(exit_minishell);
+}

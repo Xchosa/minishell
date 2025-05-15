@@ -3,7 +3,7 @@
 #include "minishell.h"
 
 
-void process_token_type_Text(t_token *curr_token,t_cmd_node *cmd_node)
+t_token* process_token_type_Text(t_token *curr_token,t_cmd_node *cmd_node)
 {
 	while(curr_token && curr_token->token_type == TEXT)
 	{
@@ -18,7 +18,7 @@ void process_token_type_Text(t_token *curr_token,t_cmd_node *cmd_node)
 		}
 	curr_token = curr_token->next;
 	}
-	return ;
+	return (curr_token);
 }
 
 
@@ -32,7 +32,7 @@ void process_token_type_Text(t_token *curr_token,t_cmd_node *cmd_node)
 	until pipe
 */
 
-t_cmd_node* process_token(t_token *curr_token)
+t_cmd_node* process_token(t_token *token_lst)
 {
 	t_cmd_node 	*cmd_node;
 
@@ -44,10 +44,10 @@ t_cmd_node* process_token(t_token *curr_token)
 	
 	// 	if(curr_token ->token_type == PIPE)
 			// 
-	while(curr_token->next)
+	while(token_lst && token_lst->next)
 	{
 		// process_token_type_export(curr_token, cmd_node)?
-		process_token_type_Text(curr_token,cmd_node);
+		token_lst=process_token_type_Text(token_lst,cmd_node);
 		// generall function for red output/input append her_doc 
 		
 
@@ -57,14 +57,15 @@ t_cmd_node* process_token(t_token *curr_token)
 
 		if(file_list->head == NULL)
 			{
-				file_list->head = process_token_type_redir(curr_token);
+				file_list->head = process_token_type_redir(token_lst);
 				file_list->size +=1;
 			}
 		else
 		{
-			file_list->tail = process_token_type_redir(curr_token);
+			file_list->tail = process_token_type_redir(token_lst);
 			file_list->tail = file_list->tail->next;
 			file_list->size +=1;
+			
 		}
 		
 		// process_token_type_export_var();

@@ -14,45 +14,31 @@
 #include "parser.h"
 
 
-// int	main(int argc, char **argv, char **envp)
+
+
+
+// int	main(int argc, char **argv, char **env)
 // {
-// 	(void) argv;
-// 	(void) argc;
-// 	(void) envp;
 // 	bool	tty_shell;
 	
 // 	tty_shell = false;
 // 	char *line;
 	
 // 	line = NULL;
-//	t_bash *bash;
-// 	t_exit_codes *exit_code;
-//	if (init_bash(env, argc)== false || (init_exit_codes(argc) == false))
-//		return(1);
+
+// 	if (init_bash(env, argc)== false || (init_exit_codes(argc) == false))
+// 		return(1);
 
 // 	if(isatty(STDIN_FILENO))
 // 	{
-// 		interactive_shell_tty(argc, argv, envp, line);
+// 		interactive_shell_tty(argc, argv, env, line);
 // 		tty_shell = true;
 // 	}
 // 	else
-// 		non_interactive_shell(argc, argv, envp, line);
-// 	// write form terminal into line (interaktiv oder aktiv )
-// 	// line = get_input_from_tty_or_not(argc, argv, line);
-
-// 	// 1. laxxen
-// 	// 2. parsen
-// 			// tree 
-// 	// 3. executen
+// 		non_interactive_shell(argc, argv, env, line);
 // 	if (tty_shell == true)
 // 		printf("clean history function + destroy shell");
 // }
-
-
-// garabe collecter implement
-// gc_malloc in einer linked list copieren
-// am ende von oben nach unten freen;
-
 
 // void   leaks(void)
 // {
@@ -60,23 +46,7 @@
 //     system("leaks minishelll: \n");
 // }
 
-// handle: 
-//  echo test $? 
-
-bool print_error_message(char *line)
-{
-	int error;
-	bool exit_minishell;
-	exit_minishell = true;
-	error = get_exit_codes()->last_exit_code;
-	if (error == invalid_identifier)
-		(printf("minishell: '%s': not a valid identifier", line));
-	if (error == syntax_failure)
-		(printf("minishell: '%s': syntax failure ", line));
-	if (error == ec_sucess)
-		return(exit_minishell = false);
-	return(exit_minishell);
-}
+// discard export hadle if t
 
 int main(int argc, char **argv, char **env)
 {
@@ -86,12 +56,12 @@ int main(int argc, char **argv, char **env)
 	t_cmd_list *cmd_lst;
 	t_bash *bash;
 	//atexit(leaks);
-	//char *line = "echo -l world=hello"; // = wird falsch gehandelt
-	char *line ="export hallo=hallosaved boni=\"hello world=\"  ";
-	//char *line = "echo $h echo $boni";
+	//char *line = "export halloworld=hello juliaworld=world"; // = wird falsch gehandelt
+	//char *line ="export hallo=hallosaved boni=\"hello world=\"  ";
+	//char *line = "echo $\"hallo world\"echo $boni world";
 	//char *line = "export h=echo echo=hello world=\"cat makefile\" hello";
 	//char *line = "echo $USER $? echo \"$?\"\"$USER\" echo \'$USER\' ";
-	//char *line = "echo test wc world >outfile";
+	char *line = "echo test wc world >outfile";
 	// char *line = "export \"Var1\"=\"hello var1\"     var2=world     var3=\"cat Makefile | grep <\"";
 	//char *line = "export Var1=hello var=\"cat Makefile | grep <\" ";
 	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
@@ -116,30 +86,28 @@ int main(int argc, char **argv, char **env)
 	// 	print_error_message(line);
 	// 	return(1);
 	// }
+
 	bash = get_bash();
 	(void)bash;
 	
     token_lst = tokeniser(line);
 	iter_tokenlst(token_lst, &print_tokenlst);
 	
+	// printf("\nenv:\n");
+	// 	ft_print_array(bash->env);
+	
 	if(extend_env(token_lst)== true)
-		return(1);// success
+		return(1);
 
 	extend_saved_export_var(token_lst);
-	printf("export_list:\n\n");
+	printf("\n export_list:\n\n");
 	// change_only tokenise if CALL_SAVED_VAR
-	// handle_export(token_lst);
 	
 	iter_tokenlst(token_lst, &print_tokenlst);
-
-		// if((print_error_message(line)) == true)
-		// 	return(1);
-			
-		// printf("\nenv:\n");
-		// ft_print_array(bash->env);
-	
+	// printf("\n multiple tokens split:\n\n");
+	// handle_export(token_lst);
+	// iter_tokenlst(token_lst, &print_tokenlst);
+	printf("\ndo i come here:\n\n");
 	cmd_lst = init_cmd_list(token_lst);
 	iter_cmd_lst(cmd_lst, &print_cmd_lst);
-
-	
 }

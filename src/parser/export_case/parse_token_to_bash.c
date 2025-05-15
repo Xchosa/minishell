@@ -34,12 +34,10 @@ bool extend_env(t_token *token_lst)
     old_bash = get_bash();
     new_bash = get_bash();
 
-    // printf("\nold env:\n");
-	// 	ft_print_array(old_bash->env);
     only_extend_env = false;
     if(token_lst->head->token_type != EXPORT)
         return (false);
-    while(token_lst->next)
+    while(token_lst != NULL && token_lst->next != NULL)
     {
         if(token_lst->token_type == Export_var)
         {
@@ -48,10 +46,9 @@ bool extend_env(t_token *token_lst)
             //new_bash = get_bash();// somehow update static function 
             only_extend_env = true;
         }
-        token_lst = token_lst->next;
+        else
+            token_lst = token_lst->next;
     }
-    // printf("\nnew env:\n");
     // ft_print_array(new_bash->env);
-
     return  (only_extend_env);
 }

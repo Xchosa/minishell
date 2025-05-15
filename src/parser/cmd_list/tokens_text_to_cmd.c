@@ -85,11 +85,11 @@ void append_token_char(t_cmd_node *cmd_node, t_token *curr_token)
     
     ft_free_array(cmd_node->cmd);
     cmd_node->cmd = append_cmd_array;\
-    // i = 0;
-    // printf("cmd node cmd array:\n");
-    // while(cmd_node->cmd[i] != NULL)
-    // {
-    //     printf("cmd node %s\n", cmd_node->cmd[i]);
-    //     i++;
-    // }
+    i = 0;
+    printf("cmd node cmd array:\n");
+    while(cmd_node->cmd[i] != NULL)
+    {
+        printf("cmd node %s\n", cmd_node->cmd[i]);
+        i++;
+    }
 }
