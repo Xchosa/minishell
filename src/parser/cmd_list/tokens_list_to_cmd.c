@@ -35,44 +35,36 @@
 t_cmd_node* process_token(t_token **token_lst)
 {
 	t_cmd_node 	*cmd_node;
+	t_file_node *file_node;
 
 	t_file_list *file_list;
 	file_list = file_list_to_NULL();
 	cmd_node = malloc(sizeof(t_cmd_node));
 	if (!cmd_node)
 		return (NULL);
-	
-	
-	while(token_lst && (*token_lst)->next)
+	cmd_node->file_list = file_list;
+	while((*token_lst)&& (*token_lst)->next)
 	{
 		// process_token_type_export(curr_token, cmd_node)?
 		process_token_type_Text(token_lst,cmd_node);
-		// generall function for red output/input append her_doc 
-		
-
-		// ganzer block der immer nur die curr_node zuruck gibt. 
-		// man arbeitet ja die ganze zeit mit der selben cmd_node
-		// new_token = process_token_type_redir
-
 		if(file_list->head == NULL)
 			{
 				file_list->head = process_token_type_redir(token_lst);
-				// file_list->head = process_token_type_redir(token_lst);
-				file_list->size +=1;
+				file_node = file_list->head;
+				file_list->tail = file_node;
 			}
-		else
+		if ((*token_lst) && (*token_lst)->token_type == PIPE)
 		{
-			file_list->head = process_token_type_redir(token_lst);
-			// file_list->tail = process_token_type_redir(token_lst);
-			file_list->tail = file_list->tail->next;
-			file_list->size +=1;
-			
+			(*token_lst) = (*token_lst)->next;
+			return (cmd_node);
 		}
-		
-		// process_token_type_export_var();
-		// process_token_call_exit;
-		// if(curr_token ->token_type == PIPE)
-		// 		break;
+		if((*token_lst)->token_type != PIPE && (*token_lst)->token_type != TEXT)
+		{
+			file_node->next = process_token_type_redir(token_lst);
+			file_node = file_node->next;
+			file_list->tail = file_node;
+			file_list->size +=1;
+		}
 	}
 	return(cmd_node);
 }

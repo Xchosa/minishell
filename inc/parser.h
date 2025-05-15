@@ -50,7 +50,6 @@ bool			init_exit_codes(int argc);
 typedef enum s_type
 {
 	TEXT = 0, // 0
-	BUILTIN = 1,
 	Redirect_input = 3, // 2 
 	Redirect_output = 4, // 
 	Append = 5,// >>
