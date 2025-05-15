@@ -200,14 +200,13 @@ bool		d_quote_case_no_div(char *line);
 void	print_cmd_lst(t_cmd_node *cmd_nodes);
 void	iter_cmd_lst(t_cmd_list *cmd_lst, void (*f)(t_cmd_node*));
 
-t_cmd_list*		init_cmd_list(t_token *token_list);
+t_cmd_list*		init_cmd_list(t_token **token_list);
 t_cmd_list*		cmd_list_to_NULL(void);
 t_file_list*	file_list_to_NULL(void);
-t_cmd_list*		init_cmd_list(t_token *token_list);
 
-t_cmd_node*		process_token(t_token *curr_token);
-t_token* 		process_token_type_Text(t_token *curr_token,t_cmd_node *cmd_node);
-void 			append_token_char(t_cmd_node *cmd_node, t_token *currjj_token);
+t_cmd_node*		process_token(t_token **curr_token);
+void 			process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node);
+void 			append_token_char(t_cmd_node *cmd_node, t_token *curr_token);
 char 			**cpy_token_char(char *token);
 int				check_for_execute(char *token_str);
 int				check_for_builtin(char *token_str);
@@ -215,10 +214,10 @@ int				choose_cmd_type(t_token *curr_token);
 
 //fill_file_list
 t_file_node*	process_token_type_redir(t_token **curr_token);
-t_file_node* 	create_redirect_append_file_node(t_token *curr_token);
-t_file_node* 	create_redirect_heredoc_file_node(t_token *curr_token);
-t_file_node* 	create_redirect_input_file_node(t_token *curr_token);
-t_file_node* 	create_redirect_output_file_node(t_token *curr_token);
+t_file_node* 	create_redirect_append_file_node(t_token **curr_token);
+t_file_node* 	create_redirect_heredoc_file_node(t_token **curr_token);
+t_file_node* 	create_redirect_input_file_node(t_token **curr_token);
+t_file_node* 	create_redirect_output_file_node(t_token **curr_token);
 
 // for new_libft
 char	**ft_cpy_array_str(char **arrays);

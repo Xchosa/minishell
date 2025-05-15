@@ -108,6 +108,6 @@ int main(int argc, char **argv, char **env)
 	// handle_export(token_lst);
 	// iter_tokenlst(token_lst, &print_tokenlst);
 	printf("\ndo i come here:\n\n");
-	cmd_lst = init_cmd_list(token_lst);
+	cmd_lst = init_cmd_list(&token_lst);
 	iter_cmd_lst(cmd_lst, &print_cmd_lst);
 }

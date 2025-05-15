@@ -35,21 +35,21 @@ In the cmd_node is a pointer to the file_list if there happens
 to be pipes or redirections. 
 */
 
-t_cmd_list	*init_cmd_list(t_token *token_list)
+t_cmd_list	*init_cmd_list(t_token **token_list)
 {
 	t_cmd_list *cmd_list;
 	t_token		*current_token;
 	
 	cmd_list = cmd_list_to_NULL();
 	
-	current_token = token_list;
-	while(current_token->next)
+	current_token = *token_list;
+	while(current_token && current_token->next)
 	{
 		if(cmd_list->head == NULL)
-			cmd_list->head = process_token(current_token);
+			cmd_list->head = process_token(&current_token);
 		else
 		{
-			cmd_list->tail= process_token(current_token);
+			cmd_list->tail= process_token(&current_token);
 			cmd_list->size +=1;
 			cmd_list->tail = cmd_list->tail->next;
 		}

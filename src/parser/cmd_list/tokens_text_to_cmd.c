@@ -86,10 +86,28 @@ void append_token_char(t_cmd_node *cmd_node, t_token *curr_token)
     ft_free_array(cmd_node->cmd);
     cmd_node->cmd = append_cmd_array;\
     i = 0;
-    printf("cmd node cmd array:\n");
-    while(cmd_node->cmd[i] != NULL)
-    {
-        printf("cmd node %s\n", cmd_node->cmd[i]);
-        i++;
-    }
+    // printf("cmd node cmd array:\n");
+    // while(cmd_node->cmd[i] != NULL)
+    // {
+    //     printf("cmd node %s\n", cmd_node->cmd[i]);
+    //     i++;
+    // }
+}
+
+void process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
+{
+	while(curr_token && *curr_token && (*curr_token)->token_type == TEXT)
+	{
+		if(cmd_node->cmd_type == 0)
+		{
+			cmd_node->cmd_type = choose_cmd_type(*curr_token);
+			cmd_node->cmd = cpy_token_char((*curr_token)->token);
+		}
+		else
+		{
+			append_token_char(cmd_node, *curr_token);
+		}
+	(*curr_token) = (*curr_token)->next;
+	}
+	return ;
 }
