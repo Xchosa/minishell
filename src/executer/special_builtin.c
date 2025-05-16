@@ -105,9 +105,9 @@ void	ft_unset_var(char **envp, int j)
 	char	**newenvp;
 	int		size;
 	int		i;
-	int		x;
+	// int		x;
 
-	size = 0;
+	// size = 0;
 	i = 0;
 	x = 0;
 	while (envp[size] != NULL)

@@ -20,6 +20,7 @@ void	ft_echo(t_cmd_node *cmd_node, char **envp)
 	int	i;
 
 	i = 1;
+	(void)envp;
 	if (ft_strncmp("-n", cmd_node->cmd[1], 2) == 0)
 		i++;
 	while (cmd_node->cmd[i] != NULL)
@@ -74,6 +75,7 @@ void	ft_env(char **envp)
 
 void	ft_cd(t_cmd_node *cmd_node, char **envp)
 {
+	(void)envp;
 	if (chdir(cmd_node->cmd[1]) != 0)
 		printf("Error\n");
 

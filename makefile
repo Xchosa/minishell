@@ -53,7 +53,14 @@ MY_SOURCES = \
 		token_redir_to_cmd.c \
 		tokens_list_to_cmd.c \
 		tokens_text_to_cmd.c \
-		debug.c
+		debug.c \
+		#builtins.c \
+		#manage_pipes.c \
+		#pipex.c \
+		#special_builtin.c \
+		#executer.c \
+		#redirect.c \
+
 
 
 HEADERS = \
