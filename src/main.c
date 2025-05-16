@@ -57,16 +57,16 @@ int main(int argc, char **argv, char **env)
 	t_bash *bash;
 	//atexit(leaks);
 	//char *line = "export halloworld=hello juliaworld=world"; // = wird falsch gehandelt
-	//char *line ="export hallo=hallosaved boni=\"hello world=\"  ";
-	//char *line = "echo $\"hallo world\"echo $boni world";
-	//char *line = "export h=echo echo=hello world=\"cat makefile\" hello";
+	// char *line ="echo $USER ";
+	// char *line = "echo $h world echo $paul echo $world";
+	// char *line = "export h=thilo paul=kruecke world=\"cat makefile\" ";
 	//char *line = "echo $USER $? echo \"$?\"\"$USER\" echo \'$USER\' ";
 	//char *line = "echo test wc world >outfile test >outfile2 >outfile3";
 	// char *line = "export \"Var1\"=\"hello var1\"     var2=world     var3=\"cat Makefile | grep <\"";
 	//char *line = "export Var1=hello var=\"cat Makefile | grep <\" ";
 	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
-	// char *line = "export h=\"echo hello test\" "; // fehler gerade
-	char *line = "cat < infile | grep test > outfile > out3file";
+	char *line = "ls -al | grep libft  | wc > outfile > out3file";
+	//char *line = "cat < infile | grep test | wc > outfile > out3file";
 	//char *line = "cat < infile > outfile > out3file";// sollte valid sein
 	//char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
 	// char *line = "\"hello< echo|hello << wow hello"; // nicht valid

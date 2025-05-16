@@ -32,6 +32,28 @@
 	until pipe
 */
 
+static bool no_pipe(t_token **token_list)
+{
+	if((*token_list)->token_type == PIPE)
+	{
+		(*token_list) = (*token_list)->next;
+		return (false);
+	}
+	return (true);
+}
+static bool no_redir(t_token **token_list)
+{
+	int type;
+
+	type = (*token_list)->token_type;
+	if (type == Redirect_input || type == Redirect_output 
+        || type == Append || type == here_doc)
+    	return (true);
+	else
+		return (false);
+}
+
+
 t_cmd_node* process_token(t_token **token_lst)
 {
 	t_cmd_node 	*cmd_node;
@@ -45,19 +67,19 @@ t_cmd_node* process_token(t_token **token_lst)
 	cmd_node->file_list = file_list;
 	while((*token_lst)&& (*token_lst)->next)
 	{
-		// process_token_type_export(curr_token, cmd_node)?
 		process_token_type_Text(token_lst,cmd_node);
+		if(no_pipe(token_lst) == false || no_redir(token_lst) == false)
+			return(cmd_node);
 		if(file_list->head == NULL)
 			{
 				file_list->head = process_token_type_redir(token_lst);
 				file_node = file_list->head;
 				file_list->tail = file_node;
 			}
-		if ((*token_lst) && (*token_lst)->token_type == PIPE)
-		{
-			(*token_lst) = (*token_lst)->next;
-			return (cmd_node);
-		}
+		// if ((*token_lst) && (*token_lst)->token_type == PIPE)
+		// {
+		// 	(*token_lst) = (*token_lst)->next;
+		// 	return (cmd_node);
 		if((*token_lst)->token_type != PIPE && (*token_lst)->token_type != TEXT)
 		{
 			file_node->next = process_token_type_redir(token_lst);
