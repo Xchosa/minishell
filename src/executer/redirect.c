@@ -51,6 +51,11 @@ void	ft_manage_append(char *appendfile, int fd[][2])
 	return ;
 }
 
+void	ft_manage_heredoc(char *delimiter, int fd[][2])
+{
+	(void) delimiter;
+}
+
 void	ft_manage_redirections(t_cmd_node *cmd_node, int fd[][2])
 {
 	t_file_node	*current;
@@ -58,11 +63,13 @@ void	ft_manage_redirections(t_cmd_node *cmd_node, int fd[][2])
 	current = cmd_node->file_list->head;
 	while (current != NULL)
 	{
-		if (current->redir_type == 1)
+		if (current->redir_type == REDIRECT_INPUT)
 			ft_manage_infile(current->filename, fd);
-		else if (current->redir_type == 2)
+		else if (current->redir_type == REDIRECT_OUTPUT)
 			ft_manage_outfile(current->filename, fd);
-		else if (current->redir_type == 3)
+		else if (current->redir_type == HEREDOC)
+			ft_manage_heredoc(current->filename, fd);
+		else if (current->redir_type == APPEND)
 			ft_manage_append(current->filename, fd);
 		current = current->next;
 	}
