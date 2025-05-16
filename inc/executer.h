@@ -4,21 +4,22 @@
 
 # include "minishell.h"
 # include <sys/wait.h>
+# include <parser.h>
 
-typedef struct s_exit_codes
-{	
-	int last_exit_code; // update after every runexit
-	
-} t_exit_codes;
+	// typedef struct s_exit_codes
+	// {	
+	// 	int last_exit_code; // update after every runexit
+		
+	// } t_exit_codes;
 
-typedef struct s_bash
-{
-	char **env;
-	
-} t_bash;
+	// typedef struct s_bash
+	// {
+	// 	char **env;
+		
+	// } t_bash;
 
-t_exit_codes	*get_exit_codes(void);
-t_bash		*get_bash(void);
+	// t_exit_codes	*get_exit_codes(void);
+	// t_bash		*get_bash(void);
 
 void	ft_echo(t_cmd_node *cmd_node, char **envp);
 void	ft_pwd(char **envp);
