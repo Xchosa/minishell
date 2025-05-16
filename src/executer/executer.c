@@ -38,6 +38,8 @@ void	ft_execute_builtin(t_cmd_node *cmd_node, char **envp)
 		ft_export(cmd_node, envp);
 	if (ft_strncmp("exit", cmd_node->cmd[0], 4) == 0)
 		ft_exit(cmd_node);
+	if (ft_strncmp("unset", cmd_node->cmd[0], 5) == 0)
+		ft_unset(cmd_node, envp);
 }
 
 void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
@@ -114,6 +116,7 @@ int	main(int argc, char **argv, char **envp)
 	cmd_list.size = 1;
 	cmd_node1.cmd_type = BUILTIN;
 	cmd_node1.cmd = ft_split("export thilo=hi", ' ');
+	//cmd_node1.cmd = {"export", "thilo=hi", "paul=kruecke", "test=cat makefile", NULL};
 	cmd_node1.file_list = &file_list1;
 	cmd_node1.next = NULL;
 	file_list1.head = NULL;
