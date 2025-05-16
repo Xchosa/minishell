@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../inc/executer.h"
 
 int	ft_get_index(int i, char **envp)
 {
@@ -105,11 +105,9 @@ void	ft_unset_var(char **envp, int j)
 	char	**newenvp;
 	int		size;
 	int		i;
-	// int		x;
 
-	// size = 0;
+	size = 0;
 	i = 0;
-	x = 0;
 	while (envp[size] != NULL)
 		size++;
 	newenvp = (char **)malloc(size * sizeof(char *));
