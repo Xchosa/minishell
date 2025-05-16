@@ -2,26 +2,6 @@
 #include "parser.h"
 #include "minishell.h"
 
-
-
-
-// t_file_node* process_token_types(t_token **token_lst)
-// {
-// 	t_file_node *file_node;
-// 	file_node = malloc(sizeof(t_cmd_node));
-// 	if (!file_node)
-// 		return (NULL);
-	
-// 	file_node = process_token_type_Text(&token_lst,cmd_node);
-
-// }
-
-
-
-
-
-
-
 /*
 	appends in cmd_node the cmd from each token
 	changing or giving a cmd_type for the hole node until a pipe
@@ -34,6 +14,9 @@
 
 static bool no_pipe(t_token **token_list)
 {
+	if(*token_list == NULL)
+        return(false);
+
 	if((*token_list)->token_type == PIPE)
 	{
 		(*token_list) = (*token_list)->next;
@@ -45,6 +28,8 @@ static bool no_redir(t_token **token_list)
 {
 	int type;
 
+	if(*token_list == NULL)
+        return(false);
 	type = (*token_list)->token_type;
 	if (type == Redirect_input || type == Redirect_output 
         || type == Append || type == here_doc)

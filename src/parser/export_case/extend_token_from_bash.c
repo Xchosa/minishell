@@ -20,7 +20,11 @@
 // nach dem ersten Tokeniser
 
 
+// issue finds for USER :Username=poverbec and prints out ame=poverbec
 
+// original_token = ft_strjoin("$", token_no_dollar);
+//     if (ft_strncmp(token_no_dollar, "USER", 4)== 0)
+//         original_token = ft_strjoin(token_no_dollar, "NAME");
 
 char* get_var_from_env(char **src, char *token_no_dollar)
 {
@@ -30,7 +34,7 @@ char* get_var_from_env(char **src, char *token_no_dollar)
 	char *tmp_token;
     char *original_token;
     
-    original_token = ft_strjoin("$", token_no_dollar);
+    original_token = ft_strjoin(":", token_no_dollar);
 	i = 0;
     j = ft_strlen(token_no_dollar);
 	while(src[i])
@@ -84,14 +88,3 @@ void extend_saved_export_var(t_token *token_lst)
         token_lst = token_lst->next;
     }
 }
-
-
-
-// bash-3.2$ echo $USER
-// poverbec
-
-
-// poverbec@3-E-23 minishell % echo 'Hallo $USER '
-// Hallo $USER
-// poverbec@3-E-23 minishell % echo "Hallo $USER"
-// Hallo poverbec

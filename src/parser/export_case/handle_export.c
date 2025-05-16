@@ -86,38 +86,40 @@ void delete_token(t_token *delete_token)
     free(delete_token);
 }
 
-// static bool check_for_whitespace(char *str)
-// {
-//     int i;
 
-//     i = 0;
-//     while(str[i])
-//     {
-//         if(ft_strchr("\t\n\v\f\r " , *str[i]) == NULL)
-// 		    return (true);
-//     }
-//     return (false);
-// }
+static bool check_for_multi_tokens(char *line)
+{
+    bool multiple_token;
+	t_token *token_lst;
 
-// static bool check_multi_tok_in_call_saved_var(t_token *token_lst)
-// {
-//     t_token *current_token;
-//     seperate_token bool;
-//     token_lst = current_token;
+	if (!line || *line == '\0')
+		return(false);
+	token_lst = tokenlstnew(line);
+	if (!token_lst)
+		return (false);
+    skip_whitespace(&line);
+    line = handle_special_characters(line);
+    // Check if line is NULL or points to end of string
+	if (line == NULL || *line == '\0')
+        multiple_token = false;
+    else
+        multiple_token = true;
+    free(token_lst);
+	return (multiple_token);
+}
 
-//     while(current_token && current_token->next)
-//     {
-//         if(current_token->token_type == CALL_SAVED_VAR)
-//         {
-//             if(current_token->next)
-//             {
-//                 current_token= current_token->next;
-//                 if (check_for_whitespace(current_token->token) == true)
-//                     return(seperate_token = true);
-//             }
-//         }
-//     }
-// }
+
+
+static bool split_needed(t_token **t_lst)
+{
+    t_token *check;
+    check = (*t_lst);
+
+    if (check_for_multi_tokens(check->token) == true)
+        return (true);
+    return(false);
+
+}
 
 
 void handle_export(t_token *token_lst)
@@ -126,9 +128,9 @@ void handle_export(t_token *token_lst)
     t_token *node_to_jump_after;
     t_token *new_tokens;
 
-    while(token_lst && token_lst->next)
+    while(token_lst)
     {
-        if(token_lst->token_type == CALL_SAVED_VAR)
+        if(token_lst->token_type == CALL_SAVED_VAR && split_needed(&token_lst)== true)
         {
             node_to_delete = token_lst->next;// "echo world"
             if(token_lst->next->next)
@@ -137,14 +139,14 @@ void handle_export(t_token *token_lst)
                 node_to_jump_after = token_lst->next->next;
             new_tokens = split_token_in_sub_token(token_lst->next, node_to_jump_after);
             delete_token(node_to_delete);
-            token_lst->next = new_tokens; // aber der next->pointer von world ist leer
+            token_lst->next = new_tokens;
             while(token_lst && token_lst->next && node_to_jump_after != NULL)
             {
                 if(token_lst != node_to_jump_after)
                     token_lst= token_lst->next;
             }
         }
-        token_lst = token_lst->next;// zwei nodes weiter wenn node gesplitted wurde
+        token_lst = token_lst->next;
     }
 }
 

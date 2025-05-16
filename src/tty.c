@@ -53,42 +53,40 @@ what is awk
 
 void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 {
-	(void) argv;
-	(void) argc;
-	(void) envp;
+	(void)argc;
+	(void)envp;
+	(void)argv;
 	t_token *token_lst;
 	t_bash *bash;
 	t_exit_codes *exit_code;
-	// (void)bash;
+	t_cmd_list *cmd_lst;
 	(void)exit_code;
 
 	while(1)
 	{
-		// command holen
 		line = readline("minishell:$ ");
 		add_history(line);
-		// if(lexer(line) == false)
-		// {
-		// 	get_exit_codes()->last_exit_code = syntax_failure;
-		// 	print_error_message(line);
-		// 	return ;
-		//;}
 		bash = get_bash();
 		(void)bash;
 		token_lst = tokeniser(line);
 		iter_tokenlst(token_lst, &print_tokenlst);
 		if(extend_env(token_lst)== true)
-			{
-				printf("\nenv extended:\n");
-				ft_print_array(bash->env);
-				continue ;
-			}
+		{
+			printf("\nenv extended:\n");
+			ft_print_array(bash->env);
+			continue ;
+		}
 		printf("\n$var from env:\n");
 		extend_saved_export_var(token_lst);
 		iter_tokenlst(token_lst, &print_tokenlst);
-		// printf("saved var_string tokenised");
-		// handle_export(token_lst);
-		//iter_tokenlst(token_lst, &print_tokenlst);
+		extend_saved_export_var(token_lst);
+		iter_tokenlst(token_lst, &print_tokenlst);
+		handle_export(token_lst);
+		printf("\n called form:\n\n");
+		iter_tokenlst(token_lst, &print_tokenlst);
+		printf("\ndo i come here:\n\n");
+		cmd_lst = init_cmd_list(&token_lst);
+		iter_cmd_lst(cmd_lst, &print_cmd_lst);
 	}
 	// free_lst(token_lst, del());
 
