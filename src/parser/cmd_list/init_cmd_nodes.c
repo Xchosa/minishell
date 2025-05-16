@@ -38,20 +38,24 @@ to be pipes or redirections.
 t_cmd_list	*init_cmd_list(t_token **token_list)
 {
 	t_cmd_list *cmd_list;
-	t_token		*current_token;
+	t_cmd_node 	*cmd_node;
 	
 	cmd_list = cmd_list_to_NULL();
 	
-	current_token = *token_list;
-	while(current_token && current_token->next)
+	while((*token_list) && (*token_list)->next)
 	{
 		if(cmd_list->head == NULL)
-			cmd_list->head = process_token(&current_token);
+		{
+			cmd_list->head = process_token(token_list);
+			cmd_node = cmd_list->head;
+			cmd_list->tail = cmd_node;
+		}
 		else
 		{
-			cmd_list->tail= process_token(&current_token);
+			cmd_node->next = process_token(token_list);
+			cmd_node = cmd_node->next;
+			cmd_list->tail = cmd_node;
 			cmd_list->size +=1;
-			cmd_list->tail = cmd_list->tail->next;
 		}
 	}
 	return(cmd_list);

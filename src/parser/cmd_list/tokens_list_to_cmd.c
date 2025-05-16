@@ -36,8 +36,8 @@ t_cmd_node* process_token(t_token **token_lst)
 {
 	t_cmd_node 	*cmd_node;
 	t_file_node *file_node;
-
 	t_file_list *file_list;
+	
 	file_list = file_list_to_NULL();
 	cmd_node = malloc(sizeof(t_cmd_node));
 	if (!cmd_node)
