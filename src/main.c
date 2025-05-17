@@ -63,7 +63,7 @@ int main(int argc, char **argv, char **env)
 	t_bash *bash;
 	//atexit(leaks);
 	// char *line = "export halloworld=hello juliaworld=world"; // = wird falsch gehandelt
-	char *line ="echo $halloworld echo $USER eche juliaworld";
+	char *line ="echo $halloworld echo $USERNAME eche $paul";
 	// char *line = "echo $h world echo $paul echo $world";
 	// char *line = "export h=thilo paul=kruecke world=\"cat makefile\" ";
 	//char *line = "echo $USER $? echo \"$?\"\"$USER\" echo \'$USER\' ";

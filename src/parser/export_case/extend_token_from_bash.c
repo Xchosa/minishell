@@ -34,7 +34,7 @@ char* get_var_from_env(char **src, char *token_no_dollar)
 	char *tmp_token;
     char *original_token;
     
-    original_token = ft_strjoin(":", token_no_dollar);
+    original_token = ft_strjoin("$", token_no_dollar);
 	i = 0;
     j = ft_strlen(token_no_dollar);
 	while(src[i])
@@ -67,6 +67,44 @@ char* get_var_from_env(char **src, char *token_no_dollar)
 //     saved_var_without_$ = ft_strdup("USERNAME");
 // }
 
+static bool check_input_user(char *token)
+{
+    if((ft_strncmp(token, "USERNAME", 8) == 0))
+        return (false);
+    if((ft_strncmp(token, "USER", 4) == 0))
+        return (true);
+    return (false);
+}
+
+static char* handle_user(char **src)
+{
+    int i;
+    int j;
+    char *new_token;
+	char *tmp_token;
+    
+	i = 0;
+    j = 0;
+    while(src[i])
+	{
+		if((ft_strncmp(src[i], "USERNAME", 8) == 0) )
+        {
+            j += 9;
+            new_token =ft_strdup("");
+            while((src[i])[j] != '\0')
+	        {
+		        tmp_token = ft_charjoin(new_token, (src[i][j]));
+		        free(new_token);
+                new_token = tmp_token;
+		        j++;
+	        }
+            return (new_token);
+        }
+		i++;
+	}
+    return(ft_strdup("$USER"));
+}
+
 
 void extend_saved_export_var(t_token *token_lst)
 {
@@ -80,7 +118,10 @@ void extend_saved_export_var(t_token *token_lst)
         {
             saved_var_without_$ = ft_strdup(token_lst->token + 1);
             free(token_lst->token);
-            token_lst->token = get_var_from_env(bash->env,saved_var_without_$);
+            if(check_input_user(saved_var_without_$) == true)
+                token_lst->token = handle_user(bash->env);
+            else
+                token_lst->token = get_var_from_env(bash->env,saved_var_without_$);
             free(saved_var_without_$);
             if(token_lst->next == NULL)
                 return;
