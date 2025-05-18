@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "parser.h"
+#include "executer.h"
 
 
 
@@ -71,7 +72,7 @@ int main(int argc, char **argv, char **env)
 	// char *line = "export \"Var1\"=\"hello var1\"     var2=world     var3=\"cat Makefile | grep <\"";
 	//char *line = "export Var1=hello var=\"cat Makefile | grep <\" ";
 	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
-	// char *line = "ls -al | grep libft  | wc > outfile > out3file";
+	//char *line = "ls -al | grep libft  | wc > outfile > out3file";
 	char *line = "cat < infile | grep test | wc > outfile > out3file";
 	//char *line = "cat < infile > outfile > out3file";// sollte valid sein
 	//char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
@@ -117,4 +118,5 @@ int main(int argc, char **argv, char **env)
 	printf("\ndo i come here:\n\n");
 	cmd_lst = init_cmd_list(&token_lst);
 	iter_cmd_lst(cmd_lst, &print_cmd_lst);
+	ft_execute(cmd_lst, get_bash()->env);
 }

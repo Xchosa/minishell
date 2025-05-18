@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../inc/executer.h"
 
-void	ft_free_array(char **array)
+void	ft_free_array2(char **array)
 {
 	int	i;
 
@@ -70,9 +70,9 @@ char	*ft_getpath(char *command, char **envp)
 		full = ft_strjoin(tmp, command);
 		free(tmp);
 		if (access(full, X_OK) == 0)
-			return (ft_free_array(arr), full);
+			return (ft_free_array2(arr), full);
 		i++;
 		free(full);
 	}
-	return (ft_free_array(arr), NULL);
+	return (ft_free_array2(arr), NULL);
 }

@@ -3,9 +3,9 @@ NAME := minishell
 CC := cc
 
 #---------linux---------
-CFLAGS	= -Wall -Wextra -Werror -g -I inc/ -ldl -lglfw -pthread -lm
+CFLAGS	= -Wall -Wextra  -g -I inc/ -ldl -lglfw -pthread -lm #-Werror
 #----------mac ---------
-CFLAGS		= -Wall -Wextra -Werror -g -I inc/
+CFLAGS		= -Wall -Wextra -g -I inc/ #-Werror
 
 LIBFT := ./libft/libft.a
 
@@ -54,12 +54,12 @@ MY_SOURCES = \
 		tokens_list_to_cmd.c \
 		tokens_text_to_cmd.c \
 		debug.c \
-		#builtins.c \
-		#manage_pipes.c \
-		#pipex.c \
-		#special_builtin.c \
-		#executer.c \
-		#redirect.c \
+		builtins.c \
+		manage_pipes.c \
+		pipex.c \
+		special_builtin.c \
+		executer.c \
+		redirect.c \
 
 
 

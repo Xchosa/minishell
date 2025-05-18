@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../inc/executer.h"
 
 void	ft_open_pipes(int fd[][2], t_cmd_list *cmd_list)
 {

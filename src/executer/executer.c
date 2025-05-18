@@ -11,18 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/executer.h"
-#include "../../inc/minishell.h"
-#include "../../inc/parser.h"
-
-#include <unistd.h>
-#include "../bash_config.c"
-#include "../exit_codes_config.c"
-#include "special_builtin.c"
-#include "builtins.c"
-#include "pipex.c"
-#include "redirect.c"
-#include "manage_pipes.c"
-
 
 void	ft_execute_builtin(t_cmd_node *cmd_node, char **envp)
 {
@@ -101,29 +89,29 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 }
 
 //test fuer export
-int	main(int argc, char **argv, char **envp)
-{
-	t_cmd_list	cmd_list;
-	t_cmd_node	cmd_node1;
-	t_file_list	file_list1;
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_cmd_list	cmd_list;
+// 	t_cmd_node	cmd_node1;
+// 	t_file_list	file_list1;
 
-	(void)argc;
-	(void)argv;
-	if (init_bash(envp, argc)== false || (init_exit_codes(argc) == false))
- 		return(1);
-	cmd_list.head = &cmd_node1;
-	cmd_list.tail = NULL;
-	cmd_list.size = 1;
-	cmd_node1.cmd_type = BUILTIN;
-	cmd_node1.cmd = ft_split("export thilo=hi", ' ');
-	//cmd_node1.cmd = {"export", "thilo=hi", "paul=kruecke", "test=cat makefile", NULL};
-	cmd_node1.file_list = &file_list1;
-	cmd_node1.next = NULL;
-	file_list1.head = NULL;
-	file_list1.tail = NULL;
-	file_list1.size = 0;
-	ft_execute(&cmd_list, get_bash()->env);
-}
+// 	(void)argc;
+// 	(void)argv;
+// 	if (init_bash(envp, argc)== false || (init_exit_codes(argc) == false))
+//  		return(1);
+// 	cmd_list.head = &cmd_node1;
+// 	cmd_list.tail = NULL;
+// 	cmd_list.size = 1;
+// 	cmd_node1.cmd_type = BUILTIN;
+// 	cmd_node1.cmd = ft_split("export thilo=hi", ' ');
+// 	//cmd_node1.cmd = {"export", "thilo=hi", "paul=kruecke", "test=cat makefile", NULL};
+// 	cmd_node1.file_list = &file_list1;
+// 	cmd_node1.next = NULL;
+// 	file_list1.head = NULL;
+// 	file_list1.tail = NULL;
+// 	file_list1.size = 0;
+// 	ft_execute(&cmd_list, get_bash()->env);
+// }
 
 //test fuer cd
 // int	main(int argc, char **argv, char **envp)

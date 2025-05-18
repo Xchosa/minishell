@@ -12,8 +12,6 @@
 
 //to do: cd (only relative or absolute)  export, unset, env, exit
 #include "../../inc/executer.h"
-#include "../../inc/minishell.h"
-#include <stdio.h>
 
 void	ft_echo(t_cmd_node *cmd_node, char **envp)
 {
