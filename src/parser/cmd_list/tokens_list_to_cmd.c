@@ -38,6 +38,26 @@ static bool no_redir(t_token **token_list)
 		return (false);
 }
 
+static void free_token(t_token **token_list)
+{
+	t_token *next_token;
+	t_token *delete_token;
+	
+	if (!token_list || !(*token_list))
+        return;
+
+	delete_token = *token_list;
+	while(delete_token)
+	{
+		next_token = delete_token->next;
+		free(delete_token->token);
+		free(delete_token);
+		delete_token = next_token;
+	}
+	*token_list= NULL;
+
+}
+
 
 t_cmd_node* process_token(t_token **token_lst)
 {
@@ -54,17 +74,16 @@ t_cmd_node* process_token(t_token **token_lst)
 	{
 		process_token_type_Text(token_lst,cmd_node);
 		if(no_pipe(token_lst) == false || no_redir(token_lst) == false)
+		{
+			free_token(token_lst);
 			return(cmd_node);
+		}
 		if(file_list->head == NULL)
 			{
 				file_list->head = process_token_type_redir(token_lst);
 				file_node = file_list->head;
 				file_list->tail = file_node;
 			}
-		// if ((*token_lst) && (*token_lst)->token_type == PIPE)
-		// {
-		// 	(*token_lst) = (*token_lst)->next;
-		// 	return (cmd_node);
 		if((*token_lst)->token_type != PIPE && (*token_lst)->token_type != TEXT)
 		{
 			file_node->next = process_token_type_redir(token_lst);
@@ -73,6 +92,7 @@ t_cmd_node* process_token(t_token **token_lst)
 			file_list->size +=1;
 		}
 	}
+	free_token(token_lst);
 	return(cmd_node);
 }
 

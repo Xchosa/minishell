@@ -63,7 +63,7 @@ int main(int argc, char **argv, char **env)
 	t_bash *bash;
 	//atexit(leaks);
 	// char *line = "export halloworld=hello juliaworld=world"; // = wird falsch gehandelt
-	char *line ="echo \"$USER\" echo $USERNAME eche \'$USER\'";
+	// char *line ="echo \"$USER\" echo $USERNAME eche \'$USER\'";
 	// char *line = "echo $h world echo $paul echo $world";
 	// char *line = "export h=thilo paul=kruecke world=\"cat makefile\" ";
 	//char *line = "echo $USER $? echo \"$?\"\"$USER\" echo \'$USER\' ";
@@ -72,7 +72,7 @@ int main(int argc, char **argv, char **env)
 	//char *line = "export Var1=hello var=\"cat Makefile | grep <\" ";
 	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
 	// char *line = "ls -al | grep libft  | wc > outfile > out3file";
-	//char *line = "cat < infile | grep test | wc > outfile > out3file";
+	char *line = "cat < infile | grep test | wc > outfile > out3file";
 	//char *line = "cat < infile > outfile > out3file";// sollte valid sein
 	//char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
 	// char *line = "\"hello< echo|hello << wow hello"; // nicht valid
