@@ -24,9 +24,10 @@
 #define syntax_failure 258
 #define ec_sucess 0
 #define ec_abort_z 146
-#define ec_failure 127
+// #define ec_failure 127
 #define invalid_identifier 1
 #define stopped 148
+#define cmd_not_found 127
 
 
 // t_bash *get_bash(void);

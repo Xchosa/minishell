@@ -88,9 +88,33 @@ void append_token_char(t_cmd_node *cmd_node, t_token *curr_token)
     i = 0;
 }
 
+
+static void handle_special_cases(t_token **curr_token,t_cmd_node *cmd_node)
+{
+   (void)cmd_node;
+   t_token *passed_position;
+
+   passed_position = (*curr_token);
+
+   while(curr_token && *curr_token)
+   {
+        if(curr_token && *curr_token && (*curr_token)->token_type == CALL_EXIT)
+        {
+            (*curr_token)->token_type = TEXT;
+        }
+        (*curr_token) = (*curr_token)->next;
+   }
+   (*curr_token) = passed_position;
+    
+}
+
+// while(curr_token && *curr_token && ((*curr_token)->token_type == TEXT || (*curr_token)->token_type == CALL_EXIT))
+
 void process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
 {
-	while(curr_token && *curr_token && (*curr_token)->token_type == TEXT)
+    handle_special_cases(curr_token,cmd_node);
+
+	while(curr_token && *curr_token && (*curr_token)->token_type == TEXT )
 	{
 		if(cmd_node->cmd_type == 0)
 		{

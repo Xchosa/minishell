@@ -106,12 +106,16 @@ static char* handle_user(char **src)
 }
 
 
+
+
+
 void extend_saved_export_var(t_token *token_lst)
 {
     char *saved_var_without_$;
     t_bash *bash;
     
-    bash = get_bash(); 
+    bash = get_bash();
+
     while(token_lst)
     {
         if(token_lst->token_type == CALL_SAVED_VAR)

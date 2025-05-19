@@ -14,12 +14,12 @@
 
 //# include "parser.h"
 
-#define REDIRECT_INPUT 1 // <
-#define REDIRECT_OUTPUT 2 // >
-#define HERE_DOC 3 // <<
-#define APPEND 4 // >>
+#define REDIRECT_INPUT 3 // <
+#define REDIRECT_OUTPUT 4 // >
+#define HERE_DOC 5 // <<
+#define APPEND 6 // >>
 
-#define BUILTIN 1
+#define BUILTIN 1 
 #define EXECUTE 2
 
 //List of redirection

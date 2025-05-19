@@ -20,12 +20,11 @@ int check_for_builtin(char *token_str)
 		return (BUILTIN);
 	if(ft_strncmp("unset" , token_str, ft_strlen(token_str)) == 0)
 		return (BUILTIN);
-	if(ft_strncmp("exit" , token_str, ft_strlen(token_str)) == 0)
+	if(ft_strncmp("$?" , token_str, ft_strlen(token_str)) == 0)
 		return (BUILTIN);
 	if(ft_strncmp("exit" , token_str, ft_strlen(token_str)) == 0)
 		return (BUILTIN);
-	else
-		return 0;
+	return 0;
 }
 
 int choose_cmd_type(t_token *curr_token)

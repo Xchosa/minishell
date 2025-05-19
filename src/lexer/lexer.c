@@ -35,7 +35,7 @@ get some bash cmds to test
 
 
 */
-// fumction to check if there is uneven nbr of 
+// fucction to check if the single or double quotes are set correct  
 // /* 
 
 

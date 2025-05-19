@@ -35,7 +35,12 @@ bool print_error_message(char *line)
 		(printf("minishell: '%s': not a valid identifier", line));
 	if (error == syntax_failure)
 		(printf("minishell: '%s': syntax failure ", line));
+	if (error == cmd_not_found)
+		(printf("minishell: '%s': command not found ", line));
 	if (error == ec_sucess)
 		return(exit_minishell = false);
 	return(exit_minishell);
 }
+
+
+// $? wird als BUILTIN deklariert
