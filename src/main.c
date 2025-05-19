@@ -61,7 +61,8 @@ int main(int argc, char **argv, char **env)
 	t_cmd_list *cmd_lst;
 	t_bash *bash;
 	//atexit(leaks);
-	char *line = "$? > outfile ";
+	// char *line = "$? > outfile ";
+	char *line = "$? || outfile ";
 	// char *line = "export halloworld=hello juliaworld=world"; // = wird falsch gehandelt
 	// char *line ="echo \"$USER\" echo $USERNAME eche \'$USER\'";
 	// char *line = "echo $h world echo $paul echo $world";
