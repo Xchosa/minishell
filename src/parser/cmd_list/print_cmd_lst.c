@@ -65,6 +65,7 @@ void	iter_cmd_lst(t_cmd_list *cmd_lst, void (*f)(t_cmd_node*))
 
 	i = 0;
 	current_cmd_node = cmd_lst->head;
+	printf("size cmd list %ld\n",cmd_lst->size);
 	while (current_cmd_node)
 	{
 		printf("cmd node %d\n", i);
