@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/21 15:58:58 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:31:30 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@
 
 // discard export hadle if t
 
+
+// 
+
+
 int main(int argc, char **argv, char **env)
 {
 	
@@ -64,16 +68,17 @@ int main(int argc, char **argv, char **env)
 	// char *line = "$? > outfile ";
 	// char *line = "$? || outfile ";
 	// char *line = "export halloworld=hello juliaworld=world"; // = wird falsch gehandelt
-	// char *line ="echo \"$USER\" echo $USERNAME eche \'$USER\'";
+	char *line = "echo \"$USER\" echo $USER eoche \'$USER\' ";
 	// char *line = "echo $h world echo $paul echo $world";
 	// char *line = "export h=thilo paul=kruecke world=\"cat makefile\" ";
 	//char *line = "echo $USER $? echo \"$?\"\"$USER\" echo \'$USER\' ";
 	//char *line = "echo test wc world >outfile test >outfile2 >outfile3";
 	// char *line = "export \"Var1\"=\"hello var1\"   \'  var2=world     var3=\"cat Makefile | grep <\"";
 	//char *line = "export Var1=hello var=\"cat Makefile | grep <\" ";
-	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
-	char *line = "ls -al | grep libft  | wc > outfile > out3file";
-	// char *line = "echo \"hello \'$USER\' Paul mein name ist\" >stand_out";
+	// char *line = "   echo   hello world >outfile    \"wow hello\"   "; // muss wow hello an world hengen;
+	//char *line = " "
+	//char *line = "ls -al | grep libft  | wc > outfile > out3file";
+	// char *line = "echo \"hello \'$USER\' Paul mein name ist\" >stand_out"; /// nicht funktioniert 
 	//char *line = "cat < infile > outfile > out3file";// sollte valid sein
 	//char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
 	// char *line = "\"hello< echo|hello << wow hello"; // nicht valid

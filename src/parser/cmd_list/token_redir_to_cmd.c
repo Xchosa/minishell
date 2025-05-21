@@ -61,6 +61,7 @@ t_file_node*	process_token_type_redir(t_token **curr_token)
 		new_file_node = create_redirect_input_file_node(curr_token);
     else if ((*curr_token)->token_type == Redirect_output)
         new_file_node = create_redirect_output_file_node(curr_token);
+	// if here
     else if ((*curr_token)->token_type == here_doc)
         new_file_node = create_heredoc_file_node(curr_token);
     else if ((*curr_token)->token_type == Append)
