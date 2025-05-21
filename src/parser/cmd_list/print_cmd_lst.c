@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 09:57:58 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/05 16:11:53 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/21 14:46:11 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,16 @@ void	print_cmd_lst(t_cmd_node *cmd_nodes)
 
 		while(current_file_node != NULL)
        	{
+			// alles einmal hoch setzen 
+			// oder gobale macros als enums 
 			printf("file node tail %d redir type: %d\n", j, current_file_node->redir_type);
-			if (current_file_node->redir_type == 1)
+			if (current_file_node->redir_type == REDIRECT_INPUT)
 				printf("file node tail %d redir type: redirect_Input \n", j);
-			else if(current_file_node->redir_type == 2)
+			else if(current_file_node->redir_type == REDIRECT_OUTPUT)
 				printf("file node tail %d redir type: redirect_Output \n", j);
-			else if(current_file_node->redir_type == 3)
+			else if(current_file_node->redir_type == HERE_DOC)
 				printf("file node tail %d redir type: Here_Doc \n", j);
-			else if(current_file_node->redir_type == 4)
+			else if(current_file_node->redir_type == APPEND)
 				printf("file node tail %d redir type: Append \n", j);
            	printf("file node tail %d filename: %s\n ", j, current_file_node->filename);
 			current_file_node = current_file_node->next;

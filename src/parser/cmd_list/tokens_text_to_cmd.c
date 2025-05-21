@@ -8,6 +8,8 @@ char** ft_cpy_array_str(char **arrays)
 {
     char **new_array;
     int i;
+
+	i = 0;
     
     if (!arrays)
         return (NULL);

@@ -54,7 +54,7 @@ MY_SOURCES = \
 		tokens_list_to_cmd.c \
 		tokens_text_to_cmd.c \
 		debug.c \
-		#builtins.c \
+		builtins.c \
 		manage_pipes.c \
 		pipex.c \
 		special_builtin.c \
