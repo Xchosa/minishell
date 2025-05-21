@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 09:57:58 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/21 14:46:11 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:01:15 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	iter_cmd_lst(t_cmd_list *cmd_lst, void (*f)(t_cmd_node*))
 	t_cmd_node *current_cmd_node;
 	int i;
 
-	i = 0;
+	i = 1;
 	current_cmd_node = cmd_lst->head;
 	printf("size cmd list %ld\n",cmd_lst->size);
 	while (current_cmd_node)

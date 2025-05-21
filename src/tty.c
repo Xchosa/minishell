@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/06 15:45:20 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:43:11 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		add_history(line);
 		bash = get_bash();
 		(void)bash;
+		if (lexer(line) == false)
+		{
+			get_exit_codes()->last_exit_code = syntax_failure;
+			print_error_message(line);
+			continue;
+		}
 		token_lst = tokeniser(line);
 		iter_tokenlst(token_lst, &print_tokenlst);
 		if(extend_env(token_lst)== true)

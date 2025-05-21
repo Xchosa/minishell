@@ -26,6 +26,8 @@ t_file_list *file_list_to_NULL(void)
     file_list->size = 0;
     return  (file_list);
 }
+
+
 /*
 process_token returns a cmd_node
 which happens to be the head of the cmd_list 
@@ -34,6 +36,7 @@ or gets appended to the tail;
 In the cmd_node is a pointer to the file_list if there happens
 to be pipes or redirections. 
 */
+
 
 t_cmd_list	*init_cmd_list(t_token **token_list)
 {
@@ -49,6 +52,7 @@ t_cmd_list	*init_cmd_list(t_token **token_list)
 			cmd_list->head = process_token(token_list);
 			cmd_node = cmd_list->head;
 			cmd_list->tail = cmd_node;
+			cmd_list->size +=1;
 		}
 		else
 		{
@@ -58,5 +62,6 @@ t_cmd_list	*init_cmd_list(t_token **token_list)
 			cmd_list->size +=1;
 		}
 	}
+	
 	return(cmd_list);
 }

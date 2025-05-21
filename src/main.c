@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/21 14:47:37 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:58:58 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int main(int argc, char **argv, char **env)
 	// char *line = "export \"Var1\"=\"hello var1\"   \'  var2=world     var3=\"cat Makefile | grep <\"";
 	//char *line = "export Var1=hello var=\"cat Makefile | grep <\" ";
 	// char *line = "echo   hello world <<    \"wow hello\""; // fehler infitite auch mit wow raus 
-	//char *line = "ls -al | grep libft  | wc > outfile > out3file";
-	char *line = "cat < infile <infile2 | grep test | wc > outfile > out3file";
+	char *line = "ls -al | grep libft  | wc > outfile > out3file";
+	// char *line = "echo \"hello \'$USER\' Paul mein name ist\" >stand_out";
 	//char *line = "cat < infile > outfile > out3file";// sollte valid sein
 	//char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
 	// char *line = "\"hello< echo|hello << wow hello"; // nicht valid
