@@ -59,8 +59,6 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	
 	// try to put in read_terminal
 	t_bash *bash;
-	bash = get_bash();
-	(void)bash;
 
 	while(1)
 	{
@@ -70,6 +68,8 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
             printf("\nexit\n");
             break;
         }
+		bash = get_bash();
+		(void)bash;
 		if (lexer(line) == false)
 		{
 			get_exit_codes()->last_exit_code = syntax_failure;
@@ -92,8 +92,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		printf("\n$var from env:\n");
 		extend_saved_export_var(token_lst);
 		iter_tokenlst(token_lst, &print_tokenlst);
-		extend_saved_export_var(token_lst);
-		iter_tokenlst(token_lst, &print_tokenlst);
+		
 		handle_export(token_lst);
 		printf("\n called form:\n\n");
 		iter_tokenlst(token_lst, &print_tokenlst);

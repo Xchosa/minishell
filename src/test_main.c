@@ -18,7 +18,7 @@
 //     // to do: tokeniser
 // 	// char *line = "echo hallo > outfile newstring  | wc > outfile6";
 	
-    // char *line = "hello world <<now hello";
+//     char *line = "hello world <<now hello";
 //     // char *line = "export halloworld=hello juliaworld=world"; // = wird falsch gehandelt
 // 	//char *line = "echo \"$USER\" echo $USER eoche \'$USER\' ";
 // 	// char *line = "echo $h world echo $paul echo $world";
@@ -29,7 +29,7 @@
 // 	//char *line = "export Var1=hello var=\"cat Makefile | grep <\" ";
 // 	// char *line = "   echo   hello world >outfile  >out3file  \"wow hello\"   "; // muss wow hello an world hengen;
 // 	//char *line = " "
-// 	char *line = "ls -al | grep libft  | wc > outfile > out3file";
+// 	// char *line = "ls -al | grep libft  | wc > outfile > out3file";
 // 	// char *line = "echo \"hello \'$USER\' Paul mein name ist\" >stand_out"; /// nicht funktioniert 
 // 	//char *line = "cat < infile > outfile > out3file";// sollte valid sein
 // 	//char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
@@ -56,15 +56,15 @@
 	
 //     token_lst = tokeniser(line);
 // 	iter_tokenlst(token_lst, &print_tokenlst);
-	
+// 	free(line); // new
 // 	// printf("\nenv:\n");
 // 	// 	ft_print_array(bash->env);
 	
 // 	if(extend_env(token_lst)== true)
 // 		return(1);
 
-// 	extend_saved_export_var(token_lst);
 // 	printf("\n export_list:\n\n");
+// 	extend_saved_export_var(token_lst);
 // 	// change_only tokenise if CALL_SAVED_VAR
 	
 // 	iter_tokenlst(token_lst, &print_tokenlst);
