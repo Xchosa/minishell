@@ -127,7 +127,10 @@ void process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
 		{
 			append_token_char(cmd_node, *curr_token);
 		}
-	(*curr_token) = (*curr_token)->next;
-	}
+        if((*curr_token)->next)
+	        (*curr_token) = (*curr_token)->next;
+        else 
+            return;
+    }
 	return ;
 }

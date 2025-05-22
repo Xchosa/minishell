@@ -31,6 +31,7 @@ MY_SOURCES = \
 		handler.c \
 		main.c \
 		tty.c \
+		abort_parser.c \
 		scan_char_helper.c \
 		tokeniser.c \
 		heredoc.c \
@@ -70,6 +71,7 @@ HEADERS = \
 		minishell.h \
 		parser.h \
 		executer.h \
+		signal.h \
 		debug.h
 
 # ---------- Objects ---------- #

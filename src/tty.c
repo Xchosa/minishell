@@ -78,18 +78,15 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 			continue;
 		}
 		token_lst = tokeniser(line);
+		free(line);
 		if (!token_lst)
-		{
-            free(line);
             continue;
-		}
 		iter_tokenlst(token_lst, &print_tokenlst);
 		if(extend_env(token_lst)== true)
 		{
 			printf("\nenv extended:\n");
 			ft_print_array(bash->env);
 			free_token(&token_lst);
-			free(line);
 			continue;
 		}
 		printf("\n$var from env:\n");
@@ -109,12 +106,8 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		printf("Thilos problem:\n");
 		ft_execute(cmd_lst, get_bash()->env);
 	}
-	free(line);
 	if (token_lst)
         free_token(&token_lst);
-	
-
-	
 }
 
 

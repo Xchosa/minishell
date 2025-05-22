@@ -3,6 +3,8 @@
 #include "parser.h"
 #include "executer.h"
 
+// merge only interactive main!!!
+
 // int main(int argc, char **argv, char **env)
 // {
 	
@@ -12,8 +14,12 @@
 // 	t_bash *bash;
 // 	//atexit(leaks);
 // 	// char *line = "$? > outfile ";
-// 	char *line = "echo hallo > outfile ";
-// 	// char *line = "export halloworld=hello juliaworld=world"; // = wird falsch gehandelt
+
+//     // to do: tokeniser
+// 	// char *line = "echo hallo > outfile newstring  | wc > outfile6";
+	
+    // char *line = "hello world <<now hello";
+//     // char *line = "export halloworld=hello juliaworld=world"; // = wird falsch gehandelt
 // 	//char *line = "echo \"$USER\" echo $USER eoche \'$USER\' ";
 // 	// char *line = "echo $h world echo $paul echo $world";
 // 	// char *line = "export h=thilo paul=kruecke world=\"cat makefile\" ";
@@ -21,9 +27,9 @@
 // 	//char *line = "echo test wc world >outfile test >outfile2 >outfile3";
 // 	// char *line = "export \"Var1\"=\"hello var1\"   \'  var2=world     var3=\"cat Makefile | grep <\"";
 // 	//char *line = "export Var1=hello var=\"cat Makefile | grep <\" ";
-// 	// char *line = "   echo   hello world >outfile    \"wow hello\"   "; // muss wow hello an world hengen;
+// 	// char *line = "   echo   hello world >outfile  >out3file  \"wow hello\"   "; // muss wow hello an world hengen;
 // 	//char *line = " "
-// 	//char *line = "ls -al | grep libft  | wc > outfile > out3file";
+// 	char *line = "ls -al | grep libft  | wc > outfile > out3file";
 // 	// char *line = "echo \"hello \'$USER\' Paul mein name ist\" >stand_out"; /// nicht funktioniert 
 // 	//char *line = "cat < infile > outfile > out3file";// sollte valid sein
 // 	//char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
