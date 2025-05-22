@@ -17,15 +17,18 @@ EXPORT_DIR = ./src/parser/export_case
 CMD_LIST_DIR = ./src/parser/cmd_list
 EXECUTER_DIR = ./src/executer
 LEXER_DIR = ./src/lexer
+SIGNAL_DIR = ./src/signal
 DEBUG_DIR = debug_dir
 INC_DIR = inc
 OBJ_DIR = obj
 
-VPATH = $(SOURCE_DIR):$(PARSE_DIR):$(TOKEN_DIR):$(LEXER_DIR):$(CMD_LIST_DIR):$(EXPORT_DIR):$(EXECUTER_DIR):$(INC_DIR)
+VPATH = $(SOURCE_DIR):$(PARSE_DIR):$(SIGNAL_DIR):$(TOKEN_DIR):$(LEXER_DIR):$(CMD_LIST_DIR):$(EXPORT_DIR):$(EXECUTER_DIR):$(INC_DIR)
 
 
 # ---------- Subjects ---------- #
 MY_SOURCES = \
+		test_main.c \
+		handler.c \
 		main.c \
 		tty.c \
 		scan_char_helper.c \

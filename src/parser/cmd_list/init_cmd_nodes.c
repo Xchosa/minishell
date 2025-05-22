@@ -62,6 +62,5 @@ t_cmd_list	*init_cmd_list(t_token **token_list)
 			cmd_list->size +=1;
 		}
 	}
-	
 	return(cmd_list);
 }

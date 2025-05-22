@@ -19,6 +19,8 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <errno.h>
+# include <signal.h>
+# include <stdlib.h>
 
 
 #define syntax_failure 258
@@ -142,7 +144,7 @@ t_token 	*create_token_with_quote_case(char **line, t_token *token);
 t_token		*tokenlstnew(char	*content);
 bool		check_for_divider_with_space(char c);
 bool		check_for_divider_without_space(char c);
-
+void 		free_token(t_token **token_list);
 
 //update line
 char		*update_line(char *line, t_token *token);

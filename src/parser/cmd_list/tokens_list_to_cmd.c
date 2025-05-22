@@ -2,7 +2,7 @@
 #include "parser.h"
 #include "minishell.h"
 
-static void free_token(t_token **token_list)
+void free_token(t_token **token_list)
 {
 	t_token *next_token;
 	t_token *delete_token;
@@ -90,7 +90,6 @@ t_cmd_node* process_token(t_token **token_lst)
 			file_list->size +=1;
 		}
 	}
-	free_token(token_lst);
 	return(cmd_node);
 }
 
