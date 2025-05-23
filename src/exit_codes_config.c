@@ -32,11 +32,11 @@ bool print_error_message(char *line)
 	exit_minishell = true;
 	error = get_exit_codes()->last_exit_code;
 	if (error == invalid_identifier)
-		(printf("minishell: '%s': not a valid identifier", line));
+		(printf("minishell: '%s': not a valid identifier \n", line));
 	if (error == syntax_failure)
-		(printf("minishell: '%s': syntax failure ", line));
+		(printf("minishell: '%s': syntax failure \n", line));
 	if (error == cmd_not_found)
-		(printf("minishell: '%s': command not found ", line));
+		(printf("minishell: '%s': command not found \n", line));
 	if (error == ec_sucess)
 		return(exit_minishell = false);
 	return(exit_minishell);

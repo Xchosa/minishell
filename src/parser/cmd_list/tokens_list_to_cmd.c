@@ -67,6 +67,7 @@ t_cmd_node* process_token(t_token **token_lst)
 		return (NULL);
 	cmd_node->file_list = file_list;
 	cmd_node->next = NULL;
+	cmd_node->cmd_type = 0;
 	while(*token_lst)
 	{
 		process_token_type_Text(token_lst,cmd_node);
