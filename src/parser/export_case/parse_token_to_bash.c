@@ -30,10 +30,10 @@ bool extend_env(t_token *token_lst)
     bool only_extend_env;
     t_bash *new_bash;
     t_bash *old_bash;
-
+    
+    printf("bash issue?\n");
     old_bash = get_bash();
     new_bash = get_bash();
-
     only_extend_env = false;
     if(token_lst->head->token_type != EXPORT)
         return (false);

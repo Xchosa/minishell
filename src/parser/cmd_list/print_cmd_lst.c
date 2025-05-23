@@ -51,6 +51,7 @@ void	print_cmd_lst(t_cmd_node *cmd_nodes)
 				printf("file node tail %d redir type: Append \n", j);
            	printf("file node tail %d filename: %s\n ", j, current_file_node->filename);
 			current_file_node = current_file_node->next;
+			j++;
 			printf("\n");
 		}
 	}

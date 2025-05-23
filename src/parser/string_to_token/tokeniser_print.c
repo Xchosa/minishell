@@ -19,15 +19,22 @@ void print_tokenlst(t_token *data)
 
 void	iter_tokenlst(t_token *lst, void (*f)(t_token *))
 {
-	if (lst == NULL)
+	t_token *cpy_token;
+
+	cpy_token =lst;
+	if (cpy_token == NULL)
 		return ;
-	while (lst != NULL)
+	while (cpy_token)
 	{
-		f(lst);
-		lst = lst->next;
+        f(cpy_token);
+        cpy_token = cpy_token->next;
 	}
 	return ;
 }
 
 
 //iter_tokenlst(token_lst, &print_tokenlst);
+
+// echo
+// $USER
+// seq

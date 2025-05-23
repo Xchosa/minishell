@@ -67,7 +67,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN)
 	{
 		ft_execute_builtin(current, envp);
-		exit(1);
+		// exit(1);
 	}
 	if (cmd_list->size > 1)
 		ft_open_pipes(fd, cmd_list);

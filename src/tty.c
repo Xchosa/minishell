@@ -37,13 +37,13 @@ what is awk
 static char* read_terminal(void)
 {
 	char *line;
-	t_bash *bash;
+	// t_bash *bash;
 
 	line = readline("minishell:$ ");
 	if (line && *line)
         add_history(line);
-	bash = get_bash();
-	(void)bash;
+	// bash = get_bash();
+	// (void)bash;
 	return(line);
 }
 
@@ -81,14 +81,16 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		free(line);
 		if (!token_lst)
             continue;
+		
 		iter_tokenlst(token_lst, &print_tokenlst);
-		if(extend_env(token_lst)== true)
-		{
-			printf("\nenv extended:\n");
-			ft_print_array(bash->env);
-			free_token(&token_lst);
-			continue;
-		}
+
+		// if(extend_env(token_lst)== true)
+		// {
+		// 	printf("\nenv extended:\n");
+		// 	ft_print_array(bash->env);
+		// 	free_token(&token_lst);
+		// 	continue;
+		// }
 		printf("\n$var from env:\n");
 		extend_saved_export_var(token_lst);
 		iter_tokenlst(token_lst, &print_tokenlst);

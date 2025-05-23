@@ -139,6 +139,7 @@ t_token *tokeniser(char *line)
 {
 	t_token *new_token;
 	t_token *token_lst;
+
 	if (!line || *line == '\0')
 		return(NULL);
 	token_lst = tokenlstnew(line);
@@ -153,6 +154,8 @@ t_token *tokeniser(char *line)
 		tokenadd_back(&token_lst, new_token);
 		line = update_line(line, token_lst);
 	}
+	new_token->next = NULL;
+    
 	return (token_lst);
 }
 
