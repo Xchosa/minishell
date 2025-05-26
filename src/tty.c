@@ -78,9 +78,11 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 			continue;
 		}
 		token_lst = tokeniser(line);
-		free(line);
 		if (!token_lst)
+		{
+			free(line);
             continue;
+		}
 		
 		iter_tokenlst(token_lst, &print_tokenlst);
 
@@ -92,13 +94,13 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		// 	continue;
 		// }
 		printf("\n$var from env:\n");
+		
 		extend_saved_export_var(token_lst);
 		iter_tokenlst(token_lst, &print_tokenlst);
 		
-		handle_export(token_lst);
-		printf("\n called form:\n\n");
+		printf("\n append token sring in export \n\n");
+		append_export_str(&token_lst);
 		iter_tokenlst(token_lst, &print_tokenlst);
-		printf("\ndo i come to _cmd_list:\n\n");
 
 		cmd_lst = init_cmd_list(&token_lst);
 		printf("\ndo i come to print_cmd_list:\n\n");
@@ -109,6 +111,8 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	}
 	if (token_lst)
         free_token(&token_lst);
+	if (!line)
+		free(line);
 }
 
 

@@ -49,6 +49,7 @@ char *handle_dividers(char *line, bool *flag)
         if (pipe_or_simec(*line) == true)
         {
             line++;
+            *flag = true;
             return (line);
         }
         line++;
@@ -75,14 +76,15 @@ char *update_line(char *line, t_token *token)
 {
     bool flag = false;
     char *updated_line;
-
+    
+    (void)token;
     skip_whitespace(&line);
     updated_line = handle_special_characters(line);
     if (updated_line)
         return (updated_line);
     line = handle_dividers(line, &flag);
-    if (token->head->token_type == EXPORT)
-        return (handle_export_token(line));
+    // if (token->head->token_type == EXPORT)
+    //     return (handle_export_token(line));
     if (flag == false)
         line = handle_regular_token(line);
     return (line);

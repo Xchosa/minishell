@@ -106,6 +106,8 @@ static char* handle_user(char **src)
 }
 
 
+// $USER oder $h > poverbec or world 
+
 void extend_saved_export_var(t_token *token_lst)
 {
     char *saved_var_without_$;

@@ -14,6 +14,25 @@
 #include "minishell.h"
 
 
+
+static char *tokenise_divider(char *content, char *new_token)
+{
+	char *tmp_token;
+
+	int i;
+	i = 0;
+	while (check_for_divider_without_space(content[i]) == true)
+	{
+		tmp_token = ft_charjoin(new_token, content[i]);
+		free(new_token);
+		new_token = tmp_token;
+		if(not_single_divider(content[i])== false )
+			return(new_token);
+		i++;
+	}
+	return(new_token);
+}
+
 char* get_token(char *content)
 {
 	int i;
@@ -30,18 +49,20 @@ char* get_token(char *content)
             free(new_token);
             new_token = tmp_token;
 		}
-		if (check_for_divider_with_space(content[i +1 ]) == true)// decide export or not
+		if (check_for_divider_with_space(content[i +1 ]) == true)
 			return (new_token);
 		i++;
 	}
-	while (check_for_divider_without_space(content[i]) == true)
+	// while (check_for_divider_without_space(content[i]) == true)
+	if(check_for_divider_without_space(content[i]) == true)
 	{
-		tmp_token = ft_charjoin( new_token, content[i]);
-		free(new_token);
-        new_token = tmp_token;
-		if(not_single_divider(content[i])== false )
-			return(new_token);
-		i++;
+		// tmp_token = ft_charjoin( new_token, content[i]);
+		// free(new_token);
+        // new_token = tmp_token;
+		// if(not_single_divider(content[i])== false )
+		// 	return(new_token);
+		// i++;
+		new_token = tokenise_divider(content + i, new_token);
 	}
 	return(new_token);
 }
@@ -70,14 +91,15 @@ t_type get_token_type(char *content)
 		else
 			return (Redirect_input);
 	}
-	if (content[i] == '\"') // " // quotes in seperate function with export
-		return (D_Quote);
-	if (content[i] == '\'') // '
-		return (S_Quote);
 	if(ft_strncmp( "export", content, 6) == 0)
 		return (EXPORT);
 	return(TEXT);
 }
+// if (content[i] == '\"') // " // quotes in seperate function with export
+	// 	return (D_Quote);
+	// if (content[i] == '\'') // '
+	// 	return (S_Quote);
+
 
 t_token*	tokenlast(t_token *lst)
 {
@@ -159,9 +181,3 @@ t_token *tokeniser(char *line)
 	return (token_lst);
 }
 
-// functioniert nicht / pruefen nach erster node / da zu viele cases
-// if (check_for_export(token_lst)== true)
-	// {
-	// 	token_lst = tokeniser_for_export(token_lst,line);
-	// 	return(token_lst);
-	// }

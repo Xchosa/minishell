@@ -104,12 +104,22 @@ static void handle_special_cases(t_token **curr_token,t_cmd_node *cmd_node)
             (*curr_token)->token_type = TEXT;
         if(curr_token && *curr_token && (*curr_token)->token_type == CALL_SAVED_VAR)
             (*curr_token)->token_type = TEXT;
+        if(curr_token && *curr_token && (*curr_token)->token_type == EXPORT)
+            (*curr_token)->token_type = TEXT;
+        if(curr_token && *curr_token && (*curr_token)->token_type == Export_var)
+        {
+            (*curr_token)->token_type = TEXT;
+        }
 
         (*curr_token) = (*curr_token)->next;
    }
    (*curr_token) = passed_position;
     
 }
+
+
+
+
 
 // while(curr_token && *curr_token && ((*curr_token)->token_type == TEXT || (*curr_token)->token_type == CALL_EXIT))
 

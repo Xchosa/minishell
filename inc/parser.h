@@ -56,10 +56,12 @@ typedef enum s_type
 	Redirect_output = 4, // 
 	Append = 5,// >>
 	here_doc = 6,// <<
+
 	S_Quote = 7,
 	D_Quote = 8, // (like " ")
 	EXPORT = 9, // export
 	Export_var =10, // from export hallo="ls -l" -> 'hallo' = Export_var  | ls -l normal TEXT
+	// hallo="ls -al" = Export var , h=welt = Export var
 	CALL_EXIT = 11, // $?
 	CALL_SAVED_VAR = 12, // $hello   e.g -holds 'world' or holds nothing
 	Error =13,// node invalid
@@ -194,7 +196,8 @@ char*		update_export_line(char *line);
 t_token*	create_export_token(char *content);
 t_token*	create_token_q_case_and_export(char **line, t_token *token_lst);
 bool		d_quote_case_no_div(char *line);
-
+bool		split_needed(t_token **t_lst);
+void 		append_export_str(t_token **token_lst);
 // cmd_list
 
 //print cmd_lst

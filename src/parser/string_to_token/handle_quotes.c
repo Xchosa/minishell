@@ -108,8 +108,8 @@ t_token *create_token_with_quote_case(char **line, t_token *token)
 		return(call_saved_export_var(line));
 	// if ((ft_strncmp("=", *line, 1) == 0))
 	// 	return(equal_case(line));
-	// if (token->head->token_type == EXPORT)
-	// 	return(create_token_equal_as_div(*line));
+	if (token->head->token_type == EXPORT)
+		return(create_token_equal_as_div(*line));
 	else
 		return(create_token(*line));
 }

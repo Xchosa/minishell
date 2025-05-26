@@ -2,28 +2,9 @@
 
 
 
-// to do 
- //   var= als eigene Variable  -> nicht var=cat und dann noch mal 'cat Makefile...'
- //
-
-// zwischen cmd und Txt unterscheiden
-// also zwischen echten cmds und random text 
-// dann random text entfernen aus tokenliste entfernen bei export ?./m
-
 #include "minishell.h"
 #include "parser.h"
 
-/*
-aus "export var=\"cat Makefile | grep <\" ";
-
-| token: 'export' | token_type: 0 
-| token: 'var=cat' | token_type: 0 
-| token: 'cat Makefile | grep <' | token_type: 0 
-
-correct muss weiter ausdifferenzieren 
-woerter ohne = werden ignoriert
-
-*/
 
 // koennten auch neue tokenliste zuruck geben und andere freen...
 
@@ -110,7 +91,7 @@ static bool check_for_multi_tokens(char *line)
 
 
 
-static bool split_needed(t_token **t_lst)
+bool split_needed(t_token **t_lst)
 {
     t_token *check;
     check = (*t_lst);
@@ -121,7 +102,8 @@ static bool split_needed(t_token **t_lst)
 
 }
 
-
+// out of $hallo 
+// typ is saved_var and it is a string-> ist splits eg." ls -al | grep  < makefile" into tokens
 void handle_export(t_token *token_lst)
 {
     t_token *node_to_delete;
