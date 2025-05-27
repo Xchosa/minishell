@@ -45,5 +45,25 @@
 //How to handle: Check the return value of 
 // input functions for EOF.
 
+/*
+Fields within termios:
+c_iflag: Input flags, controlling how input data is processed. 
+c_oflag: Output flags, controlling how output data is sent. 
+c_cflag: Control flags, configuring the terminal hardware. 
+c_lflag: Local flags, affecting local terminal operations. 
+c_cc: An array of special control characters (e.g., INTR, QUIT, ERASE). 
 
+Functions for Terminal Control:
+tcgetattr(fd, termios_p): Retrieves the current terminal attributes for a file descriptor 
+fd and stores them in the termios structure pointed to by termios_p. 
 
+tcsetattr(fd, optional_actions, termios_p): Sets the terminal attributes for a file descriptor
+ fd based on the termios structure pointed to by termios_p. The optional_actions parameter
+  specifies how the changes are applied (e.g., immediately, after output drains). 
+  
+tcdrain(fd): Waits for all output to be transmitted to the terminal. 
+tcflush(fd, queue_selector): Flushes input or output data from the terminal queue. 
+tcflow(fd, action): Controls flow control (e.g., suspending or restarting output). 
+tcsendbreak(fd, duration): Sends a break signal to the terminal. 
+
+*/

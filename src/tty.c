@@ -63,10 +63,10 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	{
 		line = read_terminal();
 		bash = get_bash();
-		if (line == NULL) // Handle EOF (Ctrl+D)
-        {
-            break;
-        }
+		// if (line == NULL) // Handle EOF (Ctrl+D)
+        // {
+        //     break;
+        // }
 		(void)bash;
 		if (lexer(line) == false)
 		{
@@ -105,6 +105,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	if (!line)
 		free(line);
 }
+
 
 
 void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)

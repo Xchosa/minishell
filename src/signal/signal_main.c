@@ -41,6 +41,10 @@ void parent_handler(int sig)
 	{
 		(void)sig;
 		get_exit_codes()->last_exit_code = 1;
+		write(STDOUT_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 	else if (sig == SIGQUIT)
 	{
@@ -48,9 +52,6 @@ void parent_handler(int sig)
 	}
 }
 
-
-// child 1
-// parent 0
 void child_handler(int sig)
 {
 	
@@ -61,7 +62,7 @@ void child_handler(int sig)
     }
 	else if (sig == SIGQUIT)
 	{
-		ft_putstr_fd("EXIT: 3\n", 1);
+		ft_putstr_fd("EXIT: 3\n", STDOUT_FILENO);
 		get_exit_codes()->last_exit_code = 131; // sleep and then ctrl + D
 	}
 	return ;
@@ -74,44 +75,45 @@ void child_handler(int sig)
 // one before execution 
 
 // turn of ^c
-void turn_off_echo()
+
+// keep all bits except ECHOCTL"
+// &= ~ECHOCTL
+void hide_ctrl_in_terminal(void)
 {
 	struct termios term;
 	
-	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag &= ~(ECHOCTL);
-	// tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	// keeps any pending input in the buffer
+	tcgetattr(STDIN_FILENO, &term);// fpr termial controll
+	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term);
-	// waits for all output to be transmitted first
+	// how typing in the terminal is displayed, 
+	// thats why stdin
+
 }
 
-void	sig_int_handler_read(int sig)
-{
-	(void)sig;
-	get_exit_codes()->last_exit_code = 1;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+// void	sig_int_handler_read(int sig)
+// {
+// 	(void)sig;
+// 	get_exit_codes()->last_exit_code = 1;
+// 	write(STDOUT_FILENO, "\n", 1);
+// 	rl_on_new_line();
+// 	rl_replace_line("", 0);
+// 	rl_redisplay();
+// }
 
 void setup_readline_signals(void)
 {
 	struct sigaction sa;
-	// struct termios	term;
 
-	// tcgetattr(STDIN_FILENO, &term);
-	turn_off_echo();
+	hide_ctrl_in_terminal();
 	
-	sa.sa_handler = sig_int_handler_read;
+	sa.sa_handler = parent_handler;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	
 	// ctrl + c
 	sigaction(SIGINT, &sa, NULL);
 
-	//ctrl + slash -> it ignores 
+	//ctrl + slash -> ignored
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
 	
@@ -121,19 +123,18 @@ void setup_readline_signals(void)
 void init_signal(int child_or_parent)
 {
     struct sigaction sa;
-	struct sigaction sin;
-	           //changes signal action (replaces signal() for better control
+
+	hide_ctrl_in_terminal();
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	//changes signal action (replaces signal() for better control
 	if(child_or_parent == 0)
 		sa.sa_handler = child_handler;  
 	else
 		sa.sa_handler = parent_handler;      // 
-	sigemptyset(&sin.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
-	// sigadset(&sa.sa.mask,SIG_IGN);// control +C and  backslash
 
-	// if child SIGQUIT is default
-	// ignored in parent - runs on
-	if(!child_or_parent)
+	if(child_or_parent != 0)
    		sa.sa_handler = SIG_IGN;        // 
 	sigaction(SIGQUIT, &sa, NULL);
     // sigemptyset(&sa.sa_mask)
