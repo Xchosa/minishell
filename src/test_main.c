@@ -17,8 +17,8 @@
 
 //     // to do: tokeniser
 // 	//char *line = "echo $USER";
-// 	char *line = "export ja=\"ls -al>outfile\" ";
-//     // char *line = "export t=\"world | around < \" echo world";
+// 	// char *line = "dfd";
+//     char *line = "export t=\"world | around < \" echo world";
 //     // char *line = "export halloworld=hello juliaworld=world"; // = wird falsch gehandelt
 // 	// char *line = "echo \"$USER\" echo $USER eoche \'$USER\' ";
 // 	// char *line = "echo $h world echo $paul echo $world";

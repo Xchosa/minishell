@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:26:42 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/06 16:25:06 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:30:15 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,8 @@ t_token *tokeniser(char *line)
 	token_lst = tokenlstnew(line);
 	if (!token_lst)
 		return (NULL);
-	line = update_line(line,token_lst);  
+	line = update_line(line,token_lst);
+	new_token = NULL;
 	while(*line)
 	{
 		if (skip_whitespace_and_check_for_eof(&line) == false)
@@ -176,6 +177,8 @@ t_token *tokeniser(char *line)
 		tokenadd_back(&token_lst, new_token);
 		line = update_line(line, token_lst);
 	}
+	if(new_token ==NULL)
+		return (token_lst);
 	new_token->next = NULL;
     
 	return (token_lst);

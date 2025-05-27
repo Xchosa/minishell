@@ -1,8 +1,16 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokens_text_to_cmd.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/27 10:54:16 by poverbec          #+#    #+#             */
+/*   Updated: 2025/05/27 10:54:29 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "parser.h"
-#include "minishell.h"
-
 
 char** ft_cpy_array_str(char **arrays)
 {
@@ -117,12 +125,6 @@ static void handle_special_cases(t_token **curr_token,t_cmd_node *cmd_node)
     
 }
 
-
-
-
-
-// while(curr_token && *curr_token && ((*curr_token)->token_type == TEXT || (*curr_token)->token_type == CALL_EXIT))
-
 void process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
 {
     handle_special_cases(curr_token,cmd_node);
@@ -141,7 +143,10 @@ void process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
         if((*curr_token)->next)
 	        (*curr_token) = (*curr_token)->next;
         else 
+		{	
+			*curr_token = NULL;
             return;
+		}
     }
 	return ;
 }

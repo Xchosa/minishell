@@ -1,10 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   define_cmd_typ.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/27 10:54:56 by poverbec          #+#    #+#             */
+/*   Updated: 2025/05/27 10:54:57 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
-#include "minishell.h"
-
-
-// what happens with test echo hallo
-// lexer_before?
-
 
 int check_for_builtin(char *token_str)
 {

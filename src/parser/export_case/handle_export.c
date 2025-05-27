@@ -1,12 +1,18 @@
-
-
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_export.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/27 10:15:42 by poverbec          #+#    #+#             */
+/*   Updated: 2025/05/27 10:58:39 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 
-
-// koennten auch neue tokenliste zuruck geben und andere freen...
 
 bool check_for_equal_sign(t_token *current_token)
 {
@@ -23,10 +29,6 @@ bool check_for_equal_sign(t_token *current_token)
 }
 
 
-// A B C 
-
-// B1 B2 B3 
-// hello var oder cat Makefile
 t_token *split_token_in_sub_token(t_token *current_token, t_token *chain)
 {
     t_token *sub_token;
@@ -56,7 +58,6 @@ t_token *create_token_splited(char *content)
 	new_token->token_type = get_token_type(content);
 	new_token->next = NULL;
 	return (new_token);
-	// tokenadd_back(get_config()->token_list, new_token);
 }
 
 void delete_token(t_token *delete_token)
@@ -90,7 +91,6 @@ static bool check_for_multi_tokens(char *line)
 }
 
 
-
 bool split_needed(t_token **t_lst)
 {
     t_token *check;
@@ -114,7 +114,7 @@ void handle_export(t_token *token_lst)
     {
         if(token_lst->token_type == CALL_SAVED_VAR && split_needed(&token_lst)== true)
         {
-            node_to_delete = token_lst->next;// "echo world"
+            node_to_delete = token_lst->next;
             if(token_lst->next->next)
                 node_to_jump_after = NULL;
             else
@@ -131,13 +131,3 @@ void handle_export(t_token *token_lst)
         token_lst = token_lst->next;
     }
 }
-
-    // wenn invalid_identiver 
-    // get_exit_codes()->last_exit_code = invalid_identifier;
-    // return;
-
-    // wenn es glatt laeuft
-    // get_exit_codes()->last_exit_code = ec_sucess;
-    // return;
-
-

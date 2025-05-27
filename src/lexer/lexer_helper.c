@@ -80,10 +80,16 @@ bool	wrong_use_pipe_and_redirection(char *line)
 	int size;
 	
 	i = 0;
-	if ((line[i] == '|')|| (line[i] == '<') || (line[i] == '>') || (line[i] == ';'))
+	if ((line[i] == '|')|| (line[i] == '&') || (line[i] == ';'))
 		return (false);
 	size = ft_strlen(line);
 	if (line [size -1] == '|')
 		return (false);
+	while (line[i])
+	{
+		if((line[i] == '&') || (line[i] == ';') || (line[i] == 47))
+			return(false);
+		i++;
+	}
 	return(true);
 }

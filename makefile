@@ -66,6 +66,8 @@ MY_SOURCES = \
 		special_builtin.c \
 		executer.c \
 		redirect.c \
+		handler.c \
+		signal_main.c 
 
 
 
@@ -73,7 +75,7 @@ HEADERS = \
 		minishell.h \
 		parser.h \
 		executer.h \
-		signal.h \
+		signal_tp.h \
 		debug.h
 
 # ---------- Objects ---------- #

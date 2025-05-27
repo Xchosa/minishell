@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_cmd_nodes.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/27 10:54:43 by poverbec          #+#    #+#             */
+/*   Updated: 2025/05/27 10:54:45 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 #include "minishell.h"
 
@@ -45,7 +57,8 @@ t_cmd_list	*init_cmd_list(t_token **token_list)
 	
 	cmd_list = cmd_list_to_NULL();
 	
-	while((*token_list) && (*token_list)->next)
+	//while((*token_list) && (*token_list)->next)
+	while((*token_list))
 	{
 		if(cmd_list->head == NULL)
 		{

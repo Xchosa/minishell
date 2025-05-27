@@ -6,13 +6,14 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/21 15:43:11 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:51:59 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 #include "executer.h"
+#include "signal_tp.h"
 /*
 Lexer overview
 check for valid input 
@@ -37,13 +38,11 @@ what is awk
 static char* read_terminal(void)
 {
 	char *line;
-	// t_bash *bash;
 
 	line = readline("minishell:$ ");
 	if (line && *line)
         add_history(line);
-	// bash = get_bash();
-	// (void)bash;
+	
 	return(line);
 }
 
@@ -59,16 +58,15 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	
 	// try to put in read_terminal
 	t_bash *bash;
-
+	setup_readline_signals();
 	while(1)
 	{
 		line = read_terminal();
-		if (!line) 
-		{
-            printf("\nexit\n");
+		bash = get_bash();
+		if (line == NULL) // Handle EOF (Ctrl+D)
+        {
             break;
         }
-		bash = get_bash();
 		(void)bash;
 		if (lexer(line) == false)
 		{
@@ -83,31 +81,24 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 			free(line);
             continue;
 		}
-		
 		iter_tokenlst(token_lst, &print_tokenlst);
-
-		// if(extend_env(token_lst)== true)
-		// {
-		// 	printf("\nenv extended:\n");
-		// 	ft_print_array(bash->env);
-		// 	free_token(&token_lst);
-		// 	continue;
-		// }
-		printf("\n$var from env:\n");
 		
+		// printf("\n$var from env:\n");
 		extend_saved_export_var(token_lst);
-		iter_tokenlst(token_lst, &print_tokenlst);
+		// iter_tokenlst(token_lst, &print_tokenlst);
 		
 		printf("\n append token string in export \n\n");
 		append_export_str(&token_lst);
 		iter_tokenlst(token_lst, &print_tokenlst);
 
 		cmd_lst = init_cmd_list(&token_lst);
-		printf("\ndo i come to print_cmd_list:\n\n");
+		printf("\n cmd_list works:\n\n");
 		iter_cmd_lst(cmd_lst, &print_cmd_lst);
 
 		printf("Thilos problem:\n");
+		init_signal(1);
 		ft_execute(cmd_lst, get_bash()->env);
+		setup_readline_signals();
 	}
 	if (token_lst)
         free_token(&token_lst);

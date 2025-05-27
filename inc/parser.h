@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/06 17:09:21 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:00:26 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 #define ec_abort_z 146
 // #define ec_failure 127
 #define invalid_identifier 1
+// control c -> 1
+// 
 #define stopped 148
 #define cmd_not_found 127
 
@@ -161,7 +163,6 @@ void		print_tokenlst(t_token *data);
 //here_doc
 void		check_here_doc_and_take_exit_word(t_token *token_lst);
 char		*cpy_str_space_deli(const char *src);
-size_t		strlen_until_space(const char *s);
 bool		not_single_divider(char c);
 bool		pipe_or_simec(char c);
 int 		special_char_no_divider(char c);
@@ -171,26 +172,16 @@ void		delete_token(t_token *delete_token);
 
 //	get export saved variables
 void 		extend_saved_export_var(t_token *token_lst);
-bool		extend_env(t_token *token_lst);
 char**		extend_env_with_str(char** src, char *token);
 char* 		get_var_from_env(char **src, char *token_no_dollar);
-void		change_spelling_USER_to_USERNAME(char *saved_var_without_$);
 // export tokenise 
-t_token*	tokeniser_for_export(t_token *token_lst, char *line);
 t_token*	equal_case(char **line);
 t_token*	split_token_in_sub_token(t_token *current_token, t_token *chain);
 t_token*	create_token_splited(char *content);
 char*		get_token_equal_as_div(char *content);
 t_token*	create_token_equal_as_div(char *content);
-bool		check_for_div_with_space_and_eq(char c);
 void		handle_export(t_token *token_lst);
-bool		check_for_export(t_token *token_lst);
-bool		check_for_export_divider(char c);
-char*		handle_dividers_in_export(char *content);
-char*		get_token_export_output(char *content);
-bool		check_divider_and_d_quotes_eof(char *line);
-char*		update_export_output_line(char *line);
-t_token*	create_token_export_output(char *line);
+
 char*		get_export_token(char *content);
 char*		update_export_line(char *line);
 t_token*	create_export_token(char *content);
@@ -216,14 +207,11 @@ t_cmd_node*		process_token(t_token **curr_token);
 void 			process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node);
 void 			append_token_char(t_cmd_node *cmd_node, t_token *curr_token);
 char 			**cpy_token_char(char *token);
-int				check_for_execute(char *token_str);
 int				check_for_builtin(char *token_str);
 int				choose_cmd_type(t_token *curr_token);
 
 //fill_file_list
 t_file_node*	process_token_type_redir(t_token **curr_token);
-t_file_node* 	create_redirect_append_file_node(t_token **curr_token);
-t_file_node* 	create_redirect_heredoc_file_node(t_token **curr_token);
 t_file_node* 	create_redirect_input_file_node(t_token **curr_token);
 t_file_node* 	create_redirect_output_file_node(t_token **curr_token);
 
@@ -232,35 +220,3 @@ char	**ft_cpy_array_str(char **arrays);
 char 	*ft_charjoin(char const *dst, char const src_char);
 void 	ft_free_array(char **arrays);
 #endif
-
-
-
-// typedef struct s_cmd
-// {
-// 	t_list		*args; // **weil eigenes envp erweitert werden muss // e.g. echo abc cyz
-// 	t_list 		*redirs; /// e.g. outfile.txt // auf void pointer von t_list
-// 	struct s_cmd 	*next;
-	
-// }	t_cmd;
-
-// // libft_struct
-// // typedef struct s_list
-// // {
-// // 	void			*content;
-// // 	struct s_list	*next;
-// // }					t_list;
-
-
-// typedef enum s_redirtype
-// {
-// 	IN,
-// 	OUT,
-// 	APPEND,
-// 	skip,
-// }	t_redirtype;
-
-// typedef struct s_redirs
-// {
-// 	t_redirtype *Redirtype;
-// 	char 		*file;
-// } t_redirs;
