@@ -198,6 +198,10 @@ t_token*	create_token_q_case_and_export(char **line, t_token *token_lst);
 bool		d_quote_case_no_div(char *line);
 bool		split_needed(t_token **t_lst);
 void 		append_export_str(t_token **token_lst);
+bool		multiple_tokens(char *line);
+char 		*handle_mulit_token(char *line);
+char 		*skip_divider_without_space(char *line);
+void 		tokenise_muliple_tok_from_env(t_token *token_lst, t_token *prev_token);
 // cmd_list
 
 //print cmd_lst

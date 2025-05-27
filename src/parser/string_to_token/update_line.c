@@ -58,12 +58,7 @@ char *handle_dividers(char *line, bool *flag)
     return (line);
 }
 
-char *handle_export_token(char *line)
-{
-    while (*line && (ft_isalnum(*line) || special_char_no_divider_no_eq(*line)))
-        line++;
-    return (line);
-}
+
 
 char *handle_regular_token(char *line)
 {

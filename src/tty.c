@@ -98,7 +98,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		extend_saved_export_var(token_lst);
 		iter_tokenlst(token_lst, &print_tokenlst);
 		
-		printf("\n append token sring in export \n\n");
+		printf("\n append token string in export \n\n");
 		append_export_str(&token_lst);
 		iter_tokenlst(token_lst, &print_tokenlst);
 

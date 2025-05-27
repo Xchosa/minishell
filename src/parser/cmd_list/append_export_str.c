@@ -19,32 +19,64 @@ static bool equal_last(char *str)
     return (false);
 }
 
-static char *update_line_ones(char *line)
-{
-    skip_whitespace(&line);
-    line = handle_regular_token(line);
-    skip_whitespace(&line);
-    return (line);
-}
+// static char *update_line_ones(char *line)
+// {
+//     skip_whitespace(&line);
+//     if(check_for_divider_without_space(*line) == false)
+//     {
+//         line = handle_mulit_token(line);
+//         if(line)
+//             return(NULL);
+//         else
+//             return(line);
+//     }
+//     line = skip_divider_without_space(line);
+//     skip_whitespace(&line);
+//         return(line);
+//     return(line);
 
-static bool multiple_tokens(char *line)
+// }
+
+
+bool multiple_tokens(char *line)
 {
     bool multiple_token;
 	t_token *cpy_tok;
 
-
+    // int i;
+    // i = 0;
 	if (!line || *line == '\0')
 		return(false);
-	cpy_tok = tokenlstnew(line);
-	if (!cpy_tok)
-		return (false);
-    line = update_line_ones(line);
-    
-	if (line == NULL || *line == '\0')
-        multiple_token = false;
-    else
-        multiple_token = true;
+
+    cpy_tok =tokeniser(line);
+    if(cpy_tok == NULL)
+    {
+        free(cpy_tok);
+        return(false);
+    }
+    if(cpy_tok->next == NULL)
+    {
+        free(cpy_tok);
+        return(false);
+        
+    }
     free(cpy_tok);
+    return(true);
+
+	// cpy_tok = tokenlstnew(line);
+    // printf("cpy toke: %s \n", cpy_tok->token);
+	// if (!cpy_tok)
+	// 	return (false);
+    // if (ft_strncmp(cpy_tok->token, "$", 1) == 0)
+    //     return(false);
+    // line = update_line_ones(line);
+    // // printf("line: %s\n", line);
+	// if (line == NULL || *line == '\0')
+    //     multiple_token = false;
+    // else
+    //     multiple_token = true;
+    // free(cpy_tok);
+    // printf("error in mulitple tok\n %d \n", multiple_token);
 	return (multiple_token);
 }
 

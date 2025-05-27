@@ -14,121 +14,80 @@
 #include "parser.h"
 #include "minishell.h"
 
-// vor handle export
-// new string muss nicht mehr getokenised werden 
 
-// nach dem ersten Tokeniser
-
-
-// issue finds for USER :Username=poverbec and prints out ame=poverbec
-
-// original_token = ft_strjoin("$", token_no_dollar);
-//     if (ft_strncmp(token_no_dollar, "USER", 4)== 0)
-//         original_token = ft_strjoin(token_no_dollar, "NAME");
-
-char* get_var_from_env(char **src, char *token_no_dollar)
+static char *extract_var_value(char *env_str, int start_pos)
 {
-	int i;
-    int j;
+    char *tmp_token;
     char *new_token;
-	char *tmp_token;
-    char *original_token;
-    
-    original_token = ft_strjoin("$", token_no_dollar);
-	i = 0;
-    j = ft_strlen(token_no_dollar);
-	while(src[i])
-	{
-		if((ft_strncmp(src[i], token_no_dollar, j) == 0))
-        {
-            printf("%d  :%s\n", i, src[i]);
-            token_no_dollar++;
-            j++;
-            new_token =ft_strdup("");
-            while((src[i])[j] != '\0')
-	        {
-		        tmp_token = ft_charjoin(new_token, (src[i][j]));
-		        free(new_token);
-                new_token = tmp_token;
-		        j++;
-	        }
-            return (new_token);
-        }
-		i++;
-	}
-    return(original_token);
-}
-// 
-// if(ft_strncmp("USER", saved_var_without_$, 4) == 0)
-//         change_spelling_USER_to_USERNAME(saved_var_without_$);
-// void change_spelling_USER_to_USERNAME(char *saved_var_without_$)
-// {
-//     free(saved_var_without_$);
-//     saved_var_without_$ = ft_strdup("USERNAME");
-// }
-
-static bool check_input_user(char *token)
-{
-    if((ft_strncmp(token, "USERNAME", 8) == 0))
-        return (false);
-    if((ft_strncmp(token, "USER", 4) == 0))
-        return (true);
-    return (false);
+    new_token = ft_strdup("");
+    if (!new_token)
+        return (NULL);
+    // printf("env string %s\n", env_str + start_pos);
+    while (env_str[start_pos] != '\0')
+    {
+        tmp_token = ft_charjoin(new_token, env_str[start_pos]);
+        free(new_token);
+        new_token = tmp_token;
+        start_pos++;
+    }
+    // printf("env string after %s\n", new_token); 
+    return (new_token);
 }
 
-static char* handle_user(char **src)
+// Main function to find environment variable value
+char *get_var_from_env(char **src, char *token_no_dollar)
 {
     int i;
-    int j;
-    char *new_token;
-	char *tmp_token;
-    
-	i = 0;
-    j = 0;
-    while(src[i])
-	{
-		if((ft_strncmp(src[i], "USERNAME", 8) == 0) )
+    int var_len;
+    char *original_token;
+    char *found_token;
+    char *tmp;
+
+    original_token = ft_strjoin("$", token_no_dollar);
+    tmp = ft_strjoin(token_no_dollar, "=");
+    if (!tmp)
+        return (NULL);
+    var_len = ft_strlen(tmp);
+    i = 0;
+    while (src[i])
+    {
+        if (ft_strncmp(src[i], tmp, var_len) == 0)
         {
-            j += 9;
-            new_token =ft_strdup("");
-            while((src[i])[j] != '\0')
-	        {
-		        tmp_token = ft_charjoin(new_token, (src[i][j]));
-		        free(new_token);
-                new_token = tmp_token;
-		        j++;
-	        }
-            return (new_token);
+            found_token = extract_var_value(src[i], var_len);
+            free(original_token);
+            free(tmp);
+            return (found_token);
         }
-		i++;
-	}
-    return(ft_strdup("$USER"));
+        i++;
+    }
+    free(tmp);
+    return (original_token);
 }
 
 
-// $USER oder $h > poverbec or world 
 
 void extend_saved_export_var(t_token *token_lst)
 {
     char *saved_var_without_$;
     t_bash *bash;
-    
-    bash = get_bash();
+    t_token *prev_token;
 
+    bash = get_bash();
+    prev_token = NULL;
     while(token_lst)
     {
         if(token_lst->token_type == CALL_SAVED_VAR)
         {
             saved_var_without_$ = ft_strdup(token_lst->token + 1);
             free(token_lst->token);
-            if(check_input_user(saved_var_without_$) == true)
-                token_lst->token = handle_user(bash->env);
-            else
-                token_lst->token = get_var_from_env(bash->env,saved_var_without_$);
+            token_lst->token = get_var_from_env(bash->env,saved_var_without_$);
             free(saved_var_without_$);
+            tokenise_muliple_tok_from_env(token_lst, prev_token);
             if(token_lst->next == NULL)
                 return;
         }
+        prev_token = token_lst;
         token_lst = token_lst->next;
     }
 }
+
