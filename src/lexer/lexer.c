@@ -37,7 +37,7 @@ get some bash cmds to test
 */
 // fucction to check if the single or double quotes are set correct  
 // /* 
-
+// missing: ddf>< or dfd <  > ->redirections stright afterwards or > | 
 
 bool	lexer(char *line)
 {

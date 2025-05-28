@@ -39,7 +39,6 @@ void parent_handler(int sig)
 {
     if (sig == SIGINT)
 	{
-		(void)sig;
 		get_exit_codes()->last_exit_code = 1;
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
@@ -49,6 +48,7 @@ void parent_handler(int sig)
 	else if (sig == SIGQUIT)
 	{
 		get_exit_codes()->last_exit_code = ec_sucess;
+		// ft_putstr_fd("EXIT: 3\n", STDOUT_FILENO);
 	}
 }
 
@@ -62,7 +62,9 @@ void child_handler(int sig)
     }
 	else if (sig == SIGQUIT)
 	{
-		ft_putstr_fd("EXIT: 3\n", STDOUT_FILENO);
+		// ft_putstr_fd("EXIT: 3\n", STDOUT_FILENO);
+		// printf("do i reach it");
+		write(STDOUT_FILENO, "Quit: 3\n", 8);
 		get_exit_codes()->last_exit_code = 131; // sleep and then ctrl + D
 	}
 	return ;
@@ -90,25 +92,14 @@ void hide_ctrl_in_terminal(void)
 
 }
 
-// void	sig_int_handler_read(int sig)
-// {
-// 	(void)sig;
-// 	get_exit_codes()->last_exit_code = 1;
-// 	write(STDOUT_FILENO, "\n", 1);
-// 	rl_on_new_line();
-// 	rl_replace_line("", 0);
-// 	rl_redisplay();
-// }
-
 void setup_readline_signals(void)
 {
 	struct sigaction sa;
 
 	hide_ctrl_in_terminal();
-	
-	sa.sa_handler = parent_handler;
+	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
+	sa.sa_handler = parent_handler;
 	
 	// ctrl + c
 	sigaction(SIGINT, &sa, NULL);
@@ -116,37 +107,43 @@ void setup_readline_signals(void)
 	//ctrl + slash -> ignored
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
-	
+}
+
+void setup_execution_signals(void)
+{
+	struct sigaction sa;
+
+	hide_ctrl_in_terminal();
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = child_handler;
+
+	sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGQUIT, &sa, NULL);
 }
 
 
-void init_signal(int child_or_parent)
+
+void init_signal(int is_child)
 {
     struct sigaction sa;
 
 	hide_ctrl_in_terminal();
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);// clear blocked signals
 	//changes signal action (replaces signal() for better control
-	if(child_or_parent == 0)
-		sa.sa_handler = child_handler;  
+	if(is_child == 1)
+	{
+		sa.sa_handler = child_handler;
+		sigaction(SIGINT, &sa, NULL);
+        sigaction(SIGQUIT, &sa, NULL);
+	}
 	else
-		sa.sa_handler = parent_handler;      // 
-	sigaction(SIGINT, &sa, NULL);
-
-	if(child_or_parent != 0)
-   		sa.sa_handler = SIG_IGN;        // 
-	sigaction(SIGQUIT, &sa, NULL);
-    // sigemptyset(&sa.sa_mask)
-    // sigaddset(&sa.sa.mask,SIGQUIT); // block Siquit during handler// only control + D 
-    // sa.sa.flags = 0;
-
+	{
+		sa.sa_handler = parent_handler;
+		sigaction(SIGINT, &sa, NULL);
+   		sa.sa_handler = SIG_IGN; // ignore ctrl backslash
+		sigaction(SIGQUIT, &sa, NULL);
+	}
+	
 }
-
-
-
-// restart from here 
-// replace a new line , readline on new line, read the display again 
-// in the termail again 
-
-

@@ -42,7 +42,11 @@ static char* read_terminal(void)
 	line = readline("minishell:$ ");
 	if (line && *line)
         add_history(line);
-	
+	if (line == NULL) // Handle EOF (Ctrl+D)
+		{
+            printf("exit\n");
+            exit(1); /// clean everything   
+        }
 	return(line);
 }
 
@@ -62,11 +66,12 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	while(1)
 	{
 		line = read_terminal();
-		bash = get_bash();
 		// if (line == NULL) // Handle EOF (Ctrl+D)
-        // {
-        //     break;
+		// {
+        //     printf("exit\n");
+        //     break;           
         // }
+		bash = get_bash();
 		(void)bash;
 		if (lexer(line) == false)
 		{
@@ -97,6 +102,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 
 		printf("Thilos problem:\n");
 		init_signal(1);
+		setup_execution_signals();
 		ft_execute(cmd_lst, get_bash()->env);
 		setup_readline_signals();
 	}

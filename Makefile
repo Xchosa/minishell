@@ -82,7 +82,6 @@ HEADERS = \
 OBJ 	= $(addprefix $(OBJ_DIR)/, $(MY_SOURCES:.c=.o))
 
 
-
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJ) -lreadline -o $@ $(LIBFT)
 
