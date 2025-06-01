@@ -14,6 +14,8 @@
 #include "parser.h"
 #include "executer.h"
 #include "signal_tp.h"
+
+
 /*
 Lexer overview
 check for valid input 
@@ -38,14 +40,19 @@ what is awk
 static char* read_terminal(void)
 {
 	char *line;
+	// setup_readline_signals();
+	tcflush(STDIN_FILENO, TCIFLUSH);
 
+	g_in_readline = 1;
+	setup_readline_signals();
 	line = readline("minishell:$ ");
+	g_in_readline = 0;
 	if (line && *line)
         add_history(line);
 	if (line == NULL) // Handle EOF (Ctrl+D)
 		{
             printf("exit\n");
-            exit(1); /// clean everything   
+            exit(get_exit_codes()->last_exit_code); /// clean everything   
         }
 	return(line);
 }
@@ -62,15 +69,9 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	
 	// try to put in read_terminal
 	t_bash *bash;
-	setup_readline_signals();
 	while(1)
 	{
 		line = read_terminal();
-		// if (line == NULL) // Handle EOF (Ctrl+D)
-		// {
-        //     printf("exit\n");
-        //     break;           
-        // }
 		bash = get_bash();
 		(void)bash;
 		if (lexer(line) == false)
@@ -87,10 +88,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
             continue;
 		}
 		iter_tokenlst(token_lst, &print_tokenlst);
-		
-		// printf("\n$var from env:\n");
 		extend_saved_export_var(token_lst);
-		// iter_tokenlst(token_lst, &print_tokenlst);
 		
 		printf("\n append token string in export \n\n");
 		append_export_str(&token_lst);
@@ -101,10 +99,9 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		iter_cmd_lst(cmd_lst, &print_cmd_lst);
 
 		printf("Thilos problem:\n");
-		init_signal(1);
-		setup_execution_signals();
+		g_in_readline = 0;
+		init_signal(0);
 		ft_execute(cmd_lst, get_bash()->env);
-		setup_readline_signals();
 	}
 	if (token_lst)
         free_token(&token_lst);

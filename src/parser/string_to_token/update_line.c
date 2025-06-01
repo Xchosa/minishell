@@ -39,6 +39,8 @@ int special_char_no_divider_no_eq(char c)
 {
 	if (c == '-')
 		return (1);
+    if (c == '/')
+		return (1);
 	return (0);
 }
 
@@ -84,3 +86,4 @@ char *update_line(char *line, t_token *token)
 	// 	return(NULL);
     return (line);
 }
+

@@ -13,15 +13,11 @@
 #include "signal_tp.h"
 #include "parser.h"
 
-// include this in heredoc 
-// signal(SIGINT,SIG_DFL) // in child process heredoc, if control c 
 
+// in header declared as extern. value will be stored only one time
+// not variables of normal headers where everything will be copyed and stored
 
-// allowed functions:
-// sigaction, sigemptyset, sigaddset, 
-
-/// watch codeVault 
-// signal 
+volatile sig_atomic_t g_in_readline = 0;
 
 /*
  struct sigaction {
@@ -33,6 +29,16 @@
            };
 */
 
+// include this in heredoc 
+// signal(SIGINT,SIG_DFL) // in child process heredoc, if control c 
+
+void signal_heredoc(void)
+{
+	// (void)
+	// heredoc is a child process where signals needs to be set
+	//seperately 
+}
+
 
 
 void parent_handler(int sig)
@@ -40,10 +46,13 @@ void parent_handler(int sig)
     if (sig == SIGINT)
 	{
 		get_exit_codes()->last_exit_code = 1;
-		write(STDOUT_FILENO, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		if(g_in_readline != 0) // in readline mode then only print new line
+		{
+			write(STDOUT_FILENO, "\n", 1);
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
 	}
 	else if (sig == SIGQUIT)
 	{
@@ -59,7 +68,8 @@ void child_handler(int sig)
     {
         write(1, "\n",1);
 		get_exit_codes()->last_exit_code = 130; // sleep and then ctrl + C
-    }
+		exit(130);
+	}
 	else if (sig == SIGQUIT)
 	{
 		// ft_putstr_fd("EXIT: 3\n", STDOUT_FILENO);
@@ -107,20 +117,10 @@ void setup_readline_signals(void)
 	//ctrl + slash -> ignored
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
+	rl_catch_signals = 0;
+	// Tell readline not to install its own handlers
 }
 
-void setup_execution_signals(void)
-{
-	struct sigaction sa;
-
-	hide_ctrl_in_terminal();
-	sa.sa_flags = SA_RESTART;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_handler = child_handler;
-
-	sigaction(SIGINT, &sa, NULL);
-    sigaction(SIGQUIT, &sa, NULL);
-}
 
 
 
@@ -133,17 +133,20 @@ void init_signal(int is_child)
 	sigemptyset(&sa.sa_mask);// clear blocked signals
 	//changes signal action (replaces signal() for better control
 	if(is_child == 1)
-	{
 		sa.sa_handler = child_handler;
-		sigaction(SIGINT, &sa, NULL);
-        sigaction(SIGQUIT, &sa, NULL);
-	}
 	else
-	{
 		sa.sa_handler = parent_handler;
-		sigaction(SIGINT, &sa, NULL);
-   		sa.sa_handler = SIG_IGN; // ignore ctrl backslash
-		sigaction(SIGQUIT, &sa, NULL);
-	}
-	
+	sigaction(SIGINT, &sa, NULL);
+   	sa.sa_handler = SIG_IGN; // ignore ctrl backslash
+	sigaction(SIGQUIT, &sa, NULL);
+	// sigaction(SIGTERM, &sa, NULL);
+	// make sure readline doesn't interfere
+	rl_catch_signals = 0;
 }
+
+//
+// chance to perform cleanup operations through 
+// your handler before terminating.
+
+
+

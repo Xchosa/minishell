@@ -134,6 +134,8 @@ bool	char_is_alpha_nbr_and_no_whitespace(char c)
 		return (true);
 	if (ft_strncmp ("-", &c, 1) == 0)
 		return (true);
+	if (ft_strncmp ("/", &c, 1) == 0)
+		return (true);
 	if (ft_strncmp ("=", &c, 1) == 0)
 		return (true);
 	return (false);
