@@ -30,6 +30,7 @@ MY_SOURCES = \
 		handler.c \
 		main.c \
 		tty.c \
+		clean_up.c \
 		skip_whitespace_helper.c \
 		scan_char_helper.c \
 		abort_parser.c \

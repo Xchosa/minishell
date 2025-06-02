@@ -110,6 +110,10 @@ void 		ft_print_array(char **src);
 void		interactive_shell_tty(int argc, char **argv, char **envp, char *line);
 void		non_interactive_shell(int argc, char **argv, char **envp, char *line);
 
+//interrupt tty
+bool check_lexer_and_free(char *line);
+bool check_lexer_token_and_free(t_token *token, char *line);
+
 // lexer
 bool		lexer(char *line);
 int			count_up_strings(char *line);
@@ -119,6 +123,7 @@ bool    	check_for_correct_single_divider(char *line);
 
 // lexer tokens
 bool		lexer_token(t_token *token_lst);
+void		clean_up(char *line, t_token *token);
 
 
 bool    	lexer_valid_ident(char *line);

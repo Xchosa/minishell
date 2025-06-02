@@ -17,7 +17,7 @@
 // in header declared as extern. value will be stored only one time
 // not variables of normal headers where everything will be copyed and stored
 
-volatile sig_atomic_t g_in_readline = 0;
+// volatile sig_atomic_t g_in_readline = 0;
 
 /*
  struct sigaction {
@@ -46,13 +46,11 @@ void parent_handler(int sig)
     if (sig == SIGINT)
 	{
 		get_exit_codes()->last_exit_code = 1;
-		if(g_in_readline != 0) // in readline mode then only print new line
-		{
-			write(STDOUT_FILENO, "\n", 1);
-			rl_on_new_line();
-			rl_replace_line("", 0);
-			rl_redisplay();
-		}
+	// in readline mode then only print new line
+		write(STDOUT_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 	else if (sig == SIGQUIT)
 	{
@@ -66,9 +64,9 @@ void child_handler(int sig)
 	
     if(sig == SIGINT)
     {
-        write(1, "\n",1);
+        // write(1, "\n",1);
 		get_exit_codes()->last_exit_code = 130; // sleep and then ctrl + C
-		exit(130);
+		write(STDOUT_FILENO, "\n", 1);
 	}
 	else if (sig == SIGQUIT)
 	{
@@ -110,36 +108,35 @@ void reset_terminal_state(void)
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &term);
 
     tcflush(STDIN_FILENO, TCIFLUSH);
+	// fflush(stdout);
 }
 
-void setup_readline_signals(void)
-{
-	struct sigaction sa;
+// void setup_readline_signals(void)
+// {
+// 	struct sigaction sa;
 
-	hide_ctrl_in_terminal();
-	sa.sa_flags = SA_RESTART;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_handler = parent_handler;
+// 	hide_ctrl_in_terminal();
+// 	sa.sa_flags = SA_RESTART;
+// 	sigemptyset(&sa.sa_mask);
+// 	sa.sa_handler = parent_handler;
 	
-	// ctrl + c
-	sigaction(SIGINT, &sa, NULL);
+// 	// ctrl + c
+// 	sigaction(SIGINT, &sa, NULL);
 
-	//ctrl + slash -> ignored
-	sa.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa, NULL);
-	rl_catch_signals = 0;
-	// Tell readline not to install its own handlers
-}
-
-
+// 	//ctrl + slash -> ignored
+// 	sa.sa_handler = SIG_IGN;
+// 	sigaction(SIGQUIT, &sa, NULL);
+// 	rl_catch_signals = 0;
+// 	// Tell readline not to install its own handlers
+// }
 
 
 void init_signal(int is_child)
 {
     struct sigaction sa;
 
-	hide_ctrl_in_terminal();
-	sa.sa_flags = SA_RESTART;
+	// sa.sa_flags = SA_RESTART;
+	reset_terminal_state();
 	sigemptyset(&sa.sa_mask);// clear blocked signals
 	//changes signal action (replaces signal() for better control
 	if(is_child == 1)
@@ -148,9 +145,8 @@ void init_signal(int is_child)
 		sa.sa_handler = parent_handler;
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
-   	sa.sa_handler = SIG_IGN; // ignore ctrl backslash
 	sigaction(SIGQUIT, &sa, NULL);
-	// sigaction(SIGTERM, &sa, NULL);
+	sigaction(SIGTERM, &sa, NULL);
 	// make sure readline doesn't interfere
 	rl_catch_signals = 0;
 }

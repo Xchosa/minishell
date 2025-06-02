@@ -44,5 +44,29 @@ bool print_error_message(char *line)
 	return(exit_minishell);
 }
 
+bool check_lexer_token_and_free(t_token *token, char *line)
+{
+	if (lexer_token(token) == false)
+	{
+		print_error_message(line);
+		free(line);
+		free(token);
+		return(false);
+	}
+	return(true);
+}
 
+bool check_lexer_and_free(char *line)
+{
+	if (lexer(line) == false)
+	{
+		get_exit_codes()->last_exit_code = syntax_failure;
+		print_error_message(line);
+		free(line);
+		return(false);
+    }
+	return(true);
+}
+\
+	
 // $? wird als BUILTIN deklariert
