@@ -87,7 +87,7 @@ bool	wrong_use_pipe_and_redirection(char *line)
 		return (false);
 	while (line[i])
 	{
-		if((line[i] == '&') || (line[i] == ';') || (line[i] == 47))
+		if((line[i] == '&') || (line[i] == ';'))
 			return(false);
 		i++;
 	}

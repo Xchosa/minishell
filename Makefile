@@ -10,7 +10,6 @@ CFLAGS		= -Wall -Wextra -g -I inc/ #-Werror
 LIBFT := ./libft/libft.a
 
 SOURCE_DIR = ./src
-GARBAGE_DIR := ./src/garbage_collector
 PARSE_DIR = ./src/parser
 TOKEN_DIR = ./src/parser/string_to_token
 EXPORT_DIR = ./src/parser/export_case
@@ -31,8 +30,10 @@ MY_SOURCES = \
 		handler.c \
 		main.c \
 		tty.c \
-		abort_parser.c \
+		skip_whitespace_helper.c \
 		scan_char_helper.c \
+		abort_parser.c \
+		get_token_fk.c \
 		tokeniser.c \
 		heredoc.c \
 		handle_quotes.c \
@@ -81,7 +82,7 @@ HEADERS = \
 # ---------- Objects ---------- #
 OBJ 	= $(addprefix $(OBJ_DIR)/, $(MY_SOURCES:.c=.o))
 
-
+all: $(NAME)
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJ) -lreadline -o $@ $(LIBFT)
 
@@ -98,18 +99,14 @@ $(LIBFT):
 debug: -Wall -Wextra -Werror -g -I inc/ -fsanitize=
 
 
+.PHONY: re clean fclean all libft_fclean
 
-clean:
-	@rm -rf $(OBJ_DIR)
-	make -C libft fclean
+libft_fclean:
+	@if [ -d "./libft" ]; then make -C libft fclean; fi 
 
-fclean: clean
+fclean: clean libft_fclean
 	@rm -f $(NAME)
 	@rm -rf $(OBJ_DIR)
-	make -C libft fclean
-
 
 re: fclean
 	$(MAKE) all
-
-.PHONY: re clean fclean all

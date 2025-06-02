@@ -5,34 +5,6 @@
 #include "minishell.h"
 
 
-// herdoc does not need to update history
-
-// here doc woww darf er nicht als delimter nehmen bei <<wow
-
-
-
-// size_t	strlen_until_space(const char *s)
-// {
-// 	size_t	i;
-// 	size_t	str_s;
-
-// 	str_s = 0;
-// 	i = 0;
-// 	while((ft_strncmp(" ", s[str_s], 1) == 0))
-// 		str_s++;
-// 	i = str_s;
-// 	while (s[i] != '\0' && s[i] != " ")
-// 	{
-// 		i++;
-// 	}
-// 	return(i - str_s);
-	
-// }
-
-
-	
-// }
-
 void check_here_doc_and_take_exit_word(t_token *token_lst)
 {
 	char *her_doc_string;
@@ -46,10 +18,6 @@ void check_here_doc_and_take_exit_word(t_token *token_lst)
 		{
 			token_lst = token_lst->next;
 			her_doc_string = ft_strdup(token_lst->token);//no space befor or after
-			// len_her_doc_string = ft_strlen(her_doc_string);
-			
-			// her_doc_string = cpy_str_space_deli(token_lst->token);
-			// len_her_doc_string = ft_strlen(her_doc_string);
 			while(1)
 			{
 				doc_line = readline("another heredoc> ");

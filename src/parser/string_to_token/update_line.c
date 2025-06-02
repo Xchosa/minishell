@@ -31,6 +31,8 @@ int special_char_no_divider(char c)
 {
 	if (c == '-')
 		return (1);
+    if (c == '/')
+		return (1);
 	if (c == '=')
 	 	return (1);
 	return (0);
