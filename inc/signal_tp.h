@@ -15,6 +15,7 @@ void	setup_readline_signals(void);
 void 	child_handler(int sig);
 void	parent_handler(int sig);
 void    hide_ctrl_in_terminal(void);
+void    reset_terminal_state(void);
 void    setup_execution_signals(void);
 
 void    setup_shell_signals(void);

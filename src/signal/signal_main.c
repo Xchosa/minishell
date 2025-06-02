@@ -97,9 +97,19 @@ void hide_ctrl_in_terminal(void)
 	tcgetattr(STDIN_FILENO, &term);// fpr termial controll
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term);
+	
 	// how typing in the terminal is displayed, 
 	// thats why stdin
 
+}
+void reset_terminal_state(void)
+{
+	struct termios term;
+    tcgetattr(STDIN_FILENO, &term);
+    term.c_lflag &= ~ECHOCTL;
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &term);
+
+    tcflush(STDIN_FILENO, TCIFLUSH);
 }
 
 void setup_readline_signals(void)
@@ -136,6 +146,7 @@ void init_signal(int is_child)
 		sa.sa_handler = child_handler;
 	else
 		sa.sa_handler = parent_handler;
+	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
    	sa.sa_handler = SIG_IGN; // ignore ctrl backslash
 	sigaction(SIGQUIT, &sa, NULL);

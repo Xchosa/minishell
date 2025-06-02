@@ -40,11 +40,10 @@ what is awk
 static char* read_terminal(void)
 {
 	char *line;
-	// setup_readline_signals();
-	tcflush(STDIN_FILENO, TCIFLUSH);
 
 	g_in_readline = 1;
 	setup_readline_signals();
+	tcflush(STDIN_FILENO, TCIFLUSH);
 	line = readline("minishell:$ ");
 	g_in_readline = 0;
 	if (line && *line)
@@ -71,6 +70,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	t_bash *bash;
 	while(1)
 	{
+		reset_terminal_state();
 		line = read_terminal();
 		bash = get_bash();
 		(void)bash;
@@ -108,6 +108,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		g_in_readline = 0;
 		init_signal(0);
 		ft_execute(cmd_lst, get_bash()->env);
+		g_in_readline = 1;
 	}
 	if (token_lst)
         free_token(&token_lst);
