@@ -93,7 +93,13 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		printf("\n append token string in export \n\n");
 		append_export_str(&token_lst);
 		iter_tokenlst(token_lst, &print_tokenlst);
-
+		if (lexer_token(token_lst) == false)
+    	{
+			print_error_message(line);
+			free(line);
+			free(token_lst);
+			continue;
+    	}
 		cmd_lst = init_cmd_list(&token_lst);
 		printf("\n cmd_list works:\n\n");
 		iter_cmd_lst(cmd_lst, &print_cmd_lst);

@@ -43,6 +43,7 @@ MY_SOURCES = \
 		lexer.c \
 		lexer_identifer.c \
 		lexer_helper.c \
+		lexer_tokens.c \
 		count_strings_up.c \
 		bash_config.c \
 		exit_codes_config.c \

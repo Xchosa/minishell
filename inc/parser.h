@@ -23,12 +23,12 @@
 
 
 #define syntax_failure 258
+#define syntax_error_token 2
 #define ec_sucess 0
 #define ec_abort_z 146
 // #define ec_failure 127
 #define invalid_identifier 1
 // control c -> 1
-// 
 #define stopped 148
 #define cmd_not_found 127
 
@@ -116,6 +116,10 @@ int			count_up_strings(char *line);
 bool		wrong_use_pipe_and_redirection(char *line);
 bool		check_for_correct_double_divider(char *line);
 bool    	check_for_correct_single_divider(char *line);
+
+// lexer tokens
+bool		lexer_token(t_token *token_lst);
+
 
 bool    	lexer_valid_ident(char *line);
 bool		d_quote_case_no_div(char *line);
