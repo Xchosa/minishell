@@ -124,6 +124,7 @@ bool    	check_for_correct_single_divider(char *line);
 // lexer tokens
 bool		lexer_token(t_token *token_lst);
 void		clean_up(char *line, t_token *token);
+bool		tokeniser_successful(t_token *token_lst, char *line);
 
 
 bool    	lexer_valid_ident(char *line);

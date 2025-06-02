@@ -67,11 +67,8 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		if(check_lexer_and_free(line) == false)
 			continue;
 		token_lst = tokeniser(line);
-		if (!token_lst)
-		{
-			free(line);
+		if(tokeniser_successful(token_lst,line) == false)
             continue;
-		}
 		extend_saved_export_var(token_lst);
 		append_export_str(&token_lst);
 		if (lexer_token(token_lst) == false)
@@ -99,32 +96,24 @@ void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)
 	(void) argc;
 	(void) envp;
 	t_token 	*token_lst;
-	t_bash 		*bash;
-	t_exit_codes *exit_code;
 	t_cmd_list 	*cmd_lst;
 
-	(void)exit_code;
-	(void)bash;
-	bash = get_bash();
 	printf("in the non interactive shell: \n");
 	line = get_next_line(STDIN_FILENO);
-	if(lexer(line) == false)
-	{
-		get_exit_codes()->last_exit_code = syntax_failure;
-		printf("syntax Error: \n");
-		printf("%s\n", line);
-		return ;
-	}
+	if(check_lexer_and_free(line) == false)
+		return;
 	token_lst = tokeniser(line);
-	
+	if(tokeniser_successful(token_lst,line) == false)
+            return;
 	iter_tokenlst(token_lst, &print_tokenlst);
 	extend_saved_export_var(token_lst);
-	iter_tokenlst(token_lst, &print_tokenlst);
-	handle_export(token_lst);
-	printf("\n called form:\n\n");
-	iter_tokenlst(token_lst, &print_tokenlst);
-	printf("\ndo i come to cmd_list:\n\n");
+	append_export_str(&token_lst);
+	if (lexer_token(token_lst) == false)
+		return;
 	cmd_lst = init_cmd_list(&token_lst);
-	iter_cmd_lst(cmd_lst, &print_cmd_lst);
+	printf("Thilos problem:\n");
+	init_signal(1);
 	ft_execute(cmd_lst, get_bash()->env);
+	init_signal(0);
+	clean_up(line,token_lst);
 }
