@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extend_user.c                                      :+:      :+:    :+:   */
+/*   extend_token_from_bash.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 09:33:22 by poverbec          #+#    #+#             */
-/*   Updated: 2025/04/29 09:35:03 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:29:53 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,33 @@ char *get_var_from_env(char **src, char *token_no_dollar)
         i++;
     }
     free(tmp);
-    return (original_token);
+    return (ft_strdup(""));
 }
 
+char *get_home_directory(char **src)
+{
+	int i;
+	int home_len;
+	
+	home_len = ft_strlen("HOME=");
+	i = 0;
+	while(src[i])
+	{
+		if(ft_strncmp("HOME=", src[i], home_len) == 0)
+		{
+			return(extract_var_value(src[i], home_len));
+		}
+		i++;
+	}
+	return(ft_strdup(""));
+}
 
+void reset_token_get_home_directory(t_token **token_lst, char **src)
+{
+	free((*token_lst)->token);
+	(*token_lst)->token = get_home_directory(src);
+	(*token_lst)->token_type = TEXT;
+}
 
 void extend_saved_export_var(t_token *token_lst)
 {
@@ -76,7 +99,9 @@ void extend_saved_export_var(t_token *token_lst)
     prev_token = NULL;
     while(token_lst)
     {
-        if(token_lst->token_type == CALL_SAVED_VAR)
+		if(token_lst->token_type == Tilde)
+			reset_token_get_home_directory(&token_lst,bash->env);
+        else if(token_lst->token_type == CALL_SAVED_VAR)
         {
             saved_var_without_$ = ft_strdup(token_lst->token + 1);
             free(token_lst->token);

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/27 17:00:26 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:01:50 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,15 @@ typedef enum s_type
 	Append = 5,// >>
 	here_doc = 6,// <<
 
-	S_Quote = 7,
-	D_Quote = 8, // (like " ")
+	// S_Quote = 7,
+	// D_Quote = 8, // (like " ")
 	EXPORT = 9, // export
 	Export_var =10, // from export hallo="ls -l" -> 'hallo' = Export_var  | ls -l normal TEXT
-	// hallo="ls -al" = Export var , h=welt = Export var
+	Tilde = 15,
 	CALL_EXIT = 11, // $?
 	CALL_SAVED_VAR = 12, // $hello   e.g -holds 'world' or holds nothing
 	Error =13,// node invalid
 	PIPE = 14, // 1
-	// " echo hello world >outfile | >outfile2"
-	// cat <infile | wc 
 
 }	t_type;
 
@@ -226,6 +224,7 @@ t_file_node* 	create_redirect_input_file_node(t_token **curr_token);
 t_file_node* 	create_redirect_output_file_node(t_token **curr_token);
 
 // for new_libft
+bool	ft_strcmp(const char *s1, const char *s2);
 char	**ft_cpy_array_str(char **arrays);
 char 	*ft_charjoin(char const *dst, char const src_char);
 void 	ft_free_array(char **arrays);

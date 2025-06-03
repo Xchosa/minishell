@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:26:42 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/27 10:30:15 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:59:43 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_token *create_token(char *content)
 	if(!new_token)
 		return (NULL);
 	new_token->token  = get_token(content);
-	new_token->token_type = get_token_type(content);
+	new_token->token_type = get_token_type(new_token->token);
 	new_token->next = NULL;
 	return (new_token);
 }

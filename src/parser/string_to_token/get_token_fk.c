@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_token_fk.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/03 14:52:50 by poverbec          #+#    #+#             */
+/*   Updated: 2025/06/03 15:00:49 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "parser.h"
 
@@ -52,7 +63,6 @@ char* get_token(char *content)
 
 // to do seperate function innerhalb des jeweiligen while loops
 
-
 t_type get_token_type(char *content)
 {
 	int i;
@@ -74,7 +84,32 @@ t_type get_token_type(char *content)
 		else
 			return (Redirect_input);
 	}
-	if(ft_strncmp( "export", content, 6) == 0)
+	if(ft_strcmp( "export", content) == true)
 		return (EXPORT);
+	if(ft_strcmp(content, "~") == true)
+		return(Tilde);
 	return(TEXT);
+}
+
+
+
+// compares the hole string not just a specific len
+bool	ft_strcmp(const char *s1, const char *s2)
+{
+	int i;
+	bool identical;
+
+	i = 0;
+	identical = false;
+
+	if((s1[i] == '\0') && (s2[i] == '\0'))
+		return (true);
+
+	while (s1[i] != '\0' && s2[i] != '\0')
+	{
+		if (s1[i] != s2[i])
+			return (false);
+		i++;
+	}
+	return((s1[i] == '\0') && (s2[i] == '\0'));
 }

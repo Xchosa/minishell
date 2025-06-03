@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/27 15:51:59 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:46:17 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,19 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		token_lst = tokeniser(line);
 		if(tokeniser_successful(token_lst,line) == false)
             continue;
+		printf("\n tokeniser \n\n");
+		iter_tokenlst(token_lst, &print_tokenlst);
 		extend_saved_export_var(token_lst);
 		append_export_str(&token_lst);
+		printf("\n append token string in export \n\n");
+		iter_tokenlst(token_lst, &print_tokenlst);
 		if (lexer_token(token_lst) == false)
 			continue;
 		cmd_lst = init_cmd_list(&token_lst);
 		printf("Thilos problem:\n");
 		init_signal(1);
+		printf("\n cmd_list works:\n\n");
+		iter_cmd_lst(cmd_lst, &print_cmd_lst);
 		ft_execute(cmd_lst, get_bash()->env);
 		init_signal(0);
 		reset_terminal_state();

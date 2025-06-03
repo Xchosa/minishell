@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:54:56 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/27 10:54:57 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:42:13 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 int check_for_builtin(char *token_str)
 {
-    if(ft_strncmp("echo" , token_str, ft_strlen(token_str)) == 0)
+    if(ft_strcmp("echo" , token_str) == true)
 		return (BUILTIN);
-	if(ft_strncmp("env" , token_str, ft_strlen(token_str)) == 0)
+	if(ft_strcmp("env" , token_str) == true)
 		return (BUILTIN);
-	if(ft_strncmp("export" , token_str, ft_strlen(token_str)) == 0)
+	if(ft_strcmp("export" , token_str) == true)
 		return (BUILTIN);
-	if(ft_strncmp("cd" , token_str, ft_strlen(token_str)) == 0)
+	if(ft_strcmp("cd" , token_str) == true)
 		return (BUILTIN);
-	if(ft_strncmp("pwd" , token_str, ft_strlen(token_str)) == 0)
+	if(ft_strcmp("pwd" , token_str) == true)
 		return (BUILTIN);
-	if(ft_strncmp("unset" , token_str, ft_strlen(token_str)) == 0)
+	if(ft_strcmp("unset" , token_str) == true)
 		return (BUILTIN);
-	if(ft_strncmp("$?" , token_str, ft_strlen(token_str)) == 0)
+	if(ft_strcmp("$?" , token_str) == true)
 		return (BUILTIN);
-	if(ft_strncmp("exit" , token_str, ft_strlen(token_str)) == 0)
+	if(ft_strcmp("exit" , token_str) == true)
 		return (BUILTIN);
 	return 0;
 }
