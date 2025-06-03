@@ -49,7 +49,7 @@ bool	char_is_alpha_nbr_and_no_whitespace(char c)
 		return (true);
 	if (ft_strnstr("\r\n\v\t ", &c, 1) != NULL)
 		return (true);
-	if (ft_strchr(".,;?*", c) != NULL)
+	if (ft_strchr(".,;?*$", c) != NULL)
 		return (true);
 	if (ft_strncmp ("-", &c, 1) == 0)
 		return (true);

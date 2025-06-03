@@ -6,13 +6,11 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:52:50 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/03 15:00:49 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:54:48 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-
 
 
 static char *tokenise_divider(char *content, char *new_token)
@@ -61,6 +59,18 @@ char* get_token(char *content)
 	return(new_token);
 }
 
+t_type append_or_redirect_output(char *content)
+{
+	int i;
+	
+	i = 0;
+	if (content[i+1] == '>')
+		return (Append);
+	else
+		return(Redirect_output);
+}
+
+
 // to do seperate function innerhalb des jeweiligen while loops
 
 t_type get_token_type(char *content)
@@ -71,12 +81,7 @@ t_type get_token_type(char *content)
 	if(content[i] == '|')
 		return(PIPE);
 	if (content[i] == '>')
-	{
-		if (content[i+1] == '>')
-			return (Append);
-		else
-			return(Redirect_output);
-	}
+		return(append_or_redirect_output(&content[i]));
 	if (content[i] == '<')
 	{
 		if (content[i+1] == '<')
@@ -88,6 +93,8 @@ t_type get_token_type(char *content)
 		return (EXPORT);
 	if(ft_strcmp(content, "~") == true)
 		return(Tilde);
+	if (ft_strchr("$", content) != NULL)
+		return (Mix_Export_var);
 	return(TEXT);
 }
 

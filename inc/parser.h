@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/03 15:01:50 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:11:11 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ typedef enum s_type
 	Redirect_output = 4, // 
 	Append = 5,// >>
 	here_doc = 6,// <<
-
+	Tilde = 7,
+	Mix_Export_var = 8, // ha$t
 	// S_Quote = 7,
 	// D_Quote = 8, // (like " ")
 	EXPORT = 9, // export
 	Export_var =10, // from export hallo="ls -l" -> 'hallo' = Export_var  | ls -l normal TEXT
-	Tilde = 15,
 	CALL_EXIT = 11, // $?
 	CALL_SAVED_VAR = 12, // $hello   e.g -holds 'world' or holds nothing
 	Error =13,// node invalid
@@ -102,8 +102,6 @@ bool		init_bash(char **env, int argc);
 t_bash		*get_bash(void);
 void 		ft_print_array(char **src);
 
-
-
 // get input 
 void		interactive_shell_tty(int argc, char **argv, char **envp, char *line);
 void		non_interactive_shell(int argc, char **argv, char **envp, char *line);
@@ -123,13 +121,6 @@ bool    	check_for_correct_single_divider(char *line);
 bool		lexer_token(t_token *token_lst);
 void		clean_up(char *line, t_token *token);
 bool		tokeniser_successful(t_token *token_lst, char *line);
-
-
-bool    	lexer_valid_ident(char *line);
-bool		d_quote_case_no_div(char *line);
-bool		only_one_cmd(char *line);
-bool 		export_case(char *line);
-
 
 bool 		print_error_message(char *line);
 
@@ -160,7 +151,6 @@ void 		free_token(t_token **token_list);
 //update line
 char		*update_line(char *line, t_token *token);
 char 		*handle_special_characters(char *line);
-char 		*handle_export_token(char *line);
 char 		*handle_regular_token(char *line);
 char		*update_line_unitl_d_quotes(char *line);
 char		*update_line_unitl_s_quotes(char *line);

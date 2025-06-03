@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 09:33:22 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/03 15:29:53 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:34:49 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,31 @@ void reset_token_get_home_directory(t_token **token_lst, char **src)
 	(*token_lst)->token_type = TEXT;
 }
 
+void reset_token_get_var_from_env(t_token **token_lst, char **src)
+{
+	char *str_until_dollar;
+	char *tmp_token;
+	char *old_token;
+	int i;
+	// ec$t
+	i = 0;
+	old_token = ft_strdup((*token_lst)->token);
+	free(((*token_lst)->token));
+	str_until_dollar = ft_strdup("");
+	while(strncmp(&old_token[i], "$", 1) != 0)
+	{
+		tmp_token = ft_charjoin(str_until_dollar,old_token[i]);
+		free(str_until_dollar);
+		str_until_dollar = tmp_token;
+		i++;
+	}
+	free(tmp_token);
+	tmp_token = get_var_from_env(src,old_token + i);
+	(*token_lst)->token = ft_strjoin(str_until_dollar, tmp_token);
+	free(str_until_dollar);
+	free(tmp_token);
+}
+
 void extend_saved_export_var(t_token *token_lst)
 {
     char *saved_var_without_$;
@@ -111,6 +136,13 @@ void extend_saved_export_var(t_token *token_lst)
             if(token_lst->next == NULL)
                 return;
         }
+		else if(token_lst->token_type == Mix_Export_var)
+		{
+			reset_token_get_var_from_env(&token_lst, bash->env);
+			tokenise_muliple_tok_from_env(token_lst, prev_token);
+    		if(token_lst->next == NULL)
+				return;
+		}
         prev_token = token_lst;
         token_lst = token_lst->next;
     }

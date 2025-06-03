@@ -17,7 +17,7 @@
 
 //     // to do: tokeniser
 // 	//char *line = "echo $USER";
-// 	char *line = "echo ~ \'~\' \"~\" echo ~h";
+// 	char *line = "echo ec$t";
 //     //char *line = "export t=\"world | around < \" echo world";
 //     // char *line = "export halloworld=hello juliaworld=world"; // = wird falsch gehandelt
 // 	// char *line = "echo \"$USER\" echo $USER eoche \'$USER\' ";
