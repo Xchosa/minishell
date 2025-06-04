@@ -49,11 +49,12 @@ MY_SOURCES = \
 		bash_config.c \
 		exit_codes_config.c \
 		tokens_to_export.c \
-		tokenise_var_from_env.c \
 		append_export_str.c \
 		create_export_tokens.c \
 		handle_export.c \
 		extend_token_from_bash.c \
+		extract_token_from_bash.c \
+		extract_token_from_bash_2.c \
 		parse_token_to_bash.c \
 		handle_dollar.c \
 		print_cmd_lst.c \

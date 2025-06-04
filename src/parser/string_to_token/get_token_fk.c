@@ -93,22 +93,21 @@ t_type get_token_type(char *content)
 		return (EXPORT);
 	if(ft_strcmp(content, "~") == true)
 		return(Tilde);
-	if (ft_strchr("$", content) != NULL)
+	if (ft_strchr(content, '$') != NULL)
 		return (Mix_Export_var);
 	return(TEXT);
 }
 
+// if (ft_strchr(".,;?*~$", c) != NULL)
+// 		 return (1);
 
 
 // compares the hole string not just a specific len
 bool	ft_strcmp(const char *s1, const char *s2)
 {
 	int i;
-	bool identical;
 
 	i = 0;
-	identical = false;
-
 	if((s1[i] == '\0') && (s2[i] == '\0'))
 		return (true);
 

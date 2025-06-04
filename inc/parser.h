@@ -172,6 +172,10 @@ void		delete_token(t_token *delete_token);
 void 		extend_saved_export_var(t_token *token_lst);
 char**		extend_env_with_str(char** src, char *token);
 char* 		get_var_from_env(char **src, char *token_no_dollar);
+char*		get_home_directory(char **src);
+char*		extract_var_value(char *env_str, int start_pos);
+void 		reset_token_get_var_from_env(t_token **token_lst, char **src);
+void		reset_token_get_home_directory(t_token **token_lst, char **src);
 // export tokenise 
 t_token*	equal_case(char **line);
 t_token*	split_token_in_sub_token(t_token *current_token, t_token *chain);
