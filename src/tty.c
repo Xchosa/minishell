@@ -76,7 +76,10 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		printf("\n append token string in export \n\n");
 		iter_tokenlst(token_lst, &print_tokenlst);
 		if (lexer_token(token_lst) == false)
+		{
+			print_error_message(line);
 			continue;
+		}
 		cmd_lst = init_cmd_list(&token_lst);
 		printf("Thilos problem:\n");
 		init_signal(1);

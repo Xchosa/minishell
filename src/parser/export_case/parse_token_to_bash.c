@@ -19,7 +19,6 @@ char **extend_env_with_str(char** src, char *token)
 		i++;
 	}
     cpy_env[i] = ft_strdup(token);
-    printf("\nvariable found:\n %s \n", cpy_env[i]);
 	cpy_env[i+1]= NULL;
 	return(cpy_env);
 }
