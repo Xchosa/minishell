@@ -53,7 +53,9 @@ void	ft_pwd(char **envp)
 	i = 0;
 	while (i < 4)
 	{
-		pwd++;
+		pwd++; //protect against fails?? cant work when there no PWD, 
+		// seg fault, but there will always be a pwd unless unset
+		// bash works fine with pwd unset but bruh
 		i++;
 	}
 	ft_printf("%s\n", pwd);
@@ -71,7 +73,7 @@ void	ft_env(char **envp)
 	}
 }
 
-void	ft_delete_old_pwd(char **envp)
+char **	ft_delete_old_pwd(char **envp)
 {
 	int		max;
 	int		i;
@@ -85,7 +87,7 @@ void	ft_delete_old_pwd(char **envp)
 		max++;
 	newenvp = (char **)malloc(max * sizeof(char *));
 	if (newenvp == NULL)
-		return;
+		return (NULL);
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], "OLDPWD", 6) != 0)
@@ -98,10 +100,11 @@ void	ft_delete_old_pwd(char **envp)
 			i++;
 	}
 	newenvp[j] = NULL;
-	envp = newenvp;
+	//envp = newenvp;
+	return (newenvp);
 }
 
-void	ft_add_old_pwd(char **envp)
+char	**ft_add_old_pwd(char **envp)
 {
 	int	max;
 	int	i;
@@ -113,7 +116,7 @@ void	ft_add_old_pwd(char **envp)
 		max++;
 	newenvp = (char **)malloc((max + 2) * sizeof(char *));
 	if (newenvp == NULL)
-		return;
+		return (NULL);
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], "PWD", 3) == 0)
@@ -122,10 +125,11 @@ void	ft_add_old_pwd(char **envp)
 		i++;
 	}
 	newenvp[max + 1] = NULL;
-	envp = newenvp;
+	//envp = newenvp;
+	return (newenvp);
 }
 
-void	ft_add_pwd(t_cmd_node *cmd_node, char **envp)
+char	**ft_add_pwd(t_cmd_node *cmd_node, char **envp)
 {
 	int	i;
 
@@ -134,26 +138,88 @@ void	ft_add_pwd(t_cmd_node *cmd_node, char **envp)
 	{
 		if (ft_strncmp(envp[i], "PWD", 3) == 0)
 		{
-			envp[i] = ft_strjoin(envp[i], "/");
+			if (ft_strlen(envp[i]) > 5)
+				envp[i] = ft_strjoin(envp[i], "/");
 			envp[i] = ft_strjoin(envp[i], cmd_node->cmd[1]);
+			if (envp[i][ft_strlen(envp[i]) - 1] == '/')
+				envp[i][ft_strlen(envp[i]) - 1] = '\0'; //can break maybe
 		}
 		i++;
 	}
+	return (envp);
 }
+
+char	**ft_add_absolute_path(t_cmd_node *cmd_node, char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		if (ft_strncmp(envp[i], "PWD", 3) == 0)
+		{
+			envp[i] = ft_strjoin("PWD=" , cmd_node->cmd[1]);
+			if (envp[i][ft_strlen(envp[i]) - 1] == '/')
+				envp[i][ft_strlen(envp[i]) - 1] = '\0'; //free here, maube break
+		}
+		i++;
+	}
+	return (envp);
+}
+
+char	**ft_add_parent(t_cmd_node *cmd_node, char **envp)
+{
+	int	i;
+	int	len;
+	int	times;
+
+	i = 0;
+	times = (ft_strlen(cmd_node->cmd[1]) + 1) / 3; //probably bad and should use split and while loop
+	while (envp[i] != NULL)
+	{
+		if (ft_strncmp(envp[i], "PWD", 3) == 0)
+		{
+			len = ft_strlen(envp[i]);
+			while (times > 0)
+			{
+				while (envp[i][len - 1] != '/') //can segfault if fals input, parten from root?
+					len--;
+				len--;
+				times--;
+			}
+			if (len > 4)
+				envp[i] = ft_substr(envp[i], 0, len);
+			else
+			 	envp[i] = ft_strdup("PWD=/");
+		}
+		i++;
+	}
+	return (envp);
+}
+
 
 void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp)
 {
-	ft_delete_old_pwd(envp);
-	ft_add_old_pwd(envp);
-	ft_add_pwd(cmd_node, envp);
+	envp = ft_delete_old_pwd(envp);
+	envp = ft_add_old_pwd(envp);
+	if (ft_strncmp("/", cmd_node->cmd[1], 1) == 0)
+		envp = ft_add_absolute_path(cmd_node, envp); //do relative path 
+	else if (ft_strncmp("..", cmd_node->cmd[1], 2) == 0)
+	 	envp = ft_add_parent(cmd_node, envp);
+	// else if (ft_strncmp("~", cmd_node->cmd[1], 1) == 0)
+	// 	envp = ft_add_tilde(cmd_node, envp);
+	else if (!(ft_strncmp(".", cmd_node->cmd[1], 10) == 0))
+		envp = ft_add_pwd(cmd_node, envp);
+	get_bash()->env = envp;
 }
 
 
 void	ft_cd(t_cmd_node *cmd_node, char **envp)
 {
 	(void)envp;
+	//error for too many arguments
 	if (chdir(cmd_node->cmd[1]) != 0)
-		printf("Error\n");
+		printf("Error\n"); //and return
 	ft_update_env_cd(cmd_node, envp);
 	//update envp
 }
