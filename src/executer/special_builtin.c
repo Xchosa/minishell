@@ -79,7 +79,7 @@ void	ft_export_variable(char *cmd_var, char **envp)
 	newenvp[i + 1] = NULL;
 	//free envp
 	get_bash()->env = newenvp;
-	ft_export_print(get_bash()->env);
+	//ft_export_print(get_bash()->env);
 }
 
 void	ft_export(t_cmd_node *cmd_node, char **envp)

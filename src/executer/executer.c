@@ -52,7 +52,10 @@ void	ft_execute_node(
 	if (cmd_node->cmd_type == EXECUTE)
 		ft_execute_command(cmd_node, envp);
 	else if (cmd_node->cmd_type == BUILTIN)
+	{
 		ft_execute_builtin(cmd_node, envp);
+		exit(0);
+	}
 }
 
 void	ft_execute(t_cmd_list *cmd_list, char **envp)
@@ -65,27 +68,27 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	i = 0;
 	current = cmd_list->head;
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN)
-	{
 		ft_execute_builtin(current, envp);
-		// exit(1);
-	}
-	if (cmd_list->size > 1)
-		ft_open_pipes(fd, cmd_list);
-	while (current != NULL)
+	else
 	{
-		pid = fork();
-		if (pid == 0)
-			ft_execute_node(cmd_list, current, fd, envp);
-		wait(0);
-		current = current->next;
-		if (i < cmd_list->size - 1)
-			close(fd[i][1]);
-		if (i > 0 && i < cmd_list->size - 1)
+		if (cmd_list->size > 1)
+			ft_open_pipes(fd, cmd_list);
+		while (current != NULL)
+		{
+			pid = fork();
+			if (pid == 0)
+				ft_execute_node(cmd_list, current, fd, envp);
+			wait(0);
+			current = current->next;
+			if (i < cmd_list->size - 1)
+				close(fd[i][1]);
+			if (i > 0 && i < cmd_list->size - 1)
+				close(fd[i - 1][0]);
+			i++;
+		}
+		if (cmd_list->size > 1)
 			close(fd[i - 1][0]);
-		i++;
 	}
-	if (cmd_list->size > 1)
-		close(fd[i - 1][0]);
 }
 
 //test fuer export
