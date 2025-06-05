@@ -37,10 +37,14 @@ bool print_error_message(char *line)
 		(printf("minishell: '%s': syntax failure \n", line));
 	if (error == cmd_not_found)
 		(printf("minishell: '%s': command not found \n", line));
+	if (error == syntax_error_token)
+		(printf("minishell: syntax error near unexpected token '%s' \n", line));
 	if (error == ec_sucess)
 		return(exit_minishell = false);
 	return(exit_minishell);
 }
 
 
+\
+	
 // $? wird als BUILTIN deklariert

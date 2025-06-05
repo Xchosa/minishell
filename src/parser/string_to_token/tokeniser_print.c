@@ -31,10 +31,3 @@ void	iter_tokenlst(t_token *lst, void (*f)(t_token *))
 	}
 	return ;
 }
-
-
-//iter_tokenlst(token_lst, &print_tokenlst);
-
-// echo
-// $USER
-// seq

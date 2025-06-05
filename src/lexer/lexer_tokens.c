@@ -1,52 +1,85 @@
 
 
-
-#include "minishell.h"
 #include "parser.h"
 
-bool lex_check_for_correct_equal_sign(t_tocken *current_token)
+bool check_correct_export_var(char *str)
 {
     int i;
 
     i = 0;
-    while(current_token->token[i])
+    if(ft_isalpha(str[i]) == false)
     {
-        if (ft_strncmp ("=", current_token->token[i], 1) == 0)
-		{
-            if(ft_isalpha(current_token->token[0]) == false) == 
-                {
-                    exit_code()->last_exit_code = invalid_identifier;
-                    current_token->token_type = error;
-                    return(false)
-                }
-        }
+        return(false);
+    }
+    while(str[i])
+    {
+        // if ((ft_strncmp("=", &str[i], 1) == 0) )
+        // {
+        //     if(str[i+1]== NULL)
+        //         return(false)
+        // }
+        printf("str i: '%c' \n", str[i]);
         i++;
     }
     return(true);
 }
 
 
-
-
-bool check_tokens(t_token *token_lst)
+bool check_syntax(t_token *token)
 {
-    t_token *current_token;
-    current_token = token_lst;
-    
-    while(current_token->next)
+    if(token->next)
     {
-        if(current_token->head->token_type==EXPORT)
-        {
-            if(lex_check_for_equal_sign(current_token)== false)
-                return(false);
-        }
-            // if token alpha to begin  dann =cat 
-                    // token-type call saved _var 
-             //   if token alpha to beginn dann = und dann \" 
-                    // ganzen token erneut tokenisen // next pointer correct updaten
-                
-                // was allein steht mit 
-
-        current_token = current_token->next;
+        token = token->next;
+        if (token->token_type == Redirect_input)
+		    return (false);
+	    if (token->token_type == Redirect_output)
+		    return (false);
+	    if (token->token_type == Append)
+		    return (false);
+	    if (token->token_type == here_doc)
+		    return (false);
+        if (token->token_type == PIPE)
+		    return (false);
     }
+    return(true);
+}
+
+bool check_for_cmd(t_token *token)
+{
+   if (token->token_type == Redirect_input)
+		return (true);
+	if (token->token_type == Redirect_output)
+		return (true);
+	if (token->token_type == Append)
+		return (true);
+	if (token->token_type == here_doc)
+		return (true);
+    if (token->token_type == PIPE)
+		return (true);
+    return(false);
+}
+
+bool lexer_token(t_token *token_lst)
+{
+    t_token *cur_token;
+    cur_token = token_lst;
+    
+    while(cur_token)
+    {
+        if(cur_token->token_type == Export_var)
+            if(check_correct_export_var(cur_token->token) == false)
+            {
+                get_exit_codes()->last_exit_code = invalid_identifier;
+                return(false);
+            }
+        if(check_for_cmd(cur_token) == true)
+            if(check_syntax(cur_token) == false)
+            {
+                get_exit_codes()->last_exit_code = syntax_error_token;
+                return(false);
+            }
+        cur_token = cur_token->next;
+    }
+    return(true);
+
 }

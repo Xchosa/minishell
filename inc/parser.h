@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/27 17:00:26 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:11:11 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@
 
 
 #define syntax_failure 258
+#define syntax_error_token 2
 #define ec_sucess 0
 #define ec_abort_z 146
 // #define ec_failure 127
 #define invalid_identifier 1
 // control c -> 1
-// 
 #define stopped 148
 #define cmd_not_found 127
 
@@ -58,18 +58,16 @@ typedef enum s_type
 	Redirect_output = 4, // 
 	Append = 5,// >>
 	here_doc = 6,// <<
-
-	S_Quote = 7,
-	D_Quote = 8, // (like " ")
+	Tilde = 7,
+	Mix_Export_var = 8, // ha$t
+	// S_Quote = 7,
+	// D_Quote = 8, // (like " ")
 	EXPORT = 9, // export
 	Export_var =10, // from export hallo="ls -l" -> 'hallo' = Export_var  | ls -l normal TEXT
-	// hallo="ls -al" = Export var , h=welt = Export var
 	CALL_EXIT = 11, // $?
 	CALL_SAVED_VAR = 12, // $hello   e.g -holds 'world' or holds nothing
 	Error =13,// node invalid
 	PIPE = 14, // 1
-	// " echo hello world >outfile | >outfile2"
-	// cat <infile | wc 
 
 }	t_type;
 
@@ -104,11 +102,13 @@ bool		init_bash(char **env, int argc);
 t_bash		*get_bash(void);
 void 		ft_print_array(char **src);
 
-
-
 // get input 
 void		interactive_shell_tty(int argc, char **argv, char **envp, char *line);
 void		non_interactive_shell(int argc, char **argv, char **envp, char *line);
+
+//interrupt tty
+bool check_lexer_and_free(char *line);
+bool check_lexer_token_and_free(t_token *token, char *line);
 
 // lexer
 bool		lexer(char *line);
@@ -117,11 +117,10 @@ bool		wrong_use_pipe_and_redirection(char *line);
 bool		check_for_correct_double_divider(char *line);
 bool    	check_for_correct_single_divider(char *line);
 
-bool    	lexer_valid_ident(char *line);
-bool		d_quote_case_no_div(char *line);
-bool		only_one_cmd(char *line);
-bool 		export_case(char *line);
-
+// lexer tokens
+bool		lexer_token(t_token *token_lst);
+void		clean_up(char *line, t_token *token);
+bool		tokeniser_successful(t_token *token_lst, char *line);
 
 bool 		print_error_message(char *line);
 
@@ -152,7 +151,6 @@ void 		free_token(t_token **token_list);
 //update line
 char		*update_line(char *line, t_token *token);
 char 		*handle_special_characters(char *line);
-char 		*handle_export_token(char *line);
 char 		*handle_regular_token(char *line);
 char		*update_line_unitl_d_quotes(char *line);
 char		*update_line_unitl_s_quotes(char *line);
@@ -174,6 +172,10 @@ void		delete_token(t_token *delete_token);
 void 		extend_saved_export_var(t_token *token_lst);
 char**		extend_env_with_str(char** src, char *token);
 char* 		get_var_from_env(char **src, char *token_no_dollar);
+char*		get_home_directory(char **src);
+char*		extract_var_value(char *env_str, int start_pos);
+void 		reset_token_get_var_from_env(t_token **token_lst, char **src);
+void		reset_token_get_home_directory(t_token **token_lst, char **src);
 // export tokenise 
 t_token*	equal_case(char **line);
 t_token*	split_token_in_sub_token(t_token *current_token, t_token *chain);
@@ -216,6 +218,7 @@ t_file_node* 	create_redirect_input_file_node(t_token **curr_token);
 t_file_node* 	create_redirect_output_file_node(t_token **curr_token);
 
 // for new_libft
+bool	ft_strcmp(const char *s1, const char *s2);
 char	**ft_cpy_array_str(char **arrays);
 char 	*ft_charjoin(char const *dst, char const src_char);
 void 	ft_free_array(char **arrays);

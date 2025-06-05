@@ -17,8 +17,8 @@
 
 //     // to do: tokeniser
 // 	//char *line = "echo $USER";
-// 	// char *line = "dfd";
-//     char *line = "export t=\"world | around < \" echo world";
+// 	char *line = "./minishell";
+//     //char *line = "export t=\"world | around < \" echo world";
 //     // char *line = "export halloworld=hello juliaworld=world"; // = wird falsch gehandelt
 // 	// char *line = "echo \"$USER\" echo $USER eoche \'$USER\' ";
 // 	// char *line = "echo $h world echo $paul echo $world";
@@ -59,6 +59,7 @@
 // 	if (!token_lst)
 //         printf("error tokeniser\n");
 // 	iter_tokenlst(token_lst, &print_tokenlst);
+
 // 	// printf("\nenv:\n");
 // 	// 	ft_print_array(bash->env);
 	
@@ -77,7 +78,11 @@
 // 	printf("\n append token\n\n");
 // 	// handle_export(token_lst);
 // 	append_export_str(&token_lst);
-
+//     if (lexer_token(token_lst) == false)
+//     {
+// 		print_error_message(line);
+// 		return(1);
+//     }
 // 	iter_tokenlst(token_lst, &print_tokenlst);
 
 // 	printf("\ndo i come to cmd list? \n\n");
