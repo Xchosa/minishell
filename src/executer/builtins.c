@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.de  +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:27:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/05/12 16:27:47 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:14:12 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,30 @@ char	**ft_add_parent(t_cmd_node *cmd_node, char **envp)
 	return (envp);
 }
 
+char	**ft_add_tilde(char **envp)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (envp[i] != NULL)
+	{
+		if (ft_strncmp(envp[i], "HOME", 4) == 0)
+			break;
+		i++;
+	}
+	while (envp[j] != NULL)
+	{
+		if (ft_strncmp(envp[j], "PWD", 3) == 0)
+		{
+			envp[j] = envp[i];
+			break;
+		}
+		j++;
+	}
+	return (envp);
+}
 
 void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp)
 {
@@ -206,8 +230,8 @@ void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp)
 		envp = ft_add_absolute_path(cmd_node, envp); //do relative path 
 	else if (ft_strncmp("..", cmd_node->cmd[1], 2) == 0)
 	 	envp = ft_add_parent(cmd_node, envp);
-	// else if (ft_strncmp("~", cmd_node->cmd[1], 1) == 0)
-	// 	envp = ft_add_tilde(cmd_node, envp);
+	else if (ft_strncmp("~", cmd_node->cmd[1], 1) == 0)
+	 	envp = ft_add_tilde(envp);
 	else if (!(ft_strncmp(".", cmd_node->cmd[1], 10) == 0))
 		envp = ft_add_pwd(cmd_node, envp);
 	get_bash()->env = envp;

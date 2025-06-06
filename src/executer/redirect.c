@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:15:52 by tschulle          #+#    #+#             */
-/*   Updated: 2025/05/06 17:49:06 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:59:01 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,20 @@ void	ft_manage_append(char *appendfile, int fd[][2])
 
 void	ft_manage_heredoc(char *delimiter, int fd[][2])
 {
-	(void) delimiter;
+	char	*next;
+
+	next = get_next_line(0);
+	while (next != NULL)
+	{
+		if (ft_strncmp(next, delimiter, ft_strlen(delimiter)) == 0)
+			break;
+		write(1, next, ft_strlen(next));
+		free(next);
+		next = get_next_line(0);
+		//ft_printf("%dn", ft_strncmp(next, delimiter, ft_strlen(delimiter)));
+	}
+	free(next);
+	return ;
 }
 
 void	ft_manage_redirections(t_cmd_node *cmd_node, int fd[][2])
