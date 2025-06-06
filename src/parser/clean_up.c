@@ -1,9 +1,30 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean_up.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/06 16:09:11 by poverbec          #+#    #+#             */
+/*   Updated: 2025/06/06 16:09:42 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "parser.h"
 
+void clean_token_lst(t_token *token_lst)
+{
+	t_token *tmp;
 
+	while(token_lst)
+	{
+		tmp = token_lst->next;
+		free(token_lst->token);
+		free(token_lst);
+		token_lst = tmp;
+	}
 
+}
 void clean_up(char *line, t_token *token_lst)
 {
 	if (token_lst)

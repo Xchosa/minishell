@@ -6,12 +6,11 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 15:57:07 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/03 17:01:41 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:09:20 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "minishell.h"
 
 
 bool	pipe_or_simec(char c)

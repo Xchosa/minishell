@@ -17,9 +17,9 @@
 
 //     // to do: tokeniser
 // 	//char *line = "echo $USER";
-// 	char *line = "<   > outfile";
-//     //char *line = "export t=\"world | around < \" echo world";
-//     // char *line = "export halloworld=hello juliaworld=world"; // = wird falsch gehandelt
+// 	// char *line = "$h outfile";
+//     // char *line = "export t=\"world | around < \" echo world";
+//     char *line = "$world outfile"; // = wird falsch gehandelt
 // 	// char *line = "echo \"$USER\" echo $USER eoche \'$USER\' ";
 // 	// char *line = "echo $h world echo $paul echo $world";
 // 	// char *line = "export h=thilo paul=kruecke world=\"cat makefile\" ";

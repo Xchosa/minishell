@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   update_line_helper.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/06 16:09:01 by poverbec          #+#    #+#             */
+/*   Updated: 2025/06/06 16:09:33 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
-#include "minishell.h"
 
 
 char	*update_line_unitl_d_quotes(char *line)

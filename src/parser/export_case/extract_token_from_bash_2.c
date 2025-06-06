@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   extract_token_from_bash_2.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/06 16:07:14 by poverbec          #+#    #+#             */
+/*   Updated: 2025/06/06 16:42:34 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "parser.h"
 #include "minishell.h"
@@ -30,76 +40,68 @@ char *skip_divider_without_space(char *line)
 		line++;
 	return (line);
 }
-// var1 ="ls -al >outfile"
-// $var1 
-// und echo $var1 ( ersters hat nicht mehr geklappt),
-// t_token* tokenise_muliple_tok_from_env(t_token *token_lst, t_token *prev_token)
-// {
-//     t_token *split_token;
-//     t_token *connect_token;
-//     t_token *tail_token;
-//     printf("About to tokenize: '%s'\n", token_lst->token);
-//     // if(multiple_tokens(token_lst->token) == false)
-//     //     return ;
-//     split_token = tokeniser(token_lst->token);
 
-    
-//     printf("split_token\n");
-//     iter_tokenlst(split_token, &print_tokenlst);
-
-
-//     if(token_lst->next != NULL)
-//         connect_token = token_lst->next;
-//     else
-//         connect_token = NULL;
-//     t_token *tmp;
-//     if(token_lst == token_lst->head ) // die zu splitende node ist die erste
-//     {
-//         tail_token = tokenlast(split_token);
-//         while(token_lst != connect_token)
-//         {
-//             tmp = (token_lst->next);
-//             // free(token_lst->token);
-//             // free(token_lst);
-//         }
-//         tail_token->next = connect_token;
-//         token_lst = split_token;
-//         free(tmp);
-//     }
-
-//     else
-//     {
-//         prev_token->next = split_token;
-//         tail_token = split_token;
-//         tail_token = tokenlast(split_token);
-//         while(token_lst != connect_token)
-//         {
-//             tmp = (token_lst->next);
-//             // free(token_lst->token);
-//             // free(token_lst);
-//         }
-//         tail_token->next = connect_token;
-//         token_lst = split_token;
-//         free(tmp);
-//     }
-// }
-void tokenise_muliple_tok_from_env(t_token *token_lst, t_token *prev_token)
+void tokenise_muliple_tok_from_env(t_token **token_lst, t_token *prev_token)
 {
     t_token *split_token;
     t_token *connect_token;
-    if(multiple_tokens(token_lst->token) == false)
+    if(multiple_tokens((*token_lst)->token) == false)
         return ;
-    split_token = tokeniser(token_lst->token);
-    printf("split_token\n");
-    iter_tokenlst(split_token, &print_tokenlst);
-    if(token_lst->next)
-        connect_token = token_lst->next;
-    else
-        connect_token = NULL;
-
-
-        
-    prev_token->next = split_token;
-    split_token = tokenlast(split_token);
-    split_token->next = connect_token;
+    split_token = tokeniser((*token_lst)->token);
+	if(*token_lst == (*token_lst)->head && (*token_lst)->next == NULL)
+	{
+		clean_token_lst(*token_lst);
+		*token_lst = split_token;
+		
+	}
+	else
+	{
+		if((*token_lst)->next)
+			connect_token = (*token_lst)->next;
+		else
+			connect_token = NULL;
+		prev_token->next = split_token;
+		split_token = tokenlast(split_token);
+		split_token->next = connect_token;
+	}
 }
+// error cases:
+/*
+
+minishell:$ $h outifle
+
+ tokeniser 
+
+| token: '$h' | token_type: 12 
+| token: 'outifle' | token_type: 0 
+before tokensise mulitple
+| token: 'ls -al >' | token_type: 12 
+| token: 'outifle' | token_type: 0 
+do i come here?
+minishell:$ $h
+minishell:$ $h
+
+ tokeniser 
+
+| token: '$h' | token_type: 12 
+before tokensise mulitple
+| token: 'ls -al >' | token_type: 12 
+do i come here?
+after tokensise mulitple
+| token: 'ls' | token_type: 0 
+| token: '-al' | token_type: 0 
+| token: '>' | token_type: 4 
+split_token
+| token: 'ls' | token_type: 0 
+| token: '-al' | token_type: 0 
+| token: '>' | token_type: 4 
+split_token
+| token: '-al' | token_type: 0 
+| token: '>' | token_type: 4 
+split_token
+| token: '>' | token_type: 4 
+
+ append token string in export 
+
+| token: '' | token_type: 12 
+*/

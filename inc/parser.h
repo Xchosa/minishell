@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/03 17:11:11 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:03:43 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ void 		append_export_str(t_token **token_lst);
 bool		multiple_tokens(char *line);
 char 		*handle_mulit_token(char *line);
 char 		*skip_divider_without_space(char *line);
-void 		tokenise_muliple_tok_from_env(t_token *token_lst, t_token *prev_token);
+void 		tokenise_muliple_tok_from_env(t_token **token_lst, t_token *prev_token);
 // cmd_list
 
 //print cmd_lst
@@ -211,6 +211,9 @@ void 			append_token_char(t_cmd_node *cmd_node, t_token *curr_token);
 char 			**cpy_token_char(char *token);
 int				check_for_builtin(char *token_str);
 int				choose_cmd_type(t_token *curr_token);
+
+// clean up
+void	clean_token_lst(t_token *token_lst);
 
 //fill_file_list
 t_file_node*	process_token_type_redir(t_token **curr_token);

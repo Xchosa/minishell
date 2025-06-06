@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   extract_token_from_bash.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/06 16:07:32 by poverbec          #+#    #+#             */
+/*   Updated: 2025/06/06 16:18:08 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "parser.h"
 #include "minishell.h"
@@ -30,7 +41,6 @@ char *get_var_from_env(char **src, char *token_no_dollar)
     char *found_token;
     char *tmp;
 
-    // original_token = ft_strjoin("$", token_no_dollar);
     tmp = ft_strjoin(token_no_dollar, "=");
     if (!tmp)
         return (NULL);
