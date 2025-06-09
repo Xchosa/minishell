@@ -69,11 +69,10 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		token_lst = tokeniser(line);
 		if(tokeniser_successful(token_lst,line) == false)
             continue;
-		printf("\n tokeniser \n\n");
-		iter_tokenlst(token_lst, &print_tokenlst);
-		extend_saved_export_var(token_lst);
+		// printf("\n tokeniser \n\n");
+		// iter_tokenlst(token_lst, &print_tokenlst);
+		token_lst = extend_saved_export_var(&token_lst);
 		append_export_str(&token_lst);
-		printf("\n append token string in export \n\n");
 		iter_tokenlst(token_lst, &print_tokenlst);
 		if (lexer_token(token_lst) == false)
 		{
@@ -115,7 +114,7 @@ void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)
 	if(tokeniser_successful(token_lst,line) == false)
             return;
 	iter_tokenlst(token_lst, &print_tokenlst);
-	extend_saved_export_var(token_lst);
+	token_lst = extend_saved_export_var(&token_lst);
 	append_export_str(&token_lst);
 	if (lexer_token(token_lst) == false)
 		return;

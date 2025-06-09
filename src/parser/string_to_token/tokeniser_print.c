@@ -14,8 +14,13 @@
 
 void print_tokenlst(t_token *data)
 {
-	printf("| token: '%s' | token_type: %u  | head_token: %s\n",data->token, data->token_type, data->head->token);
+	printf("| token: '%s' | token_type: %u \n",data->token, data->token_type);
 }
+
+// void print_tokenlst(t_token *data)
+// {
+// 	printf("| token: '%s' | token_type: %u  | head_token: %s\n",data->token, data->token_type, data->head->token);
+// }
 
 void	iter_tokenlst(t_token *lst, void (*f)(t_token *))
 {

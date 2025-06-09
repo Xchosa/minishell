@@ -169,7 +169,7 @@ int			special_char_no_divider_no_eq(char c);
 void		delete_token(t_token *delete_token);
 
 //	get export saved variables
-void 		extend_saved_export_var(t_token *token_lst);
+t_token* 	extend_saved_export_var(t_token **token_lst);
 char**		extend_env_with_str(char** src, char *token);
 char* 		get_var_from_env(char **src, char *token_no_dollar);
 char*		get_home_directory(char **src);

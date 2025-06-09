@@ -1,2 +1,14 @@
-ls -al
-[?2004hminishell:$ 
+total 1708
+drwxrwxr-x 8 poverbec poverbec    4096 Jun  9 22:35 .
+drwxrwxr-x 3 poverbec poverbec    4096 Jun  8 13:16 ..
+drwxrwxr-x 8 poverbec poverbec    4096 Jun  9 12:55 .git
+-rw-rw-r-- 1 poverbec poverbec      19 Jun  7 17:51 .gitignore
+drwxrwxr-x 2 poverbec poverbec    4096 Jun  7 17:58 inc
+drwxrwxr-x 4 poverbec poverbec    4096 Jun  9 15:35 libft
+-rw-rw-r-- 1 poverbec poverbec    2266 Jun  7 17:51 Makefile
+-rwxrwxr-x 1 poverbec poverbec  136048 Jun  9 22:35 minishell
+drwxrwxr-x 2 poverbec poverbec    4096 Jun  9 22:35 obj
+-rwxrwxr-x 1 poverbec poverbec       0 Jun  9 22:35 outfile
+drwxrwxr-x 6 poverbec poverbec    4096 Jun  7 17:58 src
+-rw-rw-r-- 1 poverbec poverbec 1568461 Jun  7 17:51 sub_minishell.pdf
+drwxrwxr-x 2 poverbec poverbec    4096 Jun  9 12:19 .vscode

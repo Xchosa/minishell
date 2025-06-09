@@ -41,67 +41,102 @@ char *skip_divider_without_space(char *line)
 	return (line);
 }
 
-void tokenise_muliple_tok_from_env(t_token **token_lst, t_token *prev_token)
+// void change_head_token(t_token *token_lst, t_token **origin_lst)
+// {
+// 	token_lst->head = (*origin_lst)->head;
+// }
+// Set head pointers for all tokens in the split list and connected tokens
+void set_head_for_all_tokens(t_token *token_lst, t_token *head)
+{
+    t_token *current;
+
+    current = token_lst;
+    while (current)
+    {
+        current->head = head;
+        current = current->next;
+    }
+}
+
+void handle_first_token(t_token **token_lst)
 {
     t_token *split_token;
     t_token *connect_token;
-    if(multiple_tokens((*token_lst)->token) == false)
-        return ;
+    t_token *head_split;
+
     split_token = tokeniser((*token_lst)->token);
-	if(*token_lst == (*token_lst)->head && (*token_lst)->next == NULL)
-	{
-		clean_token_lst(*token_lst);
-		*token_lst = split_token;
-		
-	}
-	else
-	{
-		if((*token_lst)->next)
-			connect_token = (*token_lst)->next;
-		else
-			connect_token = NULL;
-		prev_token->next = split_token;
-		split_token = tokenlast(split_token);
-		split_token->next = connect_token;
-	}
+    head_split = split_token;
+    connect_token = (*token_lst)->next;
+    split_token = tokenlast(split_token);
+    free_single_token(token_lst);
+    split_token->next = connect_token;
+    *token_lst = head_split;
+    if (connect_token)
+        set_head_for_all_tokens(connect_token, head_split);
 }
-// error cases:
-/*
+void handle_next_token(t_token **token_lst, t_token *prev_token)
+{
+    t_token *split_token;
+    t_token *connect_token;
 
-minishell:$ $h outifle
+    split_token = tokeniser((*token_lst)->token);
+    connect_token = (*token_lst)->next;
+    prev_token->next = split_token;
+    split_token = tokenlast(split_token);
+    split_token->next = connect_token;
+    set_head_for_all_tokens(split_token, prev_token->head);
+    if (connect_token)
+        set_head_for_all_tokens(connect_token, prev_token->head);
+}
 
- tokeniser 
+void tokenise_muliple_tok_from_env(t_token **token_lst, t_token *prev_token)
+{
+    if(multiple_tokens((*token_lst)->token) == false)
+        return;
+        
+    if(prev_token == NULL)
+        handle_first_token(token_lst);
+    else
+        handle_next_token(token_lst, prev_token);
+}
 
-| token: '$h' | token_type: 12 
-| token: 'outifle' | token_type: 0 
-before tokensise mulitple
-| token: 'ls -al >' | token_type: 12 
-| token: 'outifle' | token_type: 0 
-do i come here?
-minishell:$ $h
-minishell:$ $h
 
- tokeniser 
+// void tokenise_muliple_tok_from_env(t_token **token_lst, t_token *prev_token)
+// {
+//     t_token *split_token;
+//     t_token *connect_token;
+//     t_token *head_split;
 
-| token: '$h' | token_type: 12 
-before tokensise mulitple
-| token: 'ls -al >' | token_type: 12 
-do i come here?
-after tokensise mulitple
-| token: 'ls' | token_type: 0 
-| token: '-al' | token_type: 0 
-| token: '>' | token_type: 4 
-split_token
-| token: 'ls' | token_type: 0 
-| token: '-al' | token_type: 0 
-| token: '>' | token_type: 4 
-split_token
-| token: '-al' | token_type: 0 
-| token: '>' | token_type: 4 
-split_token
-| token: '>' | token_type: 4 
+//     if(multiple_tokens((*token_lst)->token) == false)
+//         return ;
+//     split_token = tokeniser((*token_lst)->token);
+// 	if(prev_token == NULL)
+// 	{
+// 		head_split = split_token; 
+// 		if((*token_lst)->next)
+// 			connect_token = (*token_lst)->next;
+// 		else
+// 			connect_token = NULL;
+// 		split_token = tokenlast(split_token);
+// 		free_single_token(token_lst);
+// 		split_token->next = connect_token;
+// 		*token_lst = head_split;
+// 		set_head_for_all_tokens(head_split, head_split);
+// 		if (connect_token)
+// 			set_head_for_all_tokens(connect_token, head_split);
+// 	}
+// 	else
+// 	{
+// 		if((*token_lst)->next)
+// 			connect_token = (*token_lst)->next;
+// 		else
+// 			connect_token = NULL;
+// 		prev_token->next = split_token;
+// 		split_token = tokenlast(split_token);
+// 		split_token->next = connect_token;
+// 		set_head_for_all_tokens(split_token, prev_token->head);
+// 		if (connect_token)
+// 			set_head_for_all_tokens(connect_token, prev_token->head);
+// 	}
+// }
 
- append token string in export 
-
-| token: '' | token_type: 12 
-*/
