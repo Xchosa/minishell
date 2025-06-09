@@ -67,9 +67,10 @@ void extend_saved_export_var(t_token *token_lst)
             free(token_lst->token);
             token_lst->token = get_var_from_env(bash->env,saved_var);
             free(saved_var);
+			printf("token from env: \n");
 			printf("before tokensise mulitple\n");
 			iter_tokenlst(token_lst, &print_tokenlst);
-			printf("do i come here?\n");\\ yes
+			printf("do i come here?\n");// yes
             tokenise_muliple_tok_from_env(&token_lst, prev_token);
 			printf("after tokensise mulitple\n");
 			iter_tokenlst(token_lst, &print_tokenlst);
@@ -85,8 +86,8 @@ void extend_saved_export_var(t_token *token_lst)
     		if(token_lst->next == NULL)
 				return;
 		}
-		printf("split_token\n");
-		iter_tokenlst(token_lst, &print_tokenlst);
+		// printf("split_token\n");
+		// iter_tokenlst(token_lst, &print_tokenlst);
         prev_token = token_lst;
         token_lst = token_lst->next;
     }

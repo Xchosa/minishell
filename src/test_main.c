@@ -3,7 +3,6 @@
 #include "parser.h"
 #include "executer.h"
 
-// merge only interactive main!!!
 
 // int main(int argc, char **argv, char **env)
 // {
@@ -19,7 +18,7 @@
 // 	//char *line = "echo $USER";
 // 	// char *line = "$h outfile";
 //     // char *line = "export t=\"world | around < \" echo world";
-//     char *line = "$world outfile"; // = wird falsch gehandelt
+//     char *line = "export new=\"ls -al <outfile\"  b=\"ls -al\" "; // = wird falsch gehandelt
 // 	// char *line = "echo \"$USER\" echo $USER eoche \'$USER\' ";
 // 	// char *line = "echo $h world echo $paul echo $world";
 // 	// char *line = "export h=thilo paul=kruecke world=\"cat makefile\" ";

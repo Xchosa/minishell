@@ -23,8 +23,19 @@ void clean_token_lst(t_token *token_lst)
 		free(token_lst);
 		token_lst = tmp;
 	}
-
 }
+
+void free_single_token(t_token **token)
+{
+	if (*token)
+	{
+		free((*token)->token);
+		free(*token);
+		*token = NULL;
+	}
+}
+
+
 void clean_up(char *line, t_token *token_lst)
 {
 	if (token_lst)

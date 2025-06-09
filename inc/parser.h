@@ -214,6 +214,7 @@ int				choose_cmd_type(t_token *curr_token);
 
 // clean up
 void	clean_token_lst(t_token *token_lst);
+void	free_single_token(t_token **token);
 
 //fill_file_list
 t_file_node*	process_token_type_redir(t_token **curr_token);
@@ -225,4 +226,9 @@ bool	ft_strcmp(const char *s1, const char *s2);
 char	**ft_cpy_array_str(char **arrays);
 char 	*ft_charjoin(char const *dst, char const src_char);
 void 	ft_free_array(char **arrays);
+
+
+
+
+
 #endif
