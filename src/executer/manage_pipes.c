@@ -65,7 +65,7 @@ void	ft_last_node(int fd [][2], t_cmd_list *cmd_list)
 	close (fd[i][0]);
 }
 
-void	ft_close_pipes(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2])
+void	ft_close_pipes(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2]) // hier werden die "hohen" pipe fd geschlosssen damit im child nur die offen sind die benoetigt werden
 {
 	int			i;
 	t_cmd_node	*current;

@@ -227,7 +227,7 @@ void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp)
 	envp = ft_delete_old_pwd(envp);
 	envp = ft_add_old_pwd(envp);
 	if (ft_strncmp("/", cmd_node->cmd[1], 1) == 0)
-		envp = ft_add_absolute_path(cmd_node, envp); //do relative path 
+		envp = ft_add_absolute_path(cmd_node, envp); //do relative path
 	else if (ft_strncmp("..", cmd_node->cmd[1], 2) == 0)
 	 	envp = ft_add_parent(cmd_node, envp);
 	else if (ft_strncmp("~", cmd_node->cmd[1], 1) == 0)

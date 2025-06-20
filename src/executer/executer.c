@@ -34,18 +34,16 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 {
 	char	*path;
 
-	path = ft_getpath(cmd_node->cmd[0], envp);
+	path = ft_getpath(cmd_node->cmd[0], envp); // ft_getpath und alles was folgt ist einfach aus pipex kopiert. in pipex.c ist eine funktion ft_freearray2 weil du auch eine hattest und mich der compiler dafuer angekackt hat. kann man aber auf eine reduzieren
 	if (path == NULL)
-		return ;//error free exit
-	//fprintf(stderr, "%s\n", cmd_node->cmd[0]);
-	execve(path, cmd_node->cmd, envp); //errorcheck
+		return ; //errorhandling, free, exit
+	execve(path, cmd_node->cmd, envp); // eventuell errorcheck also != 0 ? und ausgabe error sollte hier mit perror funktionieren
+	// path ist malloced und muesste eigentlich von der execute main am ende einmal gefreet werden.
 }
 
 void	ft_execute_node(
 	t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp)
 {
-	// ft_printf("%s\n", cmd_node->cmd[0]);
-	// ft_printf("%s\n", cmd_node->file_list->head->filename);
 	if (cmd_list->size > 1)
 		ft_manage_pipes(cmd_list, cmd_node, fd);
 	ft_manage_redirections(cmd_node, fd);
@@ -54,7 +52,7 @@ void	ft_execute_node(
 	else if (cmd_node->cmd_type == BUILTIN)
 	{
 		ft_execute_builtin(cmd_node, envp);
-		exit(0);
+		exit(0); // exit damit child prozesse von builtins keine zombie prozesse werden. ob der wert hier wichtig is weiss ich nicht, haengt glaub ich davon ab wie man in ft_execute damit umgeht
 	}
 }
 
@@ -62,23 +60,23 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 {
 	t_cmd_node	*current;
 	int			pid;
-	int			fd[(int)cmd_list->size][2];
+	int			fd[(int)cmd_list->size][2]; // am anfang werden alle pipes erstellt. ich glaube norminette mochte die schreibweise nicht, also vllt mit * ?
 	int			i;
 
 	i = 0;
 	current = cmd_list->head;
-	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN)
-		ft_execute_builtin(current, envp);
+	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN) // das ist der sonderfall von dem gabrijel geredet hat. Das muss sein damit man im selben prozess bleibt.
+		ft_execute_builtin(current, envp); 
 	else
 	{
-		if (cmd_list->size > 1)
-			ft_open_pipes(fd, cmd_list);
+		if (cmd_list->size > 1) // pipes nur wenn mehr als eine node
+			ft_open_pipes(fd, cmd_list); // die funktionen zu pipes sind alle irgendwie kompliziert, aber ich glaube sie funktionieren. Es geht darum dass die child prozesse offene fd erben und am ende des child prozesses alle fd geschlossen sind
 		while (current != NULL)
 		{
 			pid = fork();
 			if (pid == 0)
 				ft_execute_node(cmd_list, current, fd, envp);
-			wait(0);
+			wait(0); // hier mit wait oder waitpid, kann der exit code von execve abgefangen werden. der exit code builtins kommt aus zeile 55. ist aber vielleicht gar nicht noetig weil es ja eh darum geht die variable zu setzen und nicht so sehr darum dass das child mit dem richtigen code exitet
 			current = current->next;
 			if (i < cmd_list->size - 1)
 				close(fd[i][1]);
