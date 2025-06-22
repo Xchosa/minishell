@@ -33,7 +33,7 @@ t_token	*d_quote_case(char **line)
 		i++;
 	}
 	new_token->token_type = TEXT;
-	if((ft_strcmp("$", new_token->token) == true))
+	if((ft_strncmp("$", new_token->token, 1) == 0))
 		new_token->token_type = CALL_SAVED_VAR;
 	if((ft_strcmp("$?", new_token->token) == true))
 		new_token->token_type = CALL_EXIT;

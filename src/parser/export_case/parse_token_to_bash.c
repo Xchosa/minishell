@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_token_to_bash.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/06 16:07:39 by poverbec          #+#    #+#             */
+/*   Updated: 2025/06/06 16:07:42 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "parser.h"
 
@@ -19,7 +31,6 @@ char **extend_env_with_str(char** src, char *token)
 		i++;
 	}
     cpy_env[i] = ft_strdup(token);
-    printf("\nvariable found:\n %s \n", cpy_env[i]);
 	cpy_env[i+1]= NULL;
 	return(cpy_env);
 }

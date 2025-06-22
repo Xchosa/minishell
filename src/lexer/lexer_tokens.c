@@ -13,12 +13,6 @@ bool check_correct_export_var(char *str)
     }
     while(str[i])
     {
-        // if ((ft_strncmp("=", &str[i], 1) == 0) )
-        // {
-        //     if(str[i+1]== NULL)
-        //         return(false)
-        // }
-        printf("str i: '%c' \n", str[i]);
         i++;
     }
     return(true);

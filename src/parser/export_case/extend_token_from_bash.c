@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 09:33:22 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/03 17:34:49 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:40:34 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,17 @@ void reset_token_get_var_from_env(t_token **token_lst, char **src)
 		i++;
 	}
 	env_str = get_var_from_env(src,old_token + i+1);
-    printf("var found fpr $var: '%s'\n ", env_str);
+    // printf("var found fpr $var: '%s'\n ", env_str);
 	(*token_lst)->token = ft_strjoin(str_until_dollar, env_str);
     (*token_lst)->token_type = TEXT;
 	free(str_until_dollar);
 }
 
-void extend_saved_export_var(t_token *token_lst)
+
+// $new holds "ls -al >""
+// from "$new" and "outfile" extend to a token_lst of  'ls' '-al' '>' 'outfile'
+t_token *extend_saved_export_var(t_token **token_lst)
 {
-    char    *saved_var;
     t_bash  *bash;
     t_token *prev_token;
 
@@ -59,29 +61,22 @@ void extend_saved_export_var(t_token *token_lst)
     prev_token = NULL;
     while(token_lst)
     {
-		if(token_lst->token_type == Tilde)
-			reset_token_get_home_directory(&token_lst,bash->env);
-        else if(token_lst->token_type == CALL_SAVED_VAR)
+		if((*token_lst)->token_type == Tilde)
+			reset_token_get_home_directory(token_lst,bash->env);
+        else if((*token_lst)->token_type == CALL_SAVED_VAR)
         {
-            saved_var = ft_strdup(token_lst->token + 1);// without $sign 
-            free(token_lst->token);
-            token_lst->token = get_var_from_env(bash->env,saved_var);
-            free(saved_var);
+			reset_token_get_var_from_env(token_lst, bash->env);
             tokenise_muliple_tok_from_env(token_lst, prev_token);
-            if(token_lst->next == NULL)
-                return;
         }
-		else if(token_lst->token_type == Mix_Export_var)
+		else if((*token_lst)->token_type == Mix_Export_var) 
 		{
-			reset_token_get_var_from_env(&token_lst, bash->env);
+			reset_token_get_var_from_env(token_lst, bash->env);
             tokenise_muliple_tok_from_env(token_lst, prev_token);
-    		if(token_lst->next == NULL)
-				return;
 		}
-        prev_token = token_lst;
-        token_lst = token_lst->next;
+		prev_token = (*token_lst);
+		if((*token_lst)->next == NULL)
+				break;
+        (*token_lst) = (*token_lst)->next;
     }
+	return((*token_lst)->head);
 }
-
-
-

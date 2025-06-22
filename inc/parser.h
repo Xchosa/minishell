@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/03 17:11:11 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:03:43 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ int			special_char_no_divider_no_eq(char c);
 void		delete_token(t_token *delete_token);
 
 //	get export saved variables
-void 		extend_saved_export_var(t_token *token_lst);
+t_token* 	extend_saved_export_var(t_token **token_lst);
 char**		extend_env_with_str(char** src, char *token);
 char* 		get_var_from_env(char **src, char *token_no_dollar);
 char*		get_home_directory(char **src);
@@ -194,7 +194,7 @@ void 		append_export_str(t_token **token_lst);
 bool		multiple_tokens(char *line);
 char 		*handle_mulit_token(char *line);
 char 		*skip_divider_without_space(char *line);
-void 		tokenise_muliple_tok_from_env(t_token *token_lst, t_token *prev_token);
+void 		tokenise_muliple_tok_from_env(t_token **token_lst, t_token *prev_token);
 // cmd_list
 
 //print cmd_lst
@@ -212,6 +212,10 @@ char 			**cpy_token_char(char *token);
 int				check_for_builtin(char *token_str);
 int				choose_cmd_type(t_token *curr_token);
 
+// clean up
+void	clean_token_lst(t_token *token_lst);
+void	free_single_token(t_token **token);
+
 //fill_file_list
 t_file_node*	process_token_type_redir(t_token **curr_token);
 t_file_node* 	create_redirect_input_file_node(t_token **curr_token);
@@ -222,4 +226,9 @@ bool	ft_strcmp(const char *s1, const char *s2);
 char	**ft_cpy_array_str(char **arrays);
 char 	*ft_charjoin(char const *dst, char const src_char);
 void 	ft_free_array(char **arrays);
+
+
+
+
+
 #endif
