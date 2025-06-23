@@ -3,32 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/05/06 18:05:29 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:20:22 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/executer.h"
 
+// changed to real strcmp
 void	ft_execute_builtin(t_cmd_node *cmd_node, char **envp)
 {
-	if (ft_strncmp("echo", cmd_node->cmd[0], 4) == 0)
+	if (ft_strcmp("echo", cmd_node->cmd[0]) == true)
 		ft_echo(cmd_node, envp);
-	if (ft_strncmp("pwd", cmd_node->cmd[0], 3) == 0)
+	if (ft_strcmp("pwd", cmd_node->cmd[0]) == true)
 		ft_pwd(envp);
-	if (ft_strncmp("env", cmd_node->cmd[0], 3) == 0)
+	if (ft_strcmp("env", cmd_node->cmd[0]) == true)
 		ft_env(envp);
-	if (ft_strncmp("cd", cmd_node->cmd[0], 2) == 0)
+	if (ft_strcmp("cd", cmd_node->cmd[0]) == true)
 		ft_cd(cmd_node, envp);
-	if (ft_strncmp("export", cmd_node->cmd[0], 6) == 0)
+	if (ft_strcmp("export", cmd_node->cmd[0]) == true)
 		ft_export(cmd_node, envp);
-	if (ft_strncmp("exit", cmd_node->cmd[0], 4) == 0)
+	if (ft_strcmp("exit", cmd_node->cmd[0]) == true)
 		ft_exit(cmd_node);
-	if (ft_strncmp("unset", cmd_node->cmd[0], 5) == 0)
+	if (ft_strcmp("unset", cmd_node->cmd[0]) == true)
 		ft_unset(cmd_node, envp);
 }
+
 
 void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 {
@@ -64,6 +66,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	int			i;
 
 	i = 0;
+	save_heredoc_files(cmd_list->head);
 	current = cmd_list->head;
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN) // das ist der sonderfall von dem gabrijel geredet hat. Das muss sein damit man im selben prozess bleibt.
 		ft_execute_builtin(current, envp); 
