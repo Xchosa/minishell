@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:21:02 by tschulle          #+#    #+#             */
-/*   Updated: 2025/05/06 18:01:14 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:49:22 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,24 @@ void	ft_open_pipes(int fd[][2], t_cmd_list *cmd_list)
 		i++;
 	}
 }
+
+void	ft_open_pipe(int fd[][2], t_cmd_list *cmd_list)
+{
+	int	i;
+
+	i = 0;
+	while (i < cmd_list->size - 1)
+	{
+		if (pipe(fd[i]) != 0)
+			return ;
+		i++;
+	}
+}
+
+
+//dfdff
+// openpipes
+// 
 
 void	ft_first_node(int fd[][2])
 {

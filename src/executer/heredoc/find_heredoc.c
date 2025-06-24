@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:58:15 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/24 10:07:19 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:39:20 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,13 @@ int save_here_doc_in_tmp(t_file_node **file_node)
 
 int find_here_doc_file_node(t_file_node **file_node)
 {
-	while(*file_node)
+	t_file_node *cur_file_node = *file_node;
+    
+	while(cur_file_node)
 	{
-		if((*file_node)->redir_type == HERE_DOC)
+		if(cur_file_node->redir_type == HERE_DOC)
 		{
-			if(save_here_doc_in_tmp(file_node) != 0)
+			if(save_here_doc_in_tmp(cur_file_node) != 0)
 				return (1);
 		}
 		(*file_node)= (*file_node)->next;
@@ -116,18 +118,17 @@ int find_here_doc_file_node(t_file_node **file_node)
 // head uebergeben // muss doppelpointer sein um die nodes zu veraendern
 void save_heredoc_files(t_cmd_node **cmd_node)
 {	
-	while(cmd_node)
-	{
-		if((*cmd_node)->file_list)
-		{
-			if(find_here_doc_file_node((*cmd_node)->file_list) != 0);
-				return;
-		}
-		if((*cmd_node)->next != NULL)
-			(*cmd_node) = (*cmd_node)->next;
-		else 
-			break;
-	}
-
+	t_cmd_node *cur_cmd_node = *cmd_node;
+	
+	while(cur_cmd_node)
+    {
+        if(cur_cmd_node->file_list && cur_cmd_node->file_list->head)
+        {
+            if(find_here_doc_file_node(&cur_cmd_node->file_list->head) != 0)
+                return;
+        }
+        cur_cmd_node= cur_cmd_node->next;
+    }
 }
+
 

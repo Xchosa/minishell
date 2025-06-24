@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/06 16:03:43 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/24 14:07:22 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdbool.h>
 # include <errno.h>
 # include <stdlib.h>
+#include <dirent.h>
+
 
 
 #define syntax_failure 258

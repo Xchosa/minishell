@@ -61,6 +61,9 @@ int 	find_here_doc_file_node(t_file_node **file_node);
 int		save_here_doc_in_tmp(t_file_node **file_node);
 void	save_heredoc_files(t_cmd_node **cmd_node);
 
+void	execute_loop(t_cmd_list **cmd_list);
+void	ex_redirection(t_cmd_list **cur_cmd_node);
+bool	handle_single_cmd_node(t_cmd_node **cur_cmd_node);
 
 //# include "parser.h"
 

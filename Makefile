@@ -18,12 +18,15 @@ EXECUTER_DIR = ./src/executer
 LEXER_DIR = ./src/lexer
 SIGNAL_DIR = ./src/signal
 HEREDOC_DIR = ./src/executer/heredoc
+EXECUTE_DIR = ./src/executer/execution_main
+REDIRECTION = ./src/executer/redirection
 DEBUG_DIR = debug_dir
 INC_DIR = inc
 OBJ_DIR = obj
 
 VPATH = $(SOURCE_DIR):$(PARSE_DIR):$(SIGNAL_DIR):$(TOKEN_DIR):\
-$(LEXER_DIR):$(CMD_LIST_DIR):$(EXPORT_DIR):$(EXECUTER_DIR):$(HEREDOC_DIR):$(INC_DIR)
+$(LEXER_DIR):$(CMD_LIST_DIR):$(EXPORT_DIR):\
+$(EXECUTER_DIR):$(EXECUTE_DIR):$(REDIRECTION):$(HEREDOC_DIR):$(INC_DIR)
 
 
 # ---------- Subjects ---------- #
@@ -74,7 +77,9 @@ MY_SOURCES = \
 		redirect.c \
 		handler.c \
 		signal_main.c \
-		find_heredoc.c
+		find_heredoc.c \
+		execution_loop.c \
+		main_redirection.c
 
 
 

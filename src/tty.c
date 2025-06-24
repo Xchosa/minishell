@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/06 15:46:22 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/24 14:22:32 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		init_signal(1);
 		iter_cmd_lst(cmd_lst, &print_cmd_lst);
 		printf("Thilos problem:\n");
-		
-		ft_execute(cmd_lst, get_bash()->env);
+		execute_loop(&cmd_lst);
+		// ft_execute(cmd_lst, get_bash()->env);
 		init_signal(0);
 		reset_terminal_state();
 		clean_up(line,token_lst);
