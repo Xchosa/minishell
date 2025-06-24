@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:58:15 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/23 15:54:17 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:07:19 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ bool execute_here_doc(char *filename, int here_doc_fd)
 	while(1)
 	{
 		// change signal for parent heredoc
-		if(check_for_interactive_shell == true)
+		if(check_for_interactive_shell () == true)
 			line = readline("> ");
 		else
 			line = get_next_line(STDIN_FILENO);
@@ -59,16 +59,17 @@ bool execute_here_doc(char *filename, int here_doc_fd)
 		}
 		ft_putstr_fd(line, here_doc_fd);
 		if (check_for_interactive_shell() == true)
-            ft_putstr_fd("\n", fd);// for readline
+            ft_putstr_fd("\n", here_doc_fd);// for readline
 		free(line);
 	}
-	close(fd);
+	close(here_doc_fd);
 	// change signal back
 	return true;
 }
 
-
-void save_here_doc_in_tmp(t_file_node **file_node)
+// filename for tmp only allows alnum and _ -> needs to be changed to this format 
+// everything else will be _ 
+int save_here_doc_in_tmp(t_file_node **file_node)
 {
 	int		here_doc_fd;
 	char	*new_tmp_file_name;
@@ -79,29 +80,35 @@ void save_here_doc_in_tmp(t_file_node **file_node)
 	
 	here_doc_fd = open(new_tmp_file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (here_doc_fd == -1)
-		return (ft_putstr_fd("Operation not permitted\n", 2), NULL);
+	{
+		ft_putstr_fd("Operation not permitted\n", 2);
+		return 1;
+	}
 	if(execute_here_doc((*file_node)->filename, here_doc_fd))
 	{
 		close(here_doc_fd);
-		return ;
+		return(0);
 	}
 	free((*file_node)->filename);
 	(*file_node)->filename = new_tmp_file_name;
+	return (0);
 }
 
 
 
 
-void find_here_doc_file_node(t_file_node **file_node)
+int find_here_doc_file_node(t_file_node **file_node)
 {
 	while(*file_node)
 	{
 		if((*file_node)->redir_type == HERE_DOC)
 		{
-			save_here_doc_in_tmp((*file_node));
+			if(save_here_doc_in_tmp(file_node) != 0)
+				return (1);
 		}
 		(*file_node)= (*file_node)->next;
 	}
+	return (0);
 }
 
 
@@ -113,9 +120,9 @@ void save_heredoc_files(t_cmd_node **cmd_node)
 	{
 		if((*cmd_node)->file_list)
 		{
-			find_here_doc_file_node((*cmd_node)->(*file_list)->head);
+			if(find_here_doc_file_node((*cmd_node)->file_list) != 0);
+				return;
 		}
-		// is cmd_node am ende immer NULL? 
 		if((*cmd_node)->next != NULL)
 			(*cmd_node) = (*cmd_node)->next;
 		else 

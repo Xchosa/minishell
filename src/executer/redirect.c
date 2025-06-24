@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:15:52 by tschulle          #+#    #+#             */
-/*   Updated: 2025/06/23 13:35:34 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/24 09:58:07 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,20 @@ void	ft_manage_append(char *appendfile, int fd[][2])
 
 
 // complett neu 
-void	ft_manage_heredoc(char *delimiter, int fd[][2])
+/// only prints out to console 
+void	ft_manage_heredoc(char *tmp_filename, int fd[][2])
 {
-	ft_putstr_fd()
-	// muss nur noch /tmp/filename aufrufen -> in der fertig bereits
+	int here_doc_fd;
+	
+	here_doc_fd = open(tmp_filename, O_RDONLY);
+	if(here_doc < 0)
+		return;
+	if(dup2(here_doc_fd , STDOUT_FILENO) < 0)
+		return;
+	close(here_doc_fd);
+	// muss nur noc /tmp/filename aufrufen -> in der fertig bereits
 	// ausgefuehrter und gespeicherterte heredoc ist
 //	z.B. cat <<now
-
-	char	*next;
-
-	next = get_next_line(0);
-	while (next != NULL)
-	{
-		if (ft_strcmp(next, delimiter) == true)
-			break;
-		write(1, next, ft_strlen(next));
-		free(next);
-		next = get_next_line(0);
-		//ft_printf("%dn", ft_strncmp(next, delimiter, ft_strlen(delimiter)));
-	}
-	free(next);
-	return ;
 }
 
 
@@ -89,7 +82,7 @@ void	ft_manage_redirections(t_cmd_node *cmd_node, int fd[][2])
 		else if (current->redir_type == REDIRECT_OUTPUT)
 			ft_manage_outfile(current->filename, fd);
 		else if (current->redir_type == HERE_DOC)
-			ft_manage_heredoc(current->filename, fd);
+			ft_manage_heredoc(current->filename, fd);// 
 		else if (current->redir_type == APPEND)
 			ft_manage_append(current->filename, fd);
 		current = current->next;
