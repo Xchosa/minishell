@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:09:11 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/24 14:11:38 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/24 14:53:37 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void free_single_token(t_token **token)
 }
 
 
-/* delete all tmp files , where all here_docs are saved /*
-/* struct dirent {
+/* delete all tmp files , where all here_docs are saved /
+	struct dirent {
     ino_t          d_ino;       inode number
     off_t          d_off;       offset to the next dirent 
     unsigned short d_reclen;    length of this record 

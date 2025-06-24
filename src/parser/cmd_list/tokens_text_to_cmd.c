@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:54:16 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/27 10:54:29 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:43:44 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ static void handle_special_cases(t_token **curr_token,t_cmd_node *cmd_node)
 void process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
 {
     handle_special_cases(curr_token,cmd_node);
-
+	
 	while(curr_token && *curr_token && (*curr_token)->token_type == TEXT )
 	{
 		if(cmd_node->cmd_type == 0)
@@ -149,4 +149,28 @@ void process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
 		}
     }
 	return ;
+}
+
+// input <outfile 
+// soll nur eine leere outfile erstellen / oder heredoc ausfuehren
+void	process_redirect(t_token **curr_token, t_cmd_node *cmd_node)
+{
+	
+	if(cmd_node->cmd_type == 0)
+	{
+		if(redir_token(curr_token) == true)
+		{
+			cmd_node->cmd_type = choose_cmd_type(*curr_token);//
+			cmd_node->cmd = NULL;
+		}
+		
+		// if((*curr_token)->next)
+	    //     (*curr_token) = (*curr_token)->next;
+		// else 
+		// {	
+		// 	*curr_token = NULL;
+		// 	return;
+		// }
+	}
+	return;
 }

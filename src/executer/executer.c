@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/06/24 11:09:17 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/24 15:24:26 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	int			i;
 
 	i = 0;
-	// save_heredoc_files(&cmd_list->head);
+	save_heredoc_files(&cmd_list->head);
 	
 	int			fd[(int)cmd_list->size][2]; // am anfang werden alle pipes erstellt. ich glaube norminette mochte die schreibweise nicht, also vllt mit * ?
 	

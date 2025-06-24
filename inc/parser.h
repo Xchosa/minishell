@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/24 14:07:22 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:19:19 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,8 @@ void 			append_token_char(t_cmd_node *cmd_node, t_token *curr_token);
 char 			**cpy_token_char(char *token);
 int				check_for_builtin(char *token_str);
 int				choose_cmd_type(t_token *curr_token);
+bool			redir_token(t_token **token_list);
+void			process_redirect(t_token **curr_token, t_cmd_node *cmd_node);
 
 // clean up
 void	clean_token_lst(t_token *token_lst);

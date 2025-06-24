@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:54:22 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/27 10:54:24 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:32:48 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool no_pipe(t_token **token_list)
 	}
 	return (true);
 }
-static bool redir_token(t_token **token_list)
+bool redir_token(t_token **token_list)
 {
 	int type;
 
@@ -81,10 +81,13 @@ t_cmd_node* process_token(t_token **token_lst)
 	cmd_node->cmd_type = 0;
 	while(*token_lst)
 	{
+		// process redirct ( wenn redirect erstes zeichen der node ist)
+		// process_redirect(token_lst, cmd_node);
 		process_token_type_Text(token_lst,cmd_node);
 		if (*token_lst == NULL)
             break;
-		if(no_pipe(token_lst) == false || redir_token(token_lst) == false)
+		// if(no_pipe(token_lst) == false || redir_token(token_lst) == false) // 
+		if(no_pipe(token_lst) == false && redir_token(token_lst) == false) // 
 			return(cmd_node);
 		if(file_list->head == NULL)
 			if_redirect_set_file_node_head(file_list,&file_node,token_lst);

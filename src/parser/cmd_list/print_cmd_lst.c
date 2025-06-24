@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 09:57:58 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/21 15:01:15 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:39:28 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,15 @@ void	print_cmd_lst(t_cmd_node *cmd_nodes)
 		printf("cmd_type: EXECUTE\n");
 
 	printf("cmd \n");
-	while(cmd_nodes->cmd[i])
+	if(cmd_nodes->cmd[i] == (void *)0)
+		printf("NULL");
+	else
 	{
-		printf("'%s'",cmd_nodes->cmd[i]);
-		i++;
+		while(cmd_nodes->cmd[i])
+		{
+			printf("'%s'",cmd_nodes->cmd[i]);
+			i++;
+		}
 	}
 	printf("\n");
 	if(cmd_nodes->file_list->head!= NULL)
