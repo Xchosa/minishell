@@ -54,6 +54,13 @@ void	ft_unset_var(char **envp, int j);
 void	ft_unset(t_cmd_node *cmd_node,char **envp);
 
 
+//heredoc
+bool	check_for_interactive_shell(void);
+bool 	execute_here_doc(char *filename, int here_doc_fd);
+void 	find_here_doc_file_node(t_file_node **file_node);
+void	save_here_doc_in_tmp(t_file_node **file_node);
+void	save_heredoc_files(t_cmd_node **cmd_node);
+
 
 //# include "parser.h"
 

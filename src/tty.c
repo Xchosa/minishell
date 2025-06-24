@@ -90,6 +90,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		clean_up(line,token_lst);
 	}
 	clean_up(line,token_lst);
+	// delete_tmp_files;
 }
 
 // printf("\n append token string in export \n\n");

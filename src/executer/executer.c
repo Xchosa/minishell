@@ -62,11 +62,12 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 {
 	t_cmd_node	*current;
 	int			pid;
-	int			fd[(int)cmd_list->size][2]; // am anfang werden alle pipes erstellt. ich glaube norminette mochte die schreibweise nicht, also vllt mit * ?
 	int			i;
 
 	i = 0;
-	save_heredoc_files(cmd_list->head);
+	save_heredoc_files(*(&cmd_list)->head->cmd_node);
+	int			fd[(int)cmd_list->size][2]; // am anfang werden alle pipes erstellt. ich glaube norminette mochte die schreibweise nicht, also vllt mit * ?
+	
 	current = cmd_list->head;
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN) // das ist der sonderfall von dem gabrijel geredet hat. Das muss sein damit man im selben prozess bleibt.
 		ft_execute_builtin(current, envp); 

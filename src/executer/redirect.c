@@ -51,14 +51,21 @@ void	ft_manage_append(char *appendfile, int fd[][2])
 	return ;
 }
 
+
+// complett neu 
 void	ft_manage_heredoc(char *delimiter, int fd[][2])
 {
+	ft_putstr_fd()
+	// muss nur noch /tmp/filename aufrufen -> in der fertig bereits
+	// ausgefuehrter und gespeicherterte heredoc ist
+//	z.B. cat <<now
+
 	char	*next;
 
 	next = get_next_line(0);
 	while (next != NULL)
 	{
-		if (ft_strncmp(next, delimiter, ft_strlen(delimiter)) == 0)
+		if (ft_strcmp(next, delimiter) == true)
 			break;
 		write(1, next, ft_strlen(next));
 		free(next);

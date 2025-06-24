@@ -73,7 +73,8 @@ MY_SOURCES = \
 		executer.c \
 		redirect.c \
 		handler.c \
-		signal_main.c 
+		signal_main.c \
+		find_heredoc.c
 
 
 

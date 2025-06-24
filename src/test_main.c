@@ -6,7 +6,6 @@
 
 int main(int argc, char **argv, char **env)
 {
-	
     t_token *token_lst;
 	(void)argv;
 	t_cmd_list *cmd_lst;
@@ -19,7 +18,7 @@ int main(int argc, char **argv, char **env)
 	//char *line = "echo $USER";
 	// char *line = "$h outfile";
     // char *line = "export t=\"world | around < \" echo world";
-    line = "cat<infile "; // = wird falsch gehandelt
+    line = "cat <<now "; // = wird falsch gehandelt
 	// char *line = "echo \"$USER\" echo $USER eoche \'$USER\' ";
 	// char *line = "echo $h world echo $paul echo $world";
 	// char *line = "export h=thilo paul=kruecke world=\"cat makefile\" ";
