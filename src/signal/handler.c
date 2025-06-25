@@ -264,3 +264,39 @@ tcsendbreak(fd, duration): Sends a break signal to the terminal.
 // 	if (!line)
 // 		free(line);
 // }
+
+
+
+volatile sig_atomic_t g_heredoc_interrupted = 0;
+
+// Create a dedicated heredoc signal handler
+void heredoc_signal_handler(int sig)
+{
+    if (sig == SIGINT)
+    {
+        g_heredoc_interrupted = 1;
+        write(STDOUT_FILENO, "\n", 1);
+        // Close stdin to break out of readline/get_next_line
+        close(STDIN_FILENO);
+        // Set exit code for interrupted heredoc
+        get_exit_codes()->last_exit_code = 130;
+    }
+}
+
+// Implement the signal_heredoc function
+void signal_heredoc(void)
+{
+    struct sigaction sa;
+    
+    reset_terminal_state();
+    sigemptyset(&sa.sa_mask);
+    sa.sa_handler = heredoc_signal_handler;
+    sa.sa_flags = 0; // Don't use SA_RESTART for heredoc
+    sigaction(SIGINT, &sa, NULL);
+    
+    sa.sa_handler = SIG_IGN;
+    sigaction(SIGQUIT, &sa, NULL);
+    
+    rl_catch_signals = 0;
+}
+

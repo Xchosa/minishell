@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:27:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/06/06 15:14:12 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:04:32 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:58:15 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/25 13:52:05 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:51:51 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,71 @@
 
 
 */
+
+// bool execute_here_doc(char *filename, int here_doc_fd)
+// {
+//     char *line;
+//     struct sigaction sa_old_int, sa_old_quit;
+    
+//     // Save current signal handlers
+//     sigaction(SIGINT, NULL, &sa_old_int);
+//     sigaction(SIGQUIT, NULL, &sa_old_quit);
+    
+//     // Set up heredoc-specific signal handling
+//     g_heredoc_interrupted = 0;
+//     signal_heredoc();
+    
+//     while(1)
+//     {
+//         if(check_for_interactive_shell() == true)
+//             line = readline("> ");
+//         else
+//             line = get_next_line(STDIN_FILENO);
+            
+//         // Check if we were interrupted by SIGINT
+//         if (g_heredoc_interrupted)
+//         {
+//             free(line);
+//             close(here_doc_fd);
+//             // Restore signal handlers
+//             sigaction(SIGINT, &sa_old_int, NULL);
+//             sigaction(SIGQUIT, &sa_old_quit, NULL);
+//             return false;
+//         }
+        
+//         if(!line)
+//             break;
+            
+//         // Rest of your existing code
+//         if (!check_for_interactive_shell() && line[ft_strlen(line) - 1] == '\n')
+//             line[ft_strlen(line) - 1] = '\0';
+//         skip_whitespace(&line);
+//         if(ft_strcmp(line, filename) == true)
+//         {
+//             free(line);
+//             close(here_doc_fd);
+//             // Restore signal handlers
+//             sigaction(SIGINT, &sa_old_int, NULL);
+//             sigaction(SIGQUIT, &sa_old_quit, NULL);
+//             return true;
+//         }
+//         ft_putstr_fd(line, here_doc_fd);
+//         if (check_for_interactive_shell() == true)
+//             ft_putstr_fd("\n", here_doc_fd);
+//         free(line);
+//     }
+// 	close(here_doc_fd);
+//     // Restore signal handlers
+//     sigaction(SIGINT, &sa_old_int, NULL);
+//     sigaction(SIGQUIT, &sa_old_quit, NULL);
+//     return true;
+// }
+
+
+
+
+
+
 
 static int error_heredoc(char *new_tmp_file_name_suffix,char *new_tmp_file_name,char *suffix)
 {
@@ -109,6 +174,11 @@ int save_here_doc_in_tmp(t_file_node **file_node)
 	if(execute_here_doc((*file_node)->filename, here_doc_fd) == false)
 	{
 		close(here_doc_fd);
+        unlink(new_tmp_file_name_suffix);
+        free(new_tmp_file_name_suffix);
+        free(new_tmp_file_name);
+        free(suffix);
+        return(1); // Indicate interruption
 		return(0);
 	}
 	free_heredoc_helper(new_tmp_file_name, suffix, file_node);
