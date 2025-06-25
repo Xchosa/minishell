@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:58:15 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/25 11:24:55 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:52:05 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 		
 				
 // status quo 
-noch kein signaling implentiert fuer heredoc 
-filename hat noch keine _nummerierung bei zwei identischen heredocs
+
+
 */
 
 static int error_heredoc(char *new_tmp_file_name_suffix,char *new_tmp_file_name,char *suffix)
@@ -131,8 +131,8 @@ int find_here_doc_file_node(t_file_node **file_node)
 			if(save_here_doc_in_tmp(&cur_file_node) != 0)
 				return (1);
 		}
-		if((*file_node)->next)
-			(*file_node)= (*file_node)->next;
+		if(cur_file_node->next)
+			cur_file_node= cur_file_node->next;
 		else
 			return 0;
 	}
@@ -156,5 +156,6 @@ void save_heredoc_files(t_cmd_node **cmd_node)
         cur_cmd_node= cur_cmd_node->next;
     }
 }
+
 
 

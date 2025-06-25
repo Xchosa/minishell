@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/06/25 10:32:15 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:58:04 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,17 @@ void	ft_execute_node(
 	else if (cmd_node->cmd_type == BUILTIN)
 	{
 		ft_execute_builtin(cmd_node, envp);
-		exit(0); // exit damit child prozesse von builtins keine zombie prozesse werden. ob der wert hier wichtig is weiss ich nicht, haengt glaub ich davon ab wie man in ft_execute damit umgeht
+		if(cmd_list->size > 1)
+			exit(0); // exit damit child prozesse von builtins keine zombie prozesse werden. ob der wert hier wichtig is weiss ich nicht, haengt glaub ich davon ab wie man in ft_execute damit umgeht
 	}
 }
+
+
+// handle_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *current, int fd[][2], char **envp )
+// {
+	
+// 	ft_execute_node(cmd_list, current, fd, envp);
+// }
 
 void	ft_execute(t_cmd_list *cmd_list, char **envp)
 {
@@ -73,11 +81,13 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	
 	current = cmd_list->head;
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN) // das ist der sonderfall von dem gabrijel geredet hat. Das muss sein damit man im selben prozess bleibt.
-		ft_execute_builtin(current, envp); 
+		// ft_execute_builtin(current, envp); 
+		ft_execute_node(cmd_list, current, fd, envp);
 	else
 	{
 		if (cmd_list->size > 1) // pipes nur wenn mehr als eine node
-			ft_open_pipes(fd, cmd_list); // die funktionen zu pipes sind alle irgendwie kompliziert, aber ich glaube sie funktionieren. Es geht darum dass die child prozesse offene fd erben und am ende des child prozesses alle fd geschlossen sind
+			ft_open_pipes(fd, cmd_list); // die funktionen zu pipes sind alle irgendwie kompliziert, aber ich glaube sie funktionieren. 
+			//Es geht darum dass die child prozesse offene fd erben und am ende des child prozesses alle fd geschlossen sind
 		while (current != NULL)
 		{
 			pid = fork();
@@ -88,7 +98,10 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 			if (i < cmd_list->size - 1)
 				close(fd[i][1]);
 			if (i > 0 && i < cmd_list->size - 1)
-				close(fd[i - 1][0]);
+			{
+				// if (i > 0)
+					close(fd[i - 1][0]);
+			}
 			i++;
 		}
 		if (cmd_list->size > 1)
