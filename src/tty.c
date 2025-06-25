@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/24 15:23:50 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/25 10:23:48 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		ft_execute(cmd_lst, get_bash()->env);
 		init_signal(0);
 		reset_terminal_state();
-		clean_up(line,token_lst);
+		clean_up(line,token_lst); // deleltes tmp files 
 	}
 	clean_up(line,token_lst);
 	// delete_tmp_files;

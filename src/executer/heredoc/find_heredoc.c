@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:58:15 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/24 15:24:59 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/25 11:24:55 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,26 @@
 		file_node = type 3, filename /tmp/order/1
 		
 				
-
+// status quo 
+noch kein signaling implentiert fuer heredoc 
+filename hat noch keine _nummerierung bei zwei identischen heredocs
 */
+
+static int error_heredoc(char *new_tmp_file_name_suffix,char *new_tmp_file_name,char *suffix)
+{
+	free(new_tmp_file_name_suffix);
+	free(suffix);
+	free(new_tmp_file_name);
+	perror("open failed");
+	ft_putstr_fd("Operation not permitted\n", 2);
+	return 1;
+}
+static void free_heredoc_helper(char *new_tmp_file_name,char *suffix, t_file_node **file_node)
+{
+	free(new_tmp_file_name);
+	free(suffix);
+	free((*file_node)->filename);
+}
 
 bool check_for_interactive_shell(void)
 {
@@ -52,10 +70,14 @@ bool execute_here_doc(char *filename, int here_doc_fd)
 			line = get_next_line(STDIN_FILENO);
 		if(!line)
 			break;
-		if(strcmp(line, filename) == true)
+		if (!check_for_interactive_shell() && line[ft_strlen(line) - 1] == '\n')
+            line[ft_strlen(line) - 1] = '\0';
+		skip_whitespace(&line);
+		if(ft_strcmp(line, filename) == true)
 		{
 			free(line);
-			break;
+			close(here_doc_fd);
+			return(true);
 		}
 		ft_putstr_fd(line, here_doc_fd);
 		if (check_for_interactive_shell() == true)
@@ -71,26 +93,27 @@ bool execute_here_doc(char *filename, int here_doc_fd)
 // everything else will be _ 
 int save_here_doc_in_tmp(t_file_node **file_node)
 {
-	int		here_doc_fd;
-	char	*new_tmp_file_name;
+	int			here_doc_fd;
+	char		*new_tmp_file_name;
+	char		*new_tmp_file_name_suffix;
+	char		*suffix;
+	static int	count = 0;
 	
-	
-	// without changing name (so same named heredoc can be distinguished)
-	new_tmp_file_name = ft_strjoin("tmp/.here_doc_",(*file_node)->filename);
-	
-	here_doc_fd = open(new_tmp_file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	suffix = ft_itoa(count);
+	count++;
+	new_tmp_file_name = ft_strjoin("/tmp/.here_doc_",(*file_node)->filename);
+	new_tmp_file_name_suffix = ft_strjoin(new_tmp_file_name, suffix);
+	here_doc_fd = open(new_tmp_file_name_suffix, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (here_doc_fd == -1)
-	{
-		ft_putstr_fd("Operation not permitted\n", 2);
-		return 1;
-	}
-	if(execute_here_doc((*file_node)->filename, here_doc_fd))
+		return(error_heredoc(new_tmp_file_name_suffix,new_tmp_file_name,suffix),1);
+	if(execute_here_doc((*file_node)->filename, here_doc_fd) == false)
 	{
 		close(here_doc_fd);
 		return(0);
 	}
-	free((*file_node)->filename);
-	(*file_node)->filename = new_tmp_file_name;
+	free_heredoc_helper(new_tmp_file_name, suffix, file_node);
+	// free((*file_node)->filename);
+	(*file_node)->filename = new_tmp_file_name_suffix;
 	return (0);
 }
 
@@ -108,7 +131,10 @@ int find_here_doc_file_node(t_file_node **file_node)
 			if(save_here_doc_in_tmp(&cur_file_node) != 0)
 				return (1);
 		}
-		(*file_node)= (*file_node)->next;
+		if((*file_node)->next)
+			(*file_node)= (*file_node)->next;
+		else
+			return 0;
 	}
 	return (0);
 }
@@ -118,7 +144,6 @@ int find_here_doc_file_node(t_file_node **file_node)
 // head uebergeben // muss doppelpointer sein um die nodes zu veraendern
 void save_heredoc_files(t_cmd_node **cmd_node)
 {	
-	printf("do i come here");
 	t_cmd_node *cur_cmd_node = *cmd_node;
 	
 	while(cur_cmd_node)

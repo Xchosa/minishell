@@ -16,3 +16,12 @@ export printed zwar sortiert aber nicht 100% genau wie das richtige export, habs
 und file2 schreiben lassen und dann diff file1 file2 ausfuehren oder so aehnlich
 und so scherze wie pwd ... in der bash kann man unset PWD machen und dann funktioniert der pwd call immernoch. aber wtf?
 und shell level, wobei das vllt auch unnoetig ist?
+
+
+
+
+How to split work
+
+heredoc -> signaling extra case
+
+redirect 

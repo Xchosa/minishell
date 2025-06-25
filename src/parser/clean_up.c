@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:09:11 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/24 14:53:37 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/25 10:28:20 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ void delete_tmp_files(const char *foldername)
 	struct dirent	*fileName;
 	char 			*full_path;
 	char			*tmp_str;
-	
-	
-	
+
 	directory = opendir(foldername);
 	if(!directory)
 		return;
@@ -87,6 +85,8 @@ void clean_up(char *line, t_token *token_lst)
 		free(line);
 	// free(env)
 	// free(cmdlist)
+
+	
 	delete_tmp_files("/tmp");
 	
 }

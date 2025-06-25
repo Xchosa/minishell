@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:54:10 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/27 17:35:39 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/25 10:46:37 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ void parent_handler(int sig)
 	{
 		get_exit_codes()->last_exit_code = ec_sucess;
 		// ft_putstr_fd("EXIT: 3\n", STDOUT_FILENO);
+	}
+	else if (sig == SIGTSTP)
+	{
+		get_exit_codes()->last_exit_code = ec_sucess;
 	}
 }
 
@@ -147,6 +151,7 @@ void init_signal(int is_child)
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 	sigaction(SIGTERM, &sa, NULL);
+	sigaction(SIGTSTP, &sa, NULL); // ignore ctrl + Z
 	// make sure readline doesn't interfere
 	rl_catch_signals = 0;
 }
