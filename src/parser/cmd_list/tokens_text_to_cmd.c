@@ -148,11 +148,13 @@ void process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
             return;
 		}
     }
+    process_redirect(curr_token, cmd_node);
 	return ;
 }
 
-// input <outfile 
+// e.g. input < outfile 
 // soll nur eine leere outfile erstellen / oder heredoc ausfuehren
+// execute and NULL char 
 void	process_redirect(t_token **curr_token, t_cmd_node *cmd_node)
 {
 	
@@ -161,16 +163,11 @@ void	process_redirect(t_token **curr_token, t_cmd_node *cmd_node)
 		if(redir_token(curr_token) == true)
 		{
 			cmd_node->cmd_type = choose_cmd_type(*curr_token);//
-			cmd_node->cmd = NULL;
+			cmd_node->cmd = malloc(sizeof(char*));
+            if (cmd_node->cmd)
+                cmd_node->cmd[0] = NULL;
 		}
-		
-		// if((*curr_token)->next)
-	    //     (*curr_token) = (*curr_token)->next;
-		// else 
-		// {	
-		// 	*curr_token = NULL;
-		// 	return;
-		// }
+
 	}
 	return;
 }

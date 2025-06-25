@@ -18,7 +18,7 @@ int main(int argc, char **argv, char **env)
 	//char *line = "echo $USER";
 	// char *line = "$h outfile";
     // char *line = "export t=\"world | around < \" echo world";
-    line = "<now "; // = wird falsch gehandelt
+    line = "<<now | grep p >outfile"; // = wird falsch gehandelt
 	// char *line = "echo \"$USER\" echo $USER eoche \'$USER\' ";
 	// char *line = "echo $h world echo $paul echo $world";
 	// char *line = "export h=thilo paul=kruecke world=\"cat makefile\" ";

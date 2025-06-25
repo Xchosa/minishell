@@ -13,17 +13,17 @@
 #include "parser.h"
 
 
-static bool no_pipe(t_token **token_list)
+static bool pipe_token(t_token **token_list)
 {
 	if(*token_list == NULL)
-        return(false);
+        return(true);
 
 	if((*token_list)->token_type == PIPE)
 	{
 		(*token_list) = (*token_list)->next;
-		return (false);
+		return (true);
 	}
-	return (true);
+	return (false);
 }
 bool redir_token(t_token **token_list)
 {
@@ -66,6 +66,20 @@ static void if_redirect_append_file_node(t_file_list *file_list, t_file_node **f
 	file_list->size +=1;
 }
 
+
+static t_cmd_node *init_cmd_node_null(t_file_list *file_list)
+{
+	t_cmd_node 	*cmd_node;
+
+	cmd_node = malloc(sizeof(t_cmd_node));
+	if (!cmd_node)
+		return (NULL);
+	cmd_node->file_list = file_list;
+	cmd_node->next = NULL;
+	cmd_node->cmd_type = 0;
+	return (cmd_node);
+}
+
 t_cmd_node* process_token(t_token **token_lst)
 {
 	t_cmd_node 	*cmd_node;
@@ -73,21 +87,16 @@ t_cmd_node* process_token(t_token **token_lst)
 	t_file_list *file_list;
 	
 	file_list = file_list_to_NULL();
-	cmd_node = malloc(sizeof(t_cmd_node));
-	if (!cmd_node)
-		return (NULL);
-	cmd_node->file_list = file_list;
-	cmd_node->next = NULL;
-	cmd_node->cmd_type = 0;
+	cmd_node = init_cmd_node_null(file_list);
 	while(*token_lst)
 	{
-		// process redirct ( wenn redirect erstes zeichen der node ist)
-		// process_redirect(token_lst, cmd_node);
 		process_token_type_Text(token_lst,cmd_node);
 		if (*token_lst == NULL)
             break;
 		// if(no_pipe(token_lst) == false || redir_token(token_lst) == false) // 
-		if(no_pipe(token_lst) == false && redir_token(token_lst) == false) // 
+		if(pipe_token(token_lst) == true) // 
+			return(cmd_node);
+		if (redir_token(token_lst) == false)
 			return(cmd_node);
 		if(file_list->head == NULL)
 			if_redirect_set_file_node_head(file_list,&file_node,token_lst);
