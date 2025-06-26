@@ -147,6 +147,7 @@ t_token 	*create_token_with_quote_case(char **line, t_token *token);
 t_token		*tokenlstnew(char	*content);
 bool		check_for_divider_with_space(char c);
 bool		check_for_divider_without_space(char c);
+char		*skip_Dollar_parameter(char *line);
 void 		free_token(t_token **token_list);
 
 //update line
@@ -232,10 +233,10 @@ t_file_node* 	create_redirect_input_file_node(t_token **curr_token);
 t_file_node* 	create_redirect_output_file_node(t_token **curr_token);
 
 // for new_libft
-bool	ft_strcmp(const char *s1, const char *s2);
-char	**ft_cpy_array_str(char **arrays);
+//bool	ft_strcmp(const char *s1, const char *s2);
+// char	**ft_cpy_array_str(char **arrays);
 char 	*ft_charjoin(char const *dst, char const src_char);
-void 	ft_free_array(char **arrays);
+// void 	ft_free_array(char **arrays);
 
 
 

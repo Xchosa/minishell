@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "minishell.h"
-
 
 t_token*	tokenlast(t_token *lst)
 {

@@ -12,11 +12,11 @@
 
 #include "parser.h"
 
-
-
 t_token	*call_exit_token(char **line)
 {
 	t_token *new_token;
+	// (*line)++;
+	// (*line)++;
 	(void)line;
 	new_token = malloc (sizeof(t_token));
 	if(!new_token)

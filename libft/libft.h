@@ -18,6 +18,7 @@
 # include <limits.h>
 # include <stdarg.h>
 # include <fcntl.h>
+#include <stdbool.h>
 # include "get_next_line/get_next_line.h"
 # include "printf/ft_printf.h"
 
@@ -49,7 +50,7 @@ int		ft_tolower(int c);
 
 void	*ft_memset(void *b, int c, size_t len);
 void	ft_bzero(void *s, size_t n);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
+void	*ft_memcpy(void *restrict dst, const void *restrict src, size_t n);
 void	*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void	*ft_memmove(void *dst, const void *src, size_t len);
 void	*ft_memchr(const void *s, int c, size_t n);
@@ -82,5 +83,11 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 
 // char *get_next_line(int fd);
+
+
+// usefull add ons 
+bool	ft_strcmp(const char *s1, const char *s2);
+char	**ft_cpy_array_str(char **arrays);
+void 	ft_free_array(char **arrays);
 
 #endif

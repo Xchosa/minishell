@@ -48,12 +48,6 @@ void	ft_execute_node(
 }
 
 
-// handle_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *current, int fd[][2], char **envp )
-// {
-	
-// 	ft_execute_node(cmd_list, current, fd, envp);
-// }
-
 void	ft_execute(t_cmd_list *cmd_list, char **envp)
 {
 	t_cmd_node	*cur_cmd_node;
@@ -95,6 +89,10 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 			close(fd[i - 1][0]);
 	}
 }
+
+// echo ?! -> should return a new line 
+// cmd list => uebergibt 'echo' '' -> besser NULL?
+
 
 
 

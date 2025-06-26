@@ -12,7 +12,6 @@
 
 #include "parser.h"
 
-
 char	*update_line_unitl_d_quotes(char *line)
 {
 	line++;
@@ -40,6 +39,12 @@ char	*update_line_until_space(char *line)
     }
     return (line);
 }
+char	*skip_Dollar_parameter(char *line)
+{
+    line++;
+    line++;
+    return (line);
+}
 
 char *handle_special_characters(char *line)
 {
@@ -47,9 +52,11 @@ char *handle_special_characters(char *line)
         return (update_line_unitl_d_quotes(line));
     if (ft_strncmp("\'", line, 1) == 0)
         return (update_line_unitl_s_quotes(line));
-    if (ft_strncmp("$", line, 1) == 0)
-        return (update_line_until_space(line));
     if (ft_strncmp("=", line, 1) == 0)
-        return (++line); 
+        return (++line);
+    if (ft_strncmp("$?", line, 2) == 0)
+        return (skip_Dollar_parameter(line));
+    if (ft_strncmp("$", line, 1) == 0)
+            return (update_line_until_space(line));
     return (NULL); 
 }

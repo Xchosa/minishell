@@ -12,8 +12,6 @@
 
 #include "parser.h"
 
-
-
 bool	check_for_divider_without_space(char c)
 {
 	if (ft_strncmp ("|", &c, 1) == 0)
@@ -61,9 +59,7 @@ char 	*ft_charjoin(char const *dst, char const src_char)
 	size_t	strlen_dst;
 
 	i = 0;
-	
 	strlen_dst = ft_strlen(dst);
-
 	newstr = (char *)malloc(((strlen_dst + 2) * (sizeof(char))));
 	if (newstr == NULL)
 		return (NULL);

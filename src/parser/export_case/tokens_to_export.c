@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "minishell.h"
 
 char* get_export_token(char *content)
 {
@@ -25,12 +24,10 @@ char* get_export_token(char *content)
 	{
 		tmp_token = ft_charjoin(new_token, content[i]);
         free(new_token);
-        new_token = tmp_token;// lexer fischt alle export 6h="echo test" heraus
+        new_token = tmp_token;
 		i++;
 	}
 	return (new_token);
-	//
-
 }
 
 char *update_export_line(char *line)
@@ -51,10 +48,9 @@ t_token *create_export_token(char *content)
 	if(!new_token)
 		return (NULL);
 	new_token->token  = get_export_token(content);
-	new_token->token_type = EXPORT;// change
+	new_token->token_type = EXPORT;
 	new_token->next = NULL;
 	return (new_token);
-	// tokenadd_back(get_config()->token_list, new_token);
 }
 
 

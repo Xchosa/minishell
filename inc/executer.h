@@ -22,7 +22,6 @@
 	// t_bash		*get_bash(void);
 
 void	ft_echo(t_cmd_node *cmd_node, char **envp);
-void	ft_pwd(char **envp);
 void	ft_env(char **envp);
 void	ft_cd(t_cmd_node *cmd_node, char **envp);
 int		ft_isnum(char *s);
@@ -38,7 +37,6 @@ void	ft_middle_node(int fd[][2], t_cmd_list *cmd_list, t_cmd_node *cmd_node);
 void	ft_last_node(int fd [][2], t_cmd_list *cmd_list);
 void	ft_close_pipes(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2]);
 void	ft_manage_pipes(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2]);
-void	ft_free_array2(char **array);
 char	*ft_give_pointer_to_path(char **envp);
 char	*ft_getpath(char *command, char **envp);
 void	ft_manage_infile(char *infile, int fd[][2]);
@@ -52,6 +50,11 @@ void	ft_export_variable(char *cmd_var, char **envp);
 void	ft_export(t_cmd_node *cmd_node, char **envp);
 void	ft_unset_var(char **envp, int j);
 void	ft_unset(t_cmd_node *cmd_node,char **envp);
+void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp);
+void	ft_pwd(char **envp);
+char	**ft_add_pwd(t_cmd_node *cmd_node, char **envp);
+char	**ft_add_old_pwd(char **envp);
+char **	ft_delete_old_pwd(char **envp);
 
 
 //heredoc

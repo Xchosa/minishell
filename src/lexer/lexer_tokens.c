@@ -34,8 +34,9 @@ bool check_syntax(t_token *token)
 		    return (false);
         if (token->token_type == PIPE)
 		    return (false);
+        return(true);
     }
-    return(true);
+    return(false);
 }
 
 bool check_for_cmd(t_token *token)
@@ -67,11 +68,13 @@ bool lexer_token(t_token *token_lst)
                 return(false);
             }
         if(check_for_cmd(cur_token) == true)
+        {
             if(check_syntax(cur_token) == false)
             {
                 get_exit_codes()->last_exit_code = syntax_error_token;
                 return(false);
             }
+        }
         cur_token = cur_token->next;
     }
     return(true);

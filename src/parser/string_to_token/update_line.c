@@ -12,7 +12,6 @@
 
 #include "parser.h"
 
-
 bool	pipe_or_simec(char c)
 {
 	if (ft_strncmp ("|", &c, 1) == 0)
@@ -34,7 +33,7 @@ int special_char_no_divider(char c)
 		return (1);
 	if (c == '=')
 	 	return (1);
-	if (ft_strchr(".,;?*~$", c) != NULL)
+	if (ft_strchr(".,;!?*~$", c) != NULL)
 		 return (1);
 	return (0);
 }
@@ -44,7 +43,7 @@ int special_char_no_divider_no_eq(char c)
 		return (1);
     if (c == '/')
 		return (1);
-	if (ft_strchr(".,;?*~$", c) != NULL)
+	if (ft_strchr(".,;!?*~$", c) != NULL)
 		return (1);
 	return (0);
 }
@@ -79,7 +78,7 @@ char *update_line(char *line, t_token *token)
     bool flag = false;
     char *updated_line;
     
-    (void)token;
+    (void)token;// if token = $..
     skip_whitespace(&line);
     updated_line = handle_special_characters(line);
     if (updated_line)
@@ -87,8 +86,6 @@ char *update_line(char *line, t_token *token)
     line = handle_dividers(line, &flag);
     if (flag == false)
         line = handle_regular_token(line);
-	// if(line = '\0')
-	// 	return(NULL);
     return (line);
 }
 

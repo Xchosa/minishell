@@ -12,7 +12,6 @@
 
 #include "parser.h"
 
-
 static char *tokenise_divider(char *content, char *new_token)
 {
 	char *tmp_token;
@@ -51,7 +50,6 @@ char* get_token(char *content)
 			return (new_token);
 		i++;
 	}
-	// while (check_for_divider_without_space(content[i]) == true)
 	if(check_for_divider_without_space(content[i]) == true)
 	{
 		new_token = tokenise_divider(content + i, new_token);
@@ -69,9 +67,6 @@ t_type append_or_redirect_output(char *content)
 	else
 		return(Redirect_output);
 }
-
-
-// to do seperate function innerhalb des jeweiligen while loops
 
 t_type get_token_type(char *content)
 {
@@ -97,9 +92,6 @@ t_type get_token_type(char *content)
 		return (Mix_Export_var);
 	return(TEXT);
 }
-
-// if (ft_strchr(".,;?*~$", c) != NULL)
-// 		 return (1);
 
 
 // compares the hole string not just a specific len

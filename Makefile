@@ -42,7 +42,6 @@ MY_SOURCES = \
 		abort_parser.c \
 		get_token_fk.c \
 		tokeniser.c \
-		heredoc.c \
 		handle_quotes.c \
 		update_line.c \
 		update_line_helper.c \
@@ -54,6 +53,7 @@ MY_SOURCES = \
 		count_strings_up.c \
 		bash_config.c \
 		exit_codes_config.c \
+		create_token_special.c \
 		tokens_to_export.c \
 		append_export_str.c \
 		create_export_tokens.c \
