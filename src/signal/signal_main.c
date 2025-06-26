@@ -37,6 +37,19 @@ void signal_heredoc(void)
 	// (void)
 	// heredoc is a child process where signals needs to be set
 	//seperately 
+	signal(SIGINT,SIG_DFL)// all custom handlers for SIGInt will
+	// me removed now can be terminated with 
+	struct sigaction sa_old_int, sa_old_quit;
+    
+    // Save current signal handlers
+    sigaction(SIGINT, NULL, &sa_old_int);
+    sigaction(SIGQUIT, NULL, &sa_old_quit);
+}
+
+void singal_heredoc_interrupted ()
+{
+	sigaction(SIGINT, &sa_old_int, NULL);
+    sigaction(SIGQUIT, &sa_old_quit, NULL);
 }
 
 

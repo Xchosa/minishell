@@ -12,6 +12,7 @@
 
 
 #include "executer.h"
+#include "signal_tp.h"
 
 /*
 1. iterate through every cmd node 
@@ -33,70 +34,6 @@
 
 
 */
-
-// bool execute_here_doc(char *filename, int here_doc_fd)
-// {
-//     char *line;
-//     struct sigaction sa_old_int, sa_old_quit;
-    
-//     // Save current signal handlers
-//     sigaction(SIGINT, NULL, &sa_old_int);
-//     sigaction(SIGQUIT, NULL, &sa_old_quit);
-    
-//     // Set up heredoc-specific signal handling
-//     g_heredoc_interrupted = 0;
-//     signal_heredoc();
-    
-//     while(1)
-//     {
-//         if(check_for_interactive_shell() == true)
-//             line = readline("> ");
-//         else
-//             line = get_next_line(STDIN_FILENO);
-            
-//         // Check if we were interrupted by SIGINT
-//         if (g_heredoc_interrupted)
-//         {
-//             free(line);
-//             close(here_doc_fd);
-//             // Restore signal handlers
-//             sigaction(SIGINT, &sa_old_int, NULL);
-//             sigaction(SIGQUIT, &sa_old_quit, NULL);
-//             return false;
-//         }
-        
-//         if(!line)
-//             break;
-            
-//         // Rest of your existing code
-//         if (!check_for_interactive_shell() && line[ft_strlen(line) - 1] == '\n')
-//             line[ft_strlen(line) - 1] = '\0';
-//         skip_whitespace(&line);
-//         if(ft_strcmp(line, filename) == true)
-//         {
-//             free(line);
-//             close(here_doc_fd);
-//             // Restore signal handlers
-//             sigaction(SIGINT, &sa_old_int, NULL);
-//             sigaction(SIGQUIT, &sa_old_quit, NULL);
-//             return true;
-//         }
-//         ft_putstr_fd(line, here_doc_fd);
-//         if (check_for_interactive_shell() == true)
-//             ft_putstr_fd("\n", here_doc_fd);
-//         free(line);
-//     }
-// 	close(here_doc_fd);
-//     // Restore signal handlers
-//     sigaction(SIGINT, &sa_old_int, NULL);
-//     sigaction(SIGQUIT, &sa_old_quit, NULL);
-//     return true;
-// }
-
-
-
-
-
 
 
 static int error_heredoc(char *new_tmp_file_name_suffix,char *new_tmp_file_name,char *suffix)
@@ -129,6 +66,7 @@ bool execute_here_doc(char *filename, int here_doc_fd)
 	while(1)
 	{
 		// change signal for parent heredoc
+		//signal(SIGINT,SIG_DFL)//
 		if(check_for_interactive_shell () == true)
 			line = readline("> ");
 		else
@@ -142,6 +80,7 @@ bool execute_here_doc(char *filename, int here_doc_fd)
 		{
 			free(line);
 			close(here_doc_fd);
+			// change signal back
 			return(true);
 		}
 		ft_putstr_fd(line, here_doc_fd);
