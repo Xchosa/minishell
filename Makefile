@@ -14,25 +14,26 @@ PARSE_DIR = ./src/parser
 TOKEN_DIR = ./src/parser/string_to_token
 EXPORT_DIR = ./src/parser/export_case
 CMD_LIST_DIR = ./src/parser/cmd_list
-EXECUTER_DIR = ./src/executer
 LEXER_DIR = ./src/lexer
 SIGNAL_DIR = ./src/signal
+EXECUTER_DIR = ./src/executer
 HEREDOC_DIR = ./src/executer/heredoc
 EXECUTE_DIR = ./src/executer/execution_main
 REDIRECTION = ./src/executer/redirection
+BUILTIN = ./src/executer/builtin
 DEBUG_DIR = debug_dir
 INC_DIR = inc
 OBJ_DIR = obj
 
 VPATH = $(SOURCE_DIR):$(PARSE_DIR):$(SIGNAL_DIR):$(TOKEN_DIR):\
 $(LEXER_DIR):$(CMD_LIST_DIR):$(EXPORT_DIR):\
-$(EXECUTER_DIR):$(EXECUTE_DIR):$(REDIRECTION):$(HEREDOC_DIR):$(INC_DIR)
+$(EXECUTER_DIR):$(EXECUTE_DIR):$(REDIRECTION):\
+$(BUILTIN):$(HEREDOC_DIR):$(INC_DIR)
 
 
 # ---------- Subjects ---------- #
 MY_SOURCES = \
 		test_main.c \
-		handler.c \
 		main.c \
 		tty.c \
 		clean_up.c \
@@ -68,18 +69,20 @@ MY_SOURCES = \
 		token_redir_to_cmd.c \
 		tokens_list_to_cmd.c \
 		tokens_text_to_cmd.c \
-		debug.c \
-		builtins.c \
+		clean_minishell.c \
 		manage_pipes.c \
 		pipex.c \
+		builtins.c \
+		pwd_builtin.c \
 		special_builtin.c \
+		execute_builtin.c \
 		executer.c \
 		redirect.c \
+		manage_redirections.c \
 		handler.c \
 		signal_main.c \
 		find_heredoc.c \
-		execution_loop.c \
-		main_redirection.c
+		iterate_cmd_file_list.c
 
 
 
@@ -88,7 +91,6 @@ HEADERS = \
 		parser.h \
 		executer.h \
 		signal_tp.h \
-		debug.h
 
 # ---------- Objects ---------- #
 OBJ 	= $(addprefix $(OBJ_DIR)/, $(MY_SOURCES:.c=.o))

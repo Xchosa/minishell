@@ -11,13 +11,11 @@
 /* ************************************************************************** */
 
 #include "signal_tp.h"
-#include "parser.h"
+#include <termios.h>
 
 
 // in header declared as extern. value will be stored only one time
 // not variables of normal headers where everything will be copyed and stored
-
-// volatile sig_atomic_t g_in_readline = 0;
 
 /*
  struct sigaction {
@@ -32,26 +30,39 @@
 // include this in heredoc 
 // signal(SIGINT,SIG_DFL) // in child process heredoc, if control c 
 
-void signal_heredoc(void)
-{
-	// (void)
-	// heredoc is a child process where signals needs to be set
-	//seperately 
-	signal(SIGINT,SIG_DFL)// all custom handlers for SIGInt will
-	// me removed now can be terminated with 
-	struct sigaction sa_old_int, sa_old_quit;
-    
-    // Save current signal handlers
-    sigaction(SIGINT, NULL, &sa_old_int);
-    sigaction(SIGQUIT, NULL, &sa_old_quit);
-}
 
-void singal_heredoc_interrupted ()
-{
-	sigaction(SIGINT, &sa_old_int, NULL);
-    sigaction(SIGQUIT, &sa_old_quit, NULL);
-}
 
+// child 1
+// parent 0
+
+// one signal bevor user/ readline / start from here 
+// one before execution 
+
+// turn of ^c
+
+// keep all bits except ECHOCTL"
+// &= ~ECHOCTL
+
+
+
+// void setup_readline_signals(void)
+// {
+// 	struct sigaction sa;
+
+// 	hide_ctrl_in_terminal();
+// 	sa.sa_flags = SA_RESTART;
+// 	sigemptyset(&sa.sa_mask);
+// 	sa.sa_handler = parent_handler;
+	
+// 	// ctrl + c
+// 	sigaction(SIGINT, &sa, NULL);
+
+// 	//ctrl + slash -> ignored
+// 	sa.sa_handler = SIG_IGN;
+// 	sigaction(SIGQUIT, &sa, NULL);
+// 	rl_catch_signals = 0;
+// 	// Tell readline not to install its own handlers
+// }
 
 
 void parent_handler(int sig)
@@ -94,58 +105,6 @@ void child_handler(int sig)
 	}
 	return ;
 }
-
-// child 1
-// parent 0
-
-// one signal bevor user/ readline / start from here 
-// one before execution 
-
-// turn of ^c
-
-// keep all bits except ECHOCTL"
-// &= ~ECHOCTL
-void hide_ctrl_in_terminal(void)
-{
-	struct termios term;
-	
-	tcgetattr(STDIN_FILENO, &term);// fpr termial controll
-	term.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term);
-	
-	// how typing in the terminal is displayed, 
-	// thats why stdin
-
-}
-void reset_terminal_state(void)
-{
-	struct termios term;
-    tcgetattr(STDIN_FILENO, &term);
-    term.c_lflag &= ~ECHOCTL;
-    tcsetattr(STDIN_FILENO, TCSAFLUSH, &term);
-
-    tcflush(STDIN_FILENO, TCIFLUSH);
-	// fflush(stdout);
-}
-
-// void setup_readline_signals(void)
-// {
-// 	struct sigaction sa;
-
-// 	hide_ctrl_in_terminal();
-// 	sa.sa_flags = SA_RESTART;
-// 	sigemptyset(&sa.sa_mask);
-// 	sa.sa_handler = parent_handler;
-	
-// 	// ctrl + c
-// 	sigaction(SIGINT, &sa, NULL);
-
-// 	//ctrl + slash -> ignored
-// 	sa.sa_handler = SIG_IGN;
-// 	sigaction(SIGQUIT, &sa, NULL);
-// 	rl_catch_signals = 0;
-// 	// Tell readline not to install its own handlers
-// }
 
 
 void init_signal(int is_child)

@@ -52,6 +52,13 @@ static void free_heredoc_helper(char *new_tmp_file_name,char *suffix, t_file_nod
 	free((*file_node)->filename);
 }
 
+static void free_heredoc_stoped(char *new_tmp_file_name_suffix,char *new_tmp_file_name, char* suffix)
+{
+ 	free(new_tmp_file_name_suffix);
+    free(new_tmp_file_name);
+    free(suffix);
+}
+
 bool check_for_interactive_shell(void)
 {
 	if(isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
@@ -59,37 +66,34 @@ bool check_for_interactive_shell(void)
 	return false;
 }
 
-
+// reset handlers and change signal for parent process
 bool execute_here_doc(char *filename, int here_doc_fd)
 {
 	char *line;
 	while(1)
 	{
-		// change signal for parent heredoc
-		//signal(SIGINT,SIG_DFL)//
+		reset_sig_handler_to_parent();
 		if(check_for_interactive_shell () == true)
 			line = readline("> ");
 		else
 			line = get_next_line(STDIN_FILENO);
 		if(!line)
 			break;
-		if (!check_for_interactive_shell() && line[ft_strlen(line) - 1] == '\n')
-            line[ft_strlen(line) - 1] = '\0';
 		skip_whitespace(&line);
 		if(ft_strcmp(line, filename) == true)
 		{
 			free(line);
-			close(here_doc_fd);
-			// change signal back
+			close(here_doc_fd);// doppelt
+			init_signal(1);
 			return(true);
 		}
 		ft_putstr_fd(line, here_doc_fd);
 		if (check_for_interactive_shell() == true)
-            ft_putstr_fd("\n", here_doc_fd);// for readline
+            ft_putstr_fd("\n", here_doc_fd);
 		free(line);
 	}
 	close(here_doc_fd);
-	// change signal back
+	init_signal(1);
 	return true;
 }
 
@@ -112,59 +116,17 @@ int save_here_doc_in_tmp(t_file_node **file_node)
 		return(error_heredoc(new_tmp_file_name_suffix,new_tmp_file_name,suffix),1);
 	if(execute_here_doc((*file_node)->filename, here_doc_fd) == false)
 	{
-		close(here_doc_fd);
         unlink(new_tmp_file_name_suffix);
-        free(new_tmp_file_name_suffix);
-        free(new_tmp_file_name);
-        free(suffix);
-        return(1); // Indicate interruption
-		return(0);
+        free_heredoc_stoped(new_tmp_file_name_suffix,new_tmp_file_name,suffix);
+        return(1);
 	}
 	free_heredoc_helper(new_tmp_file_name, suffix, file_node);
-	// free((*file_node)->filename);
 	(*file_node)->filename = new_tmp_file_name_suffix;
 	return (0);
 }
 
 
 
-
-int find_here_doc_file_node(t_file_node **file_node)
-{
-	t_file_node *cur_file_node = *file_node;
-    
-	while(cur_file_node)
-	{
-		if(cur_file_node->redir_type == HERE_DOC)
-		{
-			if(save_here_doc_in_tmp(&cur_file_node) != 0)
-				return (1);
-		}
-		if(cur_file_node->next)
-			cur_file_node= cur_file_node->next;
-		else
-			return 0;
-	}
-	return (0);
-}
-
-
-
-// head uebergeben // muss doppelpointer sein um die nodes zu veraendern
-void save_heredoc_files(t_cmd_node **cmd_node)
-{	
-	t_cmd_node *cur_cmd_node = *cmd_node;
-	
-	while(cur_cmd_node)
-    {
-        if(cur_cmd_node->file_list && cur_cmd_node->file_list->head)
-        {
-            if(find_here_doc_file_node(&cur_cmd_node->file_list->head) != 0)
-                return;
-        }
-        cur_cmd_node= cur_cmd_node->next;
-    }
-}
 
 
 

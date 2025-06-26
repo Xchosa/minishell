@@ -10,35 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/executer.h"
+#include "executer.h"
 
-// changed to real strcmp
-void	ft_execute_builtin(t_cmd_node *cmd_node, char **envp)
-{
-	if (ft_strcmp("echo", cmd_node->cmd[0]) == true)
-		ft_echo(cmd_node, envp);
-	if (ft_strcmp("pwd", cmd_node->cmd[0]) == true)
-		ft_pwd(envp);
-	if (ft_strcmp("env", cmd_node->cmd[0]) == true)
-		ft_env(envp);
-	if (ft_strcmp("cd", cmd_node->cmd[0]) == true)
-		ft_cd(cmd_node, envp);
-	if (ft_strcmp("export", cmd_node->cmd[0]) == true)
-		ft_export(cmd_node, envp);
-	if (ft_strcmp("exit", cmd_node->cmd[0]) == true)
-		ft_exit(cmd_node);
-	if (ft_strcmp("unset", cmd_node->cmd[0]) == true)
-		ft_unset(cmd_node, envp);
-}
 
 
 void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 {
 	char	*path;
 
-	path = ft_getpath(cmd_node->cmd[0], envp); // ft_getpath und alles was folgt ist einfach aus pipex kopiert. in pipex.c ist eine funktion ft_freearray2 weil du auch eine hattest und mich der compiler dafuer angekackt hat. kann man aber auf eine reduzieren
+	path = ft_getpath(cmd_node->cmd[0], envp); // ft_getpath und alles was folgt ist einfach aus pipex kopiert. 
+	//in pipex.c ist eine funktion ft_freearray2 weil du auch eine hattest und mich der compiler dafuer angekackt hat. 
+	//kann man aber auf eine reduzieren
 	if (path == NULL)
+	{
 		return ; //errorhandling, free, exit
+	}
 	execve(path, cmd_node->cmd, envp); // eventuell errorcheck also != 0 ? und ausgabe error sollte hier mit perror funktionieren
 	// path ist malloced und muesste eigentlich von der execute main am ende einmal gefreet werden.
 }
@@ -55,7 +41,9 @@ void	ft_execute_node(
 	{
 		ft_execute_builtin(cmd_node, envp);
 		if(cmd_list->size > 1)
-			exit(0); // exit damit child prozesse von builtins keine zombie prozesse werden. ob der wert hier wichtig is weiss ich nicht, haengt glaub ich davon ab wie man in ft_execute damit umgeht
+			exit(0); 
+			// exit damit child prozesse von builtins keine zombie prozesse werden.
+			// ob der wert hier wichtig is weiss ich nicht, haengt glaub ich davon ab wie man in ft_execute damit umgeht
 	}
 }
 
@@ -74,7 +62,6 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 
 	i = 0;
 	save_heredoc_files(&cmd_list->head);
-	printf("did I leave heredoc \n");
 	iter_cmd_lst(cmd_list, &print_cmd_lst);
 	
 	int			fd[(int)cmd_list->size][2]; // am anfang werden alle pipes erstellt. ich glaube norminette mochte die schreibweise nicht, also vllt mit * ?
@@ -100,13 +87,14 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 			if (i > 0 && i < cmd_list->size - 1)
 			{
 				// if (i > 0)
-					close(fd[i - 1][0]);
+				close(fd[i - 1][0]);
 			}
 			i++;
 		}
 		if (cmd_list->size > 1)
 			close(fd[i - 1][0]);
 	}
+	printf("do i clean");
 }
 
 //test fuer export
