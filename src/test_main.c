@@ -18,7 +18,7 @@
 // 	//char *line = "echo $USER";
 // 	// char *line = "$h outfile";
 //     // char *line = "export t=\"world | around < \" echo world";
-//     line = "<<now | grep p >outfile"; // = wird falsch gehandelt
+//     line = "echo hallo >outfile"; // = wird falsch gehandelt
 // 	// char *line = "echo \"$USER\" echo $USER eoche \'$USER\' ";
 // 	// char *line = "echo $h world echo $paul echo $world";
 // 	// char *line = "export h=thilo paul=kruecke world=\"cat makefile\" ";
@@ -85,12 +85,11 @@
 // 	iter_tokenlst(token_lst, &print_tokenlst);
 
 // 	printf("\ndo i come to cmd list? \n\n");
-// 	cmd_lst = init_cmd_list(&token_lst);
+// 	cmd_lst = init_cmd_list(&token_lst, line);
 // 	iter_cmd_lst(cmd_lst, &print_cmd_lst);
 //     printf("\nis it Thilos issue: \n\n");
 // 	ft_execute(cmd_lst, get_bash()->env);
 
-//     clean_up(line,token_lst);
 
 
 //     printf("\n \nsecond round\n");
@@ -131,11 +130,10 @@
 // 	iter_tokenlst(token_lst, &print_tokenlst);
 
 // 	printf("\ndo i come to cmd list? \n\n");
-// 	cmd_lst = init_cmd_list(&token_lst);
+// 	cmd_lst = init_cmd_list(&token_lst, line);
 // 	iter_cmd_lst(cmd_lst, &print_cmd_lst);
 //     printf("\nis it Thilos issue: \n\n");
 // 	ft_execute(cmd_lst, get_bash()->env);
 
-//     clean_up(line,token_lst);
-
+// 	clean_cmd_list_objects_tmp_files(cmd_lst);
 // }

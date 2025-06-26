@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/executer.h"
+#include "executer.h"
 
 int	ft_get_index(int i, char **envp)
 {

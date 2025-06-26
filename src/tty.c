@@ -79,18 +79,21 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 			print_error_message(line);
 			continue;
 		}
-		cmd_lst = init_cmd_list(&token_lst);
+		cmd_lst = init_cmd_list(&token_lst, line); // deletes line and token_lst
+
 		init_signal(1);
 		iter_cmd_lst(cmd_lst, &print_cmd_lst);
+
 		printf("Thilos problem:\n");
-		// execute_loop(cmd_lst);// doppel oder nicht 
+		
 		ft_execute(cmd_lst, get_bash()->env);
+		
 		init_signal(0);
 		reset_terminal_state();
-		clean_up(line,token_lst); // deleltes tmp files 
+		clean_cmd_lst(cmd_lst);
 	}
-	clean_up(line,token_lst);
-	// delete_tmp_files;
+	clean_cmd_list_objects_tmp_files(cmd_lst);
+	// clean cmd_list , tmp files and bash_ exit codes 
 }
 
 // printf("\n append token string in export \n\n");
@@ -119,10 +122,11 @@ void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)
 	append_export_str(&token_lst);
 	if (lexer_token(token_lst) == false)
 		return;
-	cmd_lst = init_cmd_list(&token_lst);
+	cmd_lst = init_cmd_list(&token_lst, line);
 	printf("Thilos problem:\n");
 	init_signal(1);
 	ft_execute(cmd_lst, get_bash()->env);
 	init_signal(0);
-	clean_up(line,token_lst);
+	reset_terminal_state();
+	clean_cmd_list_objects_tmp_files(cmd_lst);
 }

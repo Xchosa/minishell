@@ -35,6 +35,19 @@ bool	init_bash(char **env, int argc)
 	return (true);
 }
 
+void clean_bash_env(void)
+{
+	t_bash *bash;
+
+	bash= get_bash();
+	if(bash->env)
+	{
+		ft_free_array(bash->env);
+	}
+	bash->env = NULL;
+}
+
+
 // cpy envp in bash_envp
 //  rows counts until 1 only 
 // see copilot

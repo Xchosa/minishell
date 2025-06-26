@@ -25,6 +25,17 @@ bool	init_exit_codes(int argc)
 	return (true);
 }
 
+// free exit codes
+void clean_exit_codes(void)
+{
+	t_exit_codes *exit_code;
+
+	exit_code= get_exit_codes();
+	
+	exit_code->last_exit_code = 0;
+	
+}
+
 bool print_error_message(char *line)
 {
 	int error;
@@ -44,7 +55,3 @@ bool print_error_message(char *line)
 	return(exit_minishell);
 }
 
-
-\
-	
-// $? wird als BUILTIN deklariert

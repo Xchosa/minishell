@@ -12,18 +12,6 @@
 
 #include "../../inc/executer.h"
 
-void	ft_free_array2(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i] != NULL)
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
 
 char	*ft_give_pointer_to_path(char **envp)
 {
@@ -70,9 +58,9 @@ char	*ft_getpath(char *command, char **envp)
 		full = ft_strjoin(tmp, command);
 		free(tmp);
 		if (access(full, X_OK) == 0)
-			return (ft_free_array2(arr), full);
+			return (ft_free_array(arr), full);
 		i++;
 		free(full);
 	}
-	return (ft_free_array2(arr), NULL);
+	return (ft_free_array(arr), NULL);
 }

@@ -45,17 +45,60 @@ void delete_tmp_files(const char *foldername)
 	closedir(directory);
 }
 
-
-void clean_up(char *line, t_token *token_lst)
+void clean_cmd_list_objects_tmp_files(t_cmd_list *cmd_list)
 {
-	if (token_lst)
-        free_token(&token_lst);
-	if (!line)
-		free(line);
-	// free(env)
-	// free(cmdlist)
+	clean_cmd_lst(cmd_list);
+	clean_bash_env();
+	clean_exit_codes();
+	delete_tmp_files("/tmp");
+
+}
+// cmd_list, token_list, line, bash_env und exit_codes
+
+
+
+
+void clean_file_lst(t_file_list *file_list)
+{
+	t_file_node *file_node;
+	t_file_node *tmp;
+
+	file_node = file_list->head;
+	while(file_node)
+	{
+		tmp = file_node->next;
+		free(file_node->filename);
+		free(file_node);
+		file_node = tmp;
+	}
+	free(file_list);
+}
+
+
+void clean_cmd_lst(t_cmd_list *cmd_list)
+{
+	t_cmd_node *cmd_node;
+	t_cmd_node *tmp;
 
 	
-	delete_tmp_files("/tmp");
-	
+	if(cmd_list->head != NULL)
+		cmd_node = cmd_list->head;
+
+	if (!cmd_node)
+        return;
+	while(cmd_node)
+	{
+		if(cmd_node->next == NULL)
+		{
+			if(cmd_node->file_list != NULL)
+				clean_file_lst(cmd_node->file_list);
+		}
+		tmp = cmd_node->next;
+		ft_free_array(cmd_node->cmd);
+		free(cmd_node);
+		cmd_node = tmp;
+
+	}
+	free(cmd_list);
 }
+

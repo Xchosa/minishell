@@ -12,16 +12,32 @@
 
 #include "parser.h"
 
+void clean_token_lst_and_line(t_token *token_lst, char *line)
+{
+	clean_token_lst(token_lst);
+	free(line);
+}
+
+
 void clean_token_lst(t_token *token_lst)
 {
 	t_token *tmp;
 
 	while(token_lst)
 	{
-		tmp = token_lst->next;
-		free(token_lst->token);
-		free(token_lst);
-		token_lst = tmp;
+		if(token_lst->next == NULL)
+		{
+			free(token_lst->token);
+			free(token_lst);
+			return;
+		}
+		else
+		{
+			tmp = token_lst->next;
+			free(token_lst->token);
+			free(token_lst);
+			token_lst = tmp;
+		}
 	}
 	
 }

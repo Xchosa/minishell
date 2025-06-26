@@ -50,7 +50,7 @@ to be pipes or redirections.
 */
 
 
-t_cmd_list	*init_cmd_list(t_token **token_list)
+t_cmd_list	*init_cmd_list(t_token **token_list,char *line)
 {
 	t_cmd_list *cmd_list;
 	t_cmd_node 	*cmd_node;
@@ -76,4 +76,5 @@ t_cmd_list	*init_cmd_list(t_token **token_list)
 		}
 	}
 	return(cmd_list);
+	clean_token_lst_and_line((*token_list),line);
 }

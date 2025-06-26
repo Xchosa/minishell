@@ -56,7 +56,7 @@ void	ft_execute_node(
 
 void	ft_execute(t_cmd_list *cmd_list, char **envp)
 {
-	t_cmd_node	*current;
+	t_cmd_node	*cur_cmd_node;
 	int			pid;
 	int			i;
 
@@ -66,22 +66,22 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	
 	int			fd[(int)cmd_list->size][2]; // am anfang werden alle pipes erstellt. ich glaube norminette mochte die schreibweise nicht, also vllt mit * ?
 	
-	current = cmd_list->head;
+	cur_cmd_node = cmd_list->head;
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN) // das ist der sonderfall von dem gabrijel geredet hat. Das muss sein damit man im selben prozess bleibt.
 		// ft_execute_builtin(current, envp); 
-		ft_execute_node(cmd_list, current, fd, envp);
+		ft_execute_node(cmd_list, cur_cmd_node, fd, envp);
 	else
 	{
 		if (cmd_list->size > 1) // pipes nur wenn mehr als eine node
 			ft_open_pipes(fd, cmd_list); // die funktionen zu pipes sind alle irgendwie kompliziert, aber ich glaube sie funktionieren. 
 			//Es geht darum dass die child prozesse offene fd erben und am ende des child prozesses alle fd geschlossen sind
-		while (current != NULL)
+		while (cur_cmd_node != NULL)
 		{
 			pid = fork();
 			if (pid == 0)
-				ft_execute_node(cmd_list, current, fd, envp);
+				ft_execute_node(cmd_list, cur_cmd_node, fd, envp);
 			wait(0); // hier mit wait oder waitpid, kann der exit code von execve abgefangen werden. der exit code builtins kommt aus zeile 55. ist aber vielleicht gar nicht noetig weil es ja eh darum geht die variable zu setzen und nicht so sehr darum dass das child mit dem richtigen code exitet
-			current = current->next;
+			cur_cmd_node = cur_cmd_node->next;
 			if (i < cmd_list->size - 1)
 				close(fd[i][1]);
 			if (i > 0 && i < cmd_list->size - 1)
@@ -94,8 +94,9 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 		if (cmd_list->size > 1)
 			close(fd[i - 1][0]);
 	}
-	printf("do i clean");
 }
+
+
 
 //test fuer export
 // int	main(int argc, char **argv, char **envp)

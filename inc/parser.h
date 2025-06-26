@@ -121,7 +121,6 @@ bool    	check_for_correct_single_divider(char *line);
 
 // lexer tokens
 bool		lexer_token(t_token *token_lst);
-void		clean_up(char *line, t_token *token);
 bool		tokeniser_successful(t_token *token_lst, char *line);
 
 bool 		print_error_message(char *line);
@@ -168,8 +167,6 @@ bool		pipe_or_simec(char c);
 int 		special_char_no_divider(char c);
 int			special_char_no_divider_no_eq(char c);
 
-void		delete_token(t_token *delete_token);
-
 //	get export saved variables
 t_token* 	extend_saved_export_var(t_token **token_lst);
 char**		extend_env_with_str(char** src, char *token);
@@ -203,7 +200,7 @@ void 		tokenise_muliple_tok_from_env(t_token **token_lst, t_token *prev_token);
 void	print_cmd_lst(t_cmd_node *cmd_nodes);
 void	iter_cmd_lst(t_cmd_list *cmd_lst, void (*f)(t_cmd_node*));
 
-t_cmd_list*		init_cmd_list(t_token **token_list);
+t_cmd_list*		init_cmd_list(t_token **token_list, char *line);
 t_cmd_list*		cmd_list_to_NULL(void);
 t_file_list*	file_list_to_NULL(void);
 
@@ -218,7 +215,16 @@ void			process_redirect(t_token **curr_token, t_cmd_node *cmd_node);
 
 // clean up
 void	clean_token_lst(t_token *token_lst);
+void	clean_token_lst_and_line(t_token *token_lst, char *line);
 void	free_single_token(t_token **token);
+void 	clean_token_lst_and_line(t_token *token_lst, char *line);
+void	clean_cmd_lst(t_cmd_list *cmd_list);
+void	clean_file_lst(t_file_list *file_list);
+void	delete_token(t_token *delete_token);
+void	delete_tmp_files(const char *foldername);
+void 	clean_cmd_list_objects_tmp_files(t_cmd_list *cmd_list);
+void	clean_exit_codes(void);
+void	clean_bash_env(void);
 
 //fill_file_list
 t_file_node*	process_token_type_redir(t_token **curr_token);
@@ -230,6 +236,7 @@ bool	ft_strcmp(const char *s1, const char *s2);
 char	**ft_cpy_array_str(char **arrays);
 char 	*ft_charjoin(char const *dst, char const src_char);
 void 	ft_free_array(char **arrays);
+
 
 
 
