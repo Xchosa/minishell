@@ -45,6 +45,7 @@ void   leaks(void)
 // 			printf("clean history function + destroy shell");
 // 		}
 // 	}
+//     // destroy shell? tyname, ttyslo
 // }
 
 

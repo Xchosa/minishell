@@ -49,7 +49,7 @@ static char* read_terminal(void)
 	if (line == NULL) // Handle EOF (Ctrl+D)
 		{
             printf("exit\n");
-            exit(get_exit_codes()->last_exit_code);
+            exit(get_exit_codes()->last_exit_code); // clean?
         }
 	return(line);
 }
