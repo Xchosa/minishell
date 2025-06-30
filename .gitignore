@@ -2,3 +2,4 @@
 *.o
 libft.a
 
+*minishell_tester

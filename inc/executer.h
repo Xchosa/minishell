@@ -43,7 +43,10 @@ void	ft_manage_infile(char *infile, int fd[][2]);
 void	ft_manage_outfile(char *outfile, int fd[][2]);
 void	ft_manage_append(char *appendfile, int fd[][2]);
 void	ft_manage_heredoc(char *delimiter, int fd[][2]);
-void	ft_manage_redirections(t_cmd_node *cmd_node, int fd[][2]);
+void	ft_manage_redirections(t_cmd_node *cmd_node, int fd[][2], int backupStdin, int backupStdout);
+void	ft_manage_redirections_multi(t_cmd_node *cmd_node, int fd[][2], int backupStdin, int backupStdout);
+
+
 int		ft_get_index(int i, char **envp);
 void	ft_export_print(char **envp);
 void	ft_export_variable(char *cmd_var, char **envp);
@@ -64,9 +67,10 @@ int 	find_here_doc_file_node(t_file_node **file_node);
 int		save_here_doc_in_tmp(t_file_node **file_node);
 void	save_heredoc_files(t_cmd_node **cmd_node);
 
-void	execute_loop(t_cmd_list *cmd_list);
-void	ex_redirection(t_cmd_node **cur_cmd_node);
-bool	handle_single_cmd_node(t_cmd_node **cur_cmd_node);
+
+void	reset_redir(int *backupStdin, int *backupStdout);
+void	set_up_backup_Stdout_Stdin(int *backupStdin, int *backupStdout);
+void	execution_loop (t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp);
 
 //# include "parser.h"
 

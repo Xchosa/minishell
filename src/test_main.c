@@ -15,7 +15,7 @@
 // 	// char *line = "$? > outfile ";
 
 //     // to do: tokeniser
-// 	line = "echo $USER >outfile";
+// 	line = "cat <<test1";
 // 	// char *line = "$h outfile";
 //     // char *line = "export t=\"world | around < \" echo world";
 //     // line = "echo $?dfdfd"; // = wird falsch gehandelt

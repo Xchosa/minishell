@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean_minishell.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/30 11:00:04 by poverbec          #+#    #+#             */
+/*   Updated: 2025/06/30 11:03:12 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "parser.h"
 
@@ -82,10 +93,13 @@ void clean_cmd_lst(t_cmd_list *cmd_list)
 
 	
 	if(cmd_list->head != NULL)
+	{
 		cmd_node = cmd_list->head;
-
-	if (!cmd_node)
-        return;
+		if (!cmd_node)
+        	return;
+	}
+	if(cmd_list->head == NULL)
+		return;
 	while(cmd_node)
 	{
 		if(cmd_node->next == NULL)

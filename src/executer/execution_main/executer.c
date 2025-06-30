@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/06/30 10:32:28 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:44:33 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,35 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 
 
 // functioniert nur fuer Outfile
-void	ft_execute_node(
-	t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp)
-{
-	if (cmd_list->size > 1)
-		ft_manage_pipes(cmd_list, cmd_node, fd);
-	// muss verallgemeinert sein 
-	int backupSTDOUT = dup(STDOUT_FILENO);// immer standout speichern, nur einmal davor. nie exist danach machen. // mu
-	ft_manage_redirections(cmd_node, fd);
+// void	ft_execute_node(
+// 	t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp)
+// { 
+// 	int backupStdout = dup(STDOUT_FILENO);
+// 	int backupStdin = dup(STDIN_FILENO);
+
+	
+// 	if (cmd_list->size > 1)
+// 		ft_manage_pipes(cmd_list, cmd_node, fd);
+// 	// muss verallgemeinert sein 
+// 	// int backupSTDOUT = dup(STDOUT_FILENO);// immer standout speichern, nur einmal davor. nie exist danach machen. // mu
+// 	ft_manage_redirections_multi(cmd_node, fd, backupStdin, backupStdout);
+	
+// 	if (cmd_node->cmd_type == EXECUTE)
+// 		ft_execute_command(cmd_node, envp);
+// 	else if (cmd_node->cmd_type == BUILTIN)
+// 	{
 		
-	if (cmd_node->cmd_type == EXECUTE)
-		ft_execute_command(cmd_node, envp);
-	else if (cmd_node->cmd_type == BUILTIN)
-	{
-		ft_execute_builtin(cmd_node, envp);
-		if(cmd_list->size > 1)
-		{
-			dup2(backupSTDOUT, STDOUT_FILENO);
-			exit(0); // auf keinen Fall 
-		}
-			// exit damit child prozesse von builtins keine zombie prozesse werden.
-			// ob der wert hier wichtig is weiss ich nicht, haengt glaub ich davon ab wie man in ft_execute damit umgeht
-	}
-	dup2(backupSTDOUT, STDOUT_FILENO);
-}
+// 		ft_execute_builtin(cmd_node, envp);
+// 		if(cmd_list->size > 1)
+// 		{
+// 			dup2(backupStdout, STDOUT_FILENO);
+// 			exit(0); // auf keinen Fall 
+// 		}
+// 			// exit damit child prozesse von builtins keine zombie prozesse werden.
+// 			// ob der wert hier wichtig is weiss ich nicht, haengt glaub ich davon ab wie man in ft_execute damit umgeht
+// 	}
+// 	dup2(backupStdout, STDOUT_FILENO);
+// }
 
 // dafor die fd speichern wie in outfile 
 // 
@@ -62,6 +67,54 @@ void	ft_execute_node(
 
 
 
+
+
+bool manage_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp)
+{
+	int backupStdout;
+	int backupStdin;
+	
+	backupStdout = dup(STDOUT_FILENO);
+	backupStdin = dup(STDIN_FILENO);
+
+	(void) cmd_list;
+	ft_manage_redirections(cmd_node, fd, backupStdin, backupStdout );
+	if (cmd_node->cmd_type == BUILTIN)
+		ft_execute_builtin(cmd_node, envp);
+	else
+		return false; 
+	// manage redirections
+	
+	reset_redir(&backupStdin, &backupStdout);
+	return (true);
+	// redirecte Stdout_filien, zuruck auf backupSTDout
+
+}
+
+// <<hello <<now funcitioniert
+// echo hallo <<now 		->printed nicht hallo nach heredoc
+// cat <<now 				haegt sich auf 
+// modifizierte ft_execute_node
+void execution_loop (t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp)
+{
+	int backupStdout;
+	int backupStdin;
+	backupStdout = dup(STDOUT_FILENO);
+    backupStdin = dup(STDIN_FILENO);
+	while(cmd_node != NULL)
+	{
+		if (cmd_list->size > 1)
+			ft_manage_pipes(cmd_list, cmd_node, fd);
+		ft_manage_redirections_multi(cmd_node, fd, backupStdin, backupStdout);
+		if(cmd_node->cmd_type == EXECUTE)
+			ft_execute_command(cmd_node, envp);
+		else if (cmd_node->cmd_type == BUILTIN)
+			ft_execute_builtin(cmd_node, envp);
+		reset_redir(&backupStdin,&backupStdout);
+		cmd_node = cmd_node->next;
+	}
+	reset_redir(&backupStdin,&backupStdout);
+}
 
 
 void	ft_execute(t_cmd_list *cmd_list, char **envp)
@@ -78,8 +131,13 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	
 	cur_cmd_node = cmd_list->head;
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN) // das ist der sonderfall von dem gabrijel geredet hat. Das muss sein damit man im selben prozess bleibt.
-		// ft_execute_builtin(current, envp); 
-		ft_execute_node(cmd_list, cur_cmd_node, fd, envp);
+	{
+		
+		// ft_execute_builtin(current, envp); macht keinen sinn
+		// ft_execute_node(cmd_list, cur_cmd_node, fd, envp); 
+		if (manage_single_cmd_node(cmd_list, cur_cmd_node, fd, envp ) == false) // works
+			return ; 
+	}
 	else
 	{
 		if (cmd_list->size > 1) // pipes nur wenn mehr als eine node
@@ -89,7 +147,10 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 		{
 			pid = fork();
 			if (pid == 0)
-				ft_execute_node(cmd_list, cur_cmd_node, fd, envp);
+			{
+				// ft_execute_node(cmd_list, cur_cmd_node, fd, envp);
+				execution_loop (cmd_list, cur_cmd_node, fd, envp);
+			}
 			wait(0); // hier mit wait oder waitpid, kann der exit code von execve abgefangen werden. der exit code builtins kommt aus zeile 55. ist aber vielleicht gar nicht noetig weil es ja eh darum geht die variable zu setzen und nicht so sehr darum dass das child mit dem richtigen code exitet
 			cur_cmd_node = cur_cmd_node->next;
 			if (i < cmd_list->size - 1)

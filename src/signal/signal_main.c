@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:54:10 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/25 10:46:37 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:50:56 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,11 @@ void init_signal(int is_child)
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 	sigaction(SIGTERM, &sa, NULL);
-	sigaction(SIGTSTP, &sa, NULL); // ignore ctrl + Z
-	// make sure readline doesn't interfere
+
+
+/// put only in if done 
+	// sigaction(SIGTSTP, &sa, NULL); // ignore ctrl + Z
+	
 	rl_catch_signals = 0;
 }
 

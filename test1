@@ -1,0 +1,16 @@
+total 3328
+drwxr-xr-x  15 poverbec  2024_heilbronn      510 Jun 30 15:11 .
+drwxr-xr-x  21 poverbec  2024_heilbronn      714 Jun 30 14:56 ..
+drwxr-xr-x  14 poverbec  2024_heilbronn      476 Jun 30 11:09 .git
+-rw-r--r--   1 poverbec  2024_heilbronn       38 Jun 30 15:11 .gitignore
+drwxr-xr-x   4 poverbec  2024_heilbronn      136 Apr 30 11:24 .vscode
+-rw-r--r--   1 poverbec  2024_heilbronn     2594 Jun 30 10:34 Makefile
+drwxr-xr-x   6 poverbec  2024_heilbronn      204 Jun 30 10:34 inc
+drwxr-xr-x  99 poverbec  2024_heilbronn     3366 Jun 30 15:04 libft
+-rwxr-xr-x   1 poverbec  2024_heilbronn   120232 Jun 30 15:05 minishell
+drwxr-xr-x  23 poverbec  2024_heilbronn      782 Jun 30 15:02 minishell_tester
+drwxr-xr-x  52 poverbec  2024_heilbronn     1768 Jun 30 15:05 obj
+drwxr-xr-x  13 poverbec  2024_heilbronn      442 Jun 30 10:34 src
+-rw-r--r--   1 poverbec  2024_heilbronn       86 Jun 25 15:00 sub.sub
+-rw-r--r--   1 poverbec  2024_heilbronn  1568461 May 21 10:32 sub_minishell.pdf
+-rwxr-xr-x   1 poverbec  2024_heilbronn        0 Jun 30 15:11 test1
