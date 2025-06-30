@@ -23,3 +23,19 @@ void	ft_manage_redirections(t_cmd_node *cmd_node, int fd[][2])
 		current = current->next;
 	}
 }
+
+
+
+// int manage_single_cmd_node(cmd_list, cur_cmd_node, fd, envp)
+// {
+// 	int backupStdout = dup(STDOUT_FILENO);
+// 	int backupStdin = dup(STDIN_FILENO);
+
+// 	// manage redirections
+
+// 	// redirecte Stdout_filien, zuruck auf backupSTDout
+// 	dup2(backupStdout, STDOUT_FILENO);
+// }
+
+
+

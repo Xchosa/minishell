@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/06/30 09:41:47 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/30 10:32:28 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 	// path ist malloced und muesste eigentlich von der execute main am ende einmal gefreet werden.
 }
 
+
+// functioniert nur fuer Outfile
 void	ft_execute_node(
 	t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp)
 {
 	if (cmd_list->size > 1)
 		ft_manage_pipes(cmd_list, cmd_node, fd);
-	
-	int backupSTDOUT = dup(STDOUT_FILENO);// immer standout speichern, nur einmal davor. nie exist danach machen. 
+	// muss verallgemeinert sein 
+	int backupSTDOUT = dup(STDOUT_FILENO);// immer standout speichern, nur einmal davor. nie exist danach machen. // mu
 	ft_manage_redirections(cmd_node, fd);
 		
 	if (cmd_node->cmd_type == EXECUTE)
@@ -46,7 +48,7 @@ void	ft_execute_node(
 		if(cmd_list->size > 1)
 		{
 			dup2(backupSTDOUT, STDOUT_FILENO);
-			exit(0); 
+			exit(0); // auf keinen Fall 
 		}
 			// exit damit child prozesse von builtins keine zombie prozesse werden.
 			// ob der wert hier wichtig is weiss ich nicht, haengt glaub ich davon ab wie man in ft_execute damit umgeht
@@ -56,6 +58,11 @@ void	ft_execute_node(
 
 // dafor die fd speichern wie in outfile 
 // 
+
+
+
+
+
 
 void	ft_execute(t_cmd_list *cmd_list, char **envp)
 {
