@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:15:52 by tschulle          #+#    #+#             */
-/*   Updated: 2025/06/25 14:44:13 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/30 09:34:12 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ void	ft_manage_outfile(char *outfile, int fd[][2])
 	out_fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (out_fd < 0)
 		return ;
+	// int backupIN = dup(STDOUT_FILENO);
 	if (dup2(out_fd, STDOUT_FILENO) < 0)
 		return ;
 	close (out_fd);
+	// dup2(backupIN, out_fd);
 	return ;
 }
 

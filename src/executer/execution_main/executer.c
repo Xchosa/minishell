@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/06/25 14:58:04 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/06/30 09:41:47 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,28 @@ void	ft_execute_node(
 {
 	if (cmd_list->size > 1)
 		ft_manage_pipes(cmd_list, cmd_node, fd);
+	
+	int backupSTDOUT = dup(STDOUT_FILENO);// immer standout speichern, nur einmal davor. nie exist danach machen. 
 	ft_manage_redirections(cmd_node, fd);
+		
 	if (cmd_node->cmd_type == EXECUTE)
 		ft_execute_command(cmd_node, envp);
 	else if (cmd_node->cmd_type == BUILTIN)
 	{
 		ft_execute_builtin(cmd_node, envp);
 		if(cmd_list->size > 1)
+		{
+			dup2(backupSTDOUT, STDOUT_FILENO);
 			exit(0); 
+		}
 			// exit damit child prozesse von builtins keine zombie prozesse werden.
 			// ob der wert hier wichtig is weiss ich nicht, haengt glaub ich davon ab wie man in ft_execute damit umgeht
 	}
+	dup2(backupSTDOUT, STDOUT_FILENO);
 }
 
+// dafor die fd speichern wie in outfile 
+// 
 
 void	ft_execute(t_cmd_list *cmd_list, char **envp)
 {
