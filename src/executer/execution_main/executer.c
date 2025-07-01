@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/06/30 15:44:33 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:50:52 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,6 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 
 
 
-
-
-
 bool manage_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp)
 {
 	int backupStdout;
@@ -79,7 +76,7 @@ bool manage_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[]
 
 	(void) cmd_list;
 	// printf("\n do i entere\n");
-	ft_manage_redirections_multi(cmd_node, fd, backupStdin, backupStdout );
+	ft_manage_redirections_multi(cmd_node->file_list, fd, backupStdin, backupStdout );
 	if (cmd_node->cmd_type == BUILTIN)
 		ft_execute_builtin(cmd_node, envp);
 	
@@ -94,20 +91,21 @@ bool manage_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[]
 // echo hallo <<now 		->printed nicht hallo nach heredoc
 // cat <<now 				haegt sich auf 
 // modifizierte ft_execute_node
-void execution_loop (t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp)
+bool execution_loop (t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp)
 {
 	int backupStdout;
 	int backupStdin;
-	printf("do I enter executon ");
+	// printf("do I enter executon ");
 	backupStdout = dup(STDOUT_FILENO);
     backupStdin = dup(STDIN_FILENO);
 	while(cmd_node != NULL)
 	{
 		if (cmd_list->size > 1)
 			ft_manage_pipes(cmd_list, cmd_node, fd);
-		printf("entered ft_manage_redirection");
-		ft_manage_redirections_multi(cmd_node, fd, backupStdin, backupStdout);
-		printf("exited ft_manage_redirection");
+		// printf("entered ft_manage_redirection");
+		if (ft_manage_redirections_multi(cmd_node->file_list, fd, backupStdin, backupStdout) != 0);
+			return false;
+		// printf("exited ft_manage_redirection");
 		if(cmd_node->cmd_type == EXECUTE)
 			ft_execute_command(cmd_node, envp);
 		else if (cmd_node->cmd_type == BUILTIN)
@@ -116,6 +114,7 @@ void execution_loop (t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], ch
 		cmd_node = cmd_node->next;
 	}
 	reset_redir(&backupStdin,&backupStdout);
+	return true;
 }
 
 
@@ -127,16 +126,13 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 
 	i = 0;
 	save_heredoc_files(&cmd_list->head);
-	iter_cmd_lst(cmd_list, &print_cmd_lst);
+	// iter_cmd_lst(cmd_list, &print_cmd_lst);
 	
 	int			fd[(int)cmd_list->size][2]; // am anfang werden alle pipes erstellt. ich glaube norminette mochte die schreibweise nicht, also vllt mit * ?
 	
 	cur_cmd_node = cmd_list->head;
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN) // das ist der sonderfall von dem gabrijel geredet hat. Das muss sein damit man im selben prozess bleibt.
-	{
-		
-		// ft_execute_builtin(current, envp); macht keinen sinn
-		// ft_execute_node(cmd_list, cur_cmd_node, fd, envp); 
+	{ 
 		if (manage_single_cmd_node(cmd_list, cur_cmd_node, fd, envp ) == true) // works
 			return ; 
 	}
@@ -148,12 +144,13 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 		
 		while (cur_cmd_node != NULL)
 		{
-			printf("do i entere");
+			// printf("before forking ");
 			pid = fork();
 			if (pid == 0)
 			{
 				// ft_execute_node(cmd_list, cur_cmd_node, fd, envp);
-				execution_loop (cmd_list, cur_cmd_node, fd, envp);
+				if (execution_loop (cmd_list, cur_cmd_node, fd, envp) == false)
+					break;
 			}
 			wait(0); // hier mit wait oder waitpid, kann der exit code von execve abgefangen werden. der exit code builtins kommt aus zeile 55. ist aber vielleicht gar nicht noetig weil es ja eh darum geht die variable zu setzen und nicht so sehr darum dass das child mit dem richtigen code exitet
 			cur_cmd_node = cur_cmd_node->next;

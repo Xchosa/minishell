@@ -6,11 +6,11 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:21:02 by tschulle          #+#    #+#             */
-/*   Updated: 2025/06/24 10:49:22 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/01 10:51:52 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/executer.h"
+#include "executer.h"
 
 void	ft_open_pipes(int fd[][2], t_cmd_list *cmd_list)
 {

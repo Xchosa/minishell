@@ -6,23 +6,23 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:15:52 by tschulle          #+#    #+#             */
-/*   Updated: 2025/06/30 09:34:12 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:43:21 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executer.h"
 
-void	ft_manage_infile(char *infile, int fd[][2])
+int	ft_manage_infile(char *infile, int fd[][2])
 {
 	int	in_fd;
 	(void)fd;
 	in_fd = open(infile, O_RDONLY);
 	if (in_fd < 0)
-		return ;
+		return -1;
 	if (dup2(in_fd, STDIN_FILENO) < 0)
-		return ;
+		return 1;
 	close (in_fd);
-	return ;
+	return 0;
 }
 
 void	ft_manage_outfile(char *outfile, int fd[][2])
@@ -56,24 +56,24 @@ void	ft_manage_append(char *appendfile, int fd[][2])
 
 // complett neu 
 /// only prints out to console 
-void	ft_manage_heredoc(char *tmp_filename, int fd[][2])
-{
-	int here_doc_fd;
-	(void)fd;
-	here_doc_fd = open(tmp_filename, O_RDONLY);
-	if(here_doc_fd < 0)
-		return;
-	if(dup2(here_doc_fd , STDOUT_FILENO) < 0)
-		return;
-	close(here_doc_fd);
-	// eigentlichen stdout zurucksetzen,
-	// heaengt sich auf bei cat <<now
-	// muss nur noc /tmp/filename aufrufen -> in der fertig bereits
-	// ausgefuehrter und gespeicherterte heredoc ist
-//	z.B. cat <<now
-}
+// void	ft_manage_heredoc(char *tmp_filename, int fd[][2])
+// {
+// 	int here_doc_fd;
+// 	(void)fd;
+// 	here_doc_fd = open(tmp_filename, O_RDONLY);
+// 	if(here_doc_fd < 0)
+// 		return;
+// 	if(dup2(here_doc_fd , STDOUT_FILENO) < 0)
+// 		return;
+// 	close(here_doc_fd);
+// 	// eigentlichen stdout zurucksetzen,
+// 	// heaengt sich auf bei cat <<now
+// 	// muss nur noc /tmp/filename aufrufen -> in der fertig bereits
+// 	// ausgefuehrter und gespeicherterte heredoc ist
+// //	z.B. cat <<now
+// }
 
-int ft_manage_heredoc_stdout(char *tmp_filename, int fd[][2], int bup_stdout)
+int ft_manage_heredoc(char *tmp_filename, int fd[][2])
 {
 	int here_doc_fd;
 	(void)fd;
@@ -81,14 +81,14 @@ int ft_manage_heredoc_stdout(char *tmp_filename, int fd[][2], int bup_stdout)
 	if(here_doc_fd < 0)
 	{
 		printf("could not open heredoc");
-		return 1;
+		return -1;
 	}
-	if(dup2(here_doc_fd , bup_stdout) < 0)
-		return 0;
+	if(dup2(here_doc_fd , STDIN_FILENO) < 0)
+		return 1;
 	else
 	{
 		close(here_doc_fd);
-		return 1;
+		return 0;
 	}
 }
 

@@ -6,89 +6,78 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:58:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/30 14:46:16 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:47:38 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executer.h"
 
 
-void	ft_manage_redirections
-	(t_cmd_node *cmd_node, int fd[][2], int backupStdin, int backupStdout)
-{
-	t_file_node	*current;
-
-	(void) backupStdin;
-	(void) backupStdout;
-	current = cmd_node->file_list->head;
-	while (current != NULL)
-	{
-		if (current->redir_type == REDIRECT_INPUT)
-			ft_manage_infile(current->filename, fd);
-		else if (current->redir_type == HERE_DOC)
-		{
-			ft_manage_heredoc(current->filename, fd);// 
-		}
-		else if (current->redir_type == REDIRECT_OUTPUT)
-			ft_manage_outfile(current->filename, fd);
-		else if (current->redir_type == APPEND)
-			ft_manage_append(current->filename, fd);
-		current = current->next;
-	}
-}
-
-
-
-void	reset_redir(int *backupStdin, int *backupStdout)
-{
-	// dup2(*backupStdin, STDIN_FILENO);
-	// dup2(*backupStdout, STDOUT_FILENO);
-	// close(*backupStdin);
-	// close(*backupStdout);
-
-	if (*backupStdin != -1)
-    {
-        dup2(*backupStdin, STDIN_FILENO); // Restore stdin
-        close(*backupStdin);             // Close the backup
-        *backupStdin = -1;               // Mark as invalid
-    }
-    if (*backupStdout != -1)
-    {
-        dup2(*backupStdout, STDOUT_FILENO); // Restore stdout
-        close(*backupStdout);               // Close the backup
-        *backupStdout = -1;                 // Mark as invalid
-    }
-}
-
-// void set_up_backup_Stdout_Stdin(int *backupStdin, int *backupStdout)
+// void	ft_manage_redirections
+// 	(t_cmd_node *cmd_node, int fd[][2], int backupStdin, int backupStdout)
 // {
-// 	// backupStdin = 0;
-// 	// backupStdout = 0;
-// 	*backupStdout = dup(STDOUT_FILENO);
-//     *backupStdin = dup(STDIN_FILENO);
+// 	t_file_node	*current;
+
+// 	(void) backupStdin;
+// 	(void) backupStdout;
+// 	current = cmd_node->file_list->head;
+// 	while (current != NULL)
+// 	{
+// 		if (current->redir_type == REDIRECT_INPUT)
+// 			ft_manage_infile(current->filename, fd);
+// 		else if (current->redir_type == HERE_DOC)
+// 		{
+// 			ft_manage_heredoc(current->filename, fd);// 
+// 		}
+// 		else if (current->redir_type == REDIRECT_OUTPUT)
+// 			ft_manage_outfile(current->filename, fd);
+// 		else if (current->redir_type == APPEND)
+// 			ft_manage_append(current->filename, fd);
+// 		current = current->next;
+// 	}
 // }
 
-void	ft_manage_redirections_multi
-	(t_cmd_node *cmd_node, int fd[][2], int backupStdin, int backupStdout)
+// need to be changed to bool 
+int	ft_manage_redirections_multi
+	(t_file_list *file_list, int fd[][2], int backupStdin, int backupStdout)
 {
-	t_file_node	*current;
-	(void) backupStdin;
+	t_file_node	*cur_file_node;
+	int check;
 	
-	current = cmd_node->file_list->head;
-	while (current != NULL)
+	check = 0;
+	if(!file_list)
+		return 0;
+	(void) backupStdout;
+	
+	cur_file_node = file_list->head;
+	while (cur_file_node != NULL)
 	{
-		if (current->redir_type == REDIRECT_INPUT)
-			ft_manage_infile(current->filename, fd);
-		else if (current->redir_type == HERE_DOC)
-			ft_manage_heredoc_stdout(current->filename, fd, backupStdout);
+		if (cur_file_node->redir_type == REDIRECT_INPUT)
+		{
+			check = ft_manage_infile(cur_file_node->filename, fd);
+		}
+		else if (cur_file_node->redir_type == HERE_DOC)
+			ft_manage_heredoc(cur_file_node->filename, fd);
 			// ft_manage_heredoc(current->filename, fd);// 
-		else if (current->redir_type == REDIRECT_OUTPUT)
-			ft_manage_outfile(current->filename, fd);
-		else if (current->redir_type == APPEND)
-			ft_manage_append(current->filename, fd);
-		current = current->next;
+		else if (cur_file_node->redir_type == REDIRECT_OUTPUT)
+			ft_manage_outfile(cur_file_node->filename, fd);
+		else if (cur_file_node->redir_type == APPEND)
+			ft_manage_append(cur_file_node->filename, fd);
+		
+		if (check != 0)
+			return 1;
+		cur_file_node = cur_file_node->next;
 	}
 }
 
 
 
+
+// Return 0 for success
+// Return specific error codes (non-zero) for different failures
+
+bool error_message (int check)
+{
+	if(check == -1)
+	
+}

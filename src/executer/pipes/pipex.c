@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:15:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/05/06 17:57:22 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/01 10:52:01 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/executer.h"
+#include "executer.h"
 
 
 char	*ft_give_pointer_to_path(char **envp)

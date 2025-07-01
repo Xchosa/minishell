@@ -21,6 +21,7 @@ HEREDOC_DIR = ./src/executer/heredoc
 EXECUTE_DIR = ./src/executer/execution_main
 REDIRECTION = ./src/executer/redirection
 BUILTIN = ./src/executer/builtin
+PIPES = ./src/executer/pipes
 DEBUG_DIR = debug_dir
 INC_DIR = inc
 OBJ_DIR = obj
@@ -28,7 +29,7 @@ OBJ_DIR = obj
 VPATH = $(SOURCE_DIR):$(PARSE_DIR):$(SIGNAL_DIR):$(TOKEN_DIR):\
 $(LEXER_DIR):$(CMD_LIST_DIR):$(EXPORT_DIR):\
 $(EXECUTER_DIR):$(EXECUTE_DIR):$(REDIRECTION):\
-$(BUILTIN):$(HEREDOC_DIR):$(INC_DIR)
+$(BUILTIN)::$(PIPES):$(HEREDOC_DIR):$(INC_DIR)
 
 
 # ---------- Subjects ---------- #
@@ -79,6 +80,7 @@ MY_SOURCES = \
 		executer.c \
 		redirect.c \
 		manage_redirections.c \
+		file_discriptor.c \
 		handler.c \
 		signal_main.c \
 		find_heredoc.c \
