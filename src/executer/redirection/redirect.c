@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:15:52 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/01 12:51:43 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:18:16 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ bool	ft_manage_infile(char *infile, int fd[][2])
 	if (in_fd < 0)
 	{
 		ft_putstr_fd(" Infile not existing\n", STDOUT_FILENO);
-		exit ; // beende den child process - forke ja immer egal(ausser 1cmd && buildin) ob es eine oder mehrere nodes sind
 		return false;
 	}
 	if (dup2(in_fd, STDIN_FILENO) < 0)

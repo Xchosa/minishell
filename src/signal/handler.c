@@ -93,7 +93,11 @@ void reset_terminal_state(void)
 
 // for heredoc
 //reset handlers and change signal for parent process
+// bei ctrl D soll process beendien -> nur heredoc beenden rest soll weiter gehen 
 
+// cat <<1<<1<<1
+// bei ctrl c soll aus allen heredocs raus
+// ctrol D nur aus eins - funktioniert 
 
 
 

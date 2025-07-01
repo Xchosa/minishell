@@ -21,7 +21,7 @@
 	// t_exit_codes	*get_exit_codes(void);
 	// t_bash		*get_bash(void);
 
-void	ft_echo(t_cmd_node *cmd_node, char **envp);
+bool	ft_echo(t_cmd_node *cmd_node, char **envp);
 void	ft_env(char **envp);
 void	ft_cd(t_cmd_node *cmd_node, char **envp);
 int		ft_isnum(char *s);
@@ -29,8 +29,8 @@ void	ft_exit(t_cmd_node *cmd_node);
 void	ft_execute(t_cmd_list *cmd_list, char **envp);
 void	ft_execute_node(
 	t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp);
-void	ft_execute_command(t_cmd_node *cmd_node, char **envp);
-void	ft_execute_builtin(t_cmd_node *cmd_node, char **envp);
+bool	ft_execute_command(t_cmd_node *cmd_node, char **envp);
+bool	ft_execute_builtin(t_cmd_node *cmd_node, char **envp);
 void	ft_open_pipes(int fd[][2], t_cmd_list *cmd_list);
 void	ft_first_node(int fd[][2]);
 void	ft_middle_node(int fd[][2], t_cmd_list *cmd_list, t_cmd_node *cmd_node);

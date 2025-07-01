@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/01 12:53:36 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:45:14 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 
-void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
+bool	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 {
 	char	*path;
 
@@ -23,9 +23,10 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 	//kann man aber auf eine reduzieren
 	if (path == NULL)
 	{
-		return ; //errorhandling, free, exit
+		return false; //errorhandling, free, exit
 	}
 	execve(path, cmd_node->cmd, envp); // eventuell errorcheck also != 0 ? und ausgabe error sollte hier mit perror funktionieren
+	return true;
 	// path ist malloced und muesste eigentlich von der execute main am ende einmal gefreet werden.
 }
 
@@ -98,24 +99,45 @@ bool execution_loop (t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], ch
 {
 	int backupStdout;
 	int backupStdin;
-	// printf("do I enter executon ");
+	bool check;
+	
 	backupStdout = dup(STDOUT_FILENO);
     backupStdin = dup(STDIN_FILENO);
+	check = true;
 	while(cmd_node != NULL)
 	{
 		if (cmd_list->size > 1)
 			ft_manage_pipes(cmd_list, cmd_node, fd);
 		if(ft_manage_redirections_multi(cmd_node->file_list, fd, backupStdin, backupStdout) == false)
-			return false;
+		{	
+			check = false;
+			break;
+		}
 		if(cmd_node->cmd_type == EXECUTE)
-			ft_execute_command(cmd_node, envp);
+		{
+			if(ft_execute_command(cmd_node, envp) == false)
+			{	
+				check = false;
+				break;
+			}
+		}
 		else if (cmd_node->cmd_type == BUILTIN)
-			ft_execute_builtin(cmd_node, envp);
+		{
+			if(ft_execute_builtin(cmd_node, envp) == false)
+			{	
+				check = false;
+				break;
+			}
+		}
 		reset_redir(&backupStdin,&backupStdout);
 		cmd_node = cmd_node->next;
 	}
 	reset_redir(&backupStdin,&backupStdout);
+	clean_cmd_list_objects_tmp_files(cmd_list);
+	if(check == false)
+		return false;
 	return true;
+	
 }
 
 
@@ -137,8 +159,8 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	cur_cmd_node = cmd_list->head;
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN) // das ist der sonderfall von dem gabrijel geredet hat. Das muss sein damit man im selben prozess bleibt.
 	{ 
-		if (manage_single_cmd_node(cmd_list, cur_cmd_node, fd, envp ) == true) // works
-			return ; 
+		if (manage_single_cmd_node(cmd_list, cur_cmd_node, fd, envp ) == false)
+			clean_cmd_list_objects_tmp_files(cmd_list); 
 	}
 	else
 	{
@@ -154,7 +176,10 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 			{
 				// ft_execute_node(cmd_list, cur_cmd_node, fd, envp);
 				if (execution_loop (cmd_list, cur_cmd_node, fd, envp) == false)
-					break;
+				{
+					clean_cmd_list_objects_tmp_files(cmd_list);/// child process failed // alles cleared 
+					// pipes schliesen 
+				}
 			}
 			wait(0); // hier mit wait oder waitpid, kann der exit code von execve abgefangen werden. der exit code builtins kommt aus zeile 55. ist aber vielleicht gar nicht noetig weil es ja eh darum geht die variable zu setzen und nicht so sehr darum dass das child mit dem richtigen code exitet
 			cur_cmd_node = cur_cmd_node->next;
@@ -162,7 +187,6 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 				close(fd[i][1]);
 			if (i > 0 && i < cmd_list->size - 1)
 			{
-				// if (i > 0)
 				close(fd[i - 1][0]);
 			}
 			i++;

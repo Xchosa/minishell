@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:54:10 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/30 14:50:56 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:56:18 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void init_signal(int is_child)
 		sa.sa_handler = parent_handler;
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);// ctrl D 
 	sigaction(SIGTERM, &sa, NULL);
 
 

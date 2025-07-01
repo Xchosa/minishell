@@ -2,11 +2,14 @@
 #include "executer.h"
 
 // changed to real strcmp
-void	ft_execute_builtin(t_cmd_node *cmd_node, char **envp)
+bool	ft_execute_builtin(t_cmd_node *cmd_node, char **envp)
 {
+	bool	check;
+
+	check = false;
 	//ft_tolower make everything to lowerletters?
 	if (ft_strcmp("echo", cmd_node->cmd[0]) == true)
-		ft_echo(cmd_node, envp);
+		check = ft_echo(cmd_node, envp);
 	if (ft_strcmp("pwd", cmd_node->cmd[0]) == true)
 		ft_pwd(envp);
 	if (ft_strcmp("env", cmd_node->cmd[0]) == true)
@@ -19,5 +22,12 @@ void	ft_execute_builtin(t_cmd_node *cmd_node, char **envp)
 		ft_exit(cmd_node);
 	if (ft_strcmp("unset", cmd_node->cmd[0]) == true)
 		ft_unset(cmd_node, envp);
+	// else
+	// {
+	// 	ft_putstr_fd("not a valid here executable", STDERR_FILENO);
+	// 	return check; // echooooo hallo aport 
+	// }
+	return check;
 }
 
+// 

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:27:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/06/25 15:04:32 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:19:56 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 
 
-void	ft_echo(t_cmd_node *cmd_node, char **envp)
+bool	ft_echo(t_cmd_node *cmd_node, char **envp)
 {
 	int	i;
 
@@ -37,6 +37,7 @@ void	ft_echo(t_cmd_node *cmd_node, char **envp)
 	}
 	if (!(ft_strncmp("-n", cmd_node->cmd[1], 2) == 0))
 		ft_printf("\n");
+	return true; 
 }
 
 void	ft_pwd(char **envp)
