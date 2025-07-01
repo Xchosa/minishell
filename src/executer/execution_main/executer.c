@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/01 11:50:52 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/01 12:53:36 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,9 @@ bool manage_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[]
 // echo hallo <<now 		->printed nicht hallo nach heredoc
 // cat <<now 				haegt sich auf 
 // modifizierte ft_execute_node
+
+
+// how to close all pipes if error e.g infile not exisiting
 bool execution_loop (t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp)
 {
 	int backupStdout;
@@ -102,10 +105,8 @@ bool execution_loop (t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], ch
 	{
 		if (cmd_list->size > 1)
 			ft_manage_pipes(cmd_list, cmd_node, fd);
-		// printf("entered ft_manage_redirection");
-		if (ft_manage_redirections_multi(cmd_node->file_list, fd, backupStdin, backupStdout) != 0);
+		if(ft_manage_redirections_multi(cmd_node->file_list, fd, backupStdin, backupStdout) == false)
 			return false;
-		// printf("exited ft_manage_redirection");
 		if(cmd_node->cmd_type == EXECUTE)
 			ft_execute_command(cmd_node, envp);
 		else if (cmd_node->cmd_type == BUILTIN)
@@ -118,6 +119,9 @@ bool execution_loop (t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], ch
 }
 
 
+// hard coden wenn ./minishell in child der beendet werden kann -
+// aktuell behaved richtig. aber schliesst processe nicht (printed new line , aber ctrl c bugged)
+
 void	ft_execute(t_cmd_list *cmd_list, char **envp)
 {
 	t_cmd_node	*cur_cmd_node;
@@ -126,7 +130,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 
 	i = 0;
 	save_heredoc_files(&cmd_list->head);
-	// iter_cmd_lst(cmd_list, &print_cmd_lst);
+	iter_cmd_lst(cmd_list, &print_cmd_lst);
 	
 	int			fd[(int)cmd_list->size][2]; // am anfang werden alle pipes erstellt. ich glaube norminette mochte die schreibweise nicht, also vllt mit * ?
 	

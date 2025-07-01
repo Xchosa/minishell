@@ -39,15 +39,15 @@ void	ft_close_pipes(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2]);
 void	ft_manage_pipes(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2]);
 char	*ft_give_pointer_to_path(char **envp);
 char	*ft_getpath(char *command, char **envp);
-int		ft_manage_infile(char *infile, int fd[][2]);
-void	ft_manage_outfile(char *outfile, int fd[][2]);
-void	ft_manage_append(char *appendfile, int fd[][2]);
+bool	ft_manage_infile(char *infile, int fd[][2]);
+bool	ft_manage_outfile(char *outfile, int fd[][2]);
+bool	ft_manage_append(char *appendfile, int fd[][2]);
 // void	ft_manage_heredoc(char *delimiter, int fd[][2]);
 // void	ft_manage_redirections(t_cmd_node *cmd_node, int fd[][2], int backupStdin, int backupStdout);
-int		ft_manage_redirections_multi(t_file_list *file_list, int fd[][2], int backupStdin, int backupStdout);
+bool	ft_manage_redirections_multi(t_file_list *file_list, int fd[][2], int backupStdin, int backupStdout);
 
 
-int 	ft_manage_heredoc(char *tmp_filename, int fd[][2]);
+bool 	ft_manage_heredoc(char *tmp_filename, int fd[][2]);
 
 int		ft_get_index(int i, char **envp);
 void	ft_export_print(char **envp);

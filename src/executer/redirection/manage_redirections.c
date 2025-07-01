@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:58:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/01 11:47:38 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/01 12:23:59 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,36 +38,36 @@
 // }
 
 // need to be changed to bool 
-int	ft_manage_redirections_multi
+bool	ft_manage_redirections_multi
 	(t_file_list *file_list, int fd[][2], int backupStdin, int backupStdout)
 {
 	t_file_node	*cur_file_node;
 	int check;
 	
-	check = 0;
+	check = true;
 	if(!file_list)
 		return 0;
 	(void) backupStdout;
+	(void) backupStdin;
 	
 	cur_file_node = file_list->head;
 	while (cur_file_node != NULL)
 	{
 		if (cur_file_node->redir_type == REDIRECT_INPUT)
-		{
 			check = ft_manage_infile(cur_file_node->filename, fd);
-		}
 		else if (cur_file_node->redir_type == HERE_DOC)
-			ft_manage_heredoc(cur_file_node->filename, fd);
+			check = ft_manage_heredoc(cur_file_node->filename, fd);
 			// ft_manage_heredoc(current->filename, fd);// 
 		else if (cur_file_node->redir_type == REDIRECT_OUTPUT)
-			ft_manage_outfile(cur_file_node->filename, fd);
+			check = ft_manage_outfile(cur_file_node->filename, fd);
 		else if (cur_file_node->redir_type == APPEND)
-			ft_manage_append(cur_file_node->filename, fd);
+			check = ft_manage_append(cur_file_node->filename, fd);
 		
-		if (check != 0)
-			return 1;
+		if (check == false)
+			return false;
 		cur_file_node = cur_file_node->next;
 	}
+	return true;
 }
 
 
@@ -75,9 +75,3 @@ int	ft_manage_redirections_multi
 
 // Return 0 for success
 // Return specific error codes (non-zero) for different failures
-
-bool error_message (int check)
-{
-	if(check == -1)
-	
-}
