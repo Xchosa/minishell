@@ -47,6 +47,8 @@ void	ft_manage_redirections(t_cmd_node *cmd_node, int fd[][2], int backupStdin, 
 void	ft_manage_redirections_multi(t_cmd_node *cmd_node, int fd[][2], int backupStdin, int backupStdout);
 
 
+int ft_manage_heredoc_stdout(char *tmp_filename, int fd[][2], int bup_stdout);
+
 int		ft_get_index(int i, char **envp);
 void	ft_export_print(char **envp);
 void	ft_export_variable(char *cmd_var, char **envp);

@@ -78,12 +78,11 @@ bool manage_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[]
 	backupStdin = dup(STDIN_FILENO);
 
 	(void) cmd_list;
-	ft_manage_redirections(cmd_node, fd, backupStdin, backupStdout );
+	// printf("\n do i entere\n");
+	ft_manage_redirections_multi(cmd_node, fd, backupStdin, backupStdout );
 	if (cmd_node->cmd_type == BUILTIN)
 		ft_execute_builtin(cmd_node, envp);
-	else
-		return false; 
-	// manage redirections
+	
 	
 	reset_redir(&backupStdin, &backupStdout);
 	return (true);
@@ -99,13 +98,16 @@ void execution_loop (t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], ch
 {
 	int backupStdout;
 	int backupStdin;
+	printf("do I enter executon ");
 	backupStdout = dup(STDOUT_FILENO);
     backupStdin = dup(STDIN_FILENO);
 	while(cmd_node != NULL)
 	{
 		if (cmd_list->size > 1)
 			ft_manage_pipes(cmd_list, cmd_node, fd);
+		printf("entered ft_manage_redirection");
 		ft_manage_redirections_multi(cmd_node, fd, backupStdin, backupStdout);
+		printf("exited ft_manage_redirection");
 		if(cmd_node->cmd_type == EXECUTE)
 			ft_execute_command(cmd_node, envp);
 		else if (cmd_node->cmd_type == BUILTIN)
@@ -135,7 +137,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 		
 		// ft_execute_builtin(current, envp); macht keinen sinn
 		// ft_execute_node(cmd_list, cur_cmd_node, fd, envp); 
-		if (manage_single_cmd_node(cmd_list, cur_cmd_node, fd, envp ) == false) // works
+		if (manage_single_cmd_node(cmd_list, cur_cmd_node, fd, envp ) == true) // works
 			return ; 
 	}
 	else
@@ -143,8 +145,10 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 		if (cmd_list->size > 1) // pipes nur wenn mehr als eine node
 			ft_open_pipes(fd, cmd_list); // die funktionen zu pipes sind alle irgendwie kompliziert, aber ich glaube sie funktionieren. 
 			//Es geht darum dass die child prozesse offene fd erben und am ende des child prozesses alle fd geschlossen sind
+		
 		while (cur_cmd_node != NULL)
 		{
+			printf("do i entere");
 			pid = fork();
 			if (pid == 0)
 			{
@@ -221,27 +225,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 // }
 
 
-//main fuer builtin env
-//int	main(int argc, char **argv, char **envp)
-// {
-// 	t_cmd_list	cmd_list;
-// 	t_cmd_node	cmd_node1;
-// 	t_file_list	file_list1;
 
-// 	(void)argc;
-// 	(void)argv;
-// 	cmd_list.head = &cmd_node1;
-// 	cmd_list.tail = NULL;
-// 	cmd_list.size = 1;
-// 	cmd_node1.cmd_type = BUILTIN;
-// 	cmd_node1.cmd = ft_split("env", ' ');
-// 	cmd_node1.file_list = &file_list1;
-// 	cmd_node1.next = NULL;
-// 	file_list1.head = NULL;
-// 	file_list1.tail = NULL;
-// 	file_list1.size = 0;
-// ft_execute(&cmd_list, envp);
-// }
 
 
 //main fuer builtin pwd

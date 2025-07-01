@@ -103,6 +103,7 @@ void	ft_close_pipes(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2]) // 
 	}
 }
 
+
 void	ft_manage_pipes(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2])
 {
 	ft_close_pipes(cmd_list, cmd_node, fd);

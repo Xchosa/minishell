@@ -61,7 +61,7 @@ void	ft_manage_heredoc(char *tmp_filename, int fd[][2])
 	int here_doc_fd;
 	(void)fd;
 	here_doc_fd = open(tmp_filename, O_RDONLY);
-	if(here_doc < 0)
+	if(here_doc_fd < 0)
 		return;
 	if(dup2(here_doc_fd , STDOUT_FILENO) < 0)
 		return;
@@ -72,5 +72,25 @@ void	ft_manage_heredoc(char *tmp_filename, int fd[][2])
 	// ausgefuehrter und gespeicherterte heredoc ist
 //	z.B. cat <<now
 }
+
+int ft_manage_heredoc_stdout(char *tmp_filename, int fd[][2], int bup_stdout)
+{
+	int here_doc_fd;
+	(void)fd;
+	here_doc_fd = open(tmp_filename, O_RDONLY);
+	if(here_doc_fd < 0)
+	{
+		printf("could not open heredoc");
+		return 1;
+	}
+	if(dup2(here_doc_fd , bup_stdout) < 0)
+		return 0;
+	else
+	{
+		close(here_doc_fd);
+		return 1;
+	}
+}
+
 
 

@@ -13,41 +13,22 @@
 #include "executer.h"
 
 
-// void	ft_manage_redirections(t_cmd_node *cmd_node, int fd[][2])
-// {
-// 	t_file_node	*current;
-
-	
-// 	current = cmd_node->file_list->head;
-// 	while (current != NULL)
-// 	{
-// 		if (current->redir_type == REDIRECT_INPUT)
-// 			ft_manage_infile(current->filename, fd);
-// 		else if (current->redir_type == REDIRECT_OUTPUT)
-// 			ft_manage_outfile(current->filename, fd);
-// 		else if (current->redir_type == HERE_DOC)
-// 			ft_manage_heredoc(current->filename, fd);// 
-// 		else if (current->redir_type == APPEND)
-// 			ft_manage_append(current->filename, fd);
-// 		current = current->next;
-// 	}
-// }
-
-
 void	ft_manage_redirections
 	(t_cmd_node *cmd_node, int fd[][2], int backupStdin, int backupStdout)
 {
 	t_file_node	*current;
-	(void) backupStdout;
+
 	(void) backupStdin;
-	
+	(void) backupStdout;
 	current = cmd_node->file_list->head;
 	while (current != NULL)
 	{
 		if (current->redir_type == REDIRECT_INPUT)
 			ft_manage_infile(current->filename, fd);
 		else if (current->redir_type == HERE_DOC)
+		{
 			ft_manage_heredoc(current->filename, fd);// 
+		}
 		else if (current->redir_type == REDIRECT_OUTPUT)
 			ft_manage_outfile(current->filename, fd);
 		else if (current->redir_type == APPEND)
@@ -60,33 +41,37 @@ void	ft_manage_redirections
 
 void	reset_redir(int *backupStdin, int *backupStdout)
 {
-	dup2(*backupStdin, STDIN_FILENO);
-	dup2(*backupStdout, STDOUT_FILENO);
-	close(*backupStdin);
-	close(*backupStdout);
+	// dup2(*backupStdin, STDIN_FILENO);
+	// dup2(*backupStdout, STDOUT_FILENO);
+	// close(*backupStdin);
+	// close(*backupStdout);
+
+	if (*backupStdin != -1)
+    {
+        dup2(*backupStdin, STDIN_FILENO); // Restore stdin
+        close(*backupStdin);             // Close the backup
+        *backupStdin = -1;               // Mark as invalid
+    }
+    if (*backupStdout != -1)
+    {
+        dup2(*backupStdout, STDOUT_FILENO); // Restore stdout
+        close(*backupStdout);               // Close the backup
+        *backupStdout = -1;                 // Mark as invalid
+    }
 }
 
-void set_up_backup_Stdout_Stdin(int *backupStdin, int *backupStdout)
-{
-	// backupStdin = 0;
-	// backupStdout = 0;
-	*backupStdout = dup(STDOUT_FILENO);
-    *backupStdin = dup(STDIN_FILENO);
-}
-
-// void	save_redir(int *backupStdin, int *backupStdout)
+// void set_up_backup_Stdout_Stdin(int *backupStdin, int *backupStdout)
 // {
-
-// 	*backupStdin = dup(STDIN_FILENO);
+// 	// backupStdin = 0;
+// 	// backupStdout = 0;
 // 	*backupStdout = dup(STDOUT_FILENO);
+//     *backupStdin = dup(STDIN_FILENO);
 // }
-
 
 void	ft_manage_redirections_multi
 	(t_cmd_node *cmd_node, int fd[][2], int backupStdin, int backupStdout)
 {
 	t_file_node	*current;
-	(void) backupStdout;
 	(void) backupStdin;
 	
 	current = cmd_node->file_list->head;
@@ -95,7 +80,8 @@ void	ft_manage_redirections_multi
 		if (current->redir_type == REDIRECT_INPUT)
 			ft_manage_infile(current->filename, fd);
 		else if (current->redir_type == HERE_DOC)
-			ft_manage_heredoc(current->filename, fd);// 
+			ft_manage_heredoc_stdout(current->filename, fd, backupStdout);
+			// ft_manage_heredoc(current->filename, fd);// 
 		else if (current->redir_type == REDIRECT_OUTPUT)
 			ft_manage_outfile(current->filename, fd);
 		else if (current->redir_type == APPEND)

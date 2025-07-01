@@ -121,6 +121,7 @@ int save_here_doc_in_tmp(t_file_node **file_node)
 	}
 	free_heredoc_helper(new_tmp_file_name, suffix, file_node);
 	(*file_node)->filename = new_tmp_file_name_suffix;
+	printf("saved_heredoc\n");
 	return (0);
 }
 
