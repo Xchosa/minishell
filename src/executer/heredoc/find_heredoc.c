@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:58:15 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/30 15:42:37 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:36:18 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,16 @@ bool execute_here_doc(char *filename, int here_doc_fd)
 			line = readline("> ");
 		else
 			line = get_next_line(STDIN_FILENO);
-		if(!line)
+		if(!line)// handle ctrl + D -> all heredocs should be closed
+		{
 			break;
+		}
 		skip_whitespace(&line);
-		if(ft_strcmp(line, filename) == true)
+		if(ft_strcmp(line, filename) == true) 
 		{
 			free(line);
 			close(here_doc_fd);// doppelt
-			init_signal(1);
+			reset_sig_handler_to_child();
 			return(true);
 		}
 		ft_putstr_fd(line, here_doc_fd);
@@ -92,7 +94,7 @@ bool execute_here_doc(char *filename, int here_doc_fd)
 		free(line);
 	}
 	close(here_doc_fd);
-	init_signal(1);
+	reset_sig_handler_to_child();
 	return true;
 }
 

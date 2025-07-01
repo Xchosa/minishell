@@ -69,7 +69,12 @@ tcsendbreak(fd, duration): Sends a break signal to the terminal.
 void reset_sig_handler_to_parent(void)
 {
 	signal(SIGINT,SIG_DFL); // reset
-  	init_signal(0); 
+	heredoc_signal(0);
+}
+void reset_sig_handler_to_child(void)
+{
+	signal(SIGINT,SIG_DFL); // reset
+	init_signal(1);
 }
 
 void hide_ctrl_in_terminal(void)
@@ -91,13 +96,53 @@ void reset_terminal_state(void)
 	// fflush(stdout);
 }
 
-// for heredoc
+// for heredoc // implementier heredoc funtionen und danach reset handler
 //reset handlers and change signal for parent process
-// bei ctrl D soll process beendien -> nur heredoc beenden rest soll weiter gehen 
+// bei ctrl D soll process beendien -> nur heredoc beenden rest soll weiter gehen  -> korrekt
+
+
 
 // cat <<1<<1<<1
 // bei ctrl c soll aus allen heredocs raus
 // ctrol D nur aus eins - funktioniert 
+void heredoc_signal(int is_child)
+{
+	struct sigaction sa;
 
+	// sa.sa_flags = SA_RESTART;
+	reset_terminal_state();
+	sigemptyset(&sa.sa_mask);// clear blocked signals
+	//changes signal action (replaces signal() for better control
+	if(is_child == 1)
+		sa.sa_handler = child_handler;
+	else
+		sa.sa_handler = heredoc_handler;
+	sa.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);// ctrl D 
+	sigaction(SIGTERM, &sa, NULL);
+}
 
+void heredoc_handler(int sig)
+{
+    if (sig == SIGINT)
+	{
+		get_exit_codes()->last_exit_code = 1;
+	// in readline mode then only print new line
+		write(STDOUT_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		exit(130); // sig int = 2 -> 128 + 2 = 130  // check bash
+	}
+	else if (sig == SIGQUIT)
+	{
+		get_exit_codes()->last_exit_code = ec_sucess;
+		exit(1);// ft_putstr_fd("EXIT: 3\n", STDOUT_FILENO);
+	}
+	else if (sig == SIGTSTP)
+	{
+		get_exit_codes()->last_exit_code = ec_sucess;
+	}
+}
 

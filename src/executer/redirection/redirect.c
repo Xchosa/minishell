@@ -6,12 +6,11 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:15:52 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/01 14:18:16 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:54:59 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executer.h"
-
 
 // use exit to terminate the child processes // bool obsolet?
 // damit signaling functioniert ctrl D 
