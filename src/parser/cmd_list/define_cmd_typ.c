@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define_cmd_typ.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:54:56 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/03 15:42:13 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/02 14:46:19 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ int check_for_builtin(char *token_str)
 int choose_cmd_type(t_token *curr_token)
 {
     int cmd_type;
+	char	*lower;
 
     cmd_type = 0;
-	cmd_type = check_for_builtin(curr_token->token);
+	lower = ft_strtolower(curr_token->token);
+	cmd_type = (check_for_builtin(lower));
+	//free(lower);
     if(cmd_type != 0)
         return(cmd_type);
     return(cmd_type = EXECUTE);

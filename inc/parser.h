@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/24 16:19:19 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:46:30 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,7 @@ void	delete_tmp_files(const char *foldername);
 void 	clean_cmd_list_objects_tmp_files(t_cmd_list *cmd_list);
 void	clean_exit_codes(void);
 void	clean_bash_env(void);
+char	*ft_strtolower(char *input);
 
 //fill_file_list
 t_file_node*	process_token_type_redir(t_token **curr_token);

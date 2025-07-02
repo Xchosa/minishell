@@ -2,7 +2,7 @@
 
 #include "executer.h"
 
-char **	ft_delete_old_pwd(char **envp)
+char	**ft_delete_old_pwd(char **envp)
 {
 	int		max;
 	int		i;
