@@ -41,11 +41,6 @@ char *skip_divider_without_space(char *line)
 	return (line);
 }
 
-// void change_head_token(t_token *token_lst, t_token **origin_lst)
-// {
-// 	token_lst->head = (*origin_lst)->head;
-// }
-// Set head pointers for all tokens in the split list and connected tokens
 void set_head_for_all_tokens(t_token *token_lst, t_token *head)
 {
     t_token *current;

@@ -14,35 +14,35 @@
 
 int check_for_builtin(char *token_str)
 {
-    if(ft_strcmp("echo" , token_str) == true)
+    if (ft_strcmp("echo" , token_str) == true)
 		return (BUILTIN);
-	if(ft_strcmp("env" , token_str) == true)
+	if( ft_strcmp("env" , token_str) == true)
 		return (BUILTIN);
-	if(ft_strcmp("export" , token_str) == true)
+	if (ft_strcmp("export" , token_str) == true)
 		return (BUILTIN);
-	if(ft_strcmp("cd" , token_str) == true)
+	if (ft_strcmp("cd" , token_str) == true)
 		return (BUILTIN);
-	if(ft_strcmp("pwd" , token_str) == true)
+	if (ft_strcmp("pwd" , token_str) == true)
 		return (BUILTIN);
-	if(ft_strcmp("unset" , token_str) == true)
+	if (ft_strcmp("unset" , token_str) == true)
 		return (BUILTIN);
-	if(ft_strcmp("$?" , token_str) == true)
+	if (ft_strcmp("$?" , token_str) == true)
 		return (BUILTIN);
-	if(ft_strcmp("exit" , token_str) == true)
+	if (ft_strcmp("exit" , token_str) == true)
 		return (BUILTIN);
-	return 0;
+	return (0);
 }
 
 int choose_cmd_type(t_token *curr_token)
 {
-    int cmd_type;
+    int		cmd_type;
 	char	*lower;
 
     cmd_type = 0;
 	lower = ft_strtolower(curr_token->token);
 	cmd_type = (check_for_builtin(lower));
 	//free(lower);
-    if(cmd_type != 0)
-        return(cmd_type);
-    return(cmd_type = EXECUTE);
+    if (cmd_type != 0)
+        return (cmd_type);
+    return (cmd_type = EXECUTE);
 }

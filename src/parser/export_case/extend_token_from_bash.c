@@ -16,21 +16,21 @@
 
 
 
-void reset_token_get_home_directory(t_token **token_lst, char **src)
+void	reset_token_get_home_directory(t_token **token_lst, char **src)
 {
 	free((*token_lst)->token);
 	(*token_lst)->token = get_home_directory(src);
 	(*token_lst)->token_type = TEXT;
 }
 
-void reset_token_get_var_from_env(t_token **token_lst, char **src)
+void	reset_token_get_var_from_env(t_token **token_lst, char **src)
 {
 	char *str_until_dollar;
 	char *tmp_token;
 	char *old_token;
     char *env_str;
 	int i;
-	// ec$t
+
 	i = 0;
 	old_token = ft_strdup((*token_lst)->token);
 	free(((*token_lst)->token));
@@ -42,16 +42,12 @@ void reset_token_get_var_from_env(t_token **token_lst, char **src)
 		str_until_dollar = tmp_token;
 		i++;
 	}
-	env_str = get_var_from_env(src,old_token + i+1);
-    // printf("var found fpr $var: '%s'\n ", env_str);
+	env_str = get_var_from_env(src,old_token + i + 1);
 	(*token_lst)->token = ft_strjoin(str_until_dollar, env_str);
     (*token_lst)->token_type = TEXT;
 	free(str_until_dollar);
 }
 
-
-// $new holds "ls -al >""
-// from "$new" and "outfile" extend to a token_lst of  'ls' '-al' '>' 'outfile'
 t_token *extend_saved_export_var(t_token **token_lst)
 {
     t_bash  *bash;

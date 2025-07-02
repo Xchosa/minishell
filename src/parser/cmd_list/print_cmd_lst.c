@@ -24,7 +24,6 @@ void	print_cmd_lst(t_cmd_node *cmd_nodes)
 		printf("cmd_type: BUILTIN\n");
 	else
 		printf("cmd_type: EXECUTE\n");
-
 	printf("cmd \n");
 	if(cmd_nodes->cmd[i] == (void *)0)
 		printf("NULL");
@@ -43,8 +42,6 @@ void	print_cmd_lst(t_cmd_node *cmd_nodes)
 
 		while(current_file_node != NULL)
        	{
-			// alles einmal hoch setzen 
-			// oder gobale macros als enums 
 			printf("file node tail %d redir type: %d\n", j, current_file_node->redir_type);
 			if (current_file_node->redir_type == REDIRECT_INPUT)
 				printf("file node tail %d redir type: redirect_Input \n", j);
@@ -61,8 +58,6 @@ void	print_cmd_lst(t_cmd_node *cmd_nodes)
 		}
 	}
 }
-
-
 
 void	iter_cmd_lst(t_cmd_list *cmd_lst, void (*f)(t_cmd_node*))
 {
