@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:58:15 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/02 12:40:35 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/02 14:41:10 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static void free_heredoc_stoped(char *new_tmp_file_name_suffix,char *new_tmp_fil
     free(new_tmp_file_name);
     free(suffix);
 }
-
 bool check_for_interactive_shell(void)
 {
 	if(isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
@@ -78,13 +77,11 @@ bool execute_here_doc(char *filename, int here_doc_fd)
 			line = get_next_line(STDIN_FILENO);
 		if(!line)
 			break;
-		skip_whitespace(&line);
 		if(ft_strcmp(line, filename) == true) 
 			break;
 		ft_putstr_fd(line, here_doc_fd);
 		if (check_for_interactive_shell() == true)
             ft_putstr_fd("\n", here_doc_fd);
-		// free(line); // eine null wird geprinted bei cat <<now
 	}
 	if(line)
 		free(line);
