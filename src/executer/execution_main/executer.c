@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/01 15:45:14 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/02 12:40:29 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ bool	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 	//kann man aber auf eine reduzieren
 	if (path == NULL)
 	{
+		perror("Error?");
+		printf("test for errno for exitcode: %d \n ", errno);
 		return false; //errorhandling, free, exit
 	}
-	execve(path, cmd_node->cmd, envp); // eventuell errorcheck also != 0 ? und ausgabe error sollte hier mit perror funktionieren
+	execve(path, cmd_node->cmd, envp);
+	// eventuell errorcheck also != 0 ? und ausgabe error sollte hier mit perror funktionieren
 	return true;
 	// path ist malloced und muesste eigentlich von der execute main am ende einmal gefreet werden.
 }
@@ -100,6 +103,7 @@ bool execution_loop (t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], ch
 	int backupStdout;
 	int backupStdin;
 	bool check;
+	//char *path to pass to ft_execute and free here
 	
 	backupStdout = dup(STDOUT_FILENO);
     backupStdin = dup(STDIN_FILENO);
@@ -153,6 +157,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	i = 0;
 	save_heredoc_files(&cmd_list->head);
 	iter_cmd_lst(cmd_list, &print_cmd_lst);
+	printf("test\n");
 	
 	int			fd[(int)cmd_list->size][2]; // am anfang werden alle pipes erstellt. ich glaube norminette mochte die schreibweise nicht, also vllt mit * ?
 	
@@ -168,7 +173,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 			ft_open_pipes(fd, cmd_list); // die funktionen zu pipes sind alle irgendwie kompliziert, aber ich glaube sie funktionieren. 
 			//Es geht darum dass die child prozesse offene fd erben und am ende des child prozesses alle fd geschlossen sind
 		
-		while (cur_cmd_node != NULL)
+		while (cur_cmd_node != NULL) // abbruchbedigung mit bool bei execution loop = check oder doch wait?
 		{
 			// printf("before forking ");
 			pid = fork();
@@ -179,6 +184,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 				{
 					clean_cmd_list_objects_tmp_files(cmd_list);/// child process failed // alles cleared 
 					// pipes schliesen 
+					// hier soll der child gecshlossen werden? bei fail auf jeden fall
 				}
 			}
 			wait(0); // hier mit wait oder waitpid, kann der exit code von execve abgefangen werden. der exit code builtins kommt aus zeile 55. ist aber vielleicht gar nicht noetig weil es ja eh darum geht die variable zu setzen und nicht so sehr darum dass das child mit dem richtigen code exitet
