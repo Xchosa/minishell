@@ -60,6 +60,9 @@ void	ft_pwd(char **envp);
 char	**ft_add_pwd(t_cmd_node *cmd_node, char **envp);
 char	**ft_add_old_pwd(char **envp);
 char	**ft_delete_old_pwd(char **envp);
+void	ft_minishell_nested(char **envp);
+void	ft_increase_shlvl(char **envp);
+int		ft_ask_shlvl(char **envp);
 
 
 //heredoc

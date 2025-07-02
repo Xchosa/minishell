@@ -6,13 +6,11 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/02 14:21:50 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:40:50 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executer.h"
-
-
 
 bool	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 {
@@ -21,15 +19,21 @@ bool	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 	path = ft_getpath(cmd_node->cmd[0], envp); // ft_getpath und alles was folgt ist einfach aus pipex kopiert. 
 	//in pipex.c ist eine funktion ft_freearray2 weil du auch eine hattest und mich der compiler dafuer angekackt hat. 
 	//kann man aber auf eine reduzieren
+	printf("test");
 	if (path == NULL)
 	{
-		perror("Error?");
-		printf("test for errno for exitcode: %d \n ", errno);
-		return false; //errorhandling, free, exit
+		// ggf cmd_node->cmd[0] in die fehlermeldung
+		perror("Shell:");
+		printf("test for errno for exitcode: %d \n ", errno); //errno could go in exit code
+		exit(errno);
+		//return false; //errorhandling, free, exit
 	}
+	printf("test");
 	execve(path, cmd_node->cmd, envp);
+	printf("test");
+	exit(errno);
 	// eventuell errorcheck also != 0 ? und ausgabe error sollte hier mit perror funktionieren
-	return true;
+	//return true;
 	// path ist malloced und muesste eigentlich von der execute main am ende einmal gefreet werden.
 }
 
@@ -149,6 +153,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	t_cmd_node	*cur_cmd_node;
 	int			pid;
 	int			i;
+	int			status;
 	const	int size = (int)cmd_list->size;
 
 	i = 0;
@@ -162,6 +167,8 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 		if (manage_single_cmd_node(cmd_list, cur_cmd_node, fd, envp ) == false)
 			clean_cmd_list_objects_tmp_files(cmd_list); 
 	}
+	else if (ft_strcmp("./minishell", cmd_list->head->cmd[0]) == true)
+		ft_minishell_nested(envp);
 	else
 	{
 		if (cmd_list->size > 1)
@@ -180,7 +187,9 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 					// hier soll der child gecshlossen werden? bei fail auf jeden fall
 				}
 			}
-			wait(0);
+			wait(&status);
+			if (WIFEXITED(status))
+				get_exit_codes()->last_exit_code = WEXITSTATUS(status);
 			cur_cmd_node = cur_cmd_node->next;
 			if (i < cmd_list->size - 1)
 				close(fd[i][1]);

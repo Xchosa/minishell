@@ -80,6 +80,7 @@ MY_SOURCES = \
 		special_builtin.c \
 		execute_builtin.c \
 		executer.c \
+		minishell_nested.c \
 		redirect.c \
 		manage_redirections.c \
 		file_discriptor.c \
