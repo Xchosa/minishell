@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:58:15 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/01 16:36:18 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/02 12:40:35 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,30 +69,25 @@ bool check_for_interactive_shell(void)
 bool execute_here_doc(char *filename, int here_doc_fd)
 {
 	char *line;
+	reset_sig_handler_to_parent();
 	while(1)
 	{
-		reset_sig_handler_to_parent();
 		if(check_for_interactive_shell () == true)
 			line = readline("> ");
 		else
 			line = get_next_line(STDIN_FILENO);
-		if(!line)// handle ctrl + D -> all heredocs should be closed
-		{
+		if(!line)
 			break;
-		}
 		skip_whitespace(&line);
 		if(ft_strcmp(line, filename) == true) 
-		{
-			free(line);
-			close(here_doc_fd);// doppelt
-			reset_sig_handler_to_child();
-			return(true);
-		}
+			break;
 		ft_putstr_fd(line, here_doc_fd);
 		if (check_for_interactive_shell() == true)
             ft_putstr_fd("\n", here_doc_fd);
-		free(line);
+		// free(line); // eine null wird geprinted bei cat <<now
 	}
+	if(line)
+		free(line);
 	close(here_doc_fd);
 	reset_sig_handler_to_child();
 	return true;

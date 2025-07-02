@@ -142,6 +142,7 @@ bool execution_loop (t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], ch
 
 
 // hard coden wenn ./minishell in child der beendet werden kann -
+// shell level um ein erhoehen und \n printen.
 // aktuell behaved richtig. aber schliesst processe nicht (printed new line , aber ctrl c bugged)
 
 void	ft_execute(t_cmd_list *cmd_list, char **envp)
