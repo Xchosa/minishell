@@ -25,7 +25,6 @@ char	*ft_strtolower(char *input)
 bool	ft_execute_builtin(t_cmd_node *cmd_node, char **envp)
 {
 	bool	check;
-	//char	*cmd_lower;
 
 	cmd_node->cmd[0] = ft_strtolower(cmd_node->cmd[0]);
 	if (cmd_node->cmd[0] == NULL)
