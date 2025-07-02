@@ -127,12 +127,9 @@ void heredoc_handler(int sig)
 {
     if (sig == SIGINT)
 	{
-		get_exit_codes()->last_exit_code = 1;
+		get_exit_codes()->last_exit_code = 130;
 	// in readline mode then only print new line
 		write(STDOUT_FILENO, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
 		exit(130); // sig int = 2 -> 128 + 2 = 130  // check bash
 	}
 	else if (sig == SIGQUIT)
