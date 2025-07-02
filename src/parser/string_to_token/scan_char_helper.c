@@ -36,8 +36,10 @@ bool	check_for_divider_with_space(char c)
 		return (true);
 	if (ft_strncmp (";", &c, 1) == 0)
 		return (true);
-	if (ft_strncmp ("\"", &c, 1) == 0)
-		return (true);
+	// if (ft_strncmp ("\"", &c, 1) == 0)
+	// 	return (true);
+	// if (ft_strncmp ("\'", &c, 1) == 0)
+	// 	return (true);
 	return (false);
 }
 

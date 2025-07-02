@@ -29,6 +29,8 @@ int special_char_no_divider(char c)
 {
 	if (c == '-')
 		return (1);
+    // if (c == ' ')
+	// 	return (1);
     if (c == '/')
 		return (1);
 	if (c == '=')
@@ -64,12 +66,22 @@ char *handle_dividers(char *line, bool *flag)
     return (line);
 }
 
-
-
+bool check_for_space(char c)
+{
+    if (c == ' ')
+		return (true);
+    return false;
+}
+// tokeniser ohne update line...  echo hallo'world now' niemals handlbar 
+// wenigstens das er trennt bei helleo
 char *handle_regular_token(char *line)
 {
     while (*line && (ft_isalnum(*line) || special_char_no_divider(*line)))
+    {
+        // if(check_for_space(*line) == true)
+        //         return(line);
         line++;
+    }
     return (line);
 }
 
