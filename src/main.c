@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/02 11:48:51 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:52:09 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,33 @@ void   leaks(void)
     system("leaks minishelll: \n");
 }
 
-int	main(int argc, char **argv, char **env)
-{
-	bool	tty_shell;
+// int	main(int argc, char **argv, char **env)
+// {
+// 	bool	tty_shell;
 	
-	tty_shell = false;
-	char *line;
+// 	tty_shell = false;
+// 	char *line;
 	
-	line = NULL;
+// 	line = NULL;
 
-	if (init_bash(env, argc)== false || (init_exit_codes(argc) == false))
-		return(1);
+// 	if (init_bash(env, argc)== false || (init_exit_codes(argc) == false))
+// 		return(1);
 
-	if(isatty(STDIN_FILENO))
-	{
-		interactive_shell_tty(argc, argv, env, line);
-		tty_shell = true;
-	}
-	else
-	{
-		non_interactive_shell(argc, argv, env, line);
-		{
-			if (tty_shell == true)
-			printf("clean history function + destroy shell");
-		}
-	}
-    // destroy shell? tyname, ttyslo
-}
+// 	if(isatty(STDIN_FILENO))
+// 	{
+// 		interactive_shell_tty(argc, argv, env, line);
+// 		tty_shell = true;
+// 	}
+// 	else
+// 	{
+// 		non_interactive_shell(argc, argv, env, line);
+// 		{
+// 			if (tty_shell == true)
+// 			printf("clean history function + destroy shell");
+// 		}
+// 	}
+//     // destroy shell? tyname, ttyslo
+// }
 
 
 

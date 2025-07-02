@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:00:04 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/01 15:54:05 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:09:04 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	clean_file_lst(t_file_list *file_list)
 	t_file_node	*file_node;
 	t_file_node	*tmp;
 
+	if (!file_list)
+		return;
 	file_node = file_list->head;
 	while (file_node)
 	{
@@ -92,15 +94,56 @@ void	clean_cmd_lst(t_cmd_list *cmd_list)
 		return ;
 	while (cmd_node)
 	{
-		if (cmd_node->next == NULL)
+		clean_file_lst(cmd_node->file_list);
+		if(cmd_node->next == NULL)
 		{
-			if (cmd_node->file_list != NULL)
-				clean_file_lst(cmd_node->file_list);
+			ft_free_array(cmd_node->cmd);
+			free(cmd_node);
+			break;
 		}
-		tmp = cmd_node->next;
+		if (cmd_node->next != NULL)
+		{
+			tmp = cmd_node->next;
+			cmd_node = tmp;
+		}
 		ft_free_array(cmd_node->cmd);
 		free(cmd_node);
-		cmd_node = tmp;
 	}
 	free(cmd_list);
 }
+
+// void clean_cmd_lst(t_cmd_list *cmd_list)
+// {
+//     t_cmd_node *cmd_node;
+//     t_cmd_node *tmp;
+
+//     if (!cmd_list)
+//         return;
+        
+//     if (!cmd_list->head)
+//     {
+//         free(cmd_list);
+//         return;
+//     }
+    
+//     cmd_node = cmd_list->head;
+//     while (cmd_node)
+//     {
+//         // Save the next node pointer before freeing anything
+//         tmp = cmd_node->next;
+        
+//         // Clean the file list for this node
+//         clean_file_lst(cmd_node->file_list);
+        
+//         // Free the command array
+//         ft_free_array(cmd_node->cmd);
+        
+//         // Free the current node
+//         free(cmd_node);
+        
+//         // Move to the next node
+//         cmd_node = tmp;
+//     }
+    
+//     free(cmd_list);
+// }
