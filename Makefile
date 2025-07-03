@@ -9,6 +9,7 @@ CFLAGS	= -Wall -Wextra  -g -fsanitize=address -I inc/ -ldl -lglfw -pthread -lm #
 CFLAGS		= -Wall -Wextra -g -fsanitize=address -I inc/ #-Werror 
 #CFLAGS		= -Wall -Wextra -g -I inc/ #-Werror 
 
+
 LIBFT := ./libft/libft.a
 
 SOURCE_DIR = ./src
@@ -47,6 +48,7 @@ MY_SOURCES = \
 		tokeniser.c \
 		handle_quotes.c \
 		update_line.c \
+		update_line_2.c \
 		update_line_helper.c \
 		tokeniser_print.c \
 		lexer.c \

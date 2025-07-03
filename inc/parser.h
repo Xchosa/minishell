@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/03 10:49:06 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:22:17 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <errno.h>
 # include <stdlib.h>
 # include <dirent.h>
-
 
 
 #define syntax_failure 258
@@ -144,7 +143,7 @@ t_token 	*create_token_with_quote_case(char **line, t_token *token);
 t_token		*tokenlstnew(char	*content);
 bool		check_for_divider_with_space(char c);
 bool		check_for_divider_without_space(char c);
-char		*skip_Dollar_parameter(char *line);
+char		*skip_dollar_parameter(char *line);
 void 		free_token(t_token **token_list);
 
 //update line

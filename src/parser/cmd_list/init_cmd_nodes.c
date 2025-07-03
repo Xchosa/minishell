@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:54:43 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/27 10:54:45 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/03 12:57:07 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ t_cmd_list	*init_cmd_list(t_token **token_list,char *line)
 			cmd_list->size +=1;
 		}
 	}
-	return(cmd_list);
 	clean_token_lst_and_line((*token_list),line);
+	return(cmd_list);
 }

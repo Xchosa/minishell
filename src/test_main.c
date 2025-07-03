@@ -1,13 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_main.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/03 14:29:52 by poverbec          #+#    #+#             */
+/*   Updated: 2025/07/03 14:33:28 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 #include "executer.h"
 
-
-
-
-
-// int main(int argc, char **argv, char **env)
+// int	main(int argc, char **argv, char **env)
 // {
 //     t_token *token_lst;
 // 	(void)argv;
@@ -18,7 +25,7 @@
 // 	// char *line = "$? > outfile ";
 
 //     // to do: tokeniser
-// 	line = " cat libft/printf/ft_printf.h";
+// 	line = " cat <<ii | <<2";
 // 	// char *line = "$h outfile";
 //     // char *line = "export t=\"world | around < \" echo world";
 //     // line = "echo $?dfdfd"; // = wird falsch gehandelt
@@ -82,6 +89,7 @@
 // 	printf("\n append token\n\n");
 // 	// handle_export(token_lst);
 // 	append_export_str(&token_lst);
+// 	printf("line , %s \n", line);
 //     if (lexer_token(token_lst) == false)
 //     {
 // 		print_error_message(&token_lst, line);

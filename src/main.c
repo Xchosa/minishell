@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/03 12:51:34 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:33:20 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,3 @@ int	main(int argc, char **argv, char **env)
 	}
     // destroy shell? tyname, ttyslo
 }
-
-
-
-
-
-
-
-
-
-
-
-

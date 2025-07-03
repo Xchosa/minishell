@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:52:50 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/02 18:00:08 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:31:47 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 static char	*tokenise_divider(char *content, char *new_token)
 {
-	char *tmp_token;
+	char	*tmp_token;
+	int		i;
 
-	int i;
 	i = 0;
 	while (check_for_divider_without_space(content[i]) == true)
 	{
 		tmp_token = ft_charjoin(new_token, content[i]);
 		free(new_token);
 		new_token = tmp_token;
-		if(not_single_divider(content[i])== false )
+		if (not_single_divider(content[i])== false )
 			return (new_token);
 		i++;
 	}
 	return (new_token);
 }
 
-char* get_token(char *content)
+char	*get_token(char *content)
 {
 	int		i;
 	char	*new_token;
@@ -38,7 +38,8 @@ char* get_token(char *content)
 
 	i = 0;
 	new_token = ft_strdup("");
-	while (content[i] != '\0' && check_for_divider_with_space(content[i]) == false)
+	while (content[i] != '\0'
+		&& check_for_divider_with_space(content[i]) == false)
 	{
 		if (char_is_alpha_nbr_and_no_whitespace(content[i]))
 		{
