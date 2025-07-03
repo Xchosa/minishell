@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:09:11 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/25 10:28:20 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:55:32 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void clean_token_lst(t_token *token_lst)
 			token_lst = tmp;
 		}
 	}
-	
 }
 
 void free_single_token(t_token **token)
@@ -54,38 +53,38 @@ void free_single_token(t_token **token)
 
 
 
-bool tokeniser_successful(t_token *token_lst, char *line)
+bool	tokeniser_successful(t_token *token_lst, char *line)
 {
 	if (!token_lst)
 	{
 		free(line);
 		return (false);
-	}	
-	return(true);
+	}
+	return (true);
 }
 
-bool check_lexer_token_and_free(t_token *token, char *line)
+bool	check_lexer_token_and_free(t_token *token, char *line)
 {
 	if (lexer_token(token) == false)
 	{
-		print_error_message(line);
+		print_error_message(&token, line);
 		free(line);
 		free(token);
-		return(false);
+		return (false);
 	}
-	return(true);
+	return (true);
 }
 
-bool check_lexer_and_free(char *line)
+bool	check_lexer_and_free(char *line)
 {
 	if (line == NULL)
-        return(false);
+		return (false);
 	if (lexer(line) == false)
 	{
 		get_exit_codes()->last_exit_code = syntax_failure;
-		print_error_message(line);
+		print_lexer_error_message(line);
 		free(line);
-		return(false);
-    }
-	return(true);
+		return (false);
+	}
+	return (true);
 }

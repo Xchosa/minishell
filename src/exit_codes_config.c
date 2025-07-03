@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:59:22 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/30 10:59:25 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:45:33 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void clean_exit_codes(void)
 	
 }
 
-bool print_error_message(t_token **token_list, char *line)
+void print_error_message(t_token **token_list, char *line)
 {
 	int error;
 	bool exit_minishell;
@@ -61,9 +61,25 @@ bool print_error_message(t_token **token_list, char *line)
 		(printf("minishell: '%s': command not found \n", line));
 	if (error == syntax_error_token)
 		(printf("minishell: syntax error near unexpected token '%s' \n", line));
-	if (error == ec_sucess)
-		return(exit_minishell = false);
+	// if (error == ec_sucess)
+	// 	return(exit_minishell = false);
 	clean_token_lst_and_line((*token_list),line);
-	return(exit_minishell);
 }
 
+
+void print_lexer_error_message(char *line)
+{
+	int error;
+
+	error = get_exit_codes()->last_exit_code;
+	if (error == invalid_identifier)
+		(printf("minishell: '%s': not a valid identifier \n", line));
+	if (error == syntax_failure)
+		(printf("minishell: '%s': syntax failure \n", line));
+	if (error == cmd_not_found)
+		(printf("minishell: '%s': command not found \n", line));
+	if (error == syntax_error_token)
+		(printf("minishell: syntax error near unexpected token '%s' \n", line));
+	// if (error == ec_sucess)
+	// 	return(exit_minishell = false);
+}

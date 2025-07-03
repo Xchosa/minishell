@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 15:57:07 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/06 16:09:20 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/03 12:45:17 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int special_char_no_divider(char c)
 		return (1);
 	if (c == '=')
 	 	return (1);
-	if (ft_strchr(".,;!?*~$", c) != NULL)
+	if (ft_strchr(".,;!?*~$_", c) != NULL)
 		 return (1);
 	return (0);
 }

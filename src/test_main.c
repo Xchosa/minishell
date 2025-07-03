@@ -18,7 +18,7 @@
 // 	// char *line = "$? > outfile ";
 
 //     // to do: tokeniser
-// 	line = " cat <infile";
+// 	line = " cat libft/printf/ft_printf.h";
 // 	// char *line = "$h outfile";
 //     // char *line = "export t=\"world | around < \" echo world";
 //     // line = "echo $?dfdfd"; // = wird falsch gehandelt
@@ -45,7 +45,7 @@
 // 	if (lexer(line) == false)
 // 	{
 // 		get_exit_codes()->last_exit_code = syntax_failure;
-// 		print_error_message(line);
+// 		print_error_message(&token_lst, line);
 // 		return(1);
 // 	}
 
@@ -84,7 +84,7 @@
 // 	append_export_str(&token_lst);
 //     if (lexer_token(token_lst) == false)
 //     {
-// 		print_error_message(line);
+// 		print_error_message(&token_lst, line);
 // 		return(1);
 //     }
 // 	iter_tokenlst(token_lst, &print_tokenlst);
@@ -98,6 +98,18 @@
 // 	clean_cmd_list_objects_tmp_files(cmd_lst);
 
 // }
+
+
+
+
+
+
+
+
+
+
+
+
 
 //     printf("\n \nsecond round\n");
 
