@@ -67,7 +67,7 @@ t_token	*tokenlstnew(char	*content)
 	return (token);
 }
 
-t_token *tokeniser(char *line)
+t_token	*tokeniser(char *line)
 {
 	t_token *new_token;
 	t_token *token_lst;
@@ -87,7 +87,7 @@ t_token *tokeniser(char *line)
 		tokenadd_back(&token_lst, new_token);
 		line = update_line(line, token_lst);
 	}
-	if(new_token ==NULL)
+	if (new_token ==NULL)
 		return (token_lst);
 	new_token->next = NULL;
     

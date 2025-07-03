@@ -82,6 +82,7 @@ MY_SOURCES = \
 		special_builtin.c \
 		execute_builtin.c \
 		executer.c \
+		execute_heredoc.c \
 		redirect.c \
 		manage_redirections.c \
 		file_discriptor.c \

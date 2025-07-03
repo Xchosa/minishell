@@ -46,9 +46,6 @@ void	clean_bash_env(void)
 	bash->env = NULL;
 }
 
-// cpy envp in bash_envp
-//  rows counts until 1 only 
-// see copilot
 char	**cpychar_arr(char **src)
 {
 	int		i;

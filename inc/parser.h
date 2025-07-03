@@ -34,16 +34,15 @@
 
 
 // t_bash *get_bash(void);
-
 typedef struct s_bash
 {
 	char	**env;
 }	t_bash;
 
-
+ // update after every runexit
 typedef struct s_exit_codes
 {
-	int	last_exit_code; // update after every runexit
+	int	last_exit_code;
 }	t_exit_codes;
 
 t_exit_codes	*get_exit_codes(void);
@@ -51,32 +50,26 @@ bool			init_exit_codes(int argc);
 
 typedef enum s_type
 {
-	TEXT = 0, // 0
-	Redirect_input = 3, // 2 
-	Redirect_output = 4, // 
-	Append = 5,// >>
-	here_doc = 6,// <<
+	TEXT = 0,
+	Redirect_input = 3,
+	Redirect_output = 4,
+	Append = 5,
+	here_doc = 6,
 	Tilde = 7,
-	Mix_Export_var = 8, // ha$t
-	// S_Quote = 7,
-	// D_Quote = 8, // (like " ")
-	EXPORT = 9, // export
-	Export_var =10, // from export hallo="ls -l" -> 'hallo' = Export_var  | ls -l normal TEXT
-	CALL_EXIT = 11, // $?
-	CALL_SAVED_VAR = 12, // $hello   e.g -holds 'world' or holds nothing
-	Error =13,// node invalid
-	PIPE = 14, // 1
+	Mix_Export_var = 8,
+	EXPORT = 9,
+	Export_var =10,
+	CALL_EXIT = 11,
+	CALL_SAVED_VAR = 12,
+	Error =13,
+	PIPE = 14,
 
 }	t_type;
 
-// export  word=hello -> evp word
-// unset word 
-// export hello="echo test" world="echo test | outfile"
-// 
-// '$hello' '>' 'outfile'
-// 
-
-// nach prios sortieren < > enum  
+//from export hallo="ls -l" -> 'hallo' = Export_var  | ls -l normal TEXT
+// call exit $?
+// call_saved_var  $hello
+//
 
 typedef struct s_token
 {
@@ -86,12 +79,6 @@ typedef struct s_token
 	struct s_token	*head;
 }	t_token;
 
-
-// redir_type 
-// infile <
-// outfile >
-// heredoc <<
-// outfile append >>
 
 // t_bash functions
 char		**cpychar_arr(char** src);

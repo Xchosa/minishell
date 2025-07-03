@@ -13,8 +13,6 @@
 # include "../libft/printf/ft_printf.h"
 # include "../libft/get_next_line/get_next_line.h"
 
-//# include "parser.h"
-
 #define REDIRECT_INPUT 3 // <
 #define REDIRECT_OUTPUT 4 // >
 #define HERE_DOC 5 // <<
@@ -26,10 +24,9 @@
 //List of redirection
 typedef struct s_file_node
 {
-	// holing name of redirecting file
-	int					redir_type; // 1. < "infile" 2.  > outfile 3. <<her_doc 4. >> append_outfile
-	char				*filename; // "hello"
-	struct s_file_node	*next; // NULL
+	int					redir_type;
+	char				*filename;
+	struct s_file_node	*next;
 }	t_file_node;
 
 //meta struct list 
@@ -40,35 +37,20 @@ typedef struct s_file_list
 	ssize_t		size;
 }	t_file_list;	
 
-
-// muss syntax checken for invailid
+// cmd_typ execute or builtin
 typedef struct s_cmd_node
 {
-	int					cmd_type; // 1. buildin oder 2. execute // 
-	char				**cmd; // echo hallo NULL
+	int					cmd_type;
+	char				**cmd;
 	t_file_list 		*file_list;
 	struct s_cmd_node	*next;
 }	t_cmd_node;
 
-// meta struct command liste 
-// poiter to first cmd and last command 
-// sizse how often got forked
 typedef struct s_cmd_list
 {
 	t_cmd_node	*head;
 	t_cmd_node	*tail;
 	ssize_t		size;
 }	t_cmd_list;
-
-
-
-
-
-
-// // singular linked list
-
-
-// // meta struct auf die immer zugegriffen wird 
-
 
 #endif

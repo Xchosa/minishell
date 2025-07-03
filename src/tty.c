@@ -26,14 +26,6 @@ if not the same as previous one
 - only then save in history 
 (check what is fkt add_history doing)
  (echo    ls does save spaces , ls     -al does not)
-
-check (empty) input (file) check for outfile
-
-get some bash cmds to test 
-
-every token one node 
-what is awk
-
 */
 
 static char	*read_terminal(void)
@@ -67,8 +59,8 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	(void)argc;
 	(void)envp;
 	(void)argv;
-	t_token *token_lst;
-	t_cmd_list *cmd_lst;
+	t_token		*token_lst;
+	t_cmd_list	*cmd_lst;
 
 	while(1)
 	{
@@ -96,7 +88,6 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		clean_cmd_lst(cmd_lst);
 	}
 	clean_cmd_list_objects_tmp_files(cmd_lst);
-	// clean cmd_list , tmp files and bash_ exit codes 
 }
 
 // printf("\n append token string in export \n\n");
@@ -114,18 +105,16 @@ void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)
 	t_cmd_list 	*cmd_lst;
 
 	line = get_next_line(STDIN_FILENO);
-	if(check_lexer_and_free(line) == false)
+	if (check_lexer_and_free(line) == false)
 		return;
 	token_lst = tokeniser(line);
-	if(tokeniser_successful(token_lst,line) == false)
+	if (tokeniser_successful(token_lst,line) == false)
             return;
-	// iter_tokenlst(token_lst, &print_tokenlst);
 	token_lst = extend_saved_export_var(&token_lst);
 	append_export_str(&token_lst);
 	if (lexer_token(token_lst) == false)
 		return;
 	cmd_lst = init_cmd_list(&token_lst, line);
-	// printf("Thilos problem:\n");
 	init_signal(1);
 	ft_execute(cmd_lst, get_bash()->env);
 	init_signal(0);

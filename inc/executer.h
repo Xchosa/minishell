@@ -6,20 +6,6 @@
 # include <sys/wait.h>
 # include <parser.h>
 
-	// typedef struct s_exit_codes
-	// {	
-	// 	int last_exit_code; // update after every runexit
-		
-	// } t_exit_codes;
-
-	// typedef struct s_bash
-	// {
-	// 	char **env;
-		
-	// } t_bash;
-
-	// t_exit_codes	*get_exit_codes(void);
-	// t_bash		*get_bash(void);
 
 bool	ft_echo(t_cmd_node *cmd_node, char **envp);
 void	ft_env(char **envp);
@@ -28,7 +14,7 @@ int		ft_isnum(char *s);
 void	ft_exit(t_cmd_node *cmd_node);
 void	ft_execute(t_cmd_list *cmd_list, char **envp);
 void	ft_execute_node(
-	t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp);
+		t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp);
 bool	ft_execute_command(t_cmd_node *cmd_node, char **envp);
 bool	ft_execute_builtin(t_cmd_node *cmd_node, char **envp);
 void	ft_open_pipes(int fd[][2], t_cmd_list *cmd_list);
@@ -42,8 +28,6 @@ char	*ft_getpath(char *command, char **envp);
 bool	ft_manage_infile(char *infile, int fd[][2]);
 bool	ft_manage_outfile(char *outfile, int fd[][2]);
 bool	ft_manage_append(char *appendfile, int fd[][2]);
-// void	ft_manage_heredoc(char *delimiter, int fd[][2]);
-// void	ft_manage_redirections(t_cmd_node *cmd_node, int fd[][2], int backupStdin, int backupStdout);
 bool	ft_manage_redirections_multi(t_file_list *file_list, int fd[][2], int backupStdin, int backupStdout);
 
 
