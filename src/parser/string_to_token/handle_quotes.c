@@ -72,6 +72,5 @@ t_token	*equal_case(char **line)
 	new_token->token =ft_strdup("=");
 	new_token->token_type = Export_var;
 	(void)line;
-	// (line)++;
 	return (new_token);
 }

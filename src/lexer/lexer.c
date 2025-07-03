@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:32:26 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/06 17:18:17 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:52:51 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,30 +41,29 @@ get some bash cmds to test
 
 bool	lexer(char *line)
 {
-	int i;
-	bool syntax;
-	
+	int		i;
+	bool	syntax;
+
 	syntax = true;
 	i = 0;
 	syntax = wrong_use_pipe_and_redirection(line);
-	while(line[i])
+	while (line[i])
 	{
-		while(line[i])
+		while (line[i])
 		{
 			if (count_up_strings(line + i) >= 0)
 				i += count_up_strings(line + i);
 			else
-				return(false);
-			if (check_for_correct_double_divider(line +i) == false)
+				return (false);
+			if (check_for_correct_double_divider(line + i) == false)
 				return (false);
 			if (check_for_correct_single_divider(line + i) == false)
 				return (false);
 			i++;
 		}
-		if(line[i]== '\0')
-			break;
+		if (line[i] == '\0')
+			break ;
 		i++;
 	}
 	return (syntax);
 }
-

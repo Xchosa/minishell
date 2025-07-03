@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/02 13:46:30 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:22:17 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 # define PARSER_H
 
 # include "minishell.h"
-
 # include <stdio.h>
 # include <unistd.h>
 # include <stdbool.h>
 # include <errno.h>
 # include <stdlib.h>
-#include <dirent.h>
-
+# include <dirent.h>
 
 
 #define syntax_failure 258
@@ -39,16 +37,14 @@
 
 typedef struct s_bash
 {
-	char **env;
-	
-} t_bash;
+	char	**env;
+}	t_bash;
 
 
 typedef struct s_exit_codes
-{	
-	int last_exit_code; // update after every runexit
-	
-} t_exit_codes;
+{
+	int	last_exit_code; // update after every runexit
+}	t_exit_codes;
 
 t_exit_codes	*get_exit_codes(void);
 bool			init_exit_codes(int argc);
@@ -84,11 +80,10 @@ typedef enum s_type
 
 typedef struct s_token
 {
-	char 			*token;// **weil eigenes envp erweitert werden muss
-	t_type 			token_type;
-	struct s_token 	*next;
+	char			*token;// **weil eigenes envp erweitert werden muss
+	t_type			token_type;
+	struct s_token	*next;
 	struct s_token	*head;
-	
 }	t_token;
 
 
@@ -109,8 +104,8 @@ void		interactive_shell_tty(int argc, char **argv, char **envp, char *line);
 void		non_interactive_shell(int argc, char **argv, char **envp, char *line);
 
 //interrupt tty
-bool check_lexer_and_free(char *line);
-bool check_lexer_token_and_free(t_token *token, char *line);
+bool 		check_lexer_and_free(char *line);
+bool 		check_lexer_token_and_free(t_token *token, char *line);
 
 // lexer
 bool		lexer(char *line);
@@ -123,7 +118,8 @@ bool    	check_for_correct_single_divider(char *line);
 bool		lexer_token(t_token *token_lst);
 bool		tokeniser_successful(t_token *token_lst, char *line);
 
-bool 		print_error_message(char *line);
+void 		print_error_message(t_token **token_lst, char *line);
+void		print_lexer_error_message(char *line);
 
 // tokeniser
 void 		skip_whitespace(char **line);
@@ -131,7 +127,7 @@ bool		skip_whitespace_and_check_for_eof(char **line);
 bool		find_divider_until_whitespace_or_eof(char c);
 bool		char_is_alpha_nbr_and_no_whitespace(char c);
 
-t_token 	*tokeniser (char *line);
+t_token 	*tokeniser(char *line);
 char		*get_token(char *content);
 t_type		get_token_type(char *content);
 t_token		*tokenlast(t_token *lst);
@@ -147,7 +143,7 @@ t_token 	*create_token_with_quote_case(char **line, t_token *token);
 t_token		*tokenlstnew(char	*content);
 bool		check_for_divider_with_space(char c);
 bool		check_for_divider_without_space(char c);
-char		*skip_Dollar_parameter(char *line);
+char		*skip_dollar_parameter(char *line);
 void 		free_token(t_token **token_list);
 
 //update line

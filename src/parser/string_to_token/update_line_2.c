@@ -1,38 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_identifer.c                                  :+:      :+:    :+:   */
+/*   update_line_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 17:25:55 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/02 17:27:01 by poverbec         ###   ########.fr       */
+/*   Created: 2025/07/03 14:13:44 by poverbec          #+#    #+#             */
+/*   Updated: 2025/07/03 14:23:48 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "parser.h"
 
-bool	d_quote_case_no_div(char *line)
+bool	check_for_space(char c)
 {
-	int	i;
+	if (c == ' ')
+		return (true);
+	return (false);
+}
 
-	i = 1;
-	while (ft_strncmp("\"", line, 1) != 0)
+char	*handle_regular_token(char *line)
+{
+	while (*line && (ft_isalnum(*line) || special_char_no_divider(*line)))
 	{
-		if (line[i])
-			return (false);
-		if (check_for_divider_without_space(line[i]) == true)
-			return (false);
-		i++;
+		line++;
 	}
-	i++;
-	while (line[i])
-	{
-		skip_whitespace(&line);
-		if (check_for_divider_without_space(line[i]) == true)
-			return (false);
-		i++;
-	}
-	return (true);
+	return (line);
 }

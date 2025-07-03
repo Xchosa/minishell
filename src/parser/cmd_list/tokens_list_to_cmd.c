@@ -13,11 +13,10 @@
 #include "parser.h"
 
 
-static bool pipe_token(t_token **token_list)
+static bool	pipe_token(t_token **token_list)
 {
 	if(*token_list == NULL)
         return(true);
-
 	if((*token_list)->token_type == PIPE)
 	{
 		(*token_list) = (*token_list)->next;
@@ -27,9 +26,9 @@ static bool pipe_token(t_token **token_list)
 }
 bool redir_token(t_token **token_list)
 {
-	int type;
+	int	type;
 
-	if(*token_list == NULL)
+	if (*token_list == NULL)
         return(false);
 	type = (*token_list)->token_type;
 	if (type == Redirect_input || type == Redirect_output 
@@ -39,18 +38,7 @@ bool redir_token(t_token **token_list)
 		return (false);
 }
 
-/*
-	appends in cmd_node the cmd from each token
-	changing or giving a cmd_type for the hole node until a pipe
-	e.g. export h=world becommes type BUILTIN
-	e.g. 
-	if redirection a file list gets created
-	looping and appending file_nodes to the head or tail of the file_list 
-	until pipe
-*/
-
-
-static void if_redirect_set_file_node_head(t_file_list *file_list, t_file_node **file_node, t_token **token_lst)
+static	void	if_redirect_set_file_node_head(t_file_list *file_list, t_file_node **file_node, t_token **token_lst)
 {
 	file_list->head = process_token_type_redir(token_lst);
 	*file_node = file_list->head;
@@ -58,7 +46,7 @@ static void if_redirect_set_file_node_head(t_file_list *file_list, t_file_node *
 	file_list->tail = *file_node;
 }
 
-static void if_redirect_append_file_node(t_file_list *file_list, t_file_node **file_node, t_token **token_lst)
+static	void	if_redirect_append_file_node(t_file_list *file_list, t_file_node **file_node, t_token **token_lst)
 {
 	(*file_node)->next = process_token_type_redir(token_lst);
 	*file_node = (*file_node)->next;
@@ -66,8 +54,7 @@ static void if_redirect_append_file_node(t_file_list *file_list, t_file_node **f
 	file_list->size +=1;
 }
 
-
-static t_cmd_node *init_cmd_node_null(t_file_list *file_list)
+static	t_cmd_node	*init_cmd_node_null(t_file_list *file_list)
 {
 	t_cmd_node 	*cmd_node;
 
@@ -80,29 +67,28 @@ static t_cmd_node *init_cmd_node_null(t_file_list *file_list)
 	return (cmd_node);
 }
 
-t_cmd_node* process_token(t_token **token_lst)
+t_cmd_node*	process_token(t_token **token_lst)
 {
 	t_cmd_node 	*cmd_node;
 	t_file_node *file_node;
 	t_file_list *file_list;
-	
+
 	file_list = file_list_to_NULL();
 	cmd_node = init_cmd_node_null(file_list);
-	while(*token_lst)
+	while (*token_lst)
 	{
 		process_token_type_Text(token_lst,cmd_node);
 		if (*token_lst == NULL)
             break;
-		// if(no_pipe(token_lst) == false || redir_token(token_lst) == false) // 
-		if(pipe_token(token_lst) == true) // 
+		if (pipe_token(token_lst) == true) // 
 			return(cmd_node);
 		if (redir_token(token_lst) == false)
 			return(cmd_node);
-		if(file_list->head == NULL)
+		if (file_list->head == NULL)
 			if_redirect_set_file_node_head(file_list,&file_node,token_lst);
 		else if((*token_lst)->token_type != PIPE && (*token_lst)->token_type != TEXT)
 			if_redirect_append_file_node(file_list, &file_node, token_lst);
 	}
-	return(cmd_node);
+	return (cmd_node);
 }
 

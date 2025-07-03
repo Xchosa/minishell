@@ -60,7 +60,8 @@ t_token *create_token_q_case_and_export(char **line, t_token *token_lst)
 		return(d_quote_case(line));
 	if ((ft_strncmp("\'", *line, 1) == 0))
 		return(s_quote_case(line));
-	if(ft_strncmp("export", token_lst->token, 6) == 0)
+	// if (strcmp("export", token_lst->token)== true)
+	if (ft_strncmp("export", token_lst->token, 6) == 0)
 	{
 		token_lst->token_type = EXPORT;
 		return(create_export_token(*line));

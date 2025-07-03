@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/30 15:25:30 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:33:20 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,24 @@
 #include "parser.h"
 #include "executer.h"
 
-void   leaks(void)
-{
-    printf("\n");
-    system("leaks minishelll: \n");
-}
+// void	leaks(void)
+// {
+//     printf("\n");
+//     system("leaks minishell: \n");
+// }
 
 int	main(int argc, char **argv, char **env)
 {
 	bool	tty_shell;
-	
+	char	*line;
+
 	tty_shell = false;
-	char *line;
-	
 	line = NULL;
 
-	if (init_bash(env, argc)== false || (init_exit_codes(argc) == false))
-		return(1);
+	if (init_bash(env, argc) == false || (init_exit_codes(argc) == false))
+		return (1);
 
-	if(isatty(STDIN_FILENO))
+	if (isatty(STDIN_FILENO))
 	{
 		interactive_shell_tty(argc, argv, env, line);
 		tty_shell = true;
@@ -47,15 +46,3 @@ int	main(int argc, char **argv, char **env)
 	}
     // destroy shell? tyname, ttyslo
 }
-
-
-
-
-
-
-
-
-
-
-
-

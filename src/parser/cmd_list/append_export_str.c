@@ -25,10 +25,9 @@ static bool equal_last(char *str)
     }
     i--;
     if(ft_strncmp((str + i), "=", 1) == 0)
-        return true;
+        return (true);
     return (false);
 }
-
 
 bool multiple_tokens(char *line)
 {
@@ -38,18 +37,18 @@ bool multiple_tokens(char *line)
 		return(false);
 
     cpy_tok =tokeniser(line);
-    if(cpy_tok == NULL)
+    if (cpy_tok == NULL)
     {
         free(cpy_tok);
-        return(false);
+        return (false);
     }
-    if(cpy_tok->next == NULL)
+    if (cpy_tok->next == NULL)
     {
         free(cpy_tok);
-        return(false);
+        return (false);
     }
     free(cpy_tok);
-    return(true);
+    return (true);
 }
 
 

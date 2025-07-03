@@ -13,7 +13,6 @@
 #include "minishell.h"
 #include "parser.h"
 
-
 static bool	check_for_div_export(char c)
 {
 	if (ft_strncmp ("|", &c, 1) == 0)
@@ -43,43 +42,56 @@ t_token *create_token_equal_as_div(char *content)
 	if(!new_token)
 		return (NULL);
 	new_token->token  = get_token_equal_as_div(content);
-	// new_token->token_type = get_token_type(content);
 	new_token->token_type = Export_var;
 	new_token->next = NULL;
 	return (new_token);
-	// tokenadd_back(get_config()->token_list, new_token);
 }
 
-char *get_token_equal_as_div(char *content)
+static char *add_char(char *content, char *tmp_token, char *new_token, int i)
 {
-	int i;
-	char *new_token;
-	char *tmp_token;
-	
-	i = 0;
-	new_token =ft_strdup("");
-	while (content[i] != '\0' && check_for_div_export(content[i]) == false)
-	{
-		if (char_is_alpha_nbr_and_no_whitespace(content[i]))
-		{	
-			tmp_token = ft_charjoin(new_token, content[i]);
-            free(new_token);
-            new_token = tmp_token;
-		}
-		if (check_for_div_export(content[i +1 ]) == true)// decide export or not
-			return (new_token);
-		i++;
-	}
 	while (check_for_divider_without_space(content[i]) == true)
 	{
 		tmp_token = ft_charjoin( new_token, content[i]);
 		free(new_token);
         new_token = tmp_token;
-		if(not_single_divider(content[i])== false )
+		if (not_single_divider(content[i])== false )
 			return(new_token);
 		i++;
 	}
-	return(new_token);
+	return (new_token);
+}
+
+char	*get_token_equal_as_div(char *content)
+{
+	int i;
+	char *new_token;
+	char *tmp_token;
+
+	i = 0;
+	new_token =ft_strdup("");
+	while (content[i] != '\0' && check_for_div_export(content[i]) == false)
+	{
+		if (char_is_alpha_nbr_and_no_whitespace(content[i]))
+		{
+			tmp_token = ft_charjoin(new_token, content[i]);
+            free(new_token);
+            new_token = tmp_token;
+		}
+		if (check_for_div_export(content[i +1 ]) == true)
+			return (new_token);
+		i++;
+	}
+	while (check_for_divider_without_space(content[i]) == true)
+	// {
+		new_token = add_char(content, tmp_token, new_token, i);
+		// tmp_token = ft_charjoin( new_token, content[i]);
+		// free (new_token);
+        // new_token = tmp_token;
+		// if (not_single_divider(content[i])== false )
+		// 	return(new_token);
+		// i++;
+	// }
+	return (new_token);
 }
 
 

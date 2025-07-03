@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 15:57:07 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/06 16:09:20 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:18:56 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,67 +25,58 @@ bool	pipe_or_simec(char c)
 	return (false);
 }
 
-int special_char_no_divider(char c)
+int	special_char_no_divider(char c)
 {
 	if (c == '-')
 		return (1);
-    if (c == '/')
+	if (c == '/')
 		return (1);
 	if (c == '=')
-	 	return (1);
-	if (ft_strchr(".,;!?*~$", c) != NULL)
-		 return (1);
+		return (1);
+	if (ft_strchr(".,;!?*~$_", c) != NULL)
+		return (1);
 	return (0);
 }
-int special_char_no_divider_no_eq(char c)
+int	special_char_no_divider_no_eq(char c)
 {
 	if (c == '-')
 		return (1);
-    if (c == '/')
+	if (c == '/')
 		return (1);
 	if (ft_strchr(".,;!?*~$", c) != NULL)
 		return (1);
 	return (0);
 }
 
-char *handle_dividers(char *line, bool *flag)
+char	*handle_dividers(char *line, bool *flag)
 {
-    while (*line && check_for_divider_with_space(*line) == true)
-    {
-        if (pipe_or_simec(*line) == true)
-        {
-            line++;
-            *flag = true;
-            return (line);
-        }
-        line++;
-        *flag = true;
-    }
-    return (line);
+	while (*line && check_for_divider_with_space(*line) == true)
+	{
+		if (pipe_or_simec(*line) == true)
+		{
+			line++;
+			*flag = true;
+			return (line);
+		}
+		line++;
+		*flag = true;
+	}
+	return (line);
 }
 
-
-
-char *handle_regular_token(char *line)
+char	*update_line(char *line, t_token *token)
 {
-    while (*line && (ft_isalnum(*line) || special_char_no_divider(*line)))
-        line++;
-    return (line);
-}
+	bool	flag;
+	char	*updated_line;
 
-char *update_line(char *line, t_token *token)
-{
-    bool flag = false;
-    char *updated_line;
-    
-    (void)token;// if token = $..
-    skip_whitespace(&line);
-    updated_line = handle_special_characters(line);
-    if (updated_line)
-        return (updated_line);
-    line = handle_dividers(line, &flag);
-    if (flag == false)
-        line = handle_regular_token(line);
-    return (line);
+	flag = false;
+	(void)token;
+	skip_whitespace(&line);
+	updated_line = handle_special_characters(line);
+	if (updated_line)
+		return (updated_line);
+	line = handle_dividers(line, &flag);
+	if (flag == false)
+		line = handle_regular_token(line);
+	return (line);
 }
-

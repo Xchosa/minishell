@@ -21,7 +21,6 @@ char *extract_var_value(char *env_str, int start_pos)
     new_token = ft_strdup("");
     if (!new_token)
         return (NULL);
-    // printf("env string %s\n", env_str + start_pos);
     while (env_str[start_pos] != '\0')
     {
         tmp_token = ft_charjoin(new_token, env_str[start_pos]);
@@ -29,7 +28,6 @@ char *extract_var_value(char *env_str, int start_pos)
         new_token = tmp_token;
         start_pos++;
     }
-    // printf("env string after %s\n", new_token); 
     return (new_token);
 }
 

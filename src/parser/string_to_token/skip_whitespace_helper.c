@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:08:33 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/06 16:08:35 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/03 12:49:58 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ bool	char_is_alpha_nbr_and_no_whitespace(char c)
 		return (true);
 	if (ft_strnstr("\r\n\v\t ", &c, 1) != NULL)
 		return (true);
-	if (ft_strchr(".,;?!*$", c) != NULL)
+	if (ft_strchr(".,;?!*$_", c) != NULL)
 		return (true);
 	if (ft_strncmp ("-", &c, 1) == 0)
 		return (true);

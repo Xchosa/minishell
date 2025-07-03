@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/30 15:05:29 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:46:39 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "parser.h"
 #include "executer.h"
 #include "signal_tp.h"
-
 
 /*
 Lexer overview
@@ -37,21 +36,30 @@ what is awk
 
 */
 
-
-
-static char* read_terminal(void)
+static char	*read_terminal(void)
 {
-	char *line;
-    init_signal(0); 
-	line = readline("minishell:$ ");
+	char	*line;
+
+	init_signal(0);
+	// line = readline("minishell:$ ");
+	
+	if (isatty(fileno(stdin)))
+		line = readline("minishell:$ ");
+	else
+	{
+		line = get_next_line(fileno(stdin));
+		line = ft_strtrim(line, "\n");
+		free(line);
+	}
+	
 	if (line && *line)
-        add_history(line);
-	if (line == NULL) // Handle EOF (Ctrl+D)
-		{
-            printf("exit\n");
-            exit(get_exit_codes()->last_exit_code); // clean?
-        }
-	return(line);
+		add_history(line);
+	if (line == NULL)
+	{
+		printf("exit\n");
+		exit(get_exit_codes()->last_exit_code);
+	}
+	return (line);
 }
 
 void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
@@ -61,13 +69,14 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	(void)argv;
 	t_token *token_lst;
 	t_cmd_list *cmd_lst;
+
 	while(1)
 	{
 		line = read_terminal();
-		if(check_lexer_and_free(line) == false)
+		if (check_lexer_and_free(line) == false)
 			continue;
 		token_lst = tokeniser(line);
-		if(tokeniser_successful(token_lst,line) == false)
+		if (tokeniser_successful(token_lst,line) == false)
             continue;
 		// printf("\n tokeniser \n\n");
 		// iter_tokenlst(token_lst, &print_tokenlst);
@@ -76,18 +85,12 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		// iter_tokenlst(token_lst, &print_tokenlst);
 		if (lexer_token(token_lst) == false)
 		{
-			print_error_message(line);
+			print_error_message(&token_lst, line);// header
 			continue;
 		}
-		cmd_lst = init_cmd_list(&token_lst, line); // deletes line and token_lst
-
+		cmd_lst = init_cmd_list(&token_lst, line);
 		init_signal(1);
-		// iter_cmd_lst(cmd_lst, &print_cmd_lst);
-
-		// printf("Thilos problem:\n");
-		
 		ft_execute(cmd_lst, get_bash()->env);
-		
 		init_signal(0);
 		reset_terminal_state();
 		clean_cmd_lst(cmd_lst);

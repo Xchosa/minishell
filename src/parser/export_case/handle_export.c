@@ -81,7 +81,6 @@ static bool check_for_multi_tokens(char *line)
 		return (false);
     skip_whitespace(&line);
     line = handle_special_characters(line);
-    // Check if line is NULL or points to end of string
 	if (line == NULL || *line == '\0')
         multiple_token = false;
     else
