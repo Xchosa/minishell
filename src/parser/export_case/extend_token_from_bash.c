@@ -10,11 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "parser.h"
 #include "minishell.h"
-
-
 
 void	reset_token_get_home_directory(t_token **token_lst, char **src)
 {

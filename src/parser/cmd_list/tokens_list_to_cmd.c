@@ -75,21 +75,20 @@ t_cmd_node*	process_token(t_token **token_lst)
 
 	file_list = file_list_to_NULL();
 	cmd_node = init_cmd_node_null(file_list);
-	while(*token_lst)
+	while (*token_lst)
 	{
 		process_token_type_Text(token_lst,cmd_node);
 		if (*token_lst == NULL)
             break;
-		// if(no_pipe(token_lst) == false || redir_token(token_lst) == false) // 
-		if(pipe_token(token_lst) == true) // 
+		if (pipe_token(token_lst) == true) // 
 			return(cmd_node);
 		if (redir_token(token_lst) == false)
 			return(cmd_node);
-		if(file_list->head == NULL)
+		if (file_list->head == NULL)
 			if_redirect_set_file_node_head(file_list,&file_node,token_lst);
 		else if((*token_lst)->token_type != PIPE && (*token_lst)->token_type != TEXT)
 			if_redirect_append_file_node(file_list, &file_node, token_lst);
 	}
-	return(cmd_node);
+	return (cmd_node);
 }
 

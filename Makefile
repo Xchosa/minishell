@@ -3,11 +3,11 @@ NAME := minishell
 CC := cc
 
 #---------linux---------
-CFLAGS	= -Wall -Wextra  -g -fsanitize=address -I inc/ -ldl -lglfw -pthread -lm #-Werror
-#CFLAGS	= -Wall -Wextra  -g -I inc/ -ldl -lglfw -pthread -lm #-Werror
+#CFLAGS	= -Wall -Wextra  -g -fsanitize=address -I inc/ -ldl -lglfw -pthread -lm #-Werror
+CFLAGS	= -Wall -Wextra  -g -I inc/ -ldl -lglfw -pthread -lm #-Werror
 #----------mac ---------
-CFLAGS		= -Wall -Wextra -g -fsanitize=address -I inc/ #-Werror 
-#CFLAGS		= -Wall -Wextra -g -I inc/ #-Werror 
+#CFLAGS		= -Wall -Wextra -g -fsanitize=address -I inc/ #-Werror 
+CFLAGS		= -Wall -Wextra -g -I inc/ #-Werror 
 
 LIBFT := ./libft/libft.a
 

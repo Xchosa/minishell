@@ -95,15 +95,15 @@ static  void    handle_special_cases(t_token **curr_token,t_cmd_node *cmd_node)
    t_token *passed_position;
 
    passed_position = (*curr_token);
-   while(curr_token && *curr_token)
+   while (curr_token && *curr_token)
    {
-        if(curr_token && *curr_token && (*curr_token)->token_type == CALL_EXIT)
+        if (curr_token && *curr_token && (*curr_token)->token_type == CALL_EXIT)
             (*curr_token)->token_type = TEXT;
-        if(curr_token && *curr_token && (*curr_token)->token_type == CALL_SAVED_VAR)
+        if (curr_token && *curr_token && (*curr_token)->token_type == CALL_SAVED_VAR)
             (*curr_token)->token_type = TEXT;
-        if(curr_token && *curr_token && (*curr_token)->token_type == EXPORT)
+        if (curr_token && *curr_token && (*curr_token)->token_type == EXPORT)
             (*curr_token)->token_type = TEXT;
-        if(curr_token && *curr_token && (*curr_token)->token_type == Export_var)
+        if (curr_token && *curr_token && (*curr_token)->token_type == Export_var)
         {
             (*curr_token)->token_type = TEXT;
         }
@@ -117,7 +117,7 @@ void process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
     handle_special_cases(curr_token,cmd_node);
 	while(curr_token && *curr_token && (*curr_token)->token_type == TEXT )
 	{
-		if(cmd_node->cmd_type == 0)
+		if (cmd_node->cmd_type == 0)
 		{
 			cmd_node->cmd_type = choose_cmd_type(*curr_token);
 			cmd_node->cmd = cpy_token_char((*curr_token)->token);
@@ -126,7 +126,7 @@ void process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
 		{
 			append_token_char(cmd_node, *curr_token);
 		}
-        if((*curr_token)->next)
+        if ((*curr_token)->next)
 	        (*curr_token) = (*curr_token)->next;
         else 
 		{	
