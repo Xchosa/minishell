@@ -76,7 +76,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		// iter_tokenlst(token_lst, &print_tokenlst);
 		if (lexer_token(token_lst) == false)
 		{
-			print_error_message(line);
+			print_error_message(&token_lst, line);// header
 			continue;
 		}
 		cmd_lst = init_cmd_list(&token_lst, line); // deletes line and token_lst

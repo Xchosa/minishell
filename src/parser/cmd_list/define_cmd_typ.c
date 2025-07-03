@@ -40,8 +40,8 @@ int choose_cmd_type(t_token *curr_token)
 
     cmd_type = 0;
 	lower = ft_strtolower(curr_token->token);
+	curr_token->token = lower; // token is empty now -> lass ihn auf lower zeigen. 
 	cmd_type = (check_for_builtin(lower));
-	//free(lower);
     if (cmd_type != 0)
         return (cmd_type);
     return (cmd_type = EXECUTE);

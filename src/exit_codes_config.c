@@ -45,10 +45,12 @@ void clean_exit_codes(void)
 	
 }
 
-bool print_error_message(char *line)
+bool print_error_message(t_token **token_list, char *line)
 {
 	int error;
 	bool exit_minishell;
+
+	
 	exit_minishell = true;
 	error = get_exit_codes()->last_exit_code;
 	if (error == invalid_identifier)
@@ -61,6 +63,7 @@ bool print_error_message(char *line)
 		(printf("minishell: syntax error near unexpected token '%s' \n", line));
 	if (error == ec_sucess)
 		return(exit_minishell = false);
+	clean_token_lst_and_line((*token_list),line);
 	return(exit_minishell);
 }
 

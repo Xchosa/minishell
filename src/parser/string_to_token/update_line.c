@@ -73,13 +73,11 @@ bool check_for_space(char c)
     return false;
 }
 // tokeniser ohne update line...  echo hallo'world now' niemals handlbar 
-// wenigstens das er trennt bei helleo
+// wenigstens das er trennt bei hello
 char *handle_regular_token(char *line)
 {
     while (*line && (ft_isalnum(*line) || special_char_no_divider(*line)))
     {
-        // if(check_for_space(*line) == true)
-        //         return(line);
         line++;
     }
     return (line);

@@ -69,12 +69,15 @@ void	clean_file_lst(t_file_list *file_list)
 	if (!file_list)
 		return;
 	file_node = file_list->head;
+	tmp = NULL;
 	while (file_node)
 	{
-		tmp = file_node->next;
+		if(!file_node->next)
+			tmp = file_node->next;
 		free(file_node->filename);
 		free(file_node);
-		file_node = tmp;
+		if(!tmp)
+			file_node = tmp;
 	}
 	free(file_list);
 }
