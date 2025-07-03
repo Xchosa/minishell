@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/02 18:40:50 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/03 13:47:34 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,19 @@ bool	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 	path = ft_getpath(cmd_node->cmd[0], envp); // ft_getpath und alles was folgt ist einfach aus pipex kopiert. 
 	//in pipex.c ist eine funktion ft_freearray2 weil du auch eine hattest und mich der compiler dafuer angekackt hat. 
 	//kann man aber auf eine reduzieren
-	printf("test");
+	printf("test1\n");
 	if (path == NULL)
 	{
 		// ggf cmd_node->cmd[0] in die fehlermeldung
-		perror("Shell:");
-		printf("test for errno for exitcode: %d \n ", errno); //errno could go in exit code
-		exit(errno);
+		ft_putendl_fd("Shell: command not found\n", 2);
+		// perror("Shell:");
+		// printf("check for errno for exitcode: %d \n", errno); //errno could go in exit code
+		exit(127);
 		//return false; //errorhandling, free, exit
 	}
-	printf("test");
+	printf("test2\n");
 	execve(path, cmd_node->cmd, envp);
-	printf("test");
+	printf("test3\n");
 	exit(errno);
 	// eventuell errorcheck also != 0 ? und ausgabe error sollte hier mit perror funktionieren
 	//return true;
@@ -98,45 +99,38 @@ bool manage_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[]
 
 
 // how to close all pipes if error e.g infile not exisiting
-bool execution_loop (t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp)
+bool execution_node(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp)
 {
 	int backupStdout;
 	int backupStdin;
 	bool check;
 	//char *path to pass to ft_execute and free here
 	
-	backupStdout = dup(STDOUT_FILENO);
-    backupStdin = dup(STDIN_FILENO);
+	//backupStdout = dup(STDOUT_FILENO);
+    //backupStdin = dup(STDIN_FILENO);
 	check = true;
-	while(cmd_node != NULL)
+	if (cmd_list->size > 1)
+		ft_manage_pipes(cmd_list, cmd_node, fd);
+	if(ft_manage_redirections_multi(cmd_node->file_list, fd, backupStdin, backupStdout) == false)
+	{	
+		check = false;
+	}
+	if(cmd_node->cmd_type == EXECUTE)
 	{
-		if (cmd_list->size > 1)
-			ft_manage_pipes(cmd_list, cmd_node, fd);
-		if(ft_manage_redirections_multi(cmd_node->file_list, fd, backupStdin, backupStdout) == false)
+		if(ft_execute_command(cmd_node, envp) == false)
 		{	
 			check = false;
-			break;
 		}
-		if(cmd_node->cmd_type == EXECUTE)
-		{
-			if(ft_execute_command(cmd_node, envp) == false)
-			{	
-				check = false;
-				break;
-			}
-		}
-		else if (cmd_node->cmd_type == BUILTIN)
-		{
-			if(ft_execute_builtin(cmd_node, envp) == false)
-			{	
-				check = false;
-				break;
-			}
-		}
-		reset_redir(&backupStdin,&backupStdout);
-		cmd_node = cmd_node->next;
 	}
+	else if (cmd_node->cmd_type == BUILTIN)
+	{
+		if(ft_execute_builtin(cmd_node, envp) == false)
+		{	
+			check = false;	// exit child process of Builtins here ?
+		}
 	reset_redir(&backupStdin,&backupStdout);
+	}
+	//reset_redir(&backupStdin,&backupStdout); //wahrscheinlich muss das in den parten zusammen mit dem backupStdout und backupStdin
 	clean_cmd_list_objects_tmp_files(cmd_list);
 	if(check == false)
 		return false;
@@ -180,7 +174,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 			if (pid == 0)
 			{
 				// ft_execute_node(cmd_list, cur_cmd_node, fd, envp);
-				if (execution_loop (cmd_list, cur_cmd_node, fd, envp) == false)
+				if (execution_node(cmd_list, cur_cmd_node, fd, envp) == false)
 				{
 					clean_cmd_list_objects_tmp_files(cmd_list);/// child process failed // alles cleared 
 					// pipes schliesen 
@@ -189,7 +183,10 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 			}
 			wait(&status);
 			if (WIFEXITED(status))
+			{
+				printf("wexitstatus ist %d\n",  WEXITSTATUS(status));
 				get_exit_codes()->last_exit_code = WEXITSTATUS(status);
+			}
 			cur_cmd_node = cur_cmd_node->next;
 			if (i < cmd_list->size - 1)
 				close(fd[i][1]);

@@ -37,12 +37,12 @@ char	*get_minishell_pointer(char **envp)
 	char	*path_to_mini;
 
 	i = 0;
-	while(envp[i] != NULL)
+	while (envp[i] != NULL)
 	{
 		if (ft_strncmp("PWD", envp[i], 3) == 0)
 		{
 			pwd = envp[i];
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -60,11 +60,12 @@ void	ft_minishell_nested(char **envp)
 {
 	int		pid;
 	char	*path_to_mini;
+	int		status;
 
 	if ((ft_ask_shlvl(envp)) >= 9) // diese 4 zeilen muessen noch in die main oder so 
 	{
 		ft_putendl_fd("Shell level is restricted to max 9", 2);
-		return;
+		return ;
 	}
 	path_to_mini = get_minishell_pointer(envp);
 	ft_printf("%s\n", path_to_mini);
@@ -72,9 +73,13 @@ void	ft_minishell_nested(char **envp)
 	if (pid == 0)
 	{
 		// some handler;
-		execve(path_to_mini, (char *[]){"minishell", NULL}, envp); 
+		execve(path_to_mini, (char *[]){"minishell", NULL}, envp);
 		perror("shell: minishell"); //change exit code
 	}
 	free(path_to_mini);
-	wait(0); //here to exit code
+	wait(&status);
+	if (WIFEXITED(status))
+	{
+		get_exit_codes()->last_exit_code = WEXITSTATUS(status);
+	}
 }

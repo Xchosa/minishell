@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:27:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/01 15:19:56 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:57:36 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 
 
-bool	ft_echo(t_cmd_node *cmd_node, char **envp)
+bool	ft_echo(t_cmd_node *cmd_node, char **envp) // muss auf write testen?
 {
 	int	i;
 
@@ -37,6 +37,7 @@ bool	ft_echo(t_cmd_node *cmd_node, char **envp)
 	}
 	if (!(ft_strncmp("-n", cmd_node->cmd[1], 2) == 0))
 		ft_printf("\n");
+	get_exit_codes()->last_exit_code = 0;
 	return true; 
 }
 
@@ -58,12 +59,11 @@ void	ft_pwd(char **envp)
 	i = 0;
 	while (i < 4)
 	{
-		pwd++; //protect against fails?? cant work when there no PWD, 
-		// seg fault, but there will always be a pwd unless unset
-		// bash works fine with pwd unset but bruh
+		pwd++; 
 		i++;
 	}
 	ft_printf("%s\n", pwd);
+	get_exit_codes()->last_exit_code = 0;
 }
 
 void	ft_env(char **envp)
@@ -76,6 +76,7 @@ void	ft_env(char **envp)
 		ft_printf("%s\n", envp[i]);
 		i++;
 	}
+	get_exit_codes()->last_exit_code = 0;
 }
 
 
@@ -207,13 +208,18 @@ void	ft_exit(t_cmd_node *cmd_node)
 			re = ft_atoi(cmd_node->cmd[1]);
 			if (cmd_node->cmd[2] != NULL)
 			{
-				ft_printf("ptsh: exit: too many arguments"); //kommt nach pipe echo??
-				//set exit code
+				ft_putendl_fd("shell: exit: too many arguments\n", 2); //kommt nach pipe echo??
+				get_exit_codes()->last_exit_code = 1;
 				return ;
 			}
 		}
 		else
-			ft_printf("ptsh: exit: %s: numeric argument required", cmd_node->cmd[1]);
+		{
+			ft_putendl_fd("shell: exit: numeric argument required", 2);
+			get_exit_codes()->last_exit_code = 255;
+			exit(255);
+		}
 	}
+	get_exit_codes()->last_exit_code = re;
 	exit(re);
 }

@@ -75,7 +75,7 @@ void	save_heredoc_files(t_cmd_node **cmd_node);
 
 void	reset_redir(int *backupStdin, int *backupStdout);
 // void	set_up_backup_Stdout_Stdin(int *backupStdin, int *backupStdout);
-bool	execution_loop (t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp);
+bool	execution_node (t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2], char **envp);
 
 //# include "parser.h"
 
