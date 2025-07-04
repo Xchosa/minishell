@@ -6,23 +6,17 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:27:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/03 14:57:36 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/04 17:09:09 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//to do: cd (only relative or absolute)  export, unset, env, exit
-
 #include "executer.h"
 
-
-
-
-bool	ft_echo(t_cmd_node *cmd_node, char **envp) // muss auf write testen?
+void	ft_echo(t_cmd_node *cmd_node) // muss auf write testen?
 {
 	int	i;
 
 	i = 1;
-	(void)envp;
 	if (ft_strncmp("-n", cmd_node->cmd[1], 2) == 0)
 		i++;
 	while (cmd_node->cmd[i] != NULL)
@@ -38,7 +32,6 @@ bool	ft_echo(t_cmd_node *cmd_node, char **envp) // muss auf write testen?
 	if (!(ft_strncmp("-n", cmd_node->cmd[1], 2) == 0))
 		ft_printf("\n");
 	get_exit_codes()->last_exit_code = 0;
-	return true; 
 }
 
 void	ft_pwd(char **envp)
@@ -131,26 +124,26 @@ char	**ft_add_parent(t_cmd_node *cmd_node, char **envp)
 
 char	**ft_add_tilde(char **envp)
 {
-	int	i;
 	int	j;
+	char	*newpwd;
+	char	*home;
 
-	i = 0;
 	j = 0;
-	while (envp[i] != NULL)
-	{
-		if (ft_strncmp(envp[i], "HOME", 4) == 0)
-			break;
-		i++;
-	}
+	newpwd = malloc(sizeof(char *));
+	if (newpwd == NULL)
+		return(NULL);
 	while (envp[j] != NULL)
 	{
 		if (ft_strncmp(envp[j], "PWD", 3) == 0)
 		{
-			envp[j] = envp[i];
+			free(envp[j]); //maybe
 			break;
 		}
 		j++;
 	}
+	home = get_home_path(envp);
+	newpwd = ft_strjoin("PWD=", home);
+	envp[j] = newpwd;
 	return (envp);
 }
 
@@ -158,68 +151,56 @@ void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp)
 {
 	envp = ft_delete_old_pwd(envp);
 	envp = ft_add_old_pwd(envp);
-	if (ft_strncmp("/", cmd_node->cmd[1], 1) == 0)
+	if (cmd_node->cmd[1] == NULL)
+		envp = ft_add_tilde(envp);
+	else if (ft_strncmp("/", cmd_node->cmd[1], 1) == 0)
 		envp = ft_add_absolute_path(cmd_node, envp); //do relative path
 	else if (ft_strncmp("..", cmd_node->cmd[1], 2) == 0)
 	 	envp = ft_add_parent(cmd_node, envp);
-	else if (ft_strncmp("~", cmd_node->cmd[1], 1) == 0)
+	else if (ft_strncmp(get_home_path(envp), cmd_node->cmd[1], 1) == 0)
 	 	envp = ft_add_tilde(envp);
 	else if (!(ft_strncmp(".", cmd_node->cmd[1], 10) == 0))
 		envp = ft_add_pwd(cmd_node, envp);
 	get_bash()->env = envp;
 }
 
+char	*get_home_path(char **envp)
+{
+	int		i;
+	char	*home;
+
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		if (strncmp("HOME=", envp[i], 5) == 0)
+			break ;
+		i++;
+	}
+	home = envp[i];
+	i = 0;
+	while (i < 5)
+	{
+		home++;
+		i++;
+	}
+	return (home);	
+}
 
 void	ft_cd(t_cmd_node *cmd_node, char **envp)
 {
-	(void)envp;
-	//error for too many arguments
+	if (cmd_node->cmd[1] == NULL)
+	{
+		chdir(get_home_path(envp));
+		ft_update_env_cd(cmd_node, envp);
+		get_exit_codes()->last_exit_code = 0;
+		return ;
+	}
 	if (chdir(cmd_node->cmd[1]) != 0)
-		printf("Error\n"); //and return
+	{
+		get_exit_codes()->last_exit_code = 1;
+		perror("shell");
+		return ;
+	}
 	ft_update_env_cd(cmd_node, envp);
-	//update envp
-}
-
-int	ft_isnum(char *s)
-{
-	int 	i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] >= '0' && s[i] <= '9')
-			i++;
-		else
-		 	return (1);
-	}
-	return (0);
-}
-
-void	ft_exit(t_cmd_node *cmd_node)
-{
-	int	re;
-
-	re = 0;
-	ft_printf("exit\n");
-	if (cmd_node->cmd[1] != NULL)
-	{
-		if (ft_isnum(cmd_node->cmd[1]) == 0)
-		{
-			re = ft_atoi(cmd_node->cmd[1]);
-			if (cmd_node->cmd[2] != NULL)
-			{
-				ft_putendl_fd("shell: exit: too many arguments\n", 2); //kommt nach pipe echo??
-				get_exit_codes()->last_exit_code = 1;
-				return ;
-			}
-		}
-		else
-		{
-			ft_putendl_fd("shell: exit: numeric argument required", 2);
-			get_exit_codes()->last_exit_code = 255;
-			exit(255);
-		}
-	}
-	get_exit_codes()->last_exit_code = re;
-	exit(re);
+	get_exit_codes()->last_exit_code = 0;
 }

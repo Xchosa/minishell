@@ -79,6 +79,7 @@ MY_SOURCES = \
 		pipex.c \
 		builtins.c \
 		pwd_builtin.c \
+		exit_builtin.c \
 		special_builtin.c \
 		execute_builtin.c \
 		executer.c \

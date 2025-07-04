@@ -6,12 +6,13 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 10:57:23 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/03 15:02:39 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:06:09 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
+#include "executer.h"
 
 t_bash	*get_bash(void)
 {

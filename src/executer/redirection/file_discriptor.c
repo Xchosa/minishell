@@ -3,16 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   file_discriptor.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 10:35:55 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/01 11:01:21 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:00:33 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "executer.h"
 
+void	reset_redir(int *backupStdin, int *backupStdout)
+{
+	if (*backupStdin != -1)
+	{
+		dup2(*backupStdin, STDIN_FILENO);
+		close(*backupStdin);
+		*backupStdin = -1;
+	}
+	if (*backupStdout != -1)
+	{
+		dup2(*backupStdout, STDOUT_FILENO);
+		close(*backupStdout);
+		*backupStdout = -1;
+	}
+}
 
 // int is_fd_open(int fd)
 // {
@@ -42,26 +56,7 @@
 //             ft_putstr_fd("\033[31mclosed\033[0m\n", 2);
 //     }
 // }
-
-
-
-void	reset_redir(int *backupStdin, int *backupStdout)
-{
-	// dup2(*backupStdin, STDIN_FILENO);
-	// dup2(*backupStdout, STDOUT_FILENO);
-	// close(*backupStdin);
-	// close(*backupStdout);
-
-	if (*backupStdin != -1)
-    {
-        dup2(*backupStdin, STDIN_FILENO); // Restore stdin
-        close(*backupStdin);             // Close the backup
-        *backupStdin = -1;               // Mark as invalid
-    }
-    if (*backupStdout != -1)
-    {
-        dup2(*backupStdout, STDOUT_FILENO); // Restore stdout
-        close(*backupStdout);               // Close the backup
-        *backupStdout = -1;                 // Mark as invalid
-    }
-}
+// dup2(*backupStdin, STDIN_FILENO);
+// dup2(*backupStdout, STDOUT_FILENO);
+// close(*backupStdin);
+// close(*backupStdout); die unteresten 4 zeilen waren in reset_dir

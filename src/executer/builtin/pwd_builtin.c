@@ -1,5 +1,4 @@
 
-
 #include "executer.h"
 
 char	**ft_delete_old_pwd(char **envp)
@@ -12,7 +11,7 @@ char	**ft_delete_old_pwd(char **envp)
 	max = 0;
 	i = 0;
 	j = 0;
-	while(envp[max] != NULL)
+	while (envp[max] != NULL)
 		max++;
 	newenvp = (char **)malloc(max * sizeof(char *));
 	if (newenvp == NULL)
@@ -35,13 +34,13 @@ char	**ft_delete_old_pwd(char **envp)
 
 char	**ft_add_old_pwd(char **envp)
 {
-	int	max;
-	int	i;
+	int		max;
+	int		i;
 	char	**newenvp;
 
 	max = 0;
 	i = 0;
-	while(envp[max] != NULL)
+	while (envp[max] != NULL)
 		max++;
 	newenvp = (char **)malloc((max + 2) * sizeof(char *));
 	if (newenvp == NULL)
