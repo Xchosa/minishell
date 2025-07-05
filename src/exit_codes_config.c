@@ -44,9 +44,7 @@ void	clean_exit_codes(void)
 void	print_error_message(t_token **token_list, char *line)
 {
 	int		error;
-	bool	exit_minishell;
 
-	exit_minishell = true;
 	error = get_exit_codes()->last_exit_code;
 	if (error == invalid_identifier)
 		(printf("minishell: '%s': not a valid identifier \n", line));

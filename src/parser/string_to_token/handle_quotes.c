@@ -12,19 +12,50 @@
 
 #include "parser.h"
 
+
+void skip_quotes(char **line)
+{
+	int i;
+
+	i = 0;
+	if(((*line)[i] == '\"') && (((*line)[i +1 ] == '\"') || (*line)[i +1 ] == '\''))
+	{
+		while(*line)
+		{
+			if(ft_strchr("\"\'" , **line) != NULL)
+				(*line)++;
+			else 
+				break;
+		}
+		return;
+	}
+	if(((*line)[i] == '\'') && (((*line)[i +1 ] == '\"') || (*line)[i +1 ] == '\''))
+	{
+		while(*line)
+		{
+			if(ft_strchr("\"\'" , **line) == NULL)
+				(*line)++;
+			else 
+				break;
+		}
+		return;
+	}
+}
+
+
 t_token	*d_quote_case(char **line)
 {
 	int i;
-	char *tmp_token;
+	char	*tmp_token;
 	t_token *new_token;
 
 	i = 0;
 	new_token = malloc (sizeof(t_token));
 	if(!new_token)
-	return (NULL);
+		return (NULL);
 	new_token->token =ft_strdup("");
-	i++;
-	while((*line)[i] != '"')
+	skip_quotes(line);
+	while((*line)[i] != '"' && (*line)[i] != '\'')
 	{
 		tmp_token = ft_charjoin( new_token->token, (*line)[i]);
 		free(new_token->token);
@@ -48,7 +79,7 @@ t_token	*s_quote_case(char **line)
 	i = 0;
 	new_token = malloc (sizeof(t_token));
 	if(!new_token)
-	return (NULL);
+		return (NULL);
 	new_token->token =ft_strdup("");
 	i++;
 	while((*line)[i] != '\'')

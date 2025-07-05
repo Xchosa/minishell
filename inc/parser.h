@@ -111,6 +111,7 @@ void		print_lexer_error_message(char *line);
 // tokeniser
 void 		skip_whitespace(char **line);
 bool		skip_whitespace_and_check_for_eof(char **line);
+void 		skip_quotes(char **line);
 bool		find_divider_until_whitespace_or_eof(char c);
 bool		char_is_alpha_nbr_and_no_whitespace(char c);
 
