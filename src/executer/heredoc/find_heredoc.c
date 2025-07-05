@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:58:15 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/02 14:41:10 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:11:29 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@
 
 */
 
-
-static int error_heredoc(char *new_tmp_file_name_suffix,char *new_tmp_file_name,char *suffix)
+static int	error_heredoc(char *new_tmp_file_name_suffix,char *new_tmp_file_name,char *suffix)
 {
 	free(new_tmp_file_name_suffix);
 	free(suffix);
@@ -57,9 +56,9 @@ static void free_heredoc_stoped(char *new_tmp_file_name_suffix,char *new_tmp_fil
     free(new_tmp_file_name);
     free(suffix);
 }
-bool check_for_interactive_shell(void)
+bool	check_for_interactive_shell(void)
 {
-	if(isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
+	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
 		return true;
 	return false;
 }
@@ -75,15 +74,15 @@ bool execute_here_doc(char *filename, int here_doc_fd)
 			line = readline("> ");
 		else
 			line = get_next_line(STDIN_FILENO);
-		if(!line)
+		if (!line)
 			break;
-		if(ft_strcmp(line, filename) == true) 
+		if (ft_strcmp(line, filename) == true) 
 			break;
 		ft_putstr_fd(line, here_doc_fd);
 		if (check_for_interactive_shell() == true)
             ft_putstr_fd("\n", here_doc_fd);
 	}
-	if(line)
+	if (line)
 		free(line);
 	close(here_doc_fd);
 	reset_sig_handler_to_child();
@@ -115,11 +114,14 @@ int save_here_doc_in_tmp(t_file_node **file_node)
 	}
 	free_heredoc_helper(new_tmp_file_name, suffix, file_node);
 	(*file_node)->filename = new_tmp_file_name_suffix;
-	printf("saved_heredoc\n");
+	// printf("saved_heredoc\n");
 	return (0);
 }
 
+// /+- zu _unformen im filename 
+// handle drum herum oder breaken unvalid 
 
+// lexer aufarbeien ""$?""
 
 
 
