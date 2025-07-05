@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/04 19:00:00 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:46:08 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,14 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 {
 	char	*path;
 
-	path = ft_getpath(cmd_node->cmd[0], envp);
+	if (cmd_node->cmd[0][0] != '/')
+		path = ft_getpath(cmd_node->cmd[0], envp);
+	else
+	{
+		path = cmd_node->cmd[0];
+		if (access(path, X_OK) != 0)
+			path = NULL;
+	}
 	if (path == NULL)
 	{
 		ft_putendl_fd("Shell: command not found\n", 2);
@@ -29,7 +36,7 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 
 void	manage_single_cmd_node(t_cmd_node *cmd_node, char **envp)
 {
-	if (ft_manage_redirections_multi(cmd_node->file_list))
+	if (ft_manage_redirections_multi(cmd_node->file_list) == false)
 		get_exit_codes()->last_exit_code = 1;
 	ft_execute_builtin(cmd_node, envp);
 }
@@ -53,6 +60,14 @@ void	execution_node(t_cmd_list *cmd_list,
 	}
 }
 
+// void	ft_close_and_free(t_cmd_list *cmd_list, int *[2], int i)
+// {
+// 	while (i < cmd_list->size)
+// 	{
+		
+// 	}
+// }
+
 void	ft_execution_loop(t_cmd_list *cmd_list, char **envp)
 {
 	int			status;
@@ -69,7 +84,7 @@ void	ft_execution_loop(t_cmd_list *cmd_list, char **envp)
 	while ((cur_cmd_node != NULL) && (i < 1 || get_exit_codes()->last_exit_code == 0))
 	{
 		pid = fork();
-		if (pid == 0)
+		if (pid == 0) //hier ENV updaten?????????? oder auch nicht bash packt auch kein pipe nach unset zB
 			execution_node(cmd_list, cur_cmd_node, fd, envp);
 		wait(&status);
 		if (WIFEXITED(status))
@@ -83,7 +98,7 @@ void	ft_execution_loop(t_cmd_list *cmd_list, char **envp)
 	}
 	if (cmd_list->size > 1)
 		close(fd[i - 1][0]);
-	//ft_close_and_free_clean
+	//ft_close_and_free(cmd_list, fd, i);
 }
 
 void	ft_execute(t_cmd_list *cmd_list, char **envp)
@@ -94,7 +109,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	backup_stdout = dup(STDOUT_FILENO);
 	backup_stdin = dup(STDIN_FILENO);
 	save_heredoc_files(&cmd_list->head);
-	iter_cmd_lst(cmd_list, &print_cmd_lst);
+	//iter_cmd_lst(cmd_list, &print_cmd_lst);
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN)
 		manage_single_cmd_node(cmd_list->head, envp);
 	else if (ft_strcmp("./minishell", cmd_list->head->cmd[0]) == true)

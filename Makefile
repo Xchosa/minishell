@@ -78,9 +78,11 @@ MY_SOURCES = \
 		manage_pipes.c \
 		pipex.c \
 		builtins.c \
-		pwd_builtin.c \
+		cd_builtin.c \
+		cd_builtin_help.c \
+		unset_builtin.c \
+		export_builtin.c \
 		exit_builtin.c \
-		special_builtin.c \
 		execute_builtin.c \
 		executer.c \
 		minishell_nested.c \

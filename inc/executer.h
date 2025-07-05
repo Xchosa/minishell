@@ -52,6 +52,7 @@ void	ft_execution_loop(t_cmd_list *cmd_list, char **envp);
 bool 	ft_manage_heredoc(char *tmp_filename);
 
 int		ft_get_index(int i, char **envp);
+bool	ft_check_valid_identifier(char *var);
 void	ft_export_print(char **envp);
 void	ft_export_variable(char *cmd_var, char **envp);
 void	ft_export(t_cmd_node *cmd_node, char **envp);

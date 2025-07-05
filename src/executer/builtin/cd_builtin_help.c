@@ -1,6 +1,26 @@
-
 #include "executer.h"
 
+char	*get_home_path(char **envp)
+{
+	int		i;
+	char	*home;
+
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		if (strncmp("HOME=", envp[i], 5) == 0)
+			break ;
+		i++;
+	}
+	home = envp[i];
+	i = 0;
+	while (i < 5)
+	{
+		home++;
+		i++;
+	}
+	return (home);
+}
 char	**ft_delete_old_pwd(char **envp)
 {
 	int		max;
