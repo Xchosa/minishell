@@ -62,6 +62,7 @@ t_cmd_list	*init_cmd_list(t_token **token_list,char *line)
 			cmd_list->size +=1;
 		}
 	}
+	printf("line: '%s'", line);
 	clean_token_lst_and_line((*token_list),line);
 	return(cmd_list);
 }

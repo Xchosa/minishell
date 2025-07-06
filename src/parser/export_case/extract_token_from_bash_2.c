@@ -74,7 +74,11 @@ void handle_next_token(t_token **token_lst, t_token *prev_token)
     t_token *split_token;
     t_token *connect_token;
 
-    split_token = tokeniser((*token_lst)->token);
+    // split_token = tokeniser((*token_lst)->token);
+    char *token_copy = ft_strdup((*token_lst)->token);
+    split_token = tokeniser(&token_copy);
+
+
     connect_token = (*token_lst)->next;
     prev_token->next = split_token;
     split_token = tokenlast(split_token);
@@ -82,6 +86,7 @@ void handle_next_token(t_token **token_lst, t_token *prev_token)
     set_head_for_all_tokens(split_token, prev_token->head);
     if (connect_token)
         set_head_for_all_tokens(connect_token, prev_token->head);
+    free(token_copy);
 }
 
 void tokenise_muliple_tok_from_env(t_token **token_lst, t_token *prev_token)

@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **env)
 	// char *line = <<1"; // leaked
 
     // to do: tokeniser
-	line = " \"\"$?\"\"";
+	line = "export h=hallo";
 	// char *line = "$h outfile";
     // char *line = "export t=\"world | around < \" echo world";
     // line = "echo $?dfdfd"; // = wird falsch gehandelt
@@ -49,12 +49,8 @@ int	main(int argc, char **argv, char **env)
 	if (init_bash(env, argc)== false || (init_exit_codes(argc) == false))
 		return(1);
 	
-	if (lexer(line) == false)
-	{
-		get_exit_codes()->last_exit_code = syntax_failure;
-		print_error_message(&token_lst, line);
-		return(1);
-	}
+	if (check_lexer_and_free(line) == false)
+		return (1);
 
 	// if (lexer_valid_ident(line) == false) // lexer seperate testen
 	// {
@@ -65,7 +61,7 @@ int	main(int argc, char **argv, char **env)
 	bash = get_bash();
 	(void)bash;
 	
-    token_lst = tokeniser(line);
+    token_lst = tokeniser(&line);
 	// free(line);
 	if (!token_lst)
         printf("error tokeniser\n");

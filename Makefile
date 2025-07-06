@@ -58,6 +58,7 @@ MY_SOURCES = \
 		count_strings_up.c \
 		bash_config.c \
 		exit_codes_config.c \
+		process_chars_helper.c \
 		create_token_special.c \
 		tokens_to_export.c \
 		append_export_str.c \

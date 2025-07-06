@@ -67,7 +67,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		line = read_terminal();
 		if (check_lexer_and_free(line) == false)
 			continue;
-		token_lst = tokeniser(line);
+		token_lst = tokeniser(&line);
 		if (tokeniser_successful(token_lst,line) == false)
             continue;
 		// printf("\n tokeniser \n\n");
@@ -107,7 +107,7 @@ void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)
 	line = get_next_line(STDIN_FILENO);
 	if (check_lexer_and_free(line) == false)
 		return;
-	token_lst = tokeniser(line);
+	token_lst = tokeniser(&line);
 	if (tokeniser_successful(token_lst,line) == false)
             return;
 	token_lst = extend_saved_export_var(&token_lst);

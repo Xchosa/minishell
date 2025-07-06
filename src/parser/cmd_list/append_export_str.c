@@ -29,26 +29,27 @@ static bool equal_last(char *str)
     return (false);
 }
 
-bool multiple_tokens(char *line)
+bool    multiple_tokens(char *line)
 {
-	t_token *cpy_tok;
+    t_token *cpy_tok;
+    bool    has_multiple_tokens;
+    char    *line_copy;
 
-	if (!line || *line == '\0')
-		return(false);
-
-    cpy_tok =tokeniser(line);
-    if (cpy_tok == NULL)
-    {
-        free(cpy_tok);
+    if (!line || *line == '\0')
         return (false);
-    }
-    if (cpy_tok->next == NULL)
-    {
-        free(cpy_tok);
-        return (false);
-    }
-    free(cpy_tok);
-    return (true);
+    line_copy = ft_strdup(line);
+    if (!line_copy)
+        return (false);   
+    cpy_tok = tokeniser(&line_copy);
+    if (cpy_tok && cpy_tok->next)
+        has_multiple_tokens = true;
+    else
+        has_multiple_tokens = false;
+    if (cpy_tok)
+        free_token(&cpy_tok);
+    if(!line_copy)
+        free(line_copy);
+    return (has_multiple_tokens);
 }
 
 

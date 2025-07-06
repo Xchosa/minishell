@@ -40,7 +40,7 @@ char *update_export_line(char *line)
 	return (line);
 }
 
-t_token *create_export_token(char *content)
+t_token *create_export_token(char **content)
 {
 	t_token *new_token;
 	
@@ -64,10 +64,10 @@ t_token *create_token_q_case_and_export(char **line, t_token *token_lst)
 	if (ft_strncmp("export", token_lst->token, 6) == 0)
 	{
 		token_lst->token_type = EXPORT;
-		return(create_export_token(*line));
+		return(create_export_token(line));
 	}
 	else
-		return (create_token(*line));
+		return (create_token(line));
 }
 
 

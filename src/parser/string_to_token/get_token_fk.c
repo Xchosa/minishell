@@ -12,25 +12,32 @@
 
 #include "parser.h"
 
-static char	*tokenise_divider(char *content, char *new_token)
+
+
+
+char	*tokenise_divider(char **content, char *new_token)
 {
 	char	*tmp_token;
 	int		i;
 
 	i = 0;
-	while (check_for_divider_without_space(content[i]) == true)
+	while (check_for_divider_without_space((*content)[i]) == true)
 	{
-		tmp_token = ft_charjoin(new_token, content[i]);
+		tmp_token = ft_charjoin(new_token, (*content)[i]);
 		free(new_token);
 		new_token = tmp_token;
-		if (not_single_divider(content[i])== false )
+		if (not_single_divider((*content)[i]) == false )
+		{
+			*content += i + 1;
 			return (new_token);
+		}
 		i++;
 	}
+	*content += i;
 	return (new_token);
 }
 
-char	*get_token(char *content)
+char	*get_token(char **content)
 {
 	int		i;
 	char	*new_token;
@@ -38,25 +45,34 @@ char	*get_token(char *content)
 
 	i = 0;
 	new_token = ft_strdup("");
-	while (content[i] != '\0'
-		&& check_for_divider_with_space(content[i]) == false)
+	if (!new_token)
+        return (NULL);
+	while ((*content)[i] != '\0'
+		&& check_for_divider_with_space((*content)[i]) == false)
 	{
-		if (char_is_alpha_nbr_and_no_whitespace(content[i]))
+		if (char_is_alpha_nbr_and_no_whitespace((*content)[i]))
 		{
-			tmp_token = ft_charjoin(new_token, content[i]);
+			tmp_token = ft_charjoin(new_token, (*content)[i]);
 			free(new_token);
             new_token = tmp_token;
 		}
-		if (check_for_divider_with_space(content[i +1 ]) == true)
+		if (check_for_divider_with_space((*content)[i +1 ]) == true)
+		{
+			*content += i + 1;
 			return (new_token);
-		i++;
+		}
+		(*content)++;
 	}
-	if (check_for_divider_without_space(content[i]) == true)
+	if (check_for_divider_without_space((*content)[i]) == true)
 	{
-		new_token = tokenise_divider(content + i, new_token);
+		char **temp_content = content;
+		new_token = tokenise_divider(temp_content, new_token);
 	}
 	return (new_token);
 }
+
+
+
 
 t_type	append_or_redirect_output(char *content)
 {

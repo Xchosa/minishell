@@ -112,23 +112,28 @@ void		print_lexer_error_message(char *line);
 void 		skip_whitespace(char **line);
 bool		skip_whitespace_and_check_for_eof(char **line);
 void 		skip_quotes(char **line);
+void		skip_single_quotes(char **line);
 bool		find_divider_until_whitespace_or_eof(char c);
 bool		char_is_alpha_nbr_and_no_whitespace(char c);
+int			process_content_to_token(char **line, t_token *token);
 
-t_token 	*tokeniser(char *line);
-char		*get_token(char *content);
+
+t_token		*validate_token_str(t_token **token);
+t_token 	*tokeniser(char **line);
+char		*get_token(char **content);
 t_type		get_token_type(char *content);
+char		*tokenise_divider(char **content, char *new_token);
 t_token		*tokenlast(t_token *lst);
 void		tokenadd_back(t_token **lst, t_token *new_token);
 
-t_token		*create_token(char *content);
+t_token		*create_token(char **content);
 t_token 	*create_first_token(char **line);
 t_token		*d_quote_case(char **line);
 t_token		*s_quote_case(char **line);
 t_token		*call_exit_token(char **line);
 t_token		*call_saved_export_var(char **line);
 t_token 	*create_token_with_quote_case(char **line, t_token *token);
-t_token		*tokenlstnew(char	*content);
+t_token		*tokenlstnew(char	**content);
 bool		check_for_divider_with_space(char c);
 bool		check_for_divider_without_space(char c);
 char		*skip_dollar_parameter(char *line);
@@ -145,7 +150,7 @@ void		iter_tokenlst(t_token *lst, void (*f)(t_token *));
 void		print_tokenlst(t_token *data);
 
 //here_doc
-void		check_here_doc_and_take_exit_word(t_token *token_lst);
+
 char		*cpy_str_space_deli(const char *src);
 bool		not_single_divider(char c);
 bool		pipe_or_simec(char c);
@@ -163,14 +168,14 @@ void		reset_token_get_home_directory(t_token **token_lst, char **src);
 // export tokenise 
 t_token*	equal_case(char **line);
 t_token*	split_token_in_sub_token(t_token *current_token, t_token *chain);
-t_token*	create_token_splited(char *content);
+t_token*	create_token_splited(char **content);
 char*		get_token_equal_as_div(char *content);
 t_token*	create_token_equal_as_div(char *content);
 void		handle_export(t_token *token_lst);
 
 char*		get_export_token(char *content);
 char*		update_export_line(char *line);
-t_token*	create_export_token(char *content);
+t_token*	create_export_token(char **content);
 t_token*	create_token_q_case_and_export(char **line, t_token *token_lst);
 bool		d_quote_case_no_div(char *line);
 bool		split_needed(t_token **t_lst);

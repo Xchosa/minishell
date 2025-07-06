@@ -29,7 +29,7 @@ bool check_for_equal_sign(t_token *current_token)
 }
 
 
-t_token *split_token_in_sub_token(t_token *current_token, t_token *chain)
+t_token	*split_token_in_sub_token(t_token *current_token, t_token *chain)
 {
     t_token *sub_token;
     t_token *head_subtoken;
@@ -37,17 +37,21 @@ t_token *split_token_in_sub_token(t_token *current_token, t_token *chain)
 
     main_token_lst = current_token->next;
 
-    sub_token = tokeniser(current_token->token);
+    // sub_token = tokeniser(&current_token->token);
+    char *token_copy = ft_strdup(current_token->token);
+    sub_token = tokeniser(&token_copy);
     if (!sub_token)
         return (main_token_lst);
+
     head_subtoken= sub_token;
-    while(sub_token->next)
+    while (sub_token->next)
         sub_token = sub_token->next;
     sub_token->next = chain;
+    free(token_copy);
     return (head_subtoken);
 }
 
-t_token *create_token_splited(char *content)
+t_token	*create_token_splited(char **content)
 {
 	t_token *new_token;
 	
@@ -71,14 +75,19 @@ void delete_token(t_token *delete_token)
 
 static bool check_for_multi_tokens(char *line)
 {
-    bool multiple_token;
+    bool    multiple_token;
 	t_token *token_lst;
 
 	if (!line || *line == '\0')
 		return(false);
-	token_lst = tokenlstnew(line);
+	// token_lst = tokenlstnew(line);
+    char *line_copy = ft_strdup(line);
+    token_lst = tokenlstnew(&line_copy);
 	if (!token_lst)
+    {
+        free(line_copy);
 		return (false);
+    }
     skip_whitespace(&line);
     line = handle_special_characters(line);
 	if (line == NULL || *line == '\0')
@@ -86,6 +95,7 @@ static bool check_for_multi_tokens(char *line)
     else
         multiple_token = true;
     free(token_lst);
+    free(line_copy);
 	return (multiple_token);
 }
 

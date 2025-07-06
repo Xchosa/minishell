@@ -14,10 +14,12 @@
 
 void clean_token_lst_and_line(t_token *token_lst, char *line)
 {
-	if(!token_lst)
+	if(token_lst)
 		clean_token_lst(token_lst);
-	if(!line)
-		free(line);
+	(void)line;
+	// if(line)
+	// 	free(line);
+	
 }
 
 void clean_token_lst(t_token *token_lst)
@@ -28,13 +30,18 @@ void clean_token_lst(t_token *token_lst)
 		return;
 	while(token_lst)
 	{
-		tmp = token_lst->next;
-		if(token_lst->next)
+		while(token_lst)
 		{
-			free(token_lst->token);
+			tmp = token_lst->next;
+			if(token_lst->next)
+			{
+				free(token_lst->token);
+			}
+			free(token_lst);
+			token_lst = tmp;
 		}
+		free(token_lst->token);
 		free(token_lst);
-		token_lst = tmp;
 	}
 }
 
@@ -42,7 +49,8 @@ void free_single_token(t_token **token)
 {
 	if (*token)
 	{
-		free((*token)->token);
+		if((*token)->token)
+			free((*token)->token);
 		free(*token);
 		*token = NULL;
 	}

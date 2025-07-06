@@ -41,7 +41,7 @@ void	tokenadd_back(t_token **lst, t_token *new_token)
 	}
 }
 
-t_token *create_token(char *content)
+t_token *create_token(char **content)
 {
 	t_token *new_token;
 	
@@ -54,12 +54,13 @@ t_token *create_token(char *content)
 	return (new_token);
 }
 
-t_token	*tokenlstnew(char	*content)
+t_token	*tokenlstnew(char	**content)
 {
 	t_token	*token;
 
-	skip_whitespace(&content);
-	token = create_first_token(&content);
+	skip_quotes(content);
+	skip_whitespace(content);
+	token = create_first_token(content);
 	if(!token)
 		return (NULL);
 	token->next = 0;
@@ -67,30 +68,32 @@ t_token	*tokenlstnew(char	*content)
 	return (token);
 }
 
-t_token	*tokeniser(char *line)
+t_token	*tokeniser(char **line)
 {
 	t_token *new_token;
 	t_token *token_lst;
 
-	if (!line || *line == '\0')
+	if (!line || **line == '\0')
 		return(NULL);
 	token_lst = tokenlstnew(line);
 	if (!token_lst)
 		return (NULL);
-	skip_quotes(&line);
-	line = update_line(line,token_lst);
+	skip_quotes(line);
+	// line = update_line(line,token_lst);
 	new_token = NULL;
-	while(*line)
+	while(*line && **line != '\0')
 	{
-		if (skip_whitespace_and_check_for_eof(&line) == false)
-			// return(token_lst);
+		if (skip_whitespace_and_check_for_eof(line) == false)
 			break;
-		new_token = create_token_with_quote_case(&line, token_lst);
+		new_token = create_token_with_quote_case(line, token_lst);
 		tokenadd_back(&token_lst, new_token);
-		line = update_line(line, token_lst);
+		// line = update_line(line, token_lst);
 	}
 	if (new_token == NULL)
+	{
+		token_lst->next = new_token;
 		return (token_lst);
+	}
 	if (token_lst ->next != NULL)
 		token_lst->next = NULL;
 	// new_token->next = NULL;
