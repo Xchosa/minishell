@@ -94,8 +94,8 @@ t_token	*tokeniser(char **line)
 		token_lst->next = new_token;
 		return (token_lst);
 	}
-	if (token_lst ->next != NULL)
-		token_lst->next = NULL;
+	// if (token_lst ->next != NULL)
+	// 	token_lst->next = NULL;
 	// new_token->next = NULL;
     
 	return (token_lst);

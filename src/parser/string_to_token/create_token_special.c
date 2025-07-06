@@ -39,7 +39,7 @@ t_token	*create_token_with_quote_case(char **line, t_token *token)
 	if ((ft_strncmp("$", *line, 1) == 0))
 		return (call_saved_export_var(line));
 	if (token->head->token_type == EXPORT)
-		return (create_token_equal_as_div(*line));
+		return (create_token_equal_as_div(line));
 	else
 		return (create_token(line));
 }

@@ -34,11 +34,11 @@ t_token	*split_token_in_sub_token(t_token *current_token, t_token *chain)
     t_token *sub_token;
     t_token *head_subtoken;
     t_token *main_token_lst;
-
+	char 	*token_copy;
     main_token_lst = current_token->next;
 
     // sub_token = tokeniser(&current_token->token);
-    char *token_copy = ft_strdup(current_token->token);
+    token_copy = ft_strdup(current_token->token);
     sub_token = tokeniser(&token_copy);
     if (!sub_token)
         return (main_token_lst);
@@ -58,8 +58,8 @@ t_token	*create_token_splited(char **content)
 	new_token = malloc (sizeof(t_token));
 	if(!new_token)
 		return (NULL);
+	new_token->token_type = get_token_type(*content);
 	new_token->token  = get_token(content);
-	new_token->token_type = get_token_type(content);
 	new_token->next = NULL;
 	return (new_token);
 }

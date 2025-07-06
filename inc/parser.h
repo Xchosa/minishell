@@ -125,6 +125,7 @@ t_type		get_token_type(char *content);
 char		*tokenise_divider(char **content, char *new_token);
 t_token		*tokenlast(t_token *lst);
 void		tokenadd_back(t_token **lst, t_token *new_token);
+char		*add_char(char **content, char *tmp_token, char *new_token, int i);
 
 t_token		*create_token(char **content);
 t_token 	*create_first_token(char **line);
@@ -169,11 +170,11 @@ void		reset_token_get_home_directory(t_token **token_lst, char **src);
 t_token*	equal_case(char **line);
 t_token*	split_token_in_sub_token(t_token *current_token, t_token *chain);
 t_token*	create_token_splited(char **content);
-char*		get_token_equal_as_div(char *content);
-t_token*	create_token_equal_as_div(char *content);
+char*		get_token_equal_as_div(char **content);
+t_token*	create_token_equal_as_div(char **content);
 void		handle_export(t_token *token_lst);
 
-char*		get_export_token(char *content);
+char*		get_export_token(char **content);
 char*		update_export_line(char *line);
 t_token*	create_export_token(char **content);
 t_token*	create_token_q_case_and_export(char **line, t_token *token_lst);

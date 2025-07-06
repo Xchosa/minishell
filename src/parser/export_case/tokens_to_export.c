@@ -12,7 +12,7 @@
 
 #include "parser.h"
 
-char* get_export_token(char *content)
+char* get_export_token(char **content)
 {
 	int i;
 	char *new_token;
@@ -20,12 +20,12 @@ char* get_export_token(char *content)
 	
 	i = 0;
 	new_token =ft_strdup("");
-	while (ft_strncmp("=", content, 1) != 0)
+	while (ft_strncmp("=", (*content), 1) != 0)
 	{
-		tmp_token = ft_charjoin(new_token, content[i]);
+		tmp_token = ft_charjoin(new_token, (*content)[i]);
         free(new_token);
         new_token = tmp_token;
-		i++;
+		(*content)++;
 	}
 	return (new_token);
 }

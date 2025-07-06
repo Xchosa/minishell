@@ -57,7 +57,7 @@ char	**cpychar_arr(char **src)
 		rows++;
 	cpy_env = (char **)malloc(sizeof(char*) * (rows + 1));
 	i = 0;
-	while (i < rows || src[i])
+	while (i < rows && src[i])
 	{
 		cpy_env[i] = ft_strdup(src[i]);
 		i++;
