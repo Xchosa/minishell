@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 10:56:31 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/07 12:53:41 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		if (lexer_token(token_lst) == false)
 		{
 			print_error_message(&token_lst, line);// header
-			continue;
+			continue ;
 		}
 		cmd_lst = init_cmd_list(&token_lst, line);
 		init_signal(1);
@@ -105,14 +105,14 @@ void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)
 
 	line = get_next_line(STDIN_FILENO);
 	if (check_lexer_and_free(line) == false)
-		return;
+		return ;
 	token_lst = tokeniser(&line);
-	if (tokeniser_successful(token_lst,line) == false)
-            return;
+	if (tokeniser_successful(token_lst, line) == false)
+		return ;
 	token_lst = extend_saved_export_var(&token_lst);
 	append_export_str(&token_lst);
 	if (lexer_token(token_lst) == false)
-		return;
+		return ;
 	cmd_lst = init_cmd_list(&token_lst, line);
 	init_signal(1);
 	ft_execute(cmd_lst, get_bash()->env);

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:54:22 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/24 16:32:48 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:33:30 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,24 +54,11 @@ static	void	if_redirect_append_file_node(t_file_list *file_list, t_file_node **f
 	file_list->size +=1;
 }
 
-static	t_cmd_node	*init_cmd_node_null(t_file_list *file_list)
-{
-	t_cmd_node 	*cmd_node;
-
-	cmd_node = malloc(sizeof(t_cmd_node));
-	if (!cmd_node)
-		return (NULL);
-	cmd_node->file_list = file_list;
-	cmd_node->next = NULL;
-	cmd_node->cmd_type = 0;
-	return (cmd_node);
-}
-
 t_cmd_node*	process_token(t_token **token_lst)
 {
-	t_cmd_node 	*cmd_node;
-	t_file_node *file_node;
-	t_file_list *file_list;
+	t_cmd_node	*cmd_node;
+	t_file_node	*file_node;
+	t_file_list	*file_list;
 
 	file_list = file_list_to_NULL();
 	cmd_node = init_cmd_node_null(file_list);
@@ -80,7 +67,7 @@ t_cmd_node*	process_token(t_token **token_lst)
 		process_token_type_Text(token_lst,cmd_node);
 		if (*token_lst == NULL)
             break;
-		if (pipe_token(token_lst) == true) // 
+		if (pipe_token(token_lst) == true)
 			return(cmd_node);
 		if (redir_token(token_lst) == false)
 			return(cmd_node);

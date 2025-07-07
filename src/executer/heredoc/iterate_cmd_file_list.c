@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:58:57 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/30 10:59:02 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:45:02 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	find_here_doc_file_node(t_file_node **file_node)
 				return (1);
 		}
 		if (cur_file_node->next)
-			cur_file_node= cur_file_node->next;
+			cur_file_node = cur_file_node->next;
 		else
 			return (0);
 	}
@@ -37,17 +37,19 @@ int	find_here_doc_file_node(t_file_node **file_node)
 
 // head uebergeben // muss doppelpointer sein um die nodes zu veraendern
 void	save_heredoc_files(t_cmd_node **cmd_node)
-{	
+{
 	t_cmd_node	*cur_cmd_node;
 
 	cur_cmd_node = *cmd_node;
 	while (cur_cmd_node)
-    {
-        if (cur_cmd_node->file_list && cur_cmd_node->file_list->head)
-        {
-            if (find_here_doc_file_node(&cur_cmd_node->file_list->head) != 0)
-                return ;
-        }
-        cur_cmd_node = cur_cmd_node->next;
-    }
+	{
+		if (cur_cmd_node->file_list && cur_cmd_node->file_list->head)
+		{
+			if (find_here_doc_file_node(&cur_cmd_node->file_list->head) != 0)
+				return ;
+		}
+		cur_cmd_node = cur_cmd_node->next;
+	}
 }
+
+// void change_incorrect_file_name

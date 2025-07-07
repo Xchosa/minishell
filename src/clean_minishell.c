@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:00:04 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/03 11:22:58 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:34:35 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,106 +67,42 @@ void	clean_file_lst(t_file_list *file_list)
 	t_file_node	*tmp;
 
 	if (!file_list)
-		return;
+		return ;
 	file_node = file_list->head;
 	tmp = NULL;
 	while (file_node)
 	{
-		if(!file_node->next)
+		if (!file_node->next)
 			tmp = file_node->next;
 		free(file_node->filename);
 		free(file_node);
-		if(!tmp)
+		if (!tmp)
 			file_node = tmp;
 	}
 	free(file_list);
 }
 
-// void	clean_cmd_lst(t_cmd_list *cmd_list)
-// {
-// 	t_cmd_node	*cmd_node;
-// 	t_cmd_node	*tmp;
 
-// 	if (cmd_list->head == NULL)
-// 		return ;
-// 	cmd_node = cmd_list->head;
-// 	while (cmd_node)
-// 	{
-// 		clean_file_lst(cmd_node->file_list);
-// 		if (cmd_node->next == NULL)
-// 		{
-// 			ft_free_array(cmd_node->cmd);
-// 			free(cmd_node);
-// 			break ;
-// 		}
-// 		if (cmd_node->next != NULL)
-// 			tmp = cmd_node->next;
-// 		ft_free_array(cmd_node->cmd);
-// 		free(cmd_node);
-// 		if(!tmp)
-// 			cmd_node = tmp;
-// 	}
-// 	free(cmd_list);
-// }
-
-void clean_cmd_lst(t_cmd_list *cmd_list)
+void	clean_cmd_lst(t_cmd_list *cmd_list)
 {
-    t_cmd_node *cmd_node;
-    t_cmd_node *tmp;
+    t_cmd_node	*cmd_node;
+    t_cmd_node	*tmp;
 
-    if (!cmd_list)
-        return;
-        
-    if (!cmd_list->head)
-    {
-        free(cmd_list);
-        return;
-    }
-    cmd_node = cmd_list->head;
-    while (cmd_node)
-    {
-        tmp = cmd_node->next;
-        clean_file_lst(cmd_node->file_list);
-        ft_free_array(cmd_node->cmd);
-        free(cmd_node);
-        cmd_node = tmp;
-    }
-    free(cmd_list);
+	if (!cmd_list)
+		return ;
+	if (!cmd_list->head)
+	{
+		free(cmd_list);
+		return ;
+	}
+	cmd_node = cmd_list->head;
+	while (cmd_node)
+	{
+		tmp = cmd_node->next;
+		clean_file_lst(cmd_node->file_list);
+		ft_free_array(cmd_node->cmd);
+		free(cmd_node);
+		cmd_node = tmp;
+	}
+	free(cmd_list);
 }
-
-
-// void clean_cmd_lst(t_cmd_list *cmd_list)
-// {
-//     t_cmd_node *cmd_node;
-//     t_cmd_node *tmp;
-
-//     if (!cmd_list)
-//         return;
-        
-//     if (!cmd_list->head)
-//     {
-//         free(cmd_list);
-//         return;
-//     }
-    
-//     cmd_node = cmd_list->head;
-//     while (cmd_node)
-//     {
-//         // Save the next node pointer before freeing anything
-//         tmp = cmd_node->next;
-        
-//         // Clean the file list for this node
-//         clean_file_lst(cmd_node->file_list);
-        
-//         // Free the command array
-//         ft_free_array(cmd_node->cmd);
-        
-//         // Free the current node
-//         free(cmd_node);
-        
-//         // Move to the next node
-//         cmd_node = tmp;
-//     }
-    
-//     free(cmd_list);
-// }
