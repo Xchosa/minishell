@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/03 14:46:39 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/07 10:56:31 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static char	*read_terminal(void)
 		line = ft_strtrim(line, "\n");
 		free(line);
 	}
-	
 	if (line && *line)
 		add_history(line);
 	if (line == NULL)

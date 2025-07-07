@@ -13,13 +13,13 @@
 # include "../libft/printf/ft_printf.h"
 # include "../libft/get_next_line/get_next_line.h"
 
-#define REDIRECT_INPUT 3 // <
-#define REDIRECT_OUTPUT 4 // >
-#define HERE_DOC 5 // <<
-#define APPEND 6 // >>
+# define REDIRECT_INPUT 3
+# define REDIRECT_OUTPUT 4
+# define HERE_DOC 5
+# define APPEND 6
 
-#define BUILTIN 1 
-#define EXECUTE 2
+# define BUILTIN 1 
+# define EXECUTE 2
 
 //List of redirection
 typedef struct s_file_node
@@ -42,7 +42,7 @@ typedef struct s_cmd_node
 {
 	int					cmd_type;
 	char				**cmd;
-	t_file_list 		*file_list;
+	t_file_list			*file_list;
 	struct s_cmd_node	*next;
 }	t_cmd_node;
 

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:54:43 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/03 12:57:07 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/07 10:55:47 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ t_cmd_list *cmd_list_to_NULL(void)
 	cmd_list->head = NULL;
 	cmd_list->tail = NULL;
 	cmd_list->size = 0;
-	return(cmd_list);
+	return (cmd_list);
 }
 
 t_file_list *file_list_to_NULL(void)
 {
-	t_file_list *file_list;
+	t_file_list	*file_list;
 
     file_list = malloc(sizeof(t_file_list));
 	if (!file_list)
@@ -41,13 +41,13 @@ t_file_list *file_list_to_NULL(void)
 
 t_cmd_list	*init_cmd_list(t_token **token_list,char *line)
 {
-	t_cmd_list *cmd_list;
-	t_cmd_node 	*cmd_node;
+	t_cmd_list	*cmd_list;
+	t_cmd_node	*cmd_node;
 
 	cmd_list = cmd_list_to_NULL();
-	while((*token_list))
+	while ((*token_list))
 	{
-		if(cmd_list->head == NULL)
+		if (cmd_list->head == NULL)
 		{
 			cmd_list->head = process_token(token_list);
 			cmd_node = cmd_list->head;
@@ -62,7 +62,6 @@ t_cmd_list	*init_cmd_list(t_token **token_list,char *line)
 			cmd_list->size +=1;
 		}
 	}
-	printf("line: '%s'", line);
 	clean_token_lst_and_line((*token_list),line);
-	return(cmd_list);
+	return (cmd_list);
 }

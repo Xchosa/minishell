@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:58:15 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 10:28:28 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/07 10:51:09 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 */
 
 static int	error_heredoc(char *new_tmp_file_name_suffix,char *new_tmp_file_name,char *suffix)
-static int	error_heredoc(char *new_tmp_file_name_suffix,char *new_tmp_file_name,char *suffix)
 {
 	free(new_tmp_file_name_suffix);
 	free(suffix);
@@ -56,7 +55,7 @@ static void free_heredoc_stoped(char *new_tmp_file_name_suffix,char *new_tmp_fil
     free(new_tmp_file_name);
     free(suffix);
 }
-bool	check_for_interactive_shell(void)
+
 bool	check_for_interactive_shell(void)
 {
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
