@@ -6,37 +6,37 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:08:33 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/03 12:49:58 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/07 09:24:56 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void skip_whitespace(char **line)
+void	skip_whitespace(char **line)
 {
-	while(*line)
+	while (*line)
 	{
-		if(ft_strchr("\t\n\v\f\r " , **line) == NULL)
+		if (ft_strchr("\t\n\v\f\r " , **line) == NULL)
 			break;
 		(*line)++;
 	}
 }
 
-bool skip_whitespace_and_check_for_eof(char **line)
+bool	skip_whitespace_and_check_for_eof(char **line)
 {
-	bool not_eof;
+	bool	not_eof;
 	not_eof = true;
-	while(**line != '\0')
+	while (**line != '\0')
 	{
-		if(ft_strchr("\t\n\v\f\r " , **line) == NULL)
-			break;
+		if (ft_strchr("\t\n\v\f\r " , **line) == NULL)
+			break ;
 		(*line)++;
 	}
-	if(**line == '\0')
+	if (**line == '\0')
 	{
-		return(not_eof = false);
+		return (not_eof = false);
 	}
-	return(not_eof);
+	return (not_eof);
 }
 
 
