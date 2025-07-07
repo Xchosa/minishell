@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:54:22 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 14:33:30 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:26:53 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_cmd_node*	process_token(t_token **token_lst)
 	t_file_node	*file_node;
 	t_file_list	*file_list;
 
-	file_list = file_list_to_NULL();
+	file_list = file_list_to_null();
 	cmd_node = init_cmd_node_null(file_list);
 	while (*token_lst)
 	{

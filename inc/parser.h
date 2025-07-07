@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 14:46:56 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:48:44 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,17 +189,19 @@ char 		*skip_divider_without_space(char *line);
 void 		tokenise_muliple_tok_from_env(t_token **token_lst, t_token *prev_token);
 // cmd_list
 
-void	check_cmd_builtin(t_token **curr_token, t_cmd_node *cmd_node);
-int		chorrect_cmd_type(t_cmd_node **cmd_node);
+void	check_cmd_builtin(t_cmd_node **cmd_node);
+int		correct_cmd_type(t_cmd_node **cmd_node);
 //print cmd_lst
 void	print_cmd_lst(t_cmd_node *cmd_nodes);
 void	iter_cmd_lst(t_cmd_list *cmd_lst, void (*f)(t_cmd_node*));
 
 t_cmd_list*		init_cmd_list(t_token **token_list, char *line);
+t_cmd_node		*init_cmd_node_null(t_file_list *file_list);
 t_cmd_list*		cmd_list_to_null(void);
 t_file_list*	file_list_to_null(void);
 
 t_cmd_node*		process_token(t_token **curr_token);
+void    		handle_special_cases(t_token **curr_token,t_cmd_node *cmd_node);
 void 			process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node);
 void 			append_token_char(t_cmd_node *cmd_node, t_token *curr_token);
 char 			**cpy_token_char(char *token);

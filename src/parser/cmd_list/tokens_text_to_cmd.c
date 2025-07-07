@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:54:16 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 14:46:40 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:48:57 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,10 @@ void    append_token_char(t_cmd_node *cmd_node, t_token *curr_token)
 }
 
 
-static  void    handle_special_cases(t_token **curr_token,t_cmd_node *cmd_node)
+void	handle_special_cases(t_token **curr_token,t_cmd_node *cmd_node)
 {
    (void)cmd_node;
-   t_token *passed_position;
+   t_token	*passed_position;
 
    passed_position = (*curr_token);
    while (curr_token && *curr_token)
@@ -112,10 +112,10 @@ static  void    handle_special_cases(t_token **curr_token,t_cmd_node *cmd_node)
    (*curr_token) = passed_position;
 }
 
-void process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
+void	process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
 {
-	handle_special_cases(curr_token,cmd_node);
-	while(curr_token && *curr_token && (*curr_token)->token_type == TEXT )
+	handle_special_cases(curr_token, cmd_node);
+	while (curr_token && *curr_token && (*curr_token)->token_type == TEXT )
 	{
 		if (cmd_node->cmd_type == 0)
 		{
@@ -126,16 +126,16 @@ void process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
 		{
 			append_token_char(cmd_node, *curr_token);
 		}
-        if ((*curr_token)->next)
-	        (*curr_token) = (*curr_token)->next;
-        else 
-		{	
+		if ((*curr_token)->next)
+			(*curr_token) = (*curr_token)->next;
+		else
+		{
 			*curr_token = NULL;
-            return;
+			return ;
 		}
 	}
 	process_redirect(curr_token, cmd_node);
-	check_cmd_builtin(curr_token, cmd_node);
+	check_cmd_builtin(&cmd_node);
 	return ;
 }
 
@@ -154,26 +154,23 @@ void	process_redirect(t_token **curr_token, t_cmd_node *cmd_node)
 	return ;
 }
 
-void	check_cmd_builtin(t_token **curr_token, t_cmd_node *cmd_node)
+void	check_cmd_builtin(t_cmd_node **cmd_node)
 {
-	
-	if (cmd_node ->cmd_type == EXECUTE)
+	if ((*cmd_node)->cmd_type == EXECUTE)
 	{
-	
-		cmd_node->cmd_type = correct_cmd_typ(cmd_node[0]);
+		(*cmd_node)->cmd_type = correct_cmd_type(cmd_node);
 	}
 }
 
-int	chorrect_cmd_type(t_cmd_node **cmd_node)
+int	correct_cmd_type(t_cmd_node **cmd_node)
 {
 	int		cmd_type;
 	char	*lower;
 
-    cmd_type = 0;
-	lower = ft_strtolower(curr_token->token);
-	curr_token->token = lower;
+	cmd_type = 0;
+	lower = ft_strtolower((*cmd_node)->cmd[0]);
 	cmd_type = (check_for_builtin(lower));
-    if	(cmd_type != 0)
-        return (cmd_type);
-    return (cmd_type = EXECUTE);
+    if (cmd_type != 0)
+		return (cmd_type);
+	return (cmd_type = EXECUTE);
 }
