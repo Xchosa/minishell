@@ -6,30 +6,28 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/05 14:46:08 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/07 17:48:02 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executer.h"
 
-void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
+void	ft_execute_command(t_cmd_node *cmd_node, char **envp) //path free once
 {
-	char	*path;
-
 	if (cmd_node->cmd[0][0] != '/')
-		path = ft_getpath(cmd_node->cmd[0], envp);
+		get_bash()->path = ft_getpath(cmd_node->cmd[0], envp);
 	else
 	{
-		path = cmd_node->cmd[0];
-		if (access(path, X_OK) != 0)
-			path = NULL;
+		get_bash()->path = cmd_node->cmd[0];
+		if (access(get_bash()->path, X_OK) != 0)
+			get_bash()->path = NULL;
 	}
-	if (path == NULL)
+	if (get_bash()->path == NULL)
 	{
 		ft_putendl_fd("Shell: command not found\n", 2);
 		exit(127);
 	}
-	execve(path, cmd_node->cmd, envp);
+	execve(get_bash()->path, cmd_node->cmd, envp);
 	perror("Execve failed");
 	exit(errno);
 }
@@ -60,31 +58,19 @@ void	execution_node(t_cmd_list *cmd_list,
 	}
 }
 
-// void	ft_close_and_free(t_cmd_list *cmd_list, int *[2], int i)
-// {
-// 	while (i < cmd_list->size)
-// 	{
-		
-// 	}
-// }
-
-void	ft_execution_loop(t_cmd_list *cmd_list, char **envp)
+void	ft_execution_loop(t_cmd_list *cmd_list, char **envp, int (*fd)[2])
 {
 	int			status;
 	int			pid;
 	int			i;
 	t_cmd_node	*cur_cmd_node;
-	int			(*fd)[2];
 
 	i = 0;
-	fd = malloc(sizeof(int [2]) * cmd_list->size);
 	cur_cmd_node = cmd_list->head;
-	if (cmd_list->size > 1)
-		ft_open_pipes(fd, cmd_list); //eigentlich nur dann malloc, etl malloc mit in die f packen
-	while ((cur_cmd_node != NULL) && (i < 1 || get_exit_codes()->last_exit_code == 0))
+	while (cur_cmd_node != NULL)
 	{
 		pid = fork();
-		if (pid == 0) //hier ENV updaten?????????? oder auch nicht bash packt auch kein pipe nach unset zB
+		if (pid == 0)
 			execution_node(cmd_list, cur_cmd_node, fd, envp);
 		wait(&status);
 		if (WIFEXITED(status))
@@ -96,28 +82,38 @@ void	ft_execution_loop(t_cmd_list *cmd_list, char **envp)
 			close(fd[i - 1][0]);
 		i++;
 	}
-	if (cmd_list->size > 1)
-		close(fd[i - 1][0]);
-	//ft_close_and_free(cmd_list, fd, i);
+	ft_close_and_free(fd, i, cmd_list->size);
 }
 
 void	ft_execute(t_cmd_list *cmd_list, char **envp)
 {
-	int	backup_stdout;
-	int	backup_stdin;
+	int			backup_stdout;
+	int			backup_stdin;
+	int			(*fd)[2];
 
 	backup_stdout = dup(STDOUT_FILENO);
 	backup_stdin = dup(STDIN_FILENO);
 	save_heredoc_files(&cmd_list->head);
+	if (create_pipes(&fd, cmd_list) != true)
+		return ;
 	//iter_cmd_lst(cmd_list, &print_cmd_lst);
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN)
 		manage_single_cmd_node(cmd_list->head, envp);
 	else if (ft_strcmp("./minishell", cmd_list->head->cmd[0]) == true)
 		ft_minishell_nested(envp);
 	else
-		ft_execution_loop(cmd_list, envp);
+		ft_execution_loop(cmd_list, envp, fd);
 	reset_redir(&backup_stdin, &backup_stdout);
-	//clean_cmd_list_objects_tmp_files(cmd_list);
+	//clean_cmd_list_objects_tmp_files(cmd_list); //callen wir 2 mal? hier ists gut
+	int leaked = 0;
+	for (int i = 3; i < 1024; ++i) {
+		if (fcntl(i, F_GETFD) != -1) {
+			printf("FD %d is still open\n", i);
+			leaked++;
+		}
+	}
+	if (leaked == 0)
+		printf("🎉 All file descriptors properly closed!\n");
 }
 
 // echo ?! -> should return a new line 
@@ -126,3 +122,64 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 // echo hallo <<now 		->printed nicht hallo nach heredoc
 // cat <<now 				haegt sich auf 
 // how to close all pipes if error e.g infile not exisiting
+// void	ft_close_and_free(int (*fd)[2], int count, int size)
+// {
+// 	int j;
+
+// 	j = 0;
+// 	if (size > 1 && count == size)
+// 	{
+// 		close(fd[count - 2][0]);
+// 		printf("closed a 0 from %d from arsch!! \n", count - 2);
+// 	}
+// 	else
+// 	{
+// 		close(fd[count - 1][0]);
+// 		printf("closed a 0 from %d from arsch!! \n", count - 1);
+// 	}
+// 	while (count < size)
+// 	{
+// 		close(fd[count][0]);
+// 		printf("closed a 0 from %d!! in close function\n", count);
+// 		close(fd[count][1]);
+// 		printf("closed a 1 from %d!! in close funtion\n", count);
+// 		count++;
+// 	}
+// 	free(fd);
+// }
+// void	ft_execution_loop(t_cmd_list *cmd_list, char **envp)
+// {
+// 	int			status;
+// 	int			pid;
+// 	int			i;
+// 	t_cmd_node	*cur_cmd_node;
+// 	int			(*fd)[2];
+
+// 	i = 0;
+// 	fd = malloc(sizeof(int [2]) * cmd_list->size);
+// 	cur_cmd_node = cmd_list->head;
+// 	if (cmd_list->size > 1)
+// 		ft_open_pipes(fd, cmd_list); //eigentlich nur dann malloc, etl malloc mit in die f packen
+// 	while ((cur_cmd_node != NULL) && (i < 1 || get_exit_codes()->last_exit_code == 0))
+// 	{
+// 		pid = fork();
+// 		if (pid == 0) //hier ENV updaten?????????? oder auch nicht bash packt auch kein pipe nach unset zB
+// 			execution_node(cmd_list, cur_cmd_node, fd, envp);
+// 		wait(&status);
+// 		if (WIFEXITED(status))
+// 			get_exit_codes()->last_exit_code = WEXITSTATUS(status);
+// 		cur_cmd_node = cur_cmd_node->next;
+// 		if (i < cmd_list->size - 1)
+// 		{
+// 			close(fd[i][1]);
+// 			printf("closed a 1 from %d !! \n", i);
+// 		}
+// 		if (i > 0 && i < cmd_list->size - 1)
+// 		{
+// 			close(fd[i - 1][0]);
+// 			printf("closed a 0 from %d !! \n", i - 1);
+// 		}
+// 		i++;
+// 	}
+// 	ft_close_and_free(fd, i, cmd_list->size);
+// }
