@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:15:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/01 10:52:01 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:59:57 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executer.h"
-
 
 char	*ft_give_pointer_to_path(char **envp)
 {
@@ -63,4 +62,28 @@ char	*ft_getpath(char *command, char **envp)
 		free(full);
 	}
 	return (ft_free_array(arr), NULL);
+}
+
+bool	ft_open_pipes(int fd[][2], t_cmd_list *cmd_list)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < cmd_list->size - 1)
+	{
+		if (pipe(fd[i]) != 0)
+		{
+			while (j < i)
+			{
+				close(fd[j][0]);
+				close(fd[j][1]);
+				j++;
+			}
+			return (false);
+		}
+		i++;
+	}
+	return (true);
 }

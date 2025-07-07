@@ -1,8 +1,6 @@
 
 #include "executer.h"
 
-// changed to real strcmp
-
 char	*ft_strtolower(char *input)
 {
 	char	*output;
@@ -11,7 +9,10 @@ char	*ft_strtolower(char *input)
 	i = 0;
 	output = malloc(ft_strlen(input) + 1);
 	if (output == NULL)
+	{
+		ft_putendl_fd("malloc failed\n", 2);
 		return (NULL);
+	}
 	while (input[i] != '\0')
 	{
 		output[i] = ft_tolower(input[i]);
@@ -22,16 +23,16 @@ char	*ft_strtolower(char *input)
 	return (output);
 }
 
-bool	ft_execute_builtin(t_cmd_node *cmd_node, char **envp)
+void	ft_execute_builtin(t_cmd_node *cmd_node, char **envp)
 {
-	bool	check;
-
 	cmd_node->cmd[0] = ft_strtolower(cmd_node->cmd[0]);
 	if (cmd_node->cmd[0] == NULL)
-		return false; //oder so
-	check = false;
+	{
+		get_exit_codes()->last_exit_code = 1;
+		return ;
+	}
 	if (ft_strcmp("echo", cmd_node->cmd[0]) == true)
-		check = ft_echo(cmd_node, envp);
+		ft_echo(cmd_node);
 	if (ft_strcmp("pwd", cmd_node->cmd[0]) == true)
 		ft_pwd(envp);
 	if (ft_strcmp("env", cmd_node->cmd[0]) == true)
@@ -44,12 +45,4 @@ bool	ft_execute_builtin(t_cmd_node *cmd_node, char **envp)
 		ft_exit(cmd_node);
 	if (ft_strcmp("unset", cmd_node->cmd[0]) == true)
 		ft_unset(cmd_node, envp);
-	// else
-	// {
-	// 	ft_putstr_fd("not a valid here executable", STDERR_FILENO);
-	// 	return check; // echooooo hallo aport 
-	// }
-	return check;
 }
-
-// 

@@ -1,7 +1,26 @@
-
-
 #include "executer.h"
 
+char	*get_home_path(char **envp)
+{
+	int		i;
+	char	*home;
+
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		if (strncmp("HOME=", envp[i], 5) == 0)
+			break ;
+		i++;
+	}
+	home = envp[i];
+	i = 0;
+	while (i < 5)
+	{
+		home++;
+		i++;
+	}
+	return (home);
+}
 char	**ft_delete_old_pwd(char **envp)
 {
 	int		max;
@@ -12,7 +31,7 @@ char	**ft_delete_old_pwd(char **envp)
 	max = 0;
 	i = 0;
 	j = 0;
-	while(envp[max] != NULL)
+	while (envp[max] != NULL)
 		max++;
 	newenvp = (char **)malloc(max * sizeof(char *));
 	if (newenvp == NULL)
@@ -35,13 +54,13 @@ char	**ft_delete_old_pwd(char **envp)
 
 char	**ft_add_old_pwd(char **envp)
 {
-	int	max;
-	int	i;
+	int		max;
+	int		i;
 	char	**newenvp;
 
 	max = 0;
 	i = 0;
-	while(envp[max] != NULL)
+	while (envp[max] != NULL)
 		max++;
 	newenvp = (char **)malloc((max + 2) * sizeof(char *));
 	if (newenvp == NULL)

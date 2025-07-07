@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   bash_config.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 10:57:23 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/03 14:26:20 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:06:09 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
+#include "executer.h"
 
 t_bash	*get_bash(void)
 {
@@ -31,6 +32,7 @@ bool	init_bash(char **env, int argc)
 		if (!bash->env)
 			return (false);
 	}
+	ft_increase_shlvl(bash->env);
 	return (true);
 }
 

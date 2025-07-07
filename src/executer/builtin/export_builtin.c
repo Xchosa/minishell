@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   special_builtin.c                                  :+:      :+:    :+:   */
+/*   export_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.de  +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:02:00 by tschulle          #+#    #+#             */
-/*   Updated: 2025/05/13 09:02:09 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/05 13:24:50 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_get_index(int i, char **envp)
 	j = 0;
 	k = 0;
 	max = 0;
-	while (envp[max] != NULL) // ggf zum kueryen max uebergeben, sollte reichen
+	while (envp[max] != NULL)
 		max++;
 	while (j != max - i && l < max)
 	{
@@ -39,7 +39,6 @@ int	ft_get_index(int i, char **envp)
 	}
 	return (l - 1);
 }
-
 	
 void	ft_export_print(char **envp)
 {
@@ -53,6 +52,7 @@ void	ft_export_print(char **envp)
 		ft_printf("declare -x %s=\"%s\"\n",ft_split(envp[j], '=')[0], ft_split(envp[j], '=')[1]);
 		i++;
 	}//diff: null, multiple =, oldpwd, _a.out;, kleinschreibung vor gross
+	get_exit_codes()->last_exit_code = 0;
 }
 
 void	ft_export_variable(char *cmd_var, char **envp)
@@ -77,9 +77,20 @@ void	ft_export_variable(char *cmd_var, char **envp)
 	}
 	newenvp[i] = newvar;
 	newenvp[i + 1] = NULL;
-	//free envp
+	ft_free_array(envp);
 	get_bash()->env = newenvp;
 	//ft_export_print(get_bash()->env);
+	get_exit_codes()->last_exit_code = 0;
+}
+
+bool	ft_check_valid_identifier(char *var) // check for overwrite?
+{
+	if (ft_isalpha(var[0]) != 1 && var[0] != '_')
+	{
+		get_exit_codes()->last_exit_code = 1;
+		return false;
+	}
+	return (true);
 }
 
 void	ft_export(t_cmd_node *cmd_node, char **envp)
@@ -93,53 +104,10 @@ void	ft_export(t_cmd_node *cmd_node, char **envp)
 	{
 		while (cmd_node->cmd[i] != NULL)
 		{
-		//	ft_check_export(cmd_node);
+			if (ft_check_valid_identifier(cmd_node->cmd[i]) == false) //doesnt do shit yet i believe because tokeniser does it, but not cerrect always
+				return ;
 			ft_export_variable(cmd_node->cmd[i], envp);
 			i++;
 		}
-	}
-}
-
-void	ft_unset_var(char **envp, int j)
-{
-	char	**newenvp;
-	int		size;
-	int		i;
-
-	size = 0;
-	i = 0;
-	while (envp[size] != NULL)
-		size++;
-	newenvp = (char **)malloc(size * sizeof(char *));
-	while (i < size)
-	{
-		if (i < j)
-			newenvp[i] = ft_strdup(envp[i]);
-		else
-			newenvp[i] = ft_strdup(envp[i + 1]);
-		i++;
-	}
-	get_bash()->env = newenvp;
-}
-
-void	ft_unset(t_cmd_node *cmd_node,char **envp)
-{
-	int	i;
-	int	j;
-	int	len;
-
-	i = 0;
-	j = 0;
-	while (cmd_node->cmd[i] != NULL)
-	{
-		len = ft_strlen(cmd_node->cmd[i]);
-		while (envp[j] != NULL)
-		{
-			if (ft_strncmp(envp[j], cmd_node->cmd[i], len) == 0)
-				ft_unset_var(envp, j);
-			j++;
-		}
-		j = 0;
-		i++;
 	}
 }
