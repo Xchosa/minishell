@@ -53,29 +53,36 @@ void set_head_for_all_tokens(t_token *token_lst, t_token *head)
     }
 }
 
-void handle_first_token(t_token **token_lst)
+void	handle_first_token(t_token **token_lst)
 {
-    t_token *split_token;
-    t_token *connect_token;
-    t_token *head_split;
+    t_token	*split_token;
+    t_token	*connect_token;
+    t_token	*head_split;
+	char	*token_cpy;
 
-    split_token = tokeniser((*token_lst)->token);
+	token_cpy = ft_strdup((*token_lst)->token);
+	if(!token_cpy)
+		return ;
+    split_token = tokeniser(&token_cpy);
     head_split = split_token;
     connect_token = (*token_lst)->next;
     split_token = tokenlast(split_token);
     free_single_token(token_lst);
     split_token->next = connect_token;
     *token_lst = head_split;
+	free(token_cpy) ;
     if (connect_token)
         set_head_for_all_tokens(connect_token, head_split);
 }
-void handle_next_token(t_token **token_lst, t_token *prev_token)
+void	handle_next_token(t_token **token_lst, t_token *prev_token)
 {
-    t_token *split_token;
-    t_token *connect_token;
+    t_token	*split_token;
+    t_token	*connect_token;
+	char	*token_copy;
 
-    // split_token = tokeniser((*token_lst)->token);
-    char *token_copy = ft_strdup((*token_lst)->token);
+    token_copy = ft_strdup((*token_lst)->token);
+	if (token_copy)
+		return;
     split_token = tokeniser(&token_copy);
 
 

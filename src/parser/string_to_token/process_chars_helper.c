@@ -9,7 +9,6 @@ t_token	*validate_token_str(t_token **new_token)
         return (NULL);
 	if (!(*new_token))
         return (NULL);
-
     if (!(*new_token)->token)
     {
 		free_single_token(new_token);
@@ -26,9 +25,14 @@ int process_content_to_token(char **line, t_token *token)
     
     i = 0;
 	if ((*line)[i] == '\'')
+	{
 		i++;
+	}
 	else if ((*line)[i] == '\"')
+	{
 		i++;
+		// updated nicht line
+	}
     while((*line)[i] && (*line)[i] != '\"' && (*line)[i] != '\'')
     {
         tmp_token = ft_charjoin(token->token, (*line)[i]);

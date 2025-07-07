@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **env)
 	// char *line = <<1"; // leaked
 
     // to do: tokeniser
-	line = "export h=hallo";
+	line = "export j=\"ls -al\"";
 	// char *line = "$h outfile";
     // char *line = "export t=\"world | around < \" echo world";
     // line = "echo $?dfdfd"; // = wird falsch gehandelt
@@ -114,13 +114,12 @@ int	main(int argc, char **argv, char **env)
 
 
 
-
 //     printf("\n \nsecond round\n");
 
 //     // new=\"ls -al >;
 //     // line = "cat makefile \"$new\" outfile";  works
-//     line = "$var3 outfile";
-//     token_lst = tokeniser(line);
+//     line = "$j > outfile";
+//     token_lst = tokeniser(&line);
 // 	// free(line);
 // 	if (!token_lst)
 //         printf("error tokeniser\n");
@@ -137,17 +136,17 @@ int	main(int argc, char **argv, char **env)
 // 	token_lst = extend_saved_export_var(&token_lst);
 // 	// change_only tokenise if CALL_SAVED_VAR
 	
-//     printf("\n tokenised multiple tokens \n");
 // 	iter_tokenlst(token_lst, &print_tokenlst);
 // 	// printf("\n multiple tokens split:\n\n");
-
+    
 // 	// splited saved_var erneut mit tokeniser
 // 	printf("\n append token\n\n");
 // 	// handle_export(token_lst);
 // 	append_export_str(&token_lst);
+// 	printf("line , %s \n", line);
 //     if (lexer_token(token_lst) == false)
 //     {
-// 		print_error_message(line);
+// 		print_error_message(&token_lst, line);
 // 		return(1);
 //     }
 // 	iter_tokenlst(token_lst, &print_tokenlst);
@@ -159,6 +158,7 @@ int	main(int argc, char **argv, char **env)
 // 	ft_execute(cmd_lst, get_bash()->env);
 
 // 	clean_cmd_list_objects_tmp_files(cmd_lst);
+
 // }
 
 
