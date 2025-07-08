@@ -6,15 +6,15 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:09:11 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/08 10:40:10 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:43:20 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void clean_token_lst_and_line(t_token *token_lst, char *line)
+void	clean_token_lst_and_line(t_token *token_lst, char *line)
 {
-	if(token_lst)
+	if (token_lst)
 		clean_token_lst(token_lst);
 	(void)line;
 	// if(line)
@@ -37,11 +37,11 @@ void	clean_token_lst(t_token *token_lst)
 	}
 }
 
-void free_single_token(t_token **token)
+void	free_single_token(t_token **token)
 {
 	if (*token)
 	{
-		if((*token)->token)
+		if ((*token)->token)
 			free((*token)->token);
 		free(*token);
 		*token = NULL;
