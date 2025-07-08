@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/08 13:32:32 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:42:57 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 		get_bash()->path = ft_getpath(cmd_node->cmd[0], envp);
 	if (get_bash()->path == NULL)
 	{
-		ft_putendl_fd("Shell: command not found\n", 2);
+		ft_putendl_fd("Shell: command not found\n", 2); // 2 exit codes bze fehlermeldunge, command not found und not a file or directory, ./bla /bla und bla und . und ..
 		exit(127);
 	}
 	execve(get_bash()->path, cmd_node->cmd, envp);
@@ -38,7 +38,10 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 void	manage_single_cmd_node(t_cmd_node *cmd_node, char **envp)
 {
 	if (ft_manage_redirections_multi(cmd_node->file_list) == false)
+	{
 		get_exit_codes()->last_exit_code = 1;
+		return ;
+	}
 	ft_execute_builtin(cmd_node, envp);
 }
 
@@ -87,7 +90,7 @@ void	ft_execution_loop(t_cmd_list *cmd_list, char **envp, int (*fd)[2])
 			close(fd[i - 1][0]);
 		i++;
 	}
-	ft_close_and_free(fd, i, cmd_list->size);
+	close_pipe_and_free_fd(fd, i, cmd_list->size);
 }
 
 void	ft_execute(t_cmd_list *cmd_list, char **envp)
@@ -101,7 +104,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	save_heredoc_files(&cmd_list->head);
 	if (create_pipes(&fd, cmd_list) != true)
 		return ;
-	iter_cmd_lst(cmd_list, &print_cmd_lst);
+	//iter_cmd_lst(cmd_list, &print_cmd_lst);
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN)
 		manage_single_cmd_node(cmd_list->head, envp);
 	// else if (ft_strcmp("./minishell", cmd_list->head->cmd[0]) == true)

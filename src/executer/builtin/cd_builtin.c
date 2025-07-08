@@ -7,7 +7,7 @@ char	**ft_add_absolute_path(t_cmd_node *cmd_node, char **envp)
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		if (ft_strncmp(envp[i], "PWD", 3) == 0)
+		if (ft_strncmp(envp[i], "PWD=", 4) == 0)
 		{
 			envp[i] = ft_strjoin("PWD=", cmd_node->cmd[1]);
 			if (envp[i][ft_strlen(envp[i]) - 1] == '/')

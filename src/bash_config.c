@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 10:57:23 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 13:32:24 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:15:45 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	init_bash(char **env, int argc)
 			return (false);
 	}
 	bash->path = NULL;
-	ft_increase_shlvl(bash->env);
+	ft_increase_shlvl(bash->env); //soll bool und if false return false and free bash->env? kann bei malloc failen
 	return (true);
 }
 

@@ -18,7 +18,7 @@ bool	ft_first_node(int fd[][2]);
 bool	ft_middle_node(int fd[][2], t_cmd_list *cmd_list, t_cmd_node *cmd_node);
 bool	ft_last_node(int fd [][2], t_cmd_list *cmd_list);
 void	ft_close_pipes(t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2]);
-void	ft_close_and_free(int (*fd)[2], int count, int size);
+void	close_pipe_and_free_fd(int (*fd)[2], int count, int size);
 
 bool	ft_manage_pipes(
 			t_cmd_list *cmd_list, t_cmd_node *cmd_node, int fd[][2]);
