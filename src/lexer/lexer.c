@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:32:26 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/02 17:52:51 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:43:32 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	lexer(char *line)
 	syntax = wrong_use_pipe_and_redirection(line);
 	while (line[i])
 	{
-		while (line[i])
+		while (line[i] != '\0')
 		{
 			if (count_up_strings(line + i) >= 0)
 				i += count_up_strings(line + i);
@@ -59,11 +59,25 @@ bool	lexer(char *line)
 				return (false);
 			if (check_for_correct_single_divider(line + i) == false)
 				return (false);
+			if (lexer_error_chars(line))
+				return (false);
 			i++;
 		}
-		if (line[i] == '\0')
-			break ;
-		i++;
+		// if (line[i] == '\0')
+		// 	break ;
+		// i++;
 	}
 	return (syntax);
+}
+
+
+bool	lexer_error_chars(char *line)
+{
+	while (line)
+	{
+		if (ft_strchr("+-!@#$^&*;()_={}'.,", (*line)) == NULL)
+			return (false);
+		line++;
+	}
+	return (true);
 }

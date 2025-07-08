@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:09:11 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 10:57:05 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:40:10 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,10 @@ void	clean_token_lst(t_token *token_lst)
 		return ;
 	while (token_lst)
 	{
-		while (token_lst)
-		{
-			tmp = token_lst->next;
-			if (token_lst->next)
-			{
-				free(token_lst->token);
-			}
-			free(token_lst);
-			token_lst = tmp;
-		}
+		tmp = token_lst->next;
 		free(token_lst->token);
 		free(token_lst);
+		token_lst = tmp;
 	}
 }
 

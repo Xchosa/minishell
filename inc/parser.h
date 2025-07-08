@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 13:23:56 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:34:35 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,10 @@ bool 		check_lexer_token_and_free(t_token *token, char *line);
 // lexer
 bool		lexer(char *line);
 int			count_up_strings(char *line);
+bool		lexer_error_chars(char *line);
 bool		wrong_use_pipe_and_redirection(char *line);
 bool		check_for_correct_double_divider(char *line);
-bool    	check_for_correct_single_divider(char *line);
+bool		check_for_correct_single_divider(char *line);
 
 // lexer tokens
 bool		lexer_token(t_token *token_lst);
@@ -108,11 +109,14 @@ bool		tokeniser_successful(t_token *token_lst, char *line);
 
 void 		print_error_message(t_token **token_lst, char *line);
 void		print_lexer_error_message(char *line);
+bool		find_error_chars(char *line);
 
 // tokeniser
 void 		skip_whitespace(char **line);
 bool		skip_whitespace_and_check_for_eof(char **line);
 void 		skip_quotes(char **line);
+bool		skip_d_quotes_and_following_quotes(char **line, int i);
+bool		skip_s_quotes_and_following_qutes(char **line, int i);
 void		skip_single_quotes(char **line);
 bool		find_divider_until_whitespace_or_eof(char c);
 bool		char_is_alpha_nbr_and_no_whitespace(char c);
@@ -125,7 +129,7 @@ char		*get_token(char **content);
 t_type		get_token_type(char *content);
 char		*tokenise_divider(char **content, char *new_token);
 t_token		*tokenlast(t_token *lst);
-void		tokenadd_back(t_token **lst, t_token *new_token);
+bool		tokenadd_back(t_token **lst, t_token *new_token);
 char		*add_char(char **content, char *tmp_token, char *new_token, int i);
 
 t_token		*create_token(char **content);
@@ -188,15 +192,19 @@ char 		*skip_divider_without_space(char *line);
 void 		tokenise_muliple_tok_from_env(t_token **token_lst, t_token *prev_token);
 // cmd_list
 
+void	check_cmd_builtin(t_cmd_node **cmd_node);
+int		correct_cmd_type(t_cmd_node **cmd_node);
 //print cmd_lst
 void	print_cmd_lst(t_cmd_node *cmd_nodes);
 void	iter_cmd_lst(t_cmd_list *cmd_lst, void (*f)(t_cmd_node*));
 
 t_cmd_list*		init_cmd_list(t_token **token_list, char *line);
-t_cmd_list*		cmd_list_to_NULL(void);
-t_file_list*	file_list_to_NULL(void);
+t_cmd_node		*init_cmd_node_null(t_file_list *file_list);
+t_cmd_list*		cmd_list_to_null(void);
+t_file_list*	file_list_to_null(void);
 
 t_cmd_node*		process_token(t_token **curr_token);
+void    		handle_special_cases(t_token **curr_token,t_cmd_node *cmd_node);
 void 			process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node);
 void 			append_token_char(t_cmd_node *cmd_node, t_token *curr_token);
 char 			**cpy_token_char(char *token);
@@ -227,7 +235,7 @@ t_file_node* 	create_redirect_output_file_node(t_token **curr_token);
 // for new_libft
 //bool	ft_strcmp(const char *s1, const char *s2);
 // char	**ft_cpy_array_str(char **arrays);
-char 	*ft_charjoin(char const *dst, char const src_char);
+char 	*ft_charjoin(char *dst, char const src_char);
 // void 	ft_free_array(char **arrays);
 
 

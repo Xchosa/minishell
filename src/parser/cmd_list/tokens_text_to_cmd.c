@@ -6,31 +6,31 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:54:16 by poverbec          #+#    #+#             */
-/*   Updated: 2025/06/24 16:43:44 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:48:57 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-char**  ft_cpy_array_str(char **arrays)
+char	**ft_cpy_array_str(char **arrays)
 {
-    char **new_array;
-    int i;
+    char	**new_array;
+    int		i;
 
 	i = 0;
     if (!arrays)
-        return (NULL);
+		return (NULL);
     while (arrays[i] != NULL)
-        i++;
-    new_array = (char**)malloc((i + 1) * sizeof(char*));
-    if (!new_array)
+		i++;
+	new_array = (char**)malloc((i + 1) * sizeof(char*));
+	if (!new_array)
         return (NULL);
     i = 0;
     while (arrays[i] != NULL)
-    {
-        new_array[i] = ft_strdup(arrays[i]);
-        i++;
-    }
+	{
+		new_array[i] = ft_strdup(arrays[i]);
+		i++;
+	}
     new_array[i] = NULL;
     return (new_array);
 }
@@ -89,10 +89,10 @@ void    append_token_char(t_cmd_node *cmd_node, t_token *curr_token)
 }
 
 
-static  void    handle_special_cases(t_token **curr_token,t_cmd_node *cmd_node)
+void	handle_special_cases(t_token **curr_token,t_cmd_node *cmd_node)
 {
    (void)cmd_node;
-   t_token *passed_position;
+   t_token	*passed_position;
 
    passed_position = (*curr_token);
    while (curr_token && *curr_token)
@@ -112,10 +112,10 @@ static  void    handle_special_cases(t_token **curr_token,t_cmd_node *cmd_node)
    (*curr_token) = passed_position;
 }
 
-void process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
+void	process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
 {
-    handle_special_cases(curr_token,cmd_node);
-	while(curr_token && *curr_token && (*curr_token)->token_type == TEXT )
+	handle_special_cases(curr_token, cmd_node);
+	while (curr_token && *curr_token && (*curr_token)->token_type == TEXT )
 	{
 		if (cmd_node->cmd_type == 0)
 		{
@@ -126,15 +126,15 @@ void process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
 		{
 			append_token_char(cmd_node, *curr_token);
 		}
-        if ((*curr_token)->next)
-	        (*curr_token) = (*curr_token)->next;
-        else 
-		{	
+		if ((*curr_token)->next)
+			(*curr_token) = (*curr_token)->next;
+		else
+		{
 			*curr_token = NULL;
-            return;
+			return ;
 		}
-    }
-    process_redirect(curr_token, cmd_node);
+	}
+	process_redirect(curr_token, cmd_node);
 	return ;
 }
 
@@ -144,11 +144,33 @@ void	process_redirect(t_token **curr_token, t_cmd_node *cmd_node)
 	{
 		if (redir_token(curr_token) == true)
 		{
-			cmd_node->cmd_type = choose_cmd_type(*curr_token);//
+			cmd_node->cmd_type = choose_cmd_type(*curr_token);
 			cmd_node->cmd = malloc(sizeof(char*));
             if (cmd_node->cmd)
-                cmd_node->cmd[0] = NULL;
+				cmd_node->cmd[0] = NULL;
 		}
 	}
 	return ;
+}
+
+void	check_cmd_builtin(t_cmd_node **cmd_node)
+{
+	if ((*cmd_node)->cmd_type == EXECUTE)
+	{
+		(*cmd_node)->cmd_type = correct_cmd_type(cmd_node);
+	}
+}
+
+int	correct_cmd_type(t_cmd_node **cmd_node)
+{
+	int		cmd_type;
+	char	*lower;
+
+	cmd_type = 0;
+	lower = ft_strtolower((*cmd_node)->cmd[0]);
+    (*cmd_node)->cmd[0] = lower;
+	cmd_type = (check_for_builtin(lower));
+    if (cmd_type != 0)
+		return (cmd_type);
+	return (cmd_type = EXECUTE);
 }

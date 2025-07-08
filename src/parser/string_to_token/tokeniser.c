@@ -6,38 +6,43 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:26:42 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 09:24:06 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/08 11:12:20 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_token*	tokenlast(t_token *lst)
+t_token	*tokenlast(t_token *lst)
 {
 	if (lst == NULL)
-		return(NULL);
+		return (NULL);
 	while (lst->next != NULL)
 		lst = lst->next;
 	return (lst);
 }
 
-void	tokenadd_back(t_token **lst, t_token *new_token)
+bool	tokenadd_back(t_token **lst, t_token *new_token)
 {
 	t_token	*last_node;
+	bool	tokeniser_worked;
 
-	if (new_token== NULL)
-		return ;
+	if (new_token == NULL)
+	{
+		clean_token_lst(*lst);
+		return (tokeniser_worked = false);
+	}
 	if (*lst == NULL)
 	{
 		*lst = new_token;
 		new_token->head = new_token;
-		return ;
+		return (false);
 	}
 	else
 	{
 		last_node = tokenlast(*lst);
 		new_token->head = (*lst)->head;
 		last_node->next = new_token;
+		return (true);
 	}
 }
 
@@ -85,17 +90,15 @@ t_token	*tokeniser(char **line)
 		if (skip_whitespace_and_check_for_eof(line) == false)
 			break ;
 		new_token = create_token_with_quote_case(line, token_lst);
-		tokenadd_back(&token_lst, new_token);
+		if (tokenadd_back(&token_lst, new_token) == false)
+			return (NULL);
+		skip_quotes(line);
 	}
 	if (new_token == NULL)
 	{
 		token_lst->next = new_token;
 		return (token_lst);
 	}
-	// if (token_lst ->next != NULL)
-	// 	token_lst->next = NULL;
-	// new_token->next = NULL;
-    
 	return (token_lst);
 }
 

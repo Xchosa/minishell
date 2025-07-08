@@ -61,6 +61,7 @@ MY_SOURCES = \
 		process_chars_helper.c \
 		create_token_special.c \
 		tokens_to_export.c \
+		skip_quotes.c \
 		append_export_str.c \
 		create_export_tokens.c \
 		handle_export.c \

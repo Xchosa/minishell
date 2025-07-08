@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:27:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/07 18:04:20 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:37:39 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ void	ft_echo(t_cmd_node *cmd_node) // muss auf write testen?
 	int	i;
 
 	i = 1;
-	while (ft_strncmp("-n", cmd_node->cmd[i], 2) == 0)
+	while (cmd_node->cmd[i] != NULL && ft_strncmp("-n", cmd_node->cmd[i], 2) == 0)
 		i++;
 	while (cmd_node->cmd[i] != NULL)
 	{
 		if (ft_strncmp("$?", cmd_node->cmd[i], 2) == 0)
 			ft_printf("%d", get_exit_codes()->last_exit_code);
-		else
-			ft_printf("%s", cmd_node->cmd[i]);
-		if (cmd_node->cmd[i + 1] != NULL)
+		else //if (cmd_node->cmd[i] != NULL)
+		 	ft_printf("%s", cmd_node->cmd[i]);
+		if (cmd_node->cmd[i] != NULL && cmd_node->cmd[i + 1] != NULL)
 			ft_printf(" ");
 		i++;
 	}

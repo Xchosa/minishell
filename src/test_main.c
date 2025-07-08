@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:29:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 10:57:31 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:28:06 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@
 // 	// char *line = <<1"; // leaked
 
 //     // to do: tokeniser
-// 	line = "export j=\"ls -al\"";
+// 	line = "echo $T";
+
+// 	// malloc line to extend $XX
+// 	// char **temp_content = content;
+
 // 	// char *line = "$h outfile";
 //     // char *line = "export t=\"world | around < \" echo world";
 //     // line = "echo $?dfdfd"; // = wird falsch gehandelt
@@ -60,11 +64,14 @@
 
 // 	bash = get_bash();
 // 	(void)bash;
-	
+// 	// vor dem tokeinser $h aufloesen und eintauschen // node update weg
 //     token_lst = tokeniser(&line);
 // 	// free(line);
 // 	if (!token_lst)
-//         printf("error tokeniser\n");
+//     {
+// 		printf("error tokeniser\n");
+// 		return (1);
+// 	}
 // 	iter_tokenlst(token_lst, &print_tokenlst);
 
 // 	// printf("\nenv:\n");
