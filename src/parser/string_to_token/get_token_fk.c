@@ -54,7 +54,7 @@ char	*get_token(char **content)
 		{
 			tmp_token = ft_charjoin(new_token, (*content)[i]);
 			free(new_token);
-            new_token = tmp_token;
+            new_token = tmp_token;// free nicht den alten string von ft_charjoin
 		}
 		if (check_for_divider_with_space((*content)[i +1 ]) == true)
 		{

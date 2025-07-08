@@ -232,7 +232,7 @@ t_file_node* 	create_redirect_output_file_node(t_token **curr_token);
 // for new_libft
 //bool	ft_strcmp(const char *s1, const char *s2);
 // char	**ft_cpy_array_str(char **arrays);
-char 	*ft_charjoin(char const *dst, char const src_char);
+char 	*ft_charjoin(char *dst, char const src_char);
 // void 	ft_free_array(char **arrays);
 
 

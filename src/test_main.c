@@ -25,7 +25,11 @@ int	main(int argc, char **argv, char **env)
 	// char *line = <<1"; // leaked
 
     // to do: tokeniser
-	line = ">outfile echo hallo";
+	line = "export +++ ";
+
+	// malloc line to extend $XX
+	// char **temp_content = content;
+
 	// char *line = "$h outfile";
     // char *line = "export t=\"world | around < \" echo world";
     // line = "echo $?dfdfd"; // = wird falsch gehandelt
@@ -64,7 +68,10 @@ int	main(int argc, char **argv, char **env)
     token_lst = tokeniser(&line);
 	// free(line);
 	if (!token_lst)
-        printf("error tokeniser\n");
+    {
+		printf("error tokeniser\n");
+		return (1);
+	}
 	iter_tokenlst(token_lst, &print_tokenlst);
 
 	// printf("\nenv:\n");

@@ -30,18 +30,13 @@ void	clean_token_lst(t_token *token_lst)
 		return ;
 	while (token_lst)
 	{
-		while (token_lst)
+		tmp = token_lst->next;
+		if (token_lst->next)
 		{
-			tmp = token_lst->next;
-			if (token_lst->next)
-			{
-				free(token_lst->token);
-			}
-			free(token_lst);
-			token_lst = tmp;
+			free(token_lst->token);
 		}
-		free(token_lst->token);
 		free(token_lst);
+		token_lst = tmp;
 	}
 }
 

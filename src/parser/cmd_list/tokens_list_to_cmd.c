@@ -68,14 +68,15 @@ t_cmd_node*	process_token(t_token **token_lst)
 		if (*token_lst == NULL)
             break;
 		if (pipe_token(token_lst) == true)
-			return(cmd_node);
+			break;
 		if (redir_token(token_lst) == false)
-			return(cmd_node);
+			break;
 		if (file_list->head == NULL)
 			if_redirect_set_file_node_head(file_list,&file_node,token_lst);
 		else if((*token_lst)->token_type != PIPE && (*token_lst)->token_type != TEXT)
 			if_redirect_append_file_node(file_list, &file_node, token_lst);
 	}
+	check_cmd_builtin(&cmd_node);
 	return (cmd_node);
 }
 

@@ -56,6 +56,7 @@ t_token	*create_token_equal_as_div(char **content)
 		return (NULL);
 	new_token->token = get_token_equal_as_div(content);
 	new_token->token_type = Export_var;
+	// if no equal -> get_type 
 	new_token->next = NULL;
 	return (new_token);
 }

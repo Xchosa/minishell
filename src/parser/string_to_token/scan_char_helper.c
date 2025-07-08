@@ -54,7 +54,7 @@ bool	not_single_divider(char c)
 }
 
 
-char 	*ft_charjoin(char const *dst, char const src_char)
+char 	*ft_charjoin(char *dst, char const src_char)
 {
 	char	*newstr;
 	size_t	i;	
@@ -64,7 +64,11 @@ char 	*ft_charjoin(char const *dst, char const src_char)
 	strlen_dst = ft_strlen(dst);
 	newstr = (char *)malloc(((strlen_dst + 2) * (sizeof(char))));
 	if (newstr == NULL)
+	{
+		if(dst != NULL)
+			free(dst);
 		return (NULL);
+	}
 	while (i < strlen_dst)
 	{
 		newstr[i] = dst[i];
@@ -72,6 +76,9 @@ char 	*ft_charjoin(char const *dst, char const src_char)
 	}
 	newstr[i] = src_char;
 	newstr[i + 1] = '\0';
+
+	// if(dst != NULL)
+	// 	free(dst);
 	return (newstr);
 }
 

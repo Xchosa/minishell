@@ -135,7 +135,6 @@ void	process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
 		}
 	}
 	process_redirect(curr_token, cmd_node);
-	check_cmd_builtin(&cmd_node);
 	return ;
 }
 
@@ -169,6 +168,7 @@ int	correct_cmd_type(t_cmd_node **cmd_node)
 
 	cmd_type = 0;
 	lower = ft_strtolower((*cmd_node)->cmd[0]);
+    (*cmd_node)->cmd[0] = lower;
 	cmd_type = (check_for_builtin(lower));
     if (cmd_type != 0)
 		return (cmd_type);
