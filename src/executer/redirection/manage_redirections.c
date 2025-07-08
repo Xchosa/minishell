@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:58:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/04 17:57:46 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/08 11:33:04 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,10 @@ bool	ft_manage_redirections_multi(t_file_list *file_list)
 			return (false);
 		cur_file_node = cur_file_node->next;
 	}
+	// for (int i = 0; i < 1024; ++i) {
+	// 	if (fcntl(i, F_GETFD) != -1) {
+	// 		printf("FD %d is still open\n", i);
+	// 	}
+	// }
 	return (true);
 }

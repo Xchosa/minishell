@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:15:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/04 18:59:57 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/08 11:35:32 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,33 @@ bool	ft_open_pipes(int fd[][2], t_cmd_list *cmd_list)
 		i++;
 	}
 	return (true);
+}
+
+bool	create_pipes(int (**fd)[2], t_cmd_list *cmd_list)
+{
+	*fd = NULL;
+	if (cmd_list->size > 1)
+	{
+		*fd = malloc(sizeof(int [2]) * cmd_list->size);
+		if (!(*fd))
+		{
+			get_exit_codes()->last_exit_code = 1;
+			ft_putendl_fd("malloc failed \n", 2);
+			return (false);
+		}
+		if (ft_open_pipes(*fd, cmd_list) == false)
+		{
+			get_exit_codes()->last_exit_code = 1;
+			ft_putendl_fd("opening pipes failed \n", 2);
+			return (false);
+		}
+	}
+	return (true);
+}
+
+void	ft_close_and_free(int (*fd)[2], int count, int size)
+{
+	if (size > 1 && count == size)
+		close(fd[count - 2][0]);
+	free(fd);
 }

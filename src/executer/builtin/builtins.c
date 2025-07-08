@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:27:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/08 11:06:15 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:37:39 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	ft_echo(t_cmd_node *cmd_node) // muss auf write testen?
 
 void	ft_pwd(char **envp)
 {
-	char *pwd;
-	int	i;
+	char	*pwd;
+	int		i;
 
 	i = 0;
-	while(envp[i] != NULL)
+	while (envp[i] != NULL)
 	{
 		if (ft_strncmp("PWD", envp[i], 3) == 0)
 		{
@@ -52,7 +52,7 @@ void	ft_pwd(char **envp)
 	i = 0;
 	while (i < 4)
 	{
-		pwd++; 
+		pwd++;
 		i++;
 	}
 	ft_printf("%s\n", pwd);
@@ -62,8 +62,8 @@ void	ft_pwd(char **envp)
 void	ft_env(char **envp)
 {
 	int	i;
-	i = 0;
 
+	i = 0;
 	while (envp[i] != NULL)
 	{
 		ft_printf("%s\n", envp[i]);

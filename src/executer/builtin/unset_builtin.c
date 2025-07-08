@@ -5,7 +5,9 @@ void	ft_unset_var(char **envp, int j)
 	char	**newenvp;
 	int		size;
 	int		i;
+	char	**tmp;
 
+	tmp = envp;
 	size = 0;
 	i = 0;
 	while (envp[size] != NULL)
@@ -24,7 +26,7 @@ void	ft_unset_var(char **envp, int j)
 	get_bash()->env = newenvp;
 }
 
-void	ft_unset(t_cmd_node *cmd_node,char **envp)
+void	ft_unset(t_cmd_node *cmd_node, char **envp)
 {
 	int	i;
 	int	j;

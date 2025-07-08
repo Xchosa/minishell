@@ -21,6 +21,7 @@ char	*get_home_path(char **envp)
 	}
 	return (home);
 }
+
 char	**ft_delete_old_pwd(char **envp)
 {
 	int		max;
