@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:02:00 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/07 18:02:51 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:41:22 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ void	ft_export_print(char **envp)
 {
 	int		i;
 	int		j;
-	char	*s;
+	char	**s;
 
 	i = 0;
-	s = ft_split(envp[j], '=');
 	while (envp[i] != NULL)
 	{
 		j = ft_get_index(i, envp);
+		s = ft_split(envp[j], '=');
 		ft_printf("declare -x %s=\"%s\"\n", s[0], s[1]);
 		i++;
+		free(s);
 	}//diff: null, multiple =, oldpwd, _a.out;, kleinschreibung vor gross
-	free(s);
 	get_exit_codes()->last_exit_code = 0;
 }
 
