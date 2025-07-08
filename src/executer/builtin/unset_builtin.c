@@ -5,9 +5,9 @@ void	ft_unset_var(char **envp, int j)
 	char	**newenvp;
 	int		size;
 	int		i;
-	char	**tmp;
+	//char	**tmp;
 
-	tmp = envp;
+	//tmp = envp;
 	size = 0;
 	i = 0;
 	while (envp[size] != NULL)
@@ -28,6 +28,8 @@ void	ft_unset_var(char **envp, int j)
 
 void	ft_unset(t_cmd_node *cmd_node, char **envp)
 {
+	// better : envp = get_bash()->bash es geht um call by
+	// reference oder call by value damit wir mit dem global env arbeite und nicht mit eineer lokalen kopie
 	int	i;
 	int	j;
 	int	len;

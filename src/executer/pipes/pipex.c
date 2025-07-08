@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:15:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/08 11:35:32 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:57:01 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ bool	create_pipes(int (**fd)[2], t_cmd_list *cmd_list)
 	return (true);
 }
 
-void	ft_close_and_free(int (*fd)[2], int count, int size)
+void	close_pipe_and_free_fd(int (*fd)[2], int count, int size)
 {
 	if (size > 1 && count == size)
 		close(fd[count - 2][0]);
