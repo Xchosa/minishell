@@ -5,7 +5,7 @@ void	ft_unset_var(char **envp, int j)
 	char	**newenvp;
 	int		size;
 	int		i;
-	char	*tmp;
+	char	**tmp;
 
 	tmp = envp;
 	size = 0;

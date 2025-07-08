@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:27:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/05 14:49:57 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:04:20 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_echo(t_cmd_node *cmd_node) // muss auf write testen?
 		if (ft_strncmp("$?", cmd_node->cmd[i], 2) == 0)
 			ft_printf("%d", get_exit_codes()->last_exit_code);
 		else
-		 	ft_printf("%s", cmd_node->cmd[i]);
+			ft_printf("%s", cmd_node->cmd[i]);
 		if (cmd_node->cmd[i + 1] != NULL)
 			ft_printf(" ");
 		i++;
@@ -36,23 +36,23 @@ void	ft_echo(t_cmd_node *cmd_node) // muss auf write testen?
 
 void	ft_pwd(char **envp)
 {
-	char *pwd;
-	int	i;
+	char	*pwd;
+	int		i;
 
 	i = 0;
-	while(envp[i] != NULL)
+	while (envp[i] != NULL)
 	{
 		if (ft_strncmp("PWD", envp[i], 3) == 0)
 		{
 			pwd = envp[i];
-			break;
+			break ;
 		}
 		i++;
 	}
 	i = 0;
 	while (i < 4)
 	{
-		pwd++; 
+		pwd++;
 		i++;
 	}
 	ft_printf("%s\n", pwd);
@@ -62,8 +62,8 @@ void	ft_pwd(char **envp)
 void	ft_env(char **envp)
 {
 	int	i;
-	i = 0;
 
+	i = 0;
 	while (envp[i] != NULL)
 	{
 		ft_printf("%s\n", envp[i]);

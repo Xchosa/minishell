@@ -6,22 +6,24 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/07 17:48:02 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/08 11:47:15 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executer.h"
 
-void	ft_execute_command(t_cmd_node *cmd_node, char **envp) //path free once
+void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 {
-	if (cmd_node->cmd[0][0] != '/')
-		get_bash()->path = ft_getpath(cmd_node->cmd[0], envp);
-	else
+	if (cmd_node->cmd[0][0] == '/')
 	{
 		get_bash()->path = cmd_node->cmd[0];
 		if (access(get_bash()->path, X_OK) != 0)
 			get_bash()->path = NULL;
 	}
+	else if (ft_strncmp("./", cmd_node->cmd[0], 2) == 0)
+		get_bash()->path = ft_execute_local(cmd_node->cmd[0], envp);
+	else
+		get_bash()->path = ft_getpath(cmd_node->cmd[0], envp);
 	if (get_bash()->path == NULL)
 	{
 		ft_putendl_fd("Shell: command not found\n", 2);
@@ -73,6 +75,8 @@ void	ft_execution_loop(t_cmd_list *cmd_list, char **envp, int (*fd)[2])
 		if (pid == 0)
 			execution_node(cmd_list, cur_cmd_node, fd, envp);
 		wait(&status);
+		free(get_bash()->path);
+		get_bash()->path = NULL;
 		if (WIFEXITED(status))
 			get_exit_codes()->last_exit_code = WEXITSTATUS(status);
 		cur_cmd_node = cur_cmd_node->next;
@@ -87,33 +91,33 @@ void	ft_execution_loop(t_cmd_list *cmd_list, char **envp, int (*fd)[2])
 
 void	ft_execute(t_cmd_list *cmd_list, char **envp)
 {
-	int			backup_stdout;
-	int			backup_stdin;
-	int			(*fd)[2];
+	int		backup_stdout;
+	int		backup_stdin;
+	int		(*fd)[2];
 
 	backup_stdout = dup(STDOUT_FILENO);
 	backup_stdin = dup(STDIN_FILENO);
 	save_heredoc_files(&cmd_list->head);
 	if (create_pipes(&fd, cmd_list) != true)
 		return ;
-	//iter_cmd_lst(cmd_list, &print_cmd_lst);
+	iter_cmd_lst(cmd_list, &print_cmd_lst);
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN)
 		manage_single_cmd_node(cmd_list->head, envp);
-	else if (ft_strcmp("./minishell", cmd_list->head->cmd[0]) == true)
-		ft_minishell_nested(envp);
+	// else if (ft_strcmp("./minishell", cmd_list->head->cmd[0]) == true)
+	// 	ft_minishell_nested(envp);
 	else
 		ft_execution_loop(cmd_list, envp, fd);
 	reset_redir(&backup_stdin, &backup_stdout);
 	//clean_cmd_list_objects_tmp_files(cmd_list); //callen wir 2 mal? hier ists gut
-	int leaked = 0;
-	for (int i = 3; i < 1024; ++i) {
-		if (fcntl(i, F_GETFD) != -1) {
-			printf("FD %d is still open\n", i);
-			leaked++;
-		}
-	}
-	if (leaked == 0)
-		printf("🎉 All file descriptors properly closed!\n");
+	// int leaked = 0;
+	// for (int i = 3; i < 1024; ++i) {
+	// 	if (fcntl(i, F_GETFD) != -1) {
+	// 		printf("FD %d is still open\n", i);
+	// 		leaked++;
+	// 	}
+	// }
+	// if (leaked == 0)
+	// 	printf("🎉 All file descriptors properly closed!\n");
 }
 
 // echo ?! -> should return a new line 

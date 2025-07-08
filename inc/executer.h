@@ -50,6 +50,8 @@ void	ft_minishell_nested(char **envp);
 void	ft_increase_shlvl(char **envp);
 int		ft_ask_shlvl(char **envp);
 char	*get_home_path(char **envp);
+char	*ft_execute_local(char *command, char **envp);
+char	*get_command_pointer(char *command, char **envp);
 
 //heredoc
 bool	check_for_interactive_shell(void);

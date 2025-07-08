@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:02:00 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/07 17:44:18 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:02:51 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	ft_get_index(int i, char **envp)
 {
 	int	j;
 	int	k;
-	int l;
-	int max;
+	int	l;
+	int	max;
 
 	l = 0;
 	j = 0;
@@ -31,7 +31,7 @@ int	ft_get_index(int i, char **envp)
 		while (envp[k] != NULL)
 		{
 			if (ft_strncmp(envp[l], envp[k], 200) < 0)
-					j++;
+				j++;
 			k++;
 		}
 		k = 0;
@@ -39,7 +39,7 @@ int	ft_get_index(int i, char **envp)
 	}
 	return (l - 1);
 }
-	
+
 void	ft_export_print(char **envp)
 {
 	int		i;
@@ -51,7 +51,7 @@ void	ft_export_print(char **envp)
 	while (envp[i] != NULL)
 	{
 		j = ft_get_index(i, envp);
-		ft_printf("declare -x %s=\"%s\"\n",s[0], s[1]);
+		ft_printf("declare -x %s=\"%s\"\n", s[0], s[1]);
 		i++;
 	}//diff: null, multiple =, oldpwd, _a.out;, kleinschreibung vor gross
 	free(s);
@@ -60,18 +60,18 @@ void	ft_export_print(char **envp)
 
 void	ft_export_variable(char *cmd_var, char **envp)
 {
-	int	max;
-	int	i;
+	int		max;
+	int		i;
 	char	**newenvp;
 	char	*newvar;
 
 	max = 0;
 	i = 0;
-	while(envp[max] != NULL)
+	while (envp[max] != NULL)
 		max++;
 	newenvp = (char **)malloc((max + 2) * sizeof(char *));
 	if (newenvp == NULL)
-		return;
+		return ;
 	newvar = ft_strdup(cmd_var);
 	while (envp[i] != NULL)
 	{
@@ -91,7 +91,7 @@ bool	ft_check_valid_identifier(char *var) // check for overwrite?
 	if (ft_isalpha(var[0]) != 1 && var[0] != '_')
 	{
 		get_exit_codes()->last_exit_code = 1;
-		return false;
+		return (false);
 	}
 	return (true);
 }
