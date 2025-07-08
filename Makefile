@@ -41,6 +41,7 @@ MY_SOURCES = \
 		main.c \
 		tty.c \
 		clean_up.c \
+		clean_up2.c \
 		skip_whitespace_helper.c \
 		scan_char_helper.c \
 		abort_parser.c \
