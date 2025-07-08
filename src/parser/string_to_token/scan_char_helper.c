@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:51:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/03 12:49:23 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:45:24 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ char 	*ft_charjoin(char *dst, char const src_char)
 	newstr[i] = src_char;
 	newstr[i + 1] = '\0';
 
-	// if(dst != NULL)
-	// 	free(dst);
+	if(dst != NULL)
+		free(dst);
 	return (newstr);
 }
 

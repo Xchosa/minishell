@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:52:50 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/03 14:31:47 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/08 11:22:52 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*tokenise_divider(char **content, char *new_token)
 		tmp_token = ft_charjoin(new_token, (*content)[i]);
 		free(new_token);
 		new_token = tmp_token;
-		if (not_single_divider((*content)[i]) == false )
+		if (not_single_divider((*content)[i]) == false)
 		{
 			*content += i + 1;
 			return (new_token);
@@ -46,15 +46,14 @@ char	*get_token(char **content)
 	i = 0;
 	new_token = ft_strdup("");
 	if (!new_token)
-        return (NULL);
+		return (NULL);
 	while ((*content)[i] != '\0'
 		&& check_for_divider_with_space((*content)[i]) == false)
 	{
 		if (char_is_alpha_nbr_and_no_whitespace((*content)[i]))
 		{
 			tmp_token = ft_charjoin(new_token, (*content)[i]);
-			free(new_token);
-            new_token = tmp_token;// free nicht den alten string von ft_charjoin
+			new_token = tmp_token;
 		}
 		if (check_for_divider_with_space((*content)[i +1 ]) == true)
 		{
@@ -65,7 +64,8 @@ char	*get_token(char **content)
 	}
 	if (check_for_divider_without_space((*content)[i]) == true)
 	{
-		char **temp_content = content;
+		char	**temp_content;
+		temp_content = content;
 		new_token = tokenise_divider(temp_content, new_token);
 	}
 	return (new_token);
@@ -76,48 +76,48 @@ char	*get_token(char **content)
 
 t_type	append_or_redirect_output(char *content)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	if (content[i+1] == '>')
 		return (Append);
 	else
-		return(Redirect_output);
+		return (Redirect_output);
 }
 
-t_type get_token_type(char *content)
+t_type	get_token_type(char *content)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if(content[i] == '|')
-		return(PIPE);
+	if (content[i] == '|')
+		return (PIPE);
 	if (content[i] == '>')
-		return(append_or_redirect_output(&content[i]));
+		return (append_or_redirect_output(&content[i]));
 	if (content[i] == '<')
 	{
-		if (content[i+1] == '<')
+		if (content [i + 1] == '<')
 			return (here_doc);
 		else
 			return (Redirect_input);
 	}
-	if(ft_strcmp( "export", content) == true)
+	if (ft_strcmp("export", content) == true)
 		return (EXPORT);
-	if(ft_strcmp(content, "~") == true)
-		return(Tilde);
+	if (ft_strcmp(content, "~") == true)
+		return (Tilde);
 	if (ft_strchr(content, '$') != NULL)
 		return (Mix_Export_var);
-	return(TEXT);
+	return (TEXT);
 }
 
 
 // compares the hole string not just a specific len
 bool	ft_strcmp(const char *s1, const char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if((s1[i] == '\0') && (s2[i] == '\0'))
+	if ((s1[i] == '\0') && (s2[i] == '\0'))
 		return (true);
 
 	while (s1[i] != '\0' && s2[i] != '\0')
@@ -126,5 +126,5 @@ bool	ft_strcmp(const char *s1, const char *s2)
 			return (false);
 		i++;
 	}
-	return((s1[i] == '\0') && (s2[i] == '\0'));
+	return ((s1[i] == '\0') && (s2[i] == '\0'));
 }

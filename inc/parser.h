@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 15:48:44 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/08 11:33:46 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ bool		find_error_chars(char *line);
 void 		skip_whitespace(char **line);
 bool		skip_whitespace_and_check_for_eof(char **line);
 void 		skip_quotes(char **line);
+bool		skip_d_quotes_and_following_quotes(char **line, int i);
+bool		skip_s_quotes_and_following_qutes(char **line, int i);
 void		skip_single_quotes(char **line);
 bool		find_divider_until_whitespace_or_eof(char c);
 bool		char_is_alpha_nbr_and_no_whitespace(char c);

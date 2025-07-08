@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:08:33 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 11:23:42 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/08 11:12:07 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ bool	skip_whitespace_and_check_for_eof(char **line)
 	bool	not_eof;
 
 	not_eof = true;
+
 	while (**line != '\0')
 	{
 		if (ft_strchr("\t\n\v\f\r ", **line) == NULL)

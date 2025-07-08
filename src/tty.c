@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 12:53:41 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/08 09:50:33 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	t_token		*token_lst;
 	t_cmd_list	*cmd_lst;
 
-	while(1)
+	while (1)
 	{
 		line = read_terminal();
 		if (check_lexer_and_free(line) == false)
@@ -79,6 +79,7 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 			print_error_message(&token_lst, line);// header
 			continue ;
 		}
+		// iter_tokenlst(token_lst, &print_tokenlst);
 		cmd_lst = init_cmd_list(&token_lst, line);
 		init_signal(1);
 		ft_execute(cmd_lst, get_bash()->env);

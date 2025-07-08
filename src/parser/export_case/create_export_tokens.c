@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:07:26 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 13:36:41 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/08 11:41:19 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ char	*add_char(char **content, char *tmp_token, char *new_token, int i)
 	while (check_for_divider_without_space((*content)[i]) == true)
 	{
 		tmp_token = ft_charjoin(new_token, (*content)[i]);
-		free(new_token);
 		new_token = tmp_token;
 		if (not_single_divider((*content)[i]) == false)
 			return (new_token);

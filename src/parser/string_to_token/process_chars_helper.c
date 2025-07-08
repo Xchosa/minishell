@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_chars_helper.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/08 11:35:48 by poverbec          #+#    #+#             */
+/*   Updated: 2025/07/08 11:35:51 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "parser.h"
 
@@ -37,60 +47,11 @@ int	process_content_to_token(char **line, t_token *token)
 		tmp_token = ft_charjoin(token->token, (*line)[i]);
 		if (!(*tmp_token))
 			return (-1);
-		free(token->token);
 		token->token = tmp_token;
 		(*line)++;
 	}
 	return (i);
 }
 
-void	skip_quotes(char **line)
-{
-	int	i;
 
-	i = 0;
-	if (((*line)[i] == '\"') && (((*line)[i +1 ] == '\"')
-		|| (*line)[i + 1] == '\''))
-	{
-		while (*line && **line != '\0')
-		{
-			if (ft_strchr("\"\'", **line) != NULL)
-				(*line)++;
-			else
-				break ;
-		}
-		return ;
-	}
-	if (((*line)[i] == '\'') && (((*line)[i + 1] == '\"')
-		|| (*line)[i + 1] == '\''))
-	{
-		while (*line && **line != '\0')
-		{
-			if (ft_strchr("\"\'",**line) != NULL)
-				(*line)++;
-			else
-				break ;
-		}
-		return ;
-	}
-	skip_single_quotes(line);
-}
-
-
-void	skip_single_quotes(char **line)
-{
-	int	i;
-
-	i = 0;
-	if (((*line)[i] == '\'') && ((*line)[i +1 ] == '\0'))
-	{
-		(*line)++;
-		return ;
-	}
-	if (((*line)[i] == '\"') && ((*line)[i +1 ] == '\0'))
-	{
-		(*line)++;
-		return ;
-	}
-}
 

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:29:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 14:14:39 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/08 11:45:52 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **env)
 	// char *line = <<1"; // leaked
 
     // to do: tokeniser
-	line = "export +++ ";
+	line = "echo $T";
 
 	// malloc line to extend $XX
 	// char **temp_content = content;
