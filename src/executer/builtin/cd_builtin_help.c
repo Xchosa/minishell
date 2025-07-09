@@ -14,12 +14,37 @@ char	*get_home_path(char **envp)
 	}
 	home = envp[i];
 	i = 0;
+	if (home == NULL)
+		return (NULL); // exitcode here maybe?
 	while (i < 5)
 	{
 		home++;
 		i++;
 	}
 	return (home);
+}
+
+bool	there_is_old_pwd(char **envp) // geht auch allgemeingueltig fuer alle env vars
+{
+	int	i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (envp[i] != NULL)
+	{
+		if (ft_strncmp(envp[i], "OLDPWD", 6) != 0) //mit istgleich besser
+		{
+			i++;
+			j++;
+		}
+		else
+			i++;
+	}
+	if (i == j)
+		return (false);
+	else
+		return (true);
 }
 
 char	**ft_delete_old_pwd(char **envp)
@@ -39,7 +64,7 @@ char	**ft_delete_old_pwd(char **envp)
 		return (NULL);
 	while (envp[i] != NULL)
 	{
-		if (ft_strncmp(envp[i], "OLDPWD", 6) != 0)
+		if (ft_strncmp(envp[i], "OLDPWD=", 7) != 0) 
 		{
 			newenvp[j] = ft_strdup(envp[i]);
 			i++;
@@ -78,20 +103,27 @@ char	**ft_add_old_pwd(char **envp)
 	return (newenvp);
 }
 
-char	**ft_add_pwd(t_cmd_node *cmd_node, char **envp)
+char	**ft_add_pwd(char *dir, char **envp) //protect malloc
 {
-	int	i;
+	int		i;
+	char	*buf;
 
 	i = 0;
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], "PWD", 3) == 0)
 		{
+			buf = envp[i];
 			if (ft_strlen(envp[i]) > 5)
+			{
 				envp[i] = ft_strjoin(envp[i], "/");
-			envp[i] = ft_strjoin(envp[i], cmd_node->cmd[1]);
+				free(buf);
+				buf = envp[i];
+			}
+			envp[i] = ft_strjoin(envp[i], dir);
 			if (envp[i][ft_strlen(envp[i]) - 1] == '/')
-				envp[i][ft_strlen(envp[i]) - 1] = '\0'; //can break maybe
+			envp[i][ft_strlen(envp[i]) - 1] = '\0'; //can break maybe
+			free(buf);
 		}
 		i++;
 	}
