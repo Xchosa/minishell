@@ -6,12 +6,11 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 15:37:48 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 10:01:25 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/10 15:32:40 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
 
 t_token	*d_quote_case(char **line)
 {
@@ -21,7 +20,7 @@ t_token	*d_quote_case(char **line)
 	nbr_of_chars_tokenised = 0;
 	skip_quotes(line);
 	if (*line == NULL)
-		return (NULL) ;
+		return (NULL);
 	new_token = malloc (sizeof(t_token));
 	if (!new_token)
 		return (NULL);
@@ -34,12 +33,18 @@ t_token	*d_quote_case(char **line)
 		free_single_token(&new_token);
 		return (NULL);
 	}
+	define_token_type(new_token);
+	new_token->next = NULL;
+	return (new_token);
+}
+
+void	define_token_type(t_token *new_token)
+{
 	new_token->token_type = TEXT;
 	if ((ft_strncmp("$", new_token->token, 1) == 0))
 		new_token->token_type = CALL_SAVED_VAR;
 	if ((ft_strcmp("$?", new_token->token) == true))
 		new_token->token_type = CALL_EXIT;
-	return (new_token);
 }
 
 t_token	*s_quote_case(char **line)

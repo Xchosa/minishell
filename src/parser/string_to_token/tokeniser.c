@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:26:42 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/08 11:12:20 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:41:55 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 t_token	*tokenlast(t_token *lst)
 {
+	t_token	*current;
+
 	if (lst == NULL)
 		return (NULL);
-	while (lst->next != NULL)
+	current = lst;
+	while (current != NULL && current->next != NULL)
 	{
-		lst = lst->next;
+		current = current->next;
 	}
-	// lst->next = NULL;
-	return (lst);
+	return (current);
 }
 
 bool	tokenadd_back(t_token **lst, t_token *new_token)
@@ -49,13 +51,13 @@ bool	tokenadd_back(t_token **lst, t_token *new_token)
 	}
 }
 
-void set_last_node_null(t_token **lst)
+void	set_last_node_null(t_token **lst)
 {
 	t_token	*last_node;
 
 	last_node = tokenlast(*lst);
 	last_node->next = NULL;
-	return;
+	return ;
 }
 
 t_token	*create_token(char **content)
@@ -108,8 +110,8 @@ t_token	*tokeniser(char **line)
 	}
 	if (new_token == NULL)
 		token_lst->next = new_token;
-	// else
-	// 	set_last_node_null(&token_lst);
-	return (token_lst);
+	else
+		set_last_node_null(&token_lst);
+	return (token_lst->head);
 }
 

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:08:09 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/08 13:40:04 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/10 11:26:02 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,34 @@ t_token	*call_exit_token(char **line)
 		return (NULL);
 	new_token->token = ft_strdup("$?");
 	new_token->token_type = CALL_EXIT;
+	new_token->next = NULL;
 	return (new_token);
 }
 
 
 t_token	*call_saved_export_var(char **line)
 {
-	int			i;
 	char		*tmp_token;
+	char		*new_token_str;
 	t_token		*new_token;
 
-	i = 0;
 	new_token = malloc (sizeof(t_token));
 	if (!new_token)
 		return (NULL);
-	new_token->token = ft_strdup("");
+	new_token_str = ft_strdup("");
 	if (!validate_token_str(&new_token))
 		return (NULL);
-	while ((*line)[i] != ' ' && (*line)[i] != '\0')
+	while (**line && (**line) != ' ' && **line != '>'
+		&& **line != '<' && **line != '|')
 	{
-		tmp_token = ft_charjoin(new_token->token, (*line)[i]);
-		new_token->token = tmp_token;
-		i++;
-		if (ft_strchr("\"", (*line)[i]) != NULL)
+		tmp_token = ft_charjoin(new_token_str, (**line));
+		new_token_str = tmp_token;
+		(*line)++;
+		if (ft_strchr("\"", (**line)) != NULL)
 			break ;
 	}
-	*line += i;
+	new_token->token = new_token_str;
 	new_token->token_type = CALL_SAVED_VAR;
+	new_token->next = NULL;
 	return (new_token);
 }

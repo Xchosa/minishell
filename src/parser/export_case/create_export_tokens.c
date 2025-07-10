@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:07:26 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/08 11:41:19 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:17:22 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,42 @@ bool	find_error_chars(char *line)
 			return (false);
 		line++;
 	}
-	return true;
+	return (true);
 }
 
 t_token	*create_token_equal_as_div(char **content)
 {
 	t_token	*new_token;
 
-	if (find_error_chars(*content) == false)
-		return (NULL);
+	// if (find_error_chars(*content) == false)
+	// 	return (NULL);
 	new_token = malloc (sizeof(t_token));
 	if (!new_token)
 		return (NULL);
-	new_token->token = get_token_equal_as_div(content);
-	new_token->token_type = Export_var;
+	if (is_redirect(*content) == true)
+	{
+		new_token->token = get_token(content);
+		new_token->token_type = get_token_type(new_token->token);
+	}
+	else
+	{
+		new_token->token = get_token_equal_as_div(content);
+		new_token->token_type = Export_var;
+	}
 	// if no equal -> get_type 
 	new_token->next = NULL;
 	return (new_token);
+}
+
+bool	is_redirect(char *content)
+{
+	if (ft_strncmp ("|", content, 1) == 0)
+		return (true);
+	if (ft_strncmp ("<", content, 1) == 0)
+		return (true);
+	if (ft_strncmp (">", content, 1) == 0)
+		return (true);
+	return (false);
 }
 
 char	*add_char(char **content, char *tmp_token, char *new_token, int i)
@@ -90,7 +109,6 @@ char	*get_token_equal_as_div(char **content)
 		if (char_is_alpha_nbr_and_no_whitespace((*content)[i]))
 		{
 			tmp_token = ft_charjoin(new_token, (*content)[i]);
-			free(new_token);
 			new_token = tmp_token;
 		}
 		if (check_for_div_export((*content)[i +1]) == true)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/08 13:34:35 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:16:59 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ bool		check_for_divider_with_space(char c);
 bool		check_for_divider_without_space(char c);
 char		*skip_dollar_parameter(char *line);
 void 		free_token(t_token **token_list);
+void		define_token_type(t_token *new_token);
+bool		is_redirect(char *content);
 
 //update line
 char		*update_line(char *line, t_token *token);
@@ -236,7 +238,7 @@ t_file_node* 	create_redirect_output_file_node(t_token **curr_token);
 // for new_libft
 //bool	ft_strcmp(const char *s1, const char *s2);
 // char	**ft_cpy_array_str(char **arrays);
-char 	*ft_charjoin(char *dst, char const src_char);
+char 	*ft_charjoin(char *dst, char src_char);
 // void 	ft_free_array(char **arrays);
 
 
