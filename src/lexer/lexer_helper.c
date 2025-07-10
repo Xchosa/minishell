@@ -42,16 +42,16 @@ bool	check_for_correct_double_divider(char *line)
 				return (false);
 			return (true);
 		}
-		if ((ft_strncmp (">", &line[i +1], 1) == 0))
+		if (ft_strchr(">|&", line[i +1]) != NULL)
 			return (false);
 	}
 	if (ft_strncmp (">", &line[i], 1) == 0)
 	{
 		if (correct_out_direction(line) == false)
 			return (false);
+		if (ft_strchr("|&", line[i +1]) != NULL)
+			return (false);
 	}
-	if (ft_strncmp ("&", &line[i], 1) == 0)
-		return (false);
 	return (true);
 }
 
@@ -62,9 +62,7 @@ bool	check_for_correct_single_divider(char *line)
 	i = 0;
 	if (ft_strncmp ("|", &line[i], 1) == 0)
 	{
-		if (ft_strncmp ("|", &line[i +1], 1) == 0)
-			return (false);
-		if (ft_strncmp (";", &line[i +1], 1) == 0)
+		if (ft_strchr("|&;", line[i +1]) != NULL)
 			return (false);
 		if (line[i +1] == '\0')
 			return (false);

@@ -105,13 +105,16 @@ t_token	*tokeniser(char **line)
 			break ;
 		new_token = create_token_with_quote_case(line, token_lst);
 		if (tokenadd_back(&token_lst, new_token) == false)
-			return (NULL);
+		{
+			clean_token_lst(token_lst);
+			return (NULL);// free token_lst and return(NULL)
+		}
 		skip_quotes(line);
 	}
 	if (new_token == NULL)
 		token_lst->next = new_token;
 	else
 		set_last_node_null(&token_lst);
-	return (token_lst->head);
+	return (token_lst);
 }
 
