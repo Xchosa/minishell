@@ -17,7 +17,10 @@ t_token	*tokenlast(t_token *lst)
 	if (lst == NULL)
 		return (NULL);
 	while (lst->next != NULL)
+	{
 		lst = lst->next;
+	}
+	// lst->next = NULL;
 	return (lst);
 }
 
@@ -46,6 +49,15 @@ bool	tokenadd_back(t_token **lst, t_token *new_token)
 	}
 }
 
+void set_last_node_null(t_token **lst)
+{
+	t_token	*last_node;
+
+	last_node = tokenlast(*lst);
+	last_node->next = NULL;
+	return;
+}
+
 t_token	*create_token(char **content)
 {
 	t_token	*new_token;
@@ -68,7 +80,7 @@ t_token	*tokenlstnew(char	**content)
 	token = create_first_token(content);
 	if (!token)
 		return (NULL);
-	token->next = 0;
+	token->next = NULL;
 	token->head = token;
 	return (token);
 }
@@ -95,10 +107,9 @@ t_token	*tokeniser(char **line)
 		skip_quotes(line);
 	}
 	if (new_token == NULL)
-	{
 		token_lst->next = new_token;
-		return (token_lst);
-	}
+	// else
+	// 	set_last_node_null(&token_lst);
 	return (token_lst);
 }
 

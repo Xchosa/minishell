@@ -132,6 +132,7 @@ t_token		*tokenlast(t_token *lst);
 bool		tokenadd_back(t_token **lst, t_token *new_token);
 char		*add_char(char **content, char *tmp_token, char *new_token, int i);
 
+void		set_last_node_null(t_token **lst);
 t_token		*create_token(char **content);
 t_token 	*create_first_token(char **line);
 t_token		*d_quote_case(char **line);
