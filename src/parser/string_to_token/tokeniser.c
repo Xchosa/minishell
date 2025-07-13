@@ -33,14 +33,13 @@ bool	tokenadd_back(t_token **lst, t_token *new_token)
 
 	if (new_token == NULL)
 	{
-		clean_token_lst(*lst);
 		return (tokeniser_worked = false);
 	}
 	if (*lst == NULL)
 	{
 		*lst = new_token;
 		new_token->head = new_token;
-		return (false);
+		return (false); // if lst is null smth failed in the first place better break
 	}
 	else
 	{
@@ -106,8 +105,10 @@ t_token	*tokeniser(char **line)
 		new_token = create_token_with_quote_case(line, token_lst);
 		if (tokenadd_back(&token_lst, new_token) == false)
 		{
+			if (new_token)
+                free_single_token(&new_token);
 			clean_token_lst(token_lst);
-			return (NULL);// free token_lst and return(NULL)
+			return (NULL);
 		}
 		skip_quotes(line);
 	}

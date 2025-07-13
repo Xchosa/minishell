@@ -105,7 +105,7 @@ bool		check_for_correct_single_divider(char *line);
 
 // lexer tokens
 bool		lexer_token(t_token *token_lst);
-bool		tokeniser_successful(t_token *token_lst, char *line);
+bool		tokeniser_successful(t_token *token_lst, char *original_line);
 
 void 		print_error_message(t_token **token_lst, char *line);
 void		print_lexer_error_message(char *line);

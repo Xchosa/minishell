@@ -52,10 +52,11 @@ t_cmd_node	*init_cmd_node_null(t_file_list *file_list)
 	return (cmd_node);
 }
 
-t_cmd_list	*init_cmd_list(t_token **token_list, char *line)
+t_cmd_list	*init_cmd_list(t_token **token_list, char *original_line)
 {
 	t_cmd_list	*cmd_list;
 	t_cmd_node	*cmd_node;
+	(void)original_line;
 
 	cmd_list = cmd_list_to_null();
 	while ((*token_list))
@@ -75,6 +76,5 @@ t_cmd_list	*init_cmd_list(t_token **token_list, char *line)
 			cmd_list->size += 1;
 		}
 	}
-	clean_token_lst_and_line((*token_list), line);
 	return (cmd_list);
 }

@@ -54,7 +54,8 @@ void	print_error_message(t_token **token_list, char *line)
 		(printf("minishell: '%s': command not found \n", line));
 	if (error == syntax_error_token)
 		(printf("minishell: syntax error near unexpected token '%s' \n", line));
-	clean_token_lst_and_line((*token_list),line);
+	clean_token_lst(*token_list);
+    free(line);
 }
 
 void	print_lexer_error_message(char *line)

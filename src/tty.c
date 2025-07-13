@@ -31,24 +31,26 @@ if not the same as previous one
 static char	*read_terminal(void)
 {
 	char	*line;
+	char	*trimmed_line;
 
 	init_signal(0);
-	// line = readline("minishell:$ ");
-	
 	if (isatty(fileno(stdin)))
 		line = readline("minishell:$ ");
 	else
 	{
 		line = get_next_line(fileno(stdin));
-		line = ft_strtrim(line, "\n");
-		free(line);
+		if (!line)
+            return (NULL);
+		trimmed_line = ft_strtrim(line, "\n");
+        free(line);
+        line = trimmed_line;
 	}
 	if (line && *line)
 		add_history(line);
 	if (line == NULL)
 	{
 		printf("exit\n");
-		exit(get_exit_codes()->last_exit_code);
+		// exit(get_exit_codes()->last_exit_code);
 	}
 	return (line);
 }
@@ -60,34 +62,45 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	(void)argv;
 	t_token		*token_lst;
 	t_cmd_list	*cmd_lst;
+	char		*original_line;
 
+	cmd_lst = NULL;
 	while (1)
 	{
 		line = read_terminal();
+		if (line == NULL)
+			break;
 		if (check_lexer_and_free(line) == false)
 			continue;
+		original_line = line;
 		token_lst = tokeniser(&line);
-		if (tokeniser_successful(token_lst,line) == false)
-            continue;
-		// printf("\n tokeniser \n\n");
-		// iter_tokenlst(token_lst, &print_tokenlst);
+		if (tokeniser_successful(token_lst, original_line) == false)// frees line
+			continue;
 		token_lst = extend_saved_export_var(&token_lst);
 		append_export_str(&token_lst);
-		// iter_tokenlst(token_lst, &print_tokenlst);
 		if (lexer_token(token_lst) == false)
 		{
-			print_error_message(&token_lst, line);// header
+			print_error_message(&token_lst, original_line);
 			continue ;
 		}
-		// iter_tokenlst(token_lst, &print_tokenlst);
-		cmd_lst = init_cmd_list(&token_lst, line);
+		cmd_lst = init_cmd_list(&token_lst, original_line);
+		clean_token_lst(token_lst);
+		free(original_line);
 		init_signal(1);
 		ft_execute(cmd_lst, get_bash()->env);
+		//  if (ft_execute(cmd_lst, get_bash()->env) == false)
+        // {
+        //     clean_cmd_lst(cmd_lst);
+        //     break; // Exit the loop gracefully
+        // }
+
 		init_signal(0);
 		reset_terminal_state();
 		clean_cmd_lst(cmd_lst);
+		cmd_lst = NULL;
 	}
 	clean_cmd_list_objects_tmp_files(cmd_lst);
+	rl_clear_history();
 }
 
 // printf("\n append token string in export \n\n");
