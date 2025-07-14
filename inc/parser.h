@@ -74,7 +74,7 @@ typedef enum s_type
 
 typedef struct s_token
 {
-	char			*token;// **weil eigenes envp erweitert werden muss
+	char			*token;
 	t_type			token_type;
 	struct s_token	*next;
 	struct s_token	*head;
