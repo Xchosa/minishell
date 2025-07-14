@@ -41,6 +41,9 @@ int	main(int argc, char **argv, char **env)
 		non_interactive_shell(argc, argv, env, line);
 		{
 			if (tty_shell == true)
+			{
+				rl_clear_history();
+			}
 			printf("clean history function + destroy shell");
 		}
 	}

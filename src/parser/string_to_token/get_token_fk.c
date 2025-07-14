@@ -19,6 +19,8 @@ char	*tokenise_divider(char **content, char *new_token)
 	while (check_for_divider_without_space((**content)) == true)
 	{
 		tmp_token = ft_charjoin(new_token, (**content));
+		if (!tmp_token)
+            return (NULL);
 		new_token = tmp_token;
 		if (not_single_divider((**content)) == false)
 		{
@@ -45,6 +47,8 @@ char	*get_token(char **content)
 		if (char_is_alpha_nbr_and_no_whitespace(**content))
 		{
 			tmp_token = ft_charjoin(new_token, (**content));
+			if (!tmp_token)
+                return (NULL);
 			new_token = tmp_token;
 		}
 		if (check_for_divider_with_space((*content)[1]) == true)

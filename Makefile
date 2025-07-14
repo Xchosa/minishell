@@ -77,6 +77,7 @@ MY_SOURCES = \
 		token_redir_to_cmd.c \
 		tokens_list_to_cmd.c \
 		tokens_text_to_cmd.c \
+		tokens_to_cmd_helper.c \
 		clean_minishell.c \
 		manage_pipes.c \
 		pipex.c \

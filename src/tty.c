@@ -86,7 +86,6 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 		// printf("\n append token string in export \n\n");
 		// iter_tokenlst(token_lst, &print_tokenlst);
 		cmd_lst = init_cmd_list(&token_lst, original_line);
-		// free(original_line);
 		init_signal(1);
 		ft_execute(cmd_lst, get_bash()->env);
 		//  if (ft_execute(cmd_lst, get_bash()->env) == false)

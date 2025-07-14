@@ -12,8 +12,7 @@
 
 #include "parser.h"
 
-
-static bool	pipe_token(t_token **token_list)
+static	bool	pipe_token(t_token **token_list)
 {
 	if(*token_list == NULL)
         return(true);
@@ -24,7 +23,7 @@ static bool	pipe_token(t_token **token_list)
 	}
 	return (false);
 }
-bool redir_token(t_token **token_list)
+bool	redir_token(t_token **token_list)
 {
 	int	type;
 
@@ -38,7 +37,8 @@ bool redir_token(t_token **token_list)
 		return (false);
 }
 
-static	void	if_redirect_set_file_node_head(t_file_list *file_list, t_file_node **file_node, t_token **token_lst)
+static	void	if_redirect_set_file_node_head(t_file_list *file_list, 
+	t_file_node **file_node, t_token **token_lst)
 {
 	file_list->head = process_token_type_redir(token_lst);
 	*file_node = file_list->head;
@@ -46,7 +46,8 @@ static	void	if_redirect_set_file_node_head(t_file_list *file_list, t_file_node *
 	file_list->tail = *file_node;
 }
 
-static	void	if_redirect_append_file_node(t_file_list *file_list, t_file_node **file_node, t_token **token_lst)
+static	void	if_redirect_append_file_node(t_file_list *file_list, 
+	t_file_node **file_node, t_token **token_lst)
 {
 	(*file_node)->next = process_token_type_redir(token_lst);
 	*file_node = (*file_node)->next;
