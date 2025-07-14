@@ -1,0 +1,20 @@
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==10793==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x000109fe44d1 bp 0x7ffee5c223e0 sp 0x7ffee5c223b0 T0)
+==10793==The signal is caused by a READ memory access.
+==10793==Hint: this fault was caused by a dereference of a high value address (see register values below).  Dissassemble the provided pc to learn which register was used.
+    #0 0x109fe44d1 in tokenlast tokeniser.c:22
+    #1 0x109fe4837 in set_last_node_null tokeniser.c:57
+    #2 0x109fe51b3 in tokeniser tokeniser.c:120
+    #3 0x109fe19fb in non_interactive_shell tty.c:123
+    #4 0x109fe11b9 in main main.c:41
+    #5 0x7fff6f4facc8 in start+0x0 (libdyld.dylib:x86_64+0x1acc8)
+
+==10793==Register values:
+rax = 0xbebebebebebebece  rbx = 0x00007ffee5c22480  rcx = 0x17d7d7d7d7d7d7d9  rdx = 0x0000100000000000  
+rdi = 0x0000603000001ae0  rsi = 0x0000100000000000  rbp = 0x00007ffee5c223e0  rsp = 0x00007ffee5c223b0  
+ r8 = 0x0000100000000000   r9 = 0x0000000000000000  r10 = 0xffffffffffffffff  r11 = 0x00000fffffffffff  
+r12 = 0x0000000000000000  r13 = 0x0000000000000000  r14 = 0x0000000000000000  r15 = 0x0000000000000000  
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV tokeniser.c:22 in tokenlast
+==10793==ABORTING

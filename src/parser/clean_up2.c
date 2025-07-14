@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 13:48:02 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/08 13:48:31 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/14 11:35:05 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	check_lexer_and_free(char *line)
 		return (false);
 	if (lexer(line) == false)
 	{
-		get_exit_codes()->last_exit_code = syntax_failure;
+		get_exit_codes()->last_exit_code = syntax_error_token;
 		print_lexer_error_message(line);
 		return (false);
 	}

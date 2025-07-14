@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/14 09:28:41 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:58:12 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 	{
 		line = read_terminal();
 		if (line == NULL)
-			break;
+			break ;
 		if (check_lexer_and_free(line) == false)
-			continue;
+			continue ;
 		original_line = line;
 		token_lst = tokeniser(&line);
 		if (tokeniser_successful(token_lst, original_line) == false)// frees line
-			continue;
+			continue ;
 		token_lst = extend_saved_export_var(&token_lst);
 		append_export_str(&token_lst);
 		if (lexer_token(token_lst) == false)
@@ -83,17 +83,17 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 			print_error_message(&token_lst, original_line);
 			continue ;
 		}
+		// printf("\n append token string in export \n\n");
+		// iter_tokenlst(token_lst, &print_tokenlst);
 		cmd_lst = init_cmd_list(&token_lst, original_line);
-		clean_token_lst(token_lst);
-		free(original_line);
+		// free(original_line);
 		init_signal(1);
 		ft_execute(cmd_lst, get_bash()->env);
 		//  if (ft_execute(cmd_lst, get_bash()->env) == false)
         // {
         //     clean_cmd_lst(cmd_lst);
-        //     break; // Exit the loop gracefully
+        //     break; // Exit the loop gracefully (wenn commando exit ist muss trotzdem gecleaned werden? )
         // }
-
 		init_signal(0);
 		reset_terminal_state();
 		clean_cmd_lst(cmd_lst);
