@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/10 16:40:58 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/14 09:30:06 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 		get_bash()->path = ft_getpath(cmd_node->cmd[0], envp);
 	if (get_bash()->path == NULL)
 	{
-		ft_putendl_fd("Shell: command not found\n", 2);
+		ft_putendl_fd("Shell: command not found", 2);
 		exit(127);
 	}
 	execve(get_bash()->path, cmd_node->cmd, envp);

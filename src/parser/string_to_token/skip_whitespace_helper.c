@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:08:33 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/08 13:40:52 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/14 10:48:25 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	skip_whitespace(char **line)
 {
-	while (*line)
+	if (**line == '\0' )
+		return ;
+	while (**line != '\0')
 	{
 		if (ft_strchr("\t\n\v\f\r ", **line) == NULL)
 			break ;

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:13:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/02 17:22:23 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/14 09:35:39 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,5 @@ bool	wrong_use_pipe_and_redirection(char *line)
 	size = ft_strlen(line);
 	if (line [size -1] == '|')
 		return (false);
-	while (line[i])
-	{
-		if ((line[i] == '&') || (line[i] == ';'))
-			return (false);
-		i++;
-	}
 	return (true);
 }
