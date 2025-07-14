@@ -88,8 +88,8 @@ t_bash		*get_bash(void);
 void 		ft_print_array(char **src);
 
 // get input 
-void		interactive_shell_tty(int argc, char **argv, char **envp, char *line);
-void		non_interactive_shell(int argc, char **argv, char **envp, char *line);
+void		interactive_shell_tty(char *line);
+void		non_interactive_shell(char *line);
 
 //interrupt tty
 bool 		check_lexer_and_free(char *line);

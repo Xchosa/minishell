@@ -25,6 +25,7 @@ int	main(int argc, char **argv, char **env)
 	bool	tty_shell;
 	char	*line;
 
+	(void)argv;
 	tty_shell = false;
 	line = NULL;
 
@@ -33,17 +34,15 @@ int	main(int argc, char **argv, char **env)
 
 	if (isatty(STDIN_FILENO))
 	{
-		interactive_shell_tty(argc, argv, env, line);
+		interactive_shell_tty(line);
 		tty_shell = true;
 	}
 	else
 	{
-		non_interactive_shell(argc, argv, env, line);
+		non_interactive_shell(line);
 		{
 			if (tty_shell == true)
-			{
 				rl_clear_history();
-			}
 			printf("clean history function + destroy shell");
 		}
 	}

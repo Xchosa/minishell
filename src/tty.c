@@ -55,11 +55,10 @@ static char	*read_terminal(void)
 	return (line);
 }
 
-void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
+// void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
+
+void	interactive_shell_tty(char *line)
 {
-	(void)argc;
-	(void)envp;
-	(void)argv;
 	t_token		*token_lst;
 	t_cmd_list	*cmd_lst;
 	char		*original_line;
@@ -83,8 +82,6 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 			print_error_message(&token_lst, original_line);
 			continue ;
 		}
-		// printf("\n append token string in export \n\n");
-		// iter_tokenlst(token_lst, &print_tokenlst);
 		cmd_lst = init_cmd_list(&token_lst, original_line);
 		init_signal(1);
 		ft_execute(cmd_lst, get_bash()->env);
@@ -108,28 +105,31 @@ void	interactive_shell_tty(int argc, char **argv, char **envp, char *line)
 // iter_cmd_lst(cmd_lst, &print_cmd_lst)
 
 
-void	non_interactive_shell(int argc, char **argv, char **envp ,char *line)
+void	non_interactive_shell(char *line)
 {
-	(void) argv;
-	(void) argc;
-	(void) envp;
+	char		*original_line;
 	t_token 	*token_lst;
 	t_cmd_list 	*cmd_lst;
 
 	line = get_next_line(STDIN_FILENO);
 	if (check_lexer_and_free(line) == false)
 		return ;
+	original_line = line;
 	token_lst = tokeniser(&line);
-	if (tokeniser_successful(token_lst, line) == false)
+	if (tokeniser_successful(token_lst, original_line) == false)
 		return ;
 	token_lst = extend_saved_export_var(&token_lst);
 	append_export_str(&token_lst);
 	if (lexer_token(token_lst) == false)
-		return ;
-	cmd_lst = init_cmd_list(&token_lst, line);
+	{
+		print_error_message(&token_lst, original_line);
+		return;
+	}
+	cmd_lst = init_cmd_list(&token_lst, original_line);
 	init_signal(1);
 	ft_execute(cmd_lst, get_bash()->env);
 	init_signal(0);
 	reset_terminal_state();
 	clean_cmd_list_objects_tmp_files(cmd_lst);
+	rl_clear_history();
 }
