@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/14 13:58:12 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/15 13:00:27 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ static char	*read_terminal(void)
 	{
 		line = get_next_line(fileno(stdin));
 		if (!line)
-            return (NULL);
+			return (NULL);
 		trimmed_line = ft_strtrim(line, "\n");
-        free(line);
-        line = trimmed_line;
+		free(line);
+		line = trimmed_line;
 	}
 	if (line && *line)
 		add_history(line);
@@ -73,7 +73,7 @@ void	interactive_shell_tty(char *line)
 			continue ;
 		original_line = line;
 		token_lst = tokeniser(&line);
-		if (tokeniser_successful(token_lst, original_line) == false)// frees line
+		if (tokeniser_successful(token_lst, original_line) == false)
 			continue ;
 		token_lst = extend_saved_export_var(&token_lst);
 		append_export_str(&token_lst);
