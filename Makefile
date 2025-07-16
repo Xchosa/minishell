@@ -45,6 +45,7 @@ MY_SOURCES = \
 		skip_whitespace_helper.c \
 		scan_char_helper.c \
 		abort_parser.c \
+		extend_line.c \
 		get_token_fk.c \
 		tokeniser.c \
 		handle_quotes.c \

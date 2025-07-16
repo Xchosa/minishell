@@ -24,8 +24,9 @@ int	main(int argc, char **argv, char **env)
 	//atexit(leaks);
 	// char *line = <<1"; // leaked
 	char *original_line;
+	char *new_line;
     // to do: tokeniser
-	line =  "\'\"\'$USER\'\"\'";
+	line =  ft_strdup(" echo  \"$USER  \" ");
 	
 
 	// malloc line to extend $XX
@@ -67,6 +68,8 @@ int	main(int argc, char **argv, char **env)
 	// bash = get_bash();
 	// ft_print_array(bash->env);
 	(void)bash;
+	new_line = extend_line(&line);
+	printf("New_line: %s \n" , new_line);
 	// vor dem tokeinser $h aufloesen und eintauschen // node update weg
     token_lst = tokeniser(&line);
 	// free(line);

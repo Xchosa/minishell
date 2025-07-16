@@ -166,6 +166,10 @@ bool		pipe_or_simec(char c);
 int 		special_char_no_divider(char c);
 int			special_char_no_divider_no_eq(char c);
 
+// extend_line
+char *extend_line(char **line);
+char *get_env_in_line( char **line);
+
 //	get export saved variables
 t_token* 	extend_saved_export_var(t_token **token_lst);
 char**		extend_env_with_str(char** src, char *token);
