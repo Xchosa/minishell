@@ -67,14 +67,18 @@ void	skip_single_quotes(char **line)
 	int	i;
 
 	i = 0;
-	if (((*line)[i] == '\'') && ((*line)[i +1 ] == '\0'))
+	if(!(*line))
+		return ;
+	else if (((*line)[i] == '\'') && ((*line)[i +1 ] == '\0'))
 	{
 		(*line)++;
 		return ;
 	}
-	if (((*line)[i] == '\"') && ((*line)[i +1 ] == '\0'))
+	else if (((*line)[i] == '\"') && ((*line)[i +1 ] == '\0'))
 	{
 		(*line)++;
 		return ;
 	}
+	else if (ft_strchr("\"\'",**line) != NULL)
+		(*line)++;
 }

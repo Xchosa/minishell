@@ -57,7 +57,7 @@ bool	check_for_cmd(t_token *token)
 	return (false);
 }
 
-bool	lexer_token(t_token *token_lst)
+bool	lexer_token(t_token *token_lst, char *original_line)
 {
 	t_token	*cur_token;
 
@@ -69,6 +69,7 @@ bool	lexer_token(t_token *token_lst)
 			if (check_correct_export_var(cur_token->token) == false)
 			{
 				get_exit_codes()->last_exit_code = invalid_identifier;
+				print_error_message(&token_lst, original_line);
 				return (false);
 			}
 		}
@@ -77,6 +78,7 @@ bool	lexer_token(t_token *token_lst)
 			if (check_syntax(cur_token) == false)
 			{
 				get_exit_codes()->last_exit_code = syntax_error_token;
+				print_error_message(&token_lst, original_line);
 				return (false);
 			}
 		}

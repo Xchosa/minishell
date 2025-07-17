@@ -13,24 +13,24 @@
 #include "minishell.h"
 #include "parser.h"
 
-static bool	check_for_div_export(char c)
-{
-	if (ft_strncmp ("|", &c, 1) == 0)
-		return (true);
-	if (ft_strncmp (" ", &c, 1) == 0)
-		return (true);
-	if (ft_strncmp ("<", &c, 1) == 0)
-		return (true);
-	if (ft_strncmp (">", &c, 1) == 0)
-		return (true);
-	if (ft_strncmp (";", &c, 1) == 0)
-		return (true);
-	if (ft_strncmp ("\"", &c, 1) == 0)
-		return (true);
-	if (ft_strncmp ("\'", &c, 1) == 0)
-		return (true);
-	return (false);
-}
+// static bool	check_for_div_export(char c)
+// {
+// 	if (ft_strncmp ("|", &c, 1) == 0)
+// 		return (true);
+// 	if (ft_strncmp (" ", &c, 1) == 0)
+// 		return (true);
+// 	if (ft_strncmp ("<", &c, 1) == 0)
+// 		return (true);
+// 	if (ft_strncmp (">", &c, 1) == 0)
+// 		return (true);
+// 	if (ft_strncmp (";", &c, 1) == 0)
+// 		return (true);
+// 	if (ft_strncmp ("\"", &c, 1) == 0)
+// 		return (true);
+// 	if (ft_strncmp ("\'", &c, 1) == 0)
+// 		return (true);
+// 	return (false);
+// }
 	// if (ft_strncmp ("=", &c, 1) == 0)
 	// 	return (true);
 
@@ -49,8 +49,6 @@ t_token	*create_token_equal_as_div(char **content)
 {
 	t_token	*new_token;
 
-	// if (find_error_chars(*content) == false)
-	// 	return (NULL);
 	new_token = malloc (sizeof(t_token));
 	if (!new_token)
 		return (NULL);
@@ -61,7 +59,9 @@ t_token	*create_token_equal_as_div(char **content)
 	}
 	else
 	{
-		new_token->token = get_token_equal_as_div(content);
+		new_token->token = get_token(content);
+		if(ft_strchr("\"\'", **content) == NULL)
+			new_token->token = append_export_var(new_token->token, content);
 		new_token->token_type = Export_var;
 	}
 	// if no equal -> get_type 
@@ -93,36 +93,69 @@ char	*add_char(char **content, char *tmp_token, char *new_token, int i)
 	return (new_token);
 }
 
-char	*get_token_equal_as_div(char **content)
+// char	*get_token_equal_as_div(char **content)
+// {
+// 	int		i;
+// 	char	*new_token;
+// 	char	*tmp_token;
+
+// 	i = 0;
+// 	new_token = ft_strdup("");
+// 	if (!new_token)
+// 		return (NULL);
+// 	while ((*content)[i] != '\0'
+// 		&& check_for_div_export((*content)[i]) == false)
+// 	{
+// 		if (char_is_alpha_nbr_and_no_whitespace((*content)[i]))
+// 		{
+// 			tmp_token = ft_charjoin(new_token, (*content)[i]);
+// 			new_token = tmp_token;
+// 		}
+// 		if (check_for_div_export((*content)[i +1]) == true)
+// 		{
+// 			*content += i + 1;
+// 			return (new_token);
+// 		}
+// 		(*content)++;
+// 	}
+// 	while (check_for_divider_without_space((*content)[i]) == true)
+// 		new_token = add_char(content, tmp_token, new_token, i);
+// 	return (new_token);
+// }
+
+
+char *append_export_var(char *token_str, char **content)
 {
-	int		i;
+	char *appended_str;
+	char *next_token_str;
+
+
+	next_token_str = get_export_token_in_quotes(content);
+	appended_str = ft_strjoin(token_str, next_token_str);
+	free(token_str);
+	return(appended_str);
+}
+
+char *get_export_token_in_quotes(char **content)
+{
 	char	*new_token;
 	char	*tmp_token;
 
-	i = 0;
 	new_token = ft_strdup("");
+	tmp_token = NULL;
 	if (!new_token)
 		return (NULL);
-	while ((*content)[i] != '\0'
-		&& check_for_div_export((*content)[i]) == false)
+	if(ft_strchr("\"", **content) == NULL)
 	{
-		if (char_is_alpha_nbr_and_no_whitespace((*content)[i]))
-		{
-			tmp_token = ft_charjoin(new_token, (*content)[i]);
-			new_token = tmp_token;
-		}
-		if (check_for_div_export((*content)[i +1]) == true)
-		{
-			*content += i + 1;
-			return (new_token);
-		}
-		(*content)++;
+		skip_single_quotes(content);
+		while ((**content) != '\0' && ft_strchr("\"", **content) == NULL)
+			new_token = add_single_char_to_line(new_token, tmp_token, content);
 	}
-	while (check_for_divider_without_space((*content)[i]) == true)
-		new_token = add_char(content, tmp_token, new_token, i);
+	else if(ft_strchr("\'", **content) == NULL)
+	{
+		skip_single_quotes(content);
+		while ((**content) != '\0' && ft_strchr("\'", **content) == NULL)
+			new_token = add_single_char_to_line(new_token, tmp_token, content);
+	}
 	return (new_token);
 }
-
-
-
-

@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **env)
 	char *new_line;
    
 	// line =  ft_strdup(" echo \"\' \'  $USER\' \' \" \"in new \' world\"");
-	line =  ft_strdup(" echo '$?   '  hallo");
+	line =  ft_strdup(" export h=\"ls   -al \" ");
 
 	// malloc line to extend $XX
 	// char **temp_content = content;
@@ -93,7 +93,7 @@ int	main(int argc, char **argv, char **env)
 	// handle_export(token_lst);
 	// append_export_str(&token_lst);
 
-    if (lexer_token(token_lst) == false)
+    if (lexer_token(token_lst, original_line) == false)
     {
 		print_error_message(&token_lst, original_line);
 		return(1);
@@ -105,47 +105,6 @@ int	main(int argc, char **argv, char **env)
 	iter_cmd_lst(cmd_lst, &print_cmd_lst);
     printf("\nis it Thilos issue: \n\n");
 	ft_execute(cmd_lst, get_bash()->env);
-
-
-
-	clean_cmd_lst(cmd_lst);// not the hole clean function
-
-    // printf("\n \nerror code \n");
-
-    // new=\"ls -al >;
-    // line = "cat makefile \"$new\" outfile";  works
-    // line = "echo $?";
-    // token_lst = tokeniser(&line);
-	// // free(line);
-	// if (!token_lst)
-    //     printf("error tokeniser\n");
-	// iter_tokenlst(token_lst, &print_tokenlst);
-
-	// printf("\n export_list:\n\n");
-	// // extends $h to word if saved in env 
-	// token_lst = extend_saved_export_var(&token_lst);
-	// // change_only tokenise if CALL_SAVED_VAR
-	
-	// iter_tokenlst(token_lst, &print_tokenlst);
-	// // printf("\n multiple tokens split:\n\n");
-    
-	// // splited saved_var erneut mit tokeniser
-	// printf("\n append token\n\n");
-	// // handle_export(token_lst);
-	// append_export_str(&token_lst);
-	// printf("line , %s \n", line);
-    // if (lexer_token(token_lst) == false)
-    // {
-	// 	print_error_message(&token_lst, line);
-	// 	return(1);
-    // }
-	// iter_tokenlst(token_lst, &print_tokenlst);
-
-	// printf("\ndo i come to cmd list? \n\n");
-	// cmd_lst = init_cmd_list(&token_lst, line);
-	// iter_cmd_lst(cmd_lst, &print_cmd_lst);
-    // printf("\nis it Thilos issue: \n\n");
-	// ft_execute(cmd_lst, get_bash()->env);
 
 	clean_cmd_list_objects_tmp_files(cmd_lst);
 

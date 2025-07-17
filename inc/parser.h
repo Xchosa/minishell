@@ -104,7 +104,7 @@ bool		check_for_correct_double_divider(char *line);
 bool		check_for_correct_single_divider(char *line);
 
 // lexer tokens
-bool		lexer_token(t_token *token_lst);
+bool		lexer_token(t_token *token_lst, char *original_line);
 bool		tokeniser_successful(t_token *token_lst, char *original_line);
 
 void 		print_error_message(t_token **token_lst, char *line);
@@ -176,6 +176,9 @@ char 	*add_s_quotes_str_to_line(char *new_line, char *tmp_line, char **line);
 char	*swap_exit_code_in_line(char *new_line, char *tmp_line, char **line);
 
 //	get export saved variables
+char 		*append_export_var(char *token_str, char **content);
+char		*get_export_token_in_quotes(char **content);
+
 t_token* 	extend_saved_export_var(t_token **token_lst);
 char**		extend_env_with_str(char** src, char *token);
 char* 		get_var_from_env(char **src, char *token_no_dollar);

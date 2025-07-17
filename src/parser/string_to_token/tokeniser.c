@@ -39,13 +39,14 @@ bool	tokenadd_back(t_token **lst, t_token *new_token)
 	{
 		*lst = new_token;
 		new_token->head = new_token;
-		return (false); // if lst is null smth failed in the first place better break
+		return (false);
 	}
 	else
 	{
 		last_node = tokenlast(*lst);
 		new_token->head = (*lst)->head;
 		last_node->next = new_token;
+		new_token->next = NULL;
 		return (true);
 	}
 }
@@ -76,7 +77,6 @@ t_token	*tokenlstnew(char	**content)
 {
 	t_token	*token;
 
-	// skip_quotes(content);
 	skip_whitespace(content);
 	if ((**content) == '\0')
 		return (NULL);
@@ -92,7 +92,7 @@ t_token	*tokenlstnew(char	**content)
 
 t_token	*tokeniser(char **line)
 {
-	t_token	*new_token;
+	t_token		*new_token;
 	t_token		*token_lst;
 
 	if (!line || **line == '\0')
@@ -100,7 +100,6 @@ t_token	*tokeniser(char **line)
 	token_lst = tokenlstnew(line);
 	if (!token_lst)
 		return (NULL);
-	// skip_quotes(line);
 	new_token = NULL;
 	while (*line && **line != '\0')
 	{
@@ -114,12 +113,7 @@ t_token	*tokeniser(char **line)
 			clean_token_lst(token_lst);
 			return (NULL);
 		}
-		skip_quotes(line);
 	}
-	if (new_token == NULL)
-		token_lst->next = new_token;
-	else
-		set_last_node_null(&token_lst);
 	return (token_lst);
 }
 
