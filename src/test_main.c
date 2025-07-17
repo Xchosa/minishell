@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **env)
 	// char *line = <<1"; // leaked
 	char *original_line;
     // to do: tokeniser
-	line =  "\'\"\'$USER\'\"\'";
+	line = ft_strdup("echo $?");
 	
 
 	// malloc line to extend $XX
