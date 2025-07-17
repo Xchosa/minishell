@@ -8,99 +8,91 @@
 // letzter schritt erst mit env abgleichen 
 char *extend_line(char **line)
 {
-    // char **line_start;
     char *new_line;
     char *tmp_line;
 
+	tmp_line = NULL;
 	new_line = ft_strdup("");
 	while(**line != '\0')
     {
-		// line_start = line;
 		if(**line != '\0' && ft_strchr("\"", **line) != NULL)
 		{
-			while(**line != '\0' || ft_strchr("\"", **line) != NULL) 
-			{
-				// (*line)++;
-				if (ft_strchr("$", **line) != NULL) // wenn $ auftaucht 
-				{
-					(*line)++;
-					char *env_str;
-					// $USER wird zu env_str = USER und dann zu poverbec
-					env_str = get_env_in_line(line);
-					while((*env_str) != '\0')
-					{
-						tmp_line = ft_charjoin(new_line, (*env_str));
-						if (!tmp_line)
-							return (NULL);
-						new_line = tmp_line;
-						env_str++;
-					}
-					(*line)++;
-					break ;
-				}
-
-				else
-					(*line)++;
-			}
+			new_line = add_single_char_to_line(new_line, tmp_line, line);
+			while(**line != '\0' && ft_strchr("\"", **line) == NULL) 
+				new_line = d_qoutes_swap_dollar_var_with_env_var(new_line, tmp_line, line);
 		}
-		while(**line != '\0' && ft_strchr("\'", **line) != NULL)
-		{
-			while(**line != '\0' || (ft_strchr("\"", **line) != NULL))
-			{
-				if(ft_strchr("\'", *line[1]) != NULL)
-				{
-					**line +=2;
-					break;
-				}
-				(*line)++;
-			}
-
-		}
-		if(ft_strchr("$", **line) != NULL) 
-		{
-			(*line)++;
-			// erstmal in new_line testcase fuer &USER reinschreiben 
-			//// alles bis '" oder space in env suchen und auflosen 
-		}
+		if(**line != '\0' && ft_strchr("\'", **line) != NULL)
+			new_line = add_s_quotes_str_to_line(new_line, tmp_line, line);
+		if(**line != '\0' && ft_strchr("$", **line) != NULL) 
+			new_line = swap_dollar_var_with_env_var(new_line, tmp_line, line);
 		else if (**line != '\0')
-		{
-			tmp_line= ft_charjoin(new_line, (**line));
-			if (!tmp_line)
-				return (NULL);
-			new_line = tmp_line;
-			(*line)++;
-		}
+			new_line = add_single_char_to_line(new_line, tmp_line, line);
 	}
 	return(new_line);
 }
 
 
-
-char *get_env_in_line( char **line)
+//get_env_in_line iterates line up until a $var is done 
+char *d_qoutes_swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line)
 {
-	char *tmp_line;
 	char *env_str;
-	char *return_str;
-	// t_bash *bash_env;
-
-	// bash_env = get_bash()->env
-	env_str = ft_strdup("");
-	// (*line)++; // pass the dollar 
-	if(!(*line))
-		return(env_str);
-	while(**line != '\0' && ft_strchr("\"\' ", (**line)) == NULL)
+	if (ft_strchr("$", **line) != NULL) // wenn $ auftaucht 
 	{
-		tmp_line = ft_charjoin(env_str, (**line));
-        if (!tmp_line)
-        	return (env_str = ft_strdup(""));
-        env_str = tmp_line;
 		(*line)++;
-
-	
+		// $USER wird zu env_str = USER und dann zu poverbec
+		env_str = get_env_in_line(line);
+		while((*env_str) != '\0')
+		{
+			tmp_line = ft_charjoin(new_line, (*env_str));
+			if (!tmp_line)
+				return (NULL);
+			new_line = tmp_line;
+			env_str++;
+		}
+		return (new_line);
 	}
-	if(!(*env_str))
-		return(env_str);
-	return_str = get_var_from_env(get_bash()->env, env_str);
-	// env_str in bash->env suchen 
-	return(return_str);
+	else if (**line != '\0')
+	{
+		new_line = add_single_char_to_line(new_line, tmp_line, line);
+	}
+	if (ft_strchr("\"", (**line)) != NULL)
+		new_line = add_single_char_to_line(new_line, tmp_line, line);
+	return (new_line);
+}
+
+
+char *add_s_quotes_str_to_line(char *new_line, char *tmp_line, char **line)
+{
+	if(**line != '\0' && ft_strchr("\'", **line) != NULL)
+	{
+		if (**line != '\0')
+			new_line = add_single_char_to_line(new_line, tmp_line, line);
+		while (**line != '\0' && ft_strchr("\'", (**line)) == NULL)
+			new_line = add_single_char_to_line(new_line, tmp_line, line);
+		if (**line != '\0')
+			new_line = add_single_char_to_line(new_line, tmp_line, line);
+		return (new_line);
+	}
+	return (new_line);
+}
+
+
+char *swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line)
+{
+	char *env_str;
+	if (ft_strchr("$", **line) != NULL)
+	{
+		(*line)++;
+		env_str = get_env_in_line(line);
+		while((*env_str) != '\0')
+		{
+			tmp_line = ft_charjoin(new_line, (*env_str));
+			if (!tmp_line)
+				return (NULL);
+			new_line = tmp_line;
+			env_str++;
+		}
+		return (new_line);
+	}
+	return(new_line);
 }

@@ -46,6 +46,7 @@ MY_SOURCES = \
 		scan_char_helper.c \
 		abort_parser.c \
 		extend_line.c \
+		extend_line_helper.c \
 		get_token_fk.c \
 		tokeniser.c \
 		handle_quotes.c \

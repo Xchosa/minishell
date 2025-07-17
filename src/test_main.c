@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **env)
 	char *original_line;
 	char *new_line;
     // to do: tokeniser
-	line =  ft_strdup(" echo  \"$USER  \" ");
+	line =  ft_strdup(" echo \' $USER\' \"in new \' world\"");
 	
 
 	// malloc line to extend $XX
@@ -57,7 +57,6 @@ int	main(int argc, char **argv, char **env)
 
 	if (check_lexer_and_free(line) == false)
 		return (1);
-	original_line = line;
 	// if (lexer_valid_ident(line) == false) // lexer seperate testen
 	// {
 	// 	print_error_message(line);
@@ -68,10 +67,12 @@ int	main(int argc, char **argv, char **env)
 	// bash = get_bash();
 	// ft_print_array(bash->env);
 	(void)bash;
+	printf("original line: %s \n" , line);
 	new_line = extend_line(&line);
 	printf("New_line: %s \n" , new_line);
 	// vor dem tokeinser $h aufloesen und eintauschen // node update weg
-    token_lst = tokeniser(&line);
+    original_line = new_line;
+	token_lst = tokeniser(&new_line);
 	// free(line);
 	if (!token_lst)
     {

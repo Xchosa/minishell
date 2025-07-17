@@ -167,8 +167,12 @@ int 		special_char_no_divider(char c);
 int			special_char_no_divider_no_eq(char c);
 
 // extend_line
-char *extend_line(char **line);
-char *get_env_in_line( char **line);
+char 	*extend_line(char **line);
+char 	*get_env_in_line( char **line);
+char 	*d_qoutes_swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line);
+char 	*swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line);
+char 	*add_single_char_to_line(char *new_line, char *tmp_line, char **line);
+char 	*add_s_quotes_str_to_line(char *new_line, char *tmp_line, char **line);
 
 //	get export saved variables
 t_token* 	extend_saved_export_var(t_token **token_lst);
