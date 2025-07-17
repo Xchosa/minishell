@@ -173,6 +173,7 @@ char 	*d_qoutes_swap_dollar_var_with_env_var(char *new_line, char *tmp_line, cha
 char 	*swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line);
 char 	*add_single_char_to_line(char *new_line, char *tmp_line, char **line);
 char 	*add_s_quotes_str_to_line(char *new_line, char *tmp_line, char **line);
+char	*swap_exit_code_in_line(char *new_line, char *tmp_line, char **line);
 
 //	get export saved variables
 t_token* 	extend_saved_export_var(t_token **token_lst);

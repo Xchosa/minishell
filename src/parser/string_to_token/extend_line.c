@@ -39,6 +39,8 @@ char *extend_line(char **line)
 char *d_qoutes_swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line)
 {
 	char *env_str;
+	if (ft_strncmp("$?", (*line), 2) == 0)
+		new_line = swap_exit_code_in_line(new_line, tmp_line, line);
 	if (ft_strchr("$", **line) != NULL) // wenn $ auftaucht 
 	{
 		(*line)++;
@@ -95,7 +97,28 @@ char *swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line)
 			new_line = tmp_line;
 			env_str++;
 		}
+		// free env?
 		return (new_line);
 	}
 	return(new_line);
+}
+
+char *swap_exit_code_in_line(char *new_line, char *tmp_line, char **line)
+{
+	char *exit_code;
+	char *start_exit_code;
+
+	(*line) +=2;
+	exit_code = (ft_itoa(get_exit_codes()->last_exit_code));
+	start_exit_code = exit_code;
+	while((*exit_code) != '\0')
+	{
+		tmp_line = ft_charjoin(new_line, (*exit_code));
+		if (!tmp_line)
+			return (NULL);
+		new_line = tmp_line;
+		exit_code++;
+	}
+	free(start_exit_code);
+	return (new_line);
 }

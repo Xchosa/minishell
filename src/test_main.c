@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **env)
 	char *new_line;
    
 	// line =  ft_strdup(" echo \"\' \'  $USER\' \' \" \"in new \' world\"");
-	line =  ft_strdup(" echo \"\' \'  $USER\' \' \" \"in new \' world\"");
+	line =  ft_strdup(" echo \"$?\"");
 
 	// malloc line to extend $XX
 	// char **temp_content = content;
