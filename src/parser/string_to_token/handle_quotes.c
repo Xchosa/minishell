@@ -51,9 +51,7 @@ void	define_token_type(t_token *new_token)
 t_token	*s_quote_case(char **line)
 {
 	t_token	*new_token;
-	int		nbr_of_chars_tokenised;
 
-	nbr_of_chars_tokenised = 0;
 	skip_quotes(line);
 	new_token = malloc (sizeof(t_token));
 	if (!new_token)
@@ -61,14 +59,12 @@ t_token	*s_quote_case(char **line)
 	new_token->token = ft_strdup("");
 	if (!validate_token_str(&new_token))
 		return (NULL);
-	nbr_of_chars_tokenised = process_content_to_token(line, new_token);
-	if (nbr_of_chars_tokenised == -1)
+	if(process_s_q_content_to_token(line, new_token) == false)
 	{
 		free_single_token(&new_token);
 		return (NULL);
 	}
 	new_token->token_type = TEXT;
-	*line += nbr_of_chars_tokenised;
 	return (new_token);
 }
 

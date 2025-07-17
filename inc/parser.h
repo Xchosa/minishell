@@ -216,6 +216,7 @@ t_cmd_list*		cmd_list_to_null(void);
 t_file_list*	file_list_to_null(void);
 
 t_cmd_node*		process_token(t_token **curr_token);
+bool			process_s_q_content_to_token(char **line, t_token *token_node);
 void    		handle_special_cases(t_token **curr_token,t_cmd_node *cmd_node);
 void 			process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node);
 void 			append_token_char(t_cmd_node *cmd_node, t_token *curr_token);

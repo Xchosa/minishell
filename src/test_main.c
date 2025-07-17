@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **env)
 	char *new_line;
    
 	// line =  ft_strdup(" echo \"\' \'  $USER\' \' \" \"in new \' world\"");
-	line =  ft_strdup(" echo \"$?\"");
+	line =  ft_strdup(" echo '$?   '  hallo");
 
 	// malloc line to extend $XX
 	// char **temp_content = content;
@@ -72,7 +72,7 @@ int	main(int argc, char **argv, char **env)
 		printf("error tokeniser\n");
 		return (1);
 	}
-	iter_tokenlst(token_lst, &print_tokenlst);
+	// iter_tokenlst(token_lst, &print_tokenlst);
 
 	// printf("\nenv:\n");
 	// 	ft_print_array(bash->env);
@@ -80,18 +80,18 @@ int	main(int argc, char **argv, char **env)
 	// if(extend_env(token_lst)== true)
 	// 	return(1);
 
-	printf("\n export_list:\n\n");
+	// printf("\n export_list:\n\n");
 	// extends $h to word if saved in env 
-	token_lst = extend_saved_export_var(&token_lst);
+	// token_lst = extend_saved_export_var(&token_lst);
 	// change_only tokenise if CALL_SAVED_VAR
 	
-	iter_tokenlst(token_lst, &print_tokenlst);
+	// iter_tokenlst(token_lst, &print_tokenlst);
 	// printf("\n multiple tokens split:\n\n");
     
 	// splited saved_var erneut mit tokeniser
-	printf("\n append token\n\n");
+	// printf("\n append token\n\n");
 	// handle_export(token_lst);
-	append_export_str(&token_lst);
+	// append_export_str(&token_lst);
 
     if (lexer_token(token_lst) == false)
     {

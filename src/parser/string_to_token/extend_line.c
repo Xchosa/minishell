@@ -41,7 +41,7 @@ char *d_qoutes_swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char
 	char *env_str;
 	if (ft_strncmp("$?", (*line), 2) == 0)
 		new_line = swap_exit_code_in_line(new_line, tmp_line, line);
-	if (ft_strchr("$", **line) != NULL) // wenn $ auftaucht 
+	else if (ft_strchr("$", **line) != NULL) // wenn $ auftaucht 
 	{
 		(*line)++;
 		// $USER wird zu env_str = USER und dann zu poverbec
@@ -85,7 +85,9 @@ char *add_s_quotes_str_to_line(char *new_line, char *tmp_line, char **line)
 char *swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line)
 {
 	char *env_str;
-	if (ft_strchr("$", **line) != NULL)
+	if (ft_strncmp("$?", (*line), 2) == 0)
+		new_line = swap_exit_code_in_line(new_line, tmp_line, line);
+	else if (ft_strchr("$", **line) != NULL)
 	{
 		(*line)++;
 		env_str = get_env_in_line(line);

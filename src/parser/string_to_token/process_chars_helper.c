@@ -28,17 +28,14 @@ t_token	*validate_token_str(t_token **new_token)
 }
 
 // fur d_quote case
+// auch bool funktion daraus machen
 int	process_content_to_token(char **line, t_token *token_node)
 {
 	int		i;
 	char	*tmp_token;
 
 	i = 0;
-	// if ((*line)[i] == '\'')
-	// 	(*line)++;
-	// else if ((*line)[i] == '\"')
-	// 	(*line)++;
-	// while ((*line)[i] && (*line)[i] != '\"' && (*line)[i] != '\'')
+
 	while ((*line)[i] && (*line)[i] != '\"')
 	{
 		tmp_token = ft_charjoin(token_node->token, (*line)[i]);
@@ -52,4 +49,18 @@ int	process_content_to_token(char **line, t_token *token_node)
 }
 
 
+bool	process_s_q_content_to_token(char **line, t_token *token_node)
+{
+	char	*tmp_token;
 
+	while ((**line) && (**line) != '\'')
+	{
+		tmp_token = ft_charjoin(token_node->token, (**line));
+		if (!(*tmp_token))
+			return (false);
+		token_node->token = tmp_token;
+		(*line)++;
+	}
+	(*line)++;
+	return (true);
+}
