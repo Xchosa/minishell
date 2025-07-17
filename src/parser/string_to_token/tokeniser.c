@@ -76,8 +76,8 @@ t_token	*tokenlstnew(char	**content)
 {
 	t_token	*token;
 
-	skip_quotes(content);
-	skip_whitespace(content);
+	// skip_quotes(content);
+	// skip_whitespace(content);
 	if ((**content) == '\0')
 		return (NULL);
 	token = create_first_token(content);

@@ -18,7 +18,8 @@ t_token	*d_quote_case(char **line)
 	int			nbr_of_chars_tokenised;
 
 	nbr_of_chars_tokenised = 0;
-	skip_quotes(line);
+	// skip_quotes(line);
+	(*line)++;
 	if (*line == NULL)
 		return (NULL);
 	new_token = malloc (sizeof(t_token));

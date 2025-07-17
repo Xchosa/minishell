@@ -10,7 +10,9 @@ char *extend_line(char **line)
 {
     char *new_line;
     char *tmp_line;
+	char *original_line;
 
+	original_line = (*line);
 	tmp_line = NULL;
 	new_line = ft_strdup("");
 	while(**line != '\0')
@@ -28,6 +30,7 @@ char *extend_line(char **line)
 		else if (**line != '\0')
 			new_line = add_single_char_to_line(new_line, tmp_line, line);
 	}
+	free(original_line);
 	return(new_line);
 }
 
