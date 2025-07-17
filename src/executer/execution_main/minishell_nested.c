@@ -3,32 +3,54 @@
 
 void	ft_increase_shlvl(char **envp)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	*newshlvl;
+	char	*freeme;
+	char	*buf;
 
 	i = 0;
+	j = 0;
 	while (envp[i] != NULL)
 	{
 		if (strncmp("SHLVL=", envp[i], 6) == 0)
-			envp[i][6]++;
+			break;
 		i++;
 	}
-}
-
-int	ft_ask_shlvl(char **envp)
-{
-	int	i;
-	int	re;
-
-	i = 0;
-	while (envp[i] != NULL)
+	if (envp[i] == NULL) //durchgelaufen und kein SHLVL in ENV gefunden
+		ft_export_variable("SHLVL=1", envp);
+	else
 	{
-		if (strncmp("SHLVL=", envp[i], 6) == 0)
-			break ;
-		i++;
+		freeme = envp[i];
+		while (j++ < 6)
+			envp[i]++;
+		buf = ft_itoa(ft_atoi(envp[i]) + 1);
+		if (buf == NULL)
+			return ;
+		newshlvl = ft_strjoin("SHLVL=", buf);
+		if (newshlvl == NULL)
+			return (free(buf));
+		envp[i] = newshlvl;	
+		return (free(freeme), free(buf));
 	}
-	re = ft_atoi(&envp[i][6]);
-	return (re);
+	//printf("%s\n", ft_itoa(ft_atoi(envp[i]) + 1));
 }
+
+// int	ft_ask_shlvl(char **envp)
+// {
+// 	int	i;
+// 	int	re;
+
+// 	i = 0;
+// 	while (envp[i] != NULL)
+// 	{
+// 		if (strncmp("SHLVL=", envp[i], 6) == 0)
+// 			break ;
+// 		i++;
+// 	}
+// 	re = ft_atoi(&envp[i][6]);
+// 	return (re);
+//}
 
 char	*get_command_pointer(char *command, char **envp)
 {
@@ -49,7 +71,7 @@ char	*get_command_pointer(char *command, char **envp)
 	i = 0;
 	while (i < 4)
 	{
-		pwd++;
+		pwd++; //can break if PWD unset. important?
 		i++;
 	}
 	command++;
@@ -88,9 +110,9 @@ char	*ft_execute_local(char *command, char **envp)
 {
 	char *path;
 
-	ft_printf("do i get here\n");
+	//ft_printf("do i get here\n");
 	path = get_command_pointer(command, envp);
-	ft_printf("%s\n", path);
+	//ft_printf("%s\n", path);
 	if (access(path, X_OK) == 0)
 		return (path);
 	else 
