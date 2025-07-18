@@ -31,7 +31,8 @@ bool	ft_manage_redirections_multi(t_file_list *file_list);
 void	manage_single_cmd_node(t_cmd_node *cmd_node, char **envp);
 void	ft_execution_loop(t_cmd_list *cmd_list, char **envp, int (*fd)[2]);
 bool	create_pipes(int (**fd)[2], t_cmd_list *cmd_list);
-bool	there_is_old_pwd(char **envp);
+//bool	there_is_old_pwd(char **envp);
+bool	there_is_env_var(char **envp, char *env_var);
 char	**ft_add_relative_path(t_cmd_node *cmd_node, char **envp);
 
 

@@ -24,7 +24,7 @@ char	*get_home_path(char **envp)
 	return (home);
 }
 
-bool	there_is_old_pwd(char **envp) // geht auch allgemeingueltig fuer alle env vars
+bool	there_is_env_var(char **envp, char *env_var)
 {
 	int	i;
 	int j;
@@ -33,7 +33,7 @@ bool	there_is_old_pwd(char **envp) // geht auch allgemeingueltig fuer alle env v
 	j = 0;
 	while (envp[i] != NULL)
 	{
-		if (ft_strncmp(envp[i], "OLDPWD", 6) != 0) //mit istgleich besser
+		if (ft_strncmp(envp[i], env_var, ft_strlen(env_var)) != 0)
 		{
 			i++;
 			j++;
@@ -42,10 +42,39 @@ bool	there_is_old_pwd(char **envp) // geht auch allgemeingueltig fuer alle env v
 			i++;
 	}
 	if (i == j)
+	{
+	//	printf("i return false\n");
 		return (false);
+	}
 	else
+	{
+	//	printf("i return true\n");
 		return (true);
+	}
 }
+
+// bool	there_is_old_pwd(char **envp)
+// {
+// 	int	i;
+// 	int j;
+
+// 	i = 0;
+// 	j = 0;
+// 	while (envp[i] != NULL)
+// 	{
+// 		if (ft_strncmp(envp[i], "OLDPWD=", 7) != 0)
+// 		{
+// 			i++;
+// 			j++;
+// 		}
+// 		else
+// 			i++;
+// 	}
+// 	if (i == j)
+// 		return (false);
+// 	else
+// 		return (true);
+// }
 
 char	**ft_delete_old_pwd(char **envp)
 {
@@ -64,7 +93,7 @@ char	**ft_delete_old_pwd(char **envp)
 		return (NULL);
 	while (envp[i] != NULL)
 	{
-		if (ft_strncmp(envp[i], "OLDPWD=", 7) != 0) 
+		if (ft_strncmp(envp[i], "OLDPWD=", 7) != 0)
 		{
 			newenvp[j] = envp[i];
 			i++;

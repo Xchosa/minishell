@@ -108,7 +108,7 @@ char	**ft_add_relative_path(t_cmd_node *cmd_node, char **envp)
 
 void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp)
 {
-	if (there_is_old_pwd(envp) == true)
+	if (there_is_env_var(envp, "OLDPWD=") == true)
 		envp = ft_delete_old_pwd(envp);
 	if (envp == NULL)
 		return ;
@@ -139,7 +139,7 @@ void	ft_cd(t_cmd_node *cmd_node, char **envp)
 		get_exit_codes()->last_exit_code = 0;
 		return ;
 	}
-	if (chdir(cmd_node->cmd[1]) != 0)
+	if (chdir(cmd_node->cmd[1]) != 0) //      ~/projects klappt hier nicht
 	{
 		get_exit_codes()->last_exit_code = 1;
 		perror("shell");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/08 16:42:57 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/18 14:31:20 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 {
 	if (cmd_node->cmd[0][0] == '/')
 	{
-		get_bash()->path = cmd_node->cmd[0];
+		get_bash()->path = cmd_node->cmd[0]; //hier andere fehlermeldung aber gleicher code
 		if (access(get_bash()->path, X_OK) != 0)
 			get_bash()->path = NULL;
 	}
 	else if (ft_strncmp("./", cmd_node->cmd[0], 2) == 0)
-		get_bash()->path = ft_execute_local(cmd_node->cmd[0], envp);
+		get_bash()->path = ft_execute_local(cmd_node->cmd[0], envp); //hier andere fehlermeldung aber gleicher code
 	else
 		get_bash()->path = ft_getpath(cmd_node->cmd[0], envp);
 	if (get_bash()->path == NULL)
@@ -104,7 +104,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	save_heredoc_files(&cmd_list->head);
 	if (create_pipes(&fd, cmd_list) != true)
 		return ;
-	iter_cmd_lst(cmd_list, &print_cmd_lst);
+	//iter_cmd_lst(cmd_list, &print_cmd_lst);
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN)
 		manage_single_cmd_node(cmd_list->head, envp);
 	// else if (ft_strcmp("./minishell", cmd_list->head->cmd[0]) == true)
