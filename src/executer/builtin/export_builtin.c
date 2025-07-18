@@ -58,7 +58,7 @@ void	ft_export_print(char **envp)
 	get_exit_codes()->last_exit_code = 0;
 }
 
-void	ft_export_variable(char *cmd_var, char **envp)
+void	ft_export_variable(char *cmd_var, char **envp) //kein strdup dafuer nur free envp statt free array envp
 {
 	int		max;
 	int		i;

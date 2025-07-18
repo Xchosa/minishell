@@ -66,7 +66,7 @@ char	**ft_delete_old_pwd(char **envp)
 	{
 		if (ft_strncmp(envp[i], "OLDPWD=", 7) != 0) 
 		{
-			newenvp[j] = ft_strdup(envp[i]);
+			newenvp[j] = envp[i];
 			i++;
 			j++;
 		}

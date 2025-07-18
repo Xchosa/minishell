@@ -3,13 +3,20 @@
 char	**ft_add_absolute_path(t_cmd_node *cmd_node, char **envp)
 {
 	int	i;
+	char	*buf;
+	char	*re;
 
 	i = 0;
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], "PWD=", 4) == 0)
 		{
-			envp[i] = ft_strjoin("PWD=", cmd_node->cmd[1]);
+			buf = envp[i];
+			re = ft_strjoin("PWD=", cmd_node->cmd[1]);
+			if (re == NULL)
+				return (NULL);
+			envp[i] = re;
+			free(buf);
 			if (envp[i][ft_strlen(envp[i]) - 1] == '/')
 				envp[i][ft_strlen(envp[i]) - 1] = '\0'; //free here, maube break
 		}
@@ -103,6 +110,8 @@ void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp)
 {
 	if (there_is_old_pwd(envp) == true)
 		envp = ft_delete_old_pwd(envp);
+	if (envp == NULL)
+		return ;
 	envp = ft_add_old_pwd(envp);
 	if (cmd_node->cmd[1] == NULL)
 		envp = ft_add_tilde(envp);
