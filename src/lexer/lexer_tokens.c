@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:27:12 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/02 17:43:49 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/14 11:10:19 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,11 @@ bool	check_for_cmd(t_token *token)
 {
 	if (token->token_type == Redirect_input)
 		return (true);
-	if (token->token_type == Redirect_output)
+	else if (token->token_type == Redirect_output)
 		return (true);
-	if (token->token_type == Append)
+	else if (token->token_type == Append)
 		return (true);
-	if (token->token_type == here_doc)
-		return (true);
-	if (token->token_type == PIPE)
+	else if (token->token_type == here_doc)
 		return (true);
 	return (false);
 }
@@ -86,3 +84,4 @@ bool	lexer_token(t_token *token_lst)
 	}
 	return (true);
 }
+

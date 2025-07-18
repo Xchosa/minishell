@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 11:35:48 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/08 11:35:51 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/14 10:14:31 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,25 @@ t_token	*validate_token_str(t_token **new_token)
 }
 
 
-int	process_content_to_token(char **line, t_token *token)
+int	process_content_to_token(char **line, t_token *token_node)
 {
 	int		i;
 	char	*tmp_token;
 
 	i = 0;
 	if ((*line)[i] == '\'')
-	{
 		(*line)++;
-	}
 	else if ((*line)[i] == '\"')
-	{
 		(*line)++;
-	}
 	while ((*line)[i] && (*line)[i] != '\"' && (*line)[i] != '\'')
 	{
-		tmp_token = ft_charjoin(token->token, (*line)[i]);
+		tmp_token = ft_charjoin(token_node->token, (*line)[i]);
 		if (!(*tmp_token))
 			return (-1);
-		token->token = tmp_token;
+		token_node->token = tmp_token;
 		(*line)++;
 	}
+	(*line)++;
 	return (i);
 }
 

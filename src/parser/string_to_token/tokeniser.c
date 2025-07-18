@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:26:42 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/08 11:12:20 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/15 16:19:01 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,16 @@
 
 t_token	*tokenlast(t_token *lst)
 {
+	t_token	*current;
+
 	if (lst == NULL)
 		return (NULL);
-	while (lst->next != NULL)
-		lst = lst->next;
-	return (lst);
+	current = lst;
+	while (current != NULL && current->next != NULL)
+	{
+		current = current->next;
+	}
+	return (current);
 }
 
 bool	tokenadd_back(t_token **lst, t_token *new_token)
@@ -28,14 +33,13 @@ bool	tokenadd_back(t_token **lst, t_token *new_token)
 
 	if (new_token == NULL)
 	{
-		clean_token_lst(*lst);
 		return (tokeniser_worked = false);
 	}
 	if (*lst == NULL)
 	{
 		*lst = new_token;
 		new_token->head = new_token;
-		return (false);
+		return (false); // if lst is null smth failed in the first place better break
 	}
 	else
 	{
@@ -44,6 +48,15 @@ bool	tokenadd_back(t_token **lst, t_token *new_token)
 		last_node->next = new_token;
 		return (true);
 	}
+}
+
+void	set_last_node_null(t_token **lst)
+{
+	t_token	*last_node;
+
+	last_node = tokenlast(*lst);
+	last_node->next = NULL;
+	return ;
 }
 
 t_token	*create_token(char **content)
@@ -65,18 +78,22 @@ t_token	*tokenlstnew(char	**content)
 
 	skip_quotes(content);
 	skip_whitespace(content);
+	if ((**content) == '\0')
+		return (NULL);
 	token = create_first_token(content);
 	if (!token)
 		return (NULL);
-	token->next = 0;
+	token->next = NULL;
 	token->head = token;
 	return (token);
 }
 
+
+
 t_token	*tokeniser(char **line)
 {
 	t_token	*new_token;
-	t_token	*token_lst;
+	t_token		*token_lst;
 
 	if (!line || **line == '\0')
 		return (NULL);
@@ -91,14 +108,18 @@ t_token	*tokeniser(char **line)
 			break ;
 		new_token = create_token_with_quote_case(line, token_lst);
 		if (tokenadd_back(&token_lst, new_token) == false)
+		{
+			if (new_token)
+                free_single_token(&new_token);
+			clean_token_lst(token_lst);
 			return (NULL);
+		}
 		skip_quotes(line);
 	}
 	if (new_token == NULL)
-	{
 		token_lst->next = new_token;
-		return (token_lst);
-	}
+	else
+		set_last_node_null(&token_lst);
 	return (token_lst);
 }
 

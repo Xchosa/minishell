@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   bash_config.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 10:57:23 by poverbec          #+#    #+#             */
 /*   Updated: 2025/07/08 16:15:45 by tschulle         ###   ########.fr       */

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/08 13:28:24 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/15 12:57:26 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 #include "parser.h"
 #include "executer.h"
 
-// void	leaks(void)
-// {
-//     printf("\n");
-//     system("leaks minishell: \n");
-// }
+void	leaks(void)
+{
+    printf("\n");
+    system("leaks minishell: \n");
+}
 
 int	main(int argc, char **argv, char **env)
 {
 	bool	tty_shell;
 	char	*line;
 
+	(void)argv;
 	tty_shell = false;
 	line = NULL;
 
@@ -33,16 +34,19 @@ int	main(int argc, char **argv, char **env)
 
 	if (isatty(STDIN_FILENO))
 	{
-		interactive_shell_tty(argc, argv, env, line);
+		interactive_shell_tty(line);
 		tty_shell = true;
 	}
 	else
 	{
-		non_interactive_shell(argc, argv, env, line);
+		non_interactive_shell(line);
 		{
 			if (tty_shell == true)
+				rl_clear_history();
 			printf("clean history function + destroy shell");
 		}
 	}
-    // destroy shell? tyname, ttyslo
+	// printf("\nclear history");
+	if(tty_shell == true)
+		rl_clear_history();
 }

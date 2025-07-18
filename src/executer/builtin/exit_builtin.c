@@ -44,3 +44,9 @@ void	ft_exit(t_cmd_node *cmd_node)
 	get_exit_codes()->last_exit_code = re;
 	exit(re);
 }
+
+
+// You will also need to modify your exit builtin to stop calling exit() 
+// directly and your ft_execute function to return the appropriate status.
+//  This change ensures that your shell's main loop remains in control of the program's 
+//  lifecycle and can perform all necessary cleanup before shutting down.

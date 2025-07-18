@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/08 13:34:35 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:42:23 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef enum s_type
 
 typedef struct s_token
 {
-	char			*token;// **weil eigenes envp erweitert werden muss
+	char			*token;
 	t_type			token_type;
 	struct s_token	*next;
 	struct s_token	*head;
@@ -88,8 +88,8 @@ t_bash		*get_bash(void);
 void 		ft_print_array(char **src);
 
 // get input 
-void		interactive_shell_tty(int argc, char **argv, char **envp, char *line);
-void		non_interactive_shell(int argc, char **argv, char **envp, char *line);
+void		interactive_shell_tty(char *line);
+void		non_interactive_shell(char *line);
 
 //interrupt tty
 bool 		check_lexer_and_free(char *line);
@@ -105,7 +105,7 @@ bool		check_for_correct_single_divider(char *line);
 
 // lexer tokens
 bool		lexer_token(t_token *token_lst);
-bool		tokeniser_successful(t_token *token_lst, char *line);
+bool		tokeniser_successful(t_token *token_lst, char *original_line);
 
 void 		print_error_message(t_token **token_lst, char *line);
 void		print_lexer_error_message(char *line);
@@ -132,6 +132,7 @@ t_token		*tokenlast(t_token *lst);
 bool		tokenadd_back(t_token **lst, t_token *new_token);
 char		*add_char(char **content, char *tmp_token, char *new_token, int i);
 
+void		set_last_node_null(t_token **lst);
 t_token		*create_token(char **content);
 t_token 	*create_first_token(char **line);
 t_token		*d_quote_case(char **line);
@@ -144,6 +145,8 @@ bool		check_for_divider_with_space(char c);
 bool		check_for_divider_without_space(char c);
 char		*skip_dollar_parameter(char *line);
 void 		free_token(t_token **token_list);
+void		define_token_type(t_token *new_token);
+bool		is_redirect(char *content);
 
 //update line
 char		*update_line(char *line, t_token *token);
@@ -235,7 +238,7 @@ t_file_node* 	create_redirect_output_file_node(t_token **curr_token);
 // for new_libft
 //bool	ft_strcmp(const char *s1, const char *s2);
 // char	**ft_cpy_array_str(char **arrays);
-char 	*ft_charjoin(char *dst, char const src_char);
+char 	*ft_charjoin(char *dst, char src_char);
 // void 	ft_free_array(char **arrays);
 
 

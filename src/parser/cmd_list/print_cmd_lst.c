@@ -45,11 +45,11 @@ void	print_cmd_lst(t_cmd_node *cmd_nodes)
 			printf("file node tail %d redir type: %d\n", j, current_file_node->redir_type);
 			if (current_file_node->redir_type == REDIRECT_INPUT)
 				printf("file node tail %d redir type: redirect_Input \n", j);
-			else if(current_file_node->redir_type == REDIRECT_OUTPUT)
+			else if (current_file_node->redir_type == REDIRECT_OUTPUT)
 				printf("file node tail %d redir type: redirect_Output \n", j);
-			else if(current_file_node->redir_type == HERE_DOC)
+			else if (current_file_node->redir_type == HERE_DOC)
 				printf("file node tail %d redir type: Here_Doc \n", j);
-			else if(current_file_node->redir_type == APPEND)
+			else if (current_file_node->redir_type == APPEND)
 				printf("file node tail %d redir type: Append \n", j);
            	printf("file node tail %d filename: %s\n ", j, current_file_node->filename);
 			current_file_node = current_file_node->next;

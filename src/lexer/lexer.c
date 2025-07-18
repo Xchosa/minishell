@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:32:26 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 13:43:32 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/14 09:34:40 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ get some bash cmds to test
 // /* 
 // missing: ddf>< or dfd <  > ->redirections stright afterwards or > | 
 
+
 bool	lexer(char *line)
 {
 	int		i;
@@ -63,9 +64,6 @@ bool	lexer(char *line)
 				return (false);
 			i++;
 		}
-		// if (line[i] == '\0')
-		// 	break ;
-		// i++;
 	}
 	return (syntax);
 }

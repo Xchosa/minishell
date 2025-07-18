@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:08:09 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/08 11:48:24 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/15 16:34:52 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,82 @@
 
 t_token	*call_exit_token(char **line)
 {
-	t_token *new_token;
-
-	(*line)++;
-	(*line)++;
-	new_token = malloc (sizeof(t_token));
-	if(!new_token)
-		return (NULL);
-	new_token->token =ft_strdup("$?");
-	new_token->token_type = CALL_EXIT;
-	return (new_token);
-}
-
-
-t_token	*call_saved_export_var(char **line)
-{
-	int			i;
-	char		*tmp_token;
 	t_token	*new_token;
 
-	i = 0;
+	(*line)++;
+	(*line)++;
 	new_token = malloc (sizeof(t_token));
 	if (!new_token)
 		return (NULL);
-	new_token->token = ft_strdup("");
-	if (!validate_token_str(&new_token))
-		return (NULL);
-	while ((*line)[i] != ' ' && (*line)[i] != '\0')
-	{
-		tmp_token = ft_charjoin( new_token->token, (*line)[i]);
-        new_token->token = tmp_token;
-		i++;
-		if (ft_strchr("\"" , (*line)[i]) != NULL) // every token with \' after $xx nicht aufloesen
-			break ;
-	}
-	*line += i;
-	new_token->token_type = CALL_SAVED_VAR;
+	new_token->token = ft_strdup("$?");
+	new_token->token_type = CALL_EXIT;
+	new_token->next = NULL;
 	return (new_token);
 }
+
+
+// t_token	*call_saved_export_var(char **line)
+// {
+// 	char		*tmp_token;
+// 	char		*new_token_str;
+// 	t_token		*new_token;
+
+// 	new_token = malloc (sizeof(t_token));
+// 	if (!new_token)
+// 		return (NULL);
+// 	new_token_str = ft_strdup("");
+// 	if (!validate_token_str(&new_token))
+// 		return (NULL);
+// 	while (**line && (**line) != ' ' && **line != '>'
+// 		&& **line != '<' && **line != '|')
+// 	{
+// 		tmp_token = ft_charjoin(new_token_str, (**line));
+// 		new_token_str = tmp_token;
+// 		(*line)++;
+// 		if (ft_strchr("\"\'", (**line)) != NULL)
+// 			break ;
+// 	}
+// 	new_token->token = new_token_str;
+// 	new_token->token_type = CALL_SAVED_VAR;
+// 	new_token->next = NULL;
+// 	return (new_token);
+// }
+
+t_token	*call_saved_export_var(char **line)
+{
+	char		*tmp_token;
+	char		*new_token_str;
+	t_token		*new_token;
+
+	new_token = malloc (sizeof(t_token));
+	if (!new_token)
+		return (NULL);
+	new_token_str = ft_strdup("");
+	if (!validate_token_str(&new_token))
+		return (NULL);
+	while (**line && (**line) != ' ' && **line != '>'
+		&& **line != '<' && **line != '|')
+	{
+		tmp_token = ft_charjoin(new_token_str, (**line));
+		new_token_str = tmp_token;
+		(*line)++;
+		if (ft_strchr("\"", (**line)) != NULL)
+			break ;
+	}
+	new_token->token = new_token_str;
+	new_token->token_type = CALL_SAVED_VAR;
+	new_token->next = NULL;
+	return (new_token);
+}
+// sobald d_quote -> wird aufgeloest 
+
+// case "''$USER'' " -> wird ''poverbec'' 
+// besser token anhand der ersten quote tokenisen 
+
+// wenn "  & $ -> Call_SAVED_VAR
+// wenn bis $ kein "  -> CAll_SAVED_VAR
+// wenn bis $ kein " aber ' -> TEXT 
+
+// -> ''$USER'' -> wenn Dollar dann CALL_SAVED_VAR 
+
+// wenn '''"$USER"

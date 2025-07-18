@@ -41,6 +41,7 @@ MY_SOURCES = \
 		main.c \
 		tty.c \
 		clean_up.c \
+		clean_up2.c \
 		skip_whitespace_helper.c \
 		scan_char_helper.c \
 		abort_parser.c \
@@ -76,6 +77,7 @@ MY_SOURCES = \
 		token_redir_to_cmd.c \
 		tokens_list_to_cmd.c \
 		tokens_text_to_cmd.c \
+		tokens_to_cmd_helper.c \
 		clean_minishell.c \
 		manage_pipes.c \
 		pipex.c \
@@ -124,6 +126,8 @@ $(LIBFT):
 
 debug: -Wall -Wextra -Werror -g -I inc/ -fsanitize=
 
+# valgrind:
+# 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./minishell
 
 .PHONY: re clean fclean all libft_fclean
 

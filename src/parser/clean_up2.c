@@ -1,35 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokeniser_print.c                                  :+:      :+:    :+:   */
+/*   clean_up2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 17:40:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/10 09:47:55 by poverbec         ###   ########.fr       */
+/*   Created: 2025/07/08 13:48:02 by poverbec          #+#    #+#             */
+/*   Updated: 2025/07/14 11:35:05 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void	print_tokenlst(t_token *data)
+bool	check_lexer_token_and_free(t_token *token, char *line)
 {
-	printf("| token: '%s' | token_type: %u \n",data->token, data->token_type);
+	if (lexer_token(token) == false)
+	{
+		print_error_message(&token, line);
+		free(line);
+		free(token);
+		return (false);
+	}
+	return (true);
 }
 
-void	iter_tokenlst(t_token *lst, void (*f)(t_token *))
+bool	check_lexer_and_free(char *line)
 {
-	t_token	*cpy_token;
-
-	cpy_token = lst;
-	if (cpy_token == NULL)
-		return ;
-	while (cpy_token != NULL)
+	if (line == NULL)
+		return (false);
+	if (lexer(line) == false)
 	{
-		f(cpy_token);
-		if (cpy_token->next == NULL) // Add this check
-            break ;
-		cpy_token = cpy_token->next;
+		get_exit_codes()->last_exit_code = syntax_error_token;
+		print_lexer_error_message(line);
+		return (false);
 	}
-	return ;
+	return (true);
 }
