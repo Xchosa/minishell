@@ -29,7 +29,7 @@ void	ft_echo(t_cmd_node *cmd_node) // muss auf write testen?
 			ft_printf(" ");
 		i++;
 	}
-	if (!(ft_strncmp("-n", cmd_node->cmd[1], 2) == 0))
+	if (cmd_node->cmd[1] != NULL && !(ft_strncmp("-n", cmd_node->cmd[1], 2) == 0))
 		ft_printf("\n");
 	get_exit_codes()->last_exit_code = 0;
 }

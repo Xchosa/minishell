@@ -31,6 +31,10 @@ bool	ft_manage_redirections_multi(t_file_list *file_list);
 void	manage_single_cmd_node(t_cmd_node *cmd_node, char **envp);
 void	ft_execution_loop(t_cmd_list *cmd_list, char **envp, int (*fd)[2]);
 bool	create_pipes(int (**fd)[2], t_cmd_list *cmd_list);
+//bool	there_is_old_pwd(char **envp);
+bool	there_is_env_var(char **envp, char *env_var);
+char	**ft_add_relative_path(t_cmd_node *cmd_node, char **envp);
+
 
 bool	ft_manage_heredoc(char *tmp_filename);
 
@@ -43,8 +47,9 @@ void	ft_unset_var(char **envp, int j);
 void	ft_unset(t_cmd_node *cmd_node, char **envp);
 void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp);
 void	ft_pwd(char **envp);
-char	**ft_add_pwd(t_cmd_node *cmd_node, char **envp);
+char	**ft_add_pwd(char *pwd, char **envp);
 char	**ft_add_old_pwd(char **envp);
+char	**ft_add_absolute_path(t_cmd_node *cmd_node, char **envp);
 char	**ft_delete_old_pwd(char **envp);
 void	ft_minishell_nested(char **envp);
 void	ft_increase_shlvl(char **envp);
