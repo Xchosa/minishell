@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:32:26 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/14 09:34:40 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/21 10:41:13 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,8 @@ if not the same as previous one
 - only then save in history 
 (check what is fkt add_history doing)
  (echo    ls does save spaces , ls     -al does not)
-
-
 check (empty) input (file) check for outfile
-
 get some bash cmds to test 
-
-
 
 */
 // fucction to check if the single or double quotes are set correct  
