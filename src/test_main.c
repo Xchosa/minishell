@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:29:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 09:19:06 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/21 09:26:56 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,11 @@
 // 	t_bash *bash;
 //     char *line;
 // 	//atexit(leaks);
-	
+// 	// char *line = <<1"; // leaked
 // 	char *original_line;
-// 	char *new_line;
-   
-// 	// line =  ft_strdup(" echo \"\' \'  $USER\' \' \" \"in new \' world\"");
-// 	line =  ft_strdup(" echo  ~ ");
+//     // to do: tokeniser
+// 	line = ft_strdup("echo $?");
+	
 
 // 	// malloc line to extend $XX
 // 	// char **temp_content = content;
@@ -52,6 +51,8 @@
 // 	// char *line = "\"hello< echo|hello << wow hello"; // nicht valid
 // 	(void)argc;
 
+// 	if (init_bash(env, 1 )== false || (init_exit_codes(1) == false))
+// 		return(1) ;
 // 	if (init_bash(env, 1 )== false || (init_exit_codes(1) == false))
 // 		return(1) ;
 
