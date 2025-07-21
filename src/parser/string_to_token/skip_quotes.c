@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 11:35:25 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/08 11:36:05 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:22:47 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,27 @@ void	skip_quotes(char **line)
 	skip_single_quotes(line);
 	// if((*line))
 	// 	(*line)++;
+}
+
+bool skip_double_quotes(char **content)
+{
+	if((ft_strchr("\"", **content) != NULL))
+	{
+		if((*content)[1] != '\0' && ft_strchr("\"", (*content)[1]) != NULL)
+		{
+			(*content) += 2;
+			return (true);
+		}
+	}
+	else if ((ft_strchr("\'", **content) != NULL))
+	{
+		if((*content)[1] != '\0' && ft_strchr("\'", (*content)[1]) != NULL )
+		{
+			(*content) += 2;
+			return (true);
+		}
+	}
+	return (false);
 }
 
 bool	skip_d_quotes_and_following_quotes(char **line, int i)

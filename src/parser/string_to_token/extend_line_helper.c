@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 09:22:06 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 09:22:10 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:58:15 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char *get_env_in_line( char **line)
 	env_str = ft_strdup("");
 	if(!(*line))
 		return(env_str);
-	while(**line != '\0' && ft_strchr("\"\' ", (**line)) == NULL)
+	while(**line != '\0' && ft_strchr("$<>|\"\' ", (**line)) == NULL)
 	{
 		tmp_line = ft_charjoin(env_str, (**line));
         if (!tmp_line)

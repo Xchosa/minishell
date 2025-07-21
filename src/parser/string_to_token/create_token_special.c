@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:58:14 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 09:22:40 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:18:45 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_token	*create_first_token(char **line)
 t_token	*create_token_with_quote_case(char **line, t_token *token)
 {
 	(void)token;
+	// skip_double_quotes(line);
 	if (ft_strncmp("\"", *line, 1) == 0)
 		return (d_quote_case(line));
 	if ((ft_strncmp("\'", *line, 1) == 0))
