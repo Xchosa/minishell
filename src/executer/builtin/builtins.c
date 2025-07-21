@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:27:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/08 14:08:07 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/21 09:36:03 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	ft_echo(t_cmd_node *cmd_node) // muss auf write testen?
 		i++;
 	while (cmd_node->cmd[i] != NULL)
 	{
-		if (ft_strncmp("$?", cmd_node->cmd[i], 2) == 0)
-			ft_printf("%d", get_exit_codes()->last_exit_code);
-		else
-		 	ft_printf("%s", cmd_node->cmd[i]);
+		// if (ft_strncmp("$?", cmd_node->cmd[i], 2) == 0)
+		// 	ft_printf("%d", get_exit_codes()->last_exit_code);
+		// else
+		ft_printf("%s", cmd_node->cmd[i]);
 		if (cmd_node->cmd[i + 1] != NULL)
 			ft_printf(" ");
 		i++;
