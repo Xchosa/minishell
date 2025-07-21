@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 15:37:48 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/10 15:32:40 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/21 13:42:53 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ t_token	*d_quote_case(char **line)
 	int			nbr_of_chars_tokenised;
 
 	nbr_of_chars_tokenised = 0;
-	// skip_quotes(line);
-	(*line)++;
+	skip_quotes(line);
 	if (*line == NULL)
 		return (NULL);
 	new_token = malloc (sizeof(t_token));

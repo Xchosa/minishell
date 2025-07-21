@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 10:31:45 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:21:46 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ bool		lexer_correct_export_var(t_token *token_lst, char *original_line);
 void 		skip_whitespace(char **line);
 bool		skip_whitespace_and_check_for_eof(char **line);
 void 		skip_quotes(char **line);
+bool		skip_double_quotes(char **content);
 bool		skip_d_quotes_and_following_quotes(char **line, int i);
 bool		skip_s_quotes_and_following_qutes(char **line, int i);
 void		skip_single_quotes(char **line);
