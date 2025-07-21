@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 10:20:25 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/21 10:36:14 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,7 @@ void	interactive_shell_tty(char *line)
 		if (check_lexer_and_free(new_line) == false)
 			continue ;
 		token_lst = tokeniser(&new_line);
-		if (tokeniser_successful(token_lst, original_line) == false)
-			continue ;
-		if (lexer_token(token_lst, original_line) == false)
+		if (final_lexer(token_lst, original_line) == false)
 			continue ;
 		cmd_lst = init_cmd_list(&token_lst, original_line);
 		init_signal(1);
@@ -126,10 +124,6 @@ void	non_interactive_shell(char *line)
 		if (check_lexer_and_free(new_line) == false)
 			break ;
 		token_lst = tokeniser(&new_line);
-		if (tokeniser_successful(token_lst, original_line) == false)
-			break ;
-		if (lexer_token(token_lst, original_line) == false)
-			break ;
 		if (final_lexer(token_lst,original_line) == false)
 			break ;
 		cmd_lst = init_cmd_list(&token_lst, original_line);
