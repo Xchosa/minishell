@@ -174,6 +174,7 @@ char 	*swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line)
 char 	*add_single_char_to_line(char *new_line, char *tmp_line, char **line);
 char 	*add_s_quotes_str_to_line(char *new_line, char *tmp_line, char **line);
 char	*swap_exit_code_in_line(char *new_line, char *tmp_line, char **line);
+char	*extend_line_with_tilde(char *new_line, char *tmp_line, char **line);
 
 //	get export saved variables
 char 		*append_export_var(char *token_str, char **content);

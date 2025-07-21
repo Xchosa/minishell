@@ -24,8 +24,8 @@ void	skip_quotes(char **line)
 	// if (skip_s_quotes_and_following_qutes(line, i) == true)
 	// 	return ;
 	skip_single_quotes(line);
-	if((*line))
-		(*line)++;
+	// if((*line))
+	// 	(*line)++;
 }
 
 bool	skip_d_quotes_and_following_quotes(char **line, int i)

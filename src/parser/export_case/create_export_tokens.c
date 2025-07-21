@@ -60,7 +60,7 @@ t_token	*create_token_equal_as_div(char **content)
 	else
 	{
 		new_token->token = get_token(content);
-		if(ft_strchr("\"\'", **content) == NULL)
+		if(ft_strchr("\"\'", **content) != NULL)
 			new_token->token = append_export_var(new_token->token, content);
 		new_token->token_type = Export_var;
 	}
@@ -145,17 +145,18 @@ char *get_export_token_in_quotes(char **content)
 	tmp_token = NULL;
 	if (!new_token)
 		return (NULL);
-	if(ft_strchr("\"", **content) == NULL)
+	if(ft_strchr("\"", **content) != NULL)
 	{
 		skip_single_quotes(content);
 		while ((**content) != '\0' && ft_strchr("\"", **content) == NULL)
 			new_token = add_single_char_to_line(new_token, tmp_token, content);
 	}
-	else if(ft_strchr("\'", **content) == NULL)
+	else if(ft_strchr("\'", **content) != NULL)
 	{
 		skip_single_quotes(content);
 		while ((**content) != '\0' && ft_strchr("\'", **content) == NULL)
 			new_token = add_single_char_to_line(new_token, tmp_token, content);
 	}
+	skip_single_quotes(content);
 	return (new_token);
 }
