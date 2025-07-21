@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:52:50 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/10 15:52:33 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/21 09:22:56 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,36 @@ char	*tokenise_divider(char **content, char *new_token)
 	return (new_token);
 }
 
+// char	*get_token(char **content)
+// {
+// 	char	*new_token;
+// 	char	*tmp_token;
+
+// 	new_token = ft_strdup("");
+// 	if (!new_token)
+// 		return (NULL);
+// 	while ((**content) != '\0'
+// 		&& check_for_divider_with_space((**content)) == false)
+// 	{
+// 		if (char_is_alpha_nbr_and_no_whitespace(**content))
+// 		{
+// 			tmp_token = ft_charjoin(new_token, (**content));
+// 			if (!tmp_token)
+//                 return (NULL);
+// 			new_token = tmp_token;
+// 		}
+// 		if (check_for_divider_with_space((*content)[1]) == true)
+// 		{
+// 			(*content)++;
+// 			return (new_token);
+// 		}
+// 		(*content)++;
+// 	}
+// 	if (check_for_divider_without_space((**content)) == true)
+// 		new_token = tokenise_divider(content, new_token);
+// 	return (new_token);
+// }
+
 
 char	*get_token(char **content)
 {
@@ -39,27 +69,24 @@ char	*get_token(char **content)
 	char	*tmp_token;
 
 	new_token = ft_strdup("");
+	tmp_token = NULL;
 	if (!new_token)
 		return (NULL);
-	while ((**content) != '\0'
-		&& check_for_divider_with_space((**content)) == false)
+	while ((**content) != '\0' && ft_strchr("\"\'", **content) == NULL)
 	{
-		if (char_is_alpha_nbr_and_no_whitespace(**content))
+		if (check_for_divider_without_space((**content)) == true)
 		{
-			tmp_token = ft_charjoin(new_token, (**content));
-			if (!tmp_token)
-                return (NULL);
-			new_token = tmp_token;
+			new_token = tokenise_divider(content, new_token);
+			return(new_token);
 		}
-		if (check_for_divider_with_space((*content)[1]) == true)
+		if(check_for_divider_with_space((**content))== false)
 		{
-			(*content)++;
+			while ((**content) != '\0' && check_for_divider_with_space((**content))== false)
+				new_token = add_single_char_to_line(new_token, tmp_token, content);
 			return (new_token);
 		}
-		(*content)++;
+		skip_whitespace(content);
 	}
-	if (check_for_divider_without_space((**content)) == true)
-		new_token = tokenise_divider(content, new_token);
 	return (new_token);
 }
 

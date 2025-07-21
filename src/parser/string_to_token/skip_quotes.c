@@ -14,16 +14,18 @@
 
 void	skip_quotes(char **line)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
-	if (skip_whitespace_and_check_for_eof(line) == false)
-		return ;
-	if (skip_d_quotes_and_following_quotes(line, i) == true)
-		return ;
-	if (skip_s_quotes_and_following_qutes(line, i) == true)
-		return ;
+	// i = 0;
+	// if (skip_whitespace_and_check_for_eof(line) == false)
+	// 	return ;
+	// if (skip_d_quotes_and_following_quotes(line, i) == true)
+	// 	return ;
+	// if (skip_s_quotes_and_following_qutes(line, i) == true)
+	// 	return ;
 	skip_single_quotes(line);
+	// if((*line))
+	// 	(*line)++;
 }
 
 bool	skip_d_quotes_and_following_quotes(char **line, int i)
@@ -65,14 +67,18 @@ void	skip_single_quotes(char **line)
 	int	i;
 
 	i = 0;
-	if (((*line)[i] == '\'') && ((*line)[i +1 ] == '\0'))
+	if(!(*line))
+		return ;
+	else if (((*line)[i] == '\'') && ((*line)[i +1 ] == '\0'))
 	{
 		(*line)++;
 		return ;
 	}
-	if (((*line)[i] == '\"') && ((*line)[i +1 ] == '\0'))
+	else if (((*line)[i] == '\"') && ((*line)[i +1 ] == '\0'))
 	{
 		(*line)++;
 		return ;
 	}
+	else if (ft_strchr("\"\'",**line) != NULL)
+		(*line)++;
 }

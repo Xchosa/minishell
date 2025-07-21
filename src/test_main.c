@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:29:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/15 16:30:59 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/21 09:26:56 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,27 @@
 
 // 	if (init_bash(env, 1 )== false || (init_exit_codes(1) == false))
 // 		return(1) ;
+// 	if (init_bash(env, 1 )== false || (init_exit_codes(1) == false))
+// 		return(1) ;
 
 // 	if (check_lexer_and_free(line) == false)
 // 		return (1);
-// 	original_line = line;
-// 	// if (lexer_valid_ident(line) == false) // lexer seperate testen
-// 	// {
-// 	// 	print_error_message(line);
-// 	// 	return(1);
-// 	// }
+	
 
-// 	// bash = get_bash();
-// 	// bash = get_bash();
-// 	// ft_print_array(bash->env);
+
 // 	(void)bash;
-// 	// vor dem tokeinser $h aufloesen und eintauschen // node update weg
-//     token_lst = tokeniser(&line);
-// 	// free(line);
+// 	printf("original line: %s \n" , line);
+// 	new_line = extend_line(&line);
+// 	printf("New_line: %s \n" , new_line);
+//     original_line = new_line;
+// 	token_lst = tokeniser(&new_line);
+	
 // 	if (!token_lst)
 //     {
 // 		printf("error tokeniser\n");
 // 		return (1);
 // 	}
-// 	iter_tokenlst(token_lst, &print_tokenlst);
+// 	// iter_tokenlst(token_lst, &print_tokenlst);
 
 // 	// printf("\nenv:\n");
 // 	// 	ft_print_array(bash->env);
@@ -83,20 +81,20 @@
 // 	// if(extend_env(token_lst)== true)
 // 	// 	return(1);
 
-// 	printf("\n export_list:\n\n");
+// 	// printf("\n export_list:\n\n");
 // 	// extends $h to word if saved in env 
-// 	token_lst = extend_saved_export_var(&token_lst);
+// 	// token_lst = extend_saved_export_var(&token_lst);
 // 	// change_only tokenise if CALL_SAVED_VAR
 	
-// 	iter_tokenlst(token_lst, &print_tokenlst);
+// 	// iter_tokenlst(token_lst, &print_tokenlst);
 // 	// printf("\n multiple tokens split:\n\n");
     
 // 	// splited saved_var erneut mit tokeniser
-// 	printf("\n append token\n\n");
+// 	// printf("\n append token\n\n");
 // 	// handle_export(token_lst);
-// 	append_export_str(&token_lst);
+// 	// append_export_str(&token_lst);
 
-//     if (lexer_token(token_lst) == false)
+//     if (lexer_token(token_lst, original_line) == false)
 //     {
 // 		print_error_message(&token_lst, original_line);
 // 		return(1);
@@ -108,47 +106,6 @@
 // 	iter_cmd_lst(cmd_lst, &print_cmd_lst);
 //     printf("\nis it Thilos issue: \n\n");
 // 	ft_execute(cmd_lst, get_bash()->env);
-
-
-
-// 	clean_cmd_lst(cmd_lst);// not the hole clean function
-
-//     // printf("\n \nerror code \n");
-
-//     // new=\"ls -al >;
-//     // line = "cat makefile \"$new\" outfile";  works
-//     // line = "echo $?";
-//     // token_lst = tokeniser(&line);
-// 	// // free(line);
-// 	// if (!token_lst)
-//     //     printf("error tokeniser\n");
-// 	// iter_tokenlst(token_lst, &print_tokenlst);
-
-// 	// printf("\n export_list:\n\n");
-// 	// // extends $h to word if saved in env 
-// 	// token_lst = extend_saved_export_var(&token_lst);
-// 	// // change_only tokenise if CALL_SAVED_VAR
-	
-// 	// iter_tokenlst(token_lst, &print_tokenlst);
-// 	// // printf("\n multiple tokens split:\n\n");
-    
-// 	// // splited saved_var erneut mit tokeniser
-// 	// printf("\n append token\n\n");
-// 	// // handle_export(token_lst);
-// 	// append_export_str(&token_lst);
-// 	// printf("line , %s \n", line);
-//     // if (lexer_token(token_lst) == false)
-//     // {
-// 	// 	print_error_message(&token_lst, line);
-// 	// 	return(1);
-//     // }
-// 	// iter_tokenlst(token_lst, &print_tokenlst);
-
-// 	// printf("\ndo i come to cmd list? \n\n");
-// 	// cmd_lst = init_cmd_list(&token_lst, line);
-// 	// iter_cmd_lst(cmd_lst, &print_cmd_lst);
-//     // printf("\nis it Thilos issue: \n\n");
-// 	// ft_execute(cmd_lst, get_bash()->env);
 
 // 	clean_cmd_list_objects_tmp_files(cmd_lst);
 

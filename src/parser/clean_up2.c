@@ -14,7 +14,7 @@
 
 bool	check_lexer_token_and_free(t_token *token, char *line)
 {
-	if (lexer_token(token) == false)
+	if (lexer_token(token, line) == false)
 	{
 		print_error_message(&token, line);
 		free(line);

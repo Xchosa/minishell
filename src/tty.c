@@ -50,7 +50,7 @@ static char	*read_terminal(void)
 	if (line == NULL)
 	{
 		printf("exit\n");
-		// exit(get_exit_codes()->last_exit_code);
+		//exit(get_exit_codes()->last_exit_code);
 	}
 	return (line);
 }
@@ -62,28 +62,29 @@ void	interactive_shell_tty(char *line)
 	t_token		*token_lst;
 	t_cmd_list	*cmd_lst;
 	char		*original_line;
+	char		*new_line;
 
-	cmd_lst = NULL;
 	while (1)
 	{
+		cmd_lst = NULL;
 		line = read_terminal();
 		if (line == NULL)
 			break ;
 		if (check_lexer_and_free(line) == false)
 			continue ;
-		original_line = line;
-		token_lst = tokeniser(&line);
+		new_line = extend_line(&line);
+		original_line = new_line;
+		if (check_lexer_and_free(new_line) == false)
+			continue ;
+		token_lst = tokeniser(&new_line);
 		if (tokeniser_successful(token_lst, original_line) == false)
 			continue ;
-		token_lst = extend_saved_export_var(&token_lst);
-		append_export_str(&token_lst);
-		if (lexer_token(token_lst) == false)
-		{
-			print_error_message(&token_lst, original_line);
+		if (lexer_token(token_lst, original_line) == false)
 			continue ;
-		}
 		cmd_lst = init_cmd_list(&token_lst, original_line);
 		init_signal(1);
+		printf("\n cmd_list works:\n\n");
+		iter_cmd_lst(cmd_lst, &print_cmd_lst);
 		ft_execute(cmd_lst, get_bash()->env);
 		//  if (ft_execute(cmd_lst, get_bash()->env) == false)
         // {
@@ -93,12 +94,14 @@ void	interactive_shell_tty(char *line)
 		init_signal(0);
 		reset_terminal_state();
 		clean_cmd_lst(cmd_lst);
-		cmd_lst = NULL;
 	}
 	clean_cmd_list_objects_tmp_files(cmd_lst);
 	rl_clear_history();
 }
 
+
+//// token_lst = extend_saved_export_var(&token_lst);
+// append_export_str(&token_lst);
 // printf("\n append token string in export \n\n");
 // iter_tokenlst(token_lst, &print_tokenlst);
 // printf("\n cmd_list works:\n\n");
@@ -108,28 +111,31 @@ void	interactive_shell_tty(char *line)
 void	non_interactive_shell(char *line)
 {
 	char		*original_line;
+	char		*new_line;
 	t_token 	*token_lst;
 	t_cmd_list 	*cmd_lst;
 
 	line = get_next_line(STDIN_FILENO);
-	if (check_lexer_and_free(line) == false)
-		return ;
-	original_line = line;
-	token_lst = tokeniser(&line);
-	if (tokeniser_successful(token_lst, original_line) == false)
-		return ;
-	token_lst = extend_saved_export_var(&token_lst);
-	append_export_str(&token_lst);
-	if (lexer_token(token_lst) == false)
+	while (line != NULL)
 	{
-		print_error_message(&token_lst, original_line);
-		return;
+		cmd_lst = NULL;
+		if (check_lexer_and_free(line) == false)
+			break ;
+		new_line = extend_line(&line);
+		original_line = new_line;
+		if (check_lexer_and_free(new_line) == false)
+			break ;
+		token_lst = tokeniser(&new_line);
+		if (tokeniser_successful(token_lst, original_line) == false)
+			break ;
+		if (lexer_token(token_lst, original_line) == false)
+			break ;
+		cmd_lst = init_cmd_list(&token_lst, original_line);
+		init_signal(1);
+		ft_execute(cmd_lst, get_bash()->env);
+		init_signal(0);
+		reset_terminal_state();
 	}
-	cmd_lst = init_cmd_list(&token_lst, original_line);
-	init_signal(1);
-	ft_execute(cmd_lst, get_bash()->env);
-	init_signal(0);
-	reset_terminal_state();
 	clean_cmd_list_objects_tmp_files(cmd_lst);
 	rl_clear_history();
 }

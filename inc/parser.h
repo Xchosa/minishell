@@ -104,7 +104,7 @@ bool		check_for_correct_double_divider(char *line);
 bool		check_for_correct_single_divider(char *line);
 
 // lexer tokens
-bool		lexer_token(t_token *token_lst);
+bool		lexer_token(t_token *token_lst, char *original_line);
 bool		tokeniser_successful(t_token *token_lst, char *original_line);
 
 void 		print_error_message(t_token **token_lst, char *line);
@@ -166,7 +166,20 @@ bool		pipe_or_simec(char c);
 int 		special_char_no_divider(char c);
 int			special_char_no_divider_no_eq(char c);
 
+// extend_line
+char 	*extend_line(char **line);
+char 	*get_env_in_line( char **line);
+char 	*d_qoutes_swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line);
+char 	*swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line);
+char 	*add_single_char_to_line(char *new_line, char *tmp_line, char **line);
+char 	*add_s_quotes_str_to_line(char *new_line, char *tmp_line, char **line);
+char	*swap_exit_code_in_line(char *new_line, char *tmp_line, char **line);
+char	*extend_line_with_tilde(char *new_line, char *tmp_line, char **line);
+
 //	get export saved variables
+char 		*append_export_var(char *token_str, char **content);
+char		*get_export_token_in_quotes(char **content);
+
 t_token* 	extend_saved_export_var(t_token **token_lst);
 char**		extend_env_with_str(char** src, char *token);
 char* 		get_var_from_env(char **src, char *token_no_dollar);
@@ -207,6 +220,7 @@ t_cmd_list*		cmd_list_to_null(void);
 t_file_list*	file_list_to_null(void);
 
 t_cmd_node*		process_token(t_token **curr_token);
+bool			process_s_q_content_to_token(char **line, t_token *token_node);
 void    		handle_special_cases(t_token **curr_token,t_cmd_node *cmd_node);
 void 			process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node);
 void 			append_token_char(t_cmd_node *cmd_node, t_token *curr_token);
