@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:15:52 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/08 14:30:30 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/21 10:46:55 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ bool	ft_manage_infile(char *infile)
 	in_fd = open(infile, O_RDONLY);
 	if (in_fd < 0)
 	{
-		ft_putstr_fd(" Infile not existing\n", STDOUT_FILENO);
+		ft_putstr_fd(" Infile not existing\n", STDERR_FILENO);
 		return (false);
 	}
 	if (dup2(in_fd, STDIN_FILENO) < 0)
 	{
-		ft_putstr_fd(" redirecting failed\n", STDOUT_FILENO);
+		ft_putstr_fd(" redirecting failed\n", STDERR_FILENO);
 		close (in_fd); //new
 		return (false);
 	}
@@ -55,12 +55,12 @@ bool	ft_manage_append(char *appendfile)
 	ap_fd = open(appendfile, O_WRONLY | O_APPEND | O_CREAT);
 	if (ap_fd < 0)
 	{
-		ft_putstr_fd("creating appendfile failed\n", STDOUT_FILENO);
+		ft_putstr_fd("creating appendfile failed\n", STDERR_FILENO);
 		return (false);
 	}
 	if (dup2(ap_fd, STDOUT_FILENO) < 0)
 	{
-		ft_putstr_fd(" redirecting failed\n", STDOUT_FILENO);
+		ft_putstr_fd(" redirecting failed\n", STDERR_FILENO);
 		close (ap_fd);
 		return (false);
 	}
@@ -80,7 +80,7 @@ bool	ft_manage_heredoc(char *tmp_filename)
 	}
 	if (dup2(here_doc_fd, STDIN_FILENO) < 0)
 	{
-		ft_putstr_fd(" redirecting failed\n", STDOUT_FILENO);
+		ft_putstr_fd(" redirecting failed\n", STDERR_FILENO);
 		close (here_doc_fd);
 		return (false);
 	}

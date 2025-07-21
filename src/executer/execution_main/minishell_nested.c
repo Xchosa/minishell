@@ -18,7 +18,7 @@ void	ft_increase_shlvl(char **envp)
 		i++;
 	}
 	if (envp[i] == NULL) //durchgelaufen und kein SHLVL in ENV gefunden
-		ft_export_variable("SHLVL=1", envp);
+		get_bash()->env = ft_export_variable("SHLVL=1", envp); //check this for 
 	else
 	{
 		freeme = envp[i];

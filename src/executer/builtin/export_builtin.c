@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:02:00 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/18 14:16:43 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:37:31 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_get_index(int i, char **envp)
 		j = 0;
 		while (envp[k] != NULL)
 		{
-			if (ft_strncmp(envp[l], envp[k], 200) < 0)
+			if (ft_strncmp(envp[l], envp[k], 1024) < 0)
 				j++;
 			k++;
 		}
@@ -59,7 +59,7 @@ void	ft_export_print(char **envp)
 	get_exit_codes()->last_exit_code = 0;
 }
 
-void	ft_export_variable(char *cmd_var, char **envp) //kein strdup dafuer nur free envp statt free array envp
+char **	ft_export_variable(char *cmd_var, char **envp)
 {
 	int		max;
 	int		i;
@@ -72,22 +72,23 @@ void	ft_export_variable(char *cmd_var, char **envp) //kein strdup dafuer nur fre
 		max++;
 	newenvp = (char **)malloc((max + 2) * sizeof(char *));
 	if (newenvp == NULL)
-		return ;
+		return (NULL);
 	newvar = ft_strdup(cmd_var);
+	if (newvar == NULL)
+		return (NULL);
 	while (envp[i] != NULL)
 	{
-		newenvp[i] = ft_strdup(envp[i]);
+		newenvp[i] = envp[i];
 		i++;
 	}
 	newenvp[i] = newvar;
 	newenvp[i + 1] = NULL;
-	ft_free_array(envp);
-	get_bash()->env = newenvp;
-	//ft_export_print(get_bash()->env);
-	get_exit_codes()->last_exit_code = 0;
+	free(envp);
+	get_exit_codes()->last_exit_code = 0; //vllt nicht hier weil auch fuer shlvl
+	return (newenvp);
 }
 
-bool	ft_check_valid_identifier(char *var) // check for overwrite?
+bool	ft_check_valid_identifier(char *var)
 {
 	if (ft_isalpha(var[0]) != 1 && var[0] != '_')
 	{
@@ -100,7 +101,10 @@ bool	ft_check_valid_identifier(char *var) // check for overwrite?
 void	ft_export(t_cmd_node *cmd_node, char **envp)
 {
 	int	i;
+	char	**env_var;
+	bool	flag;
 
+	flag = true;
 	i = 1;
 	if (cmd_node->cmd[1] == NULL)
 		ft_export_print(envp);
@@ -108,10 +112,24 @@ void	ft_export(t_cmd_node *cmd_node, char **envp)
 	{
 		while (cmd_node->cmd[i] != NULL)
 		{
-			if (ft_check_valid_identifier(cmd_node->cmd[i]) == false) //doesnt do shit yet i believe because tokeniser does it, but not cerrect always
-				return ;
-			ft_export_variable(cmd_node->cmd[i], envp);
+			env_var = ft_split(cmd_node->cmd[i], '=');
+			//malloc check
+			if (there_is_env_var(envp, env_var[0]) == true)
+			{
+				envp = ft_unset_var_by_name(envp, env_var[0]);
+				envp = ft_export_variable(cmd_node->cmd[i], envp);
+			}
+			else if (ft_check_valid_identifier(cmd_node->cmd[i]) == true) // exit code and mssg here or in function
+				envp = ft_export_variable(cmd_node->cmd[i], envp);
+			else
+				flag = false;
+			ft_free_array(env_var);
 			i++;
 		}
 	}
+	get_bash()->env = envp;
+	if (flag == false)
+		get_exit_codes()->last_exit_code = 1;
+	else
+		get_exit_codes()->last_exit_code = 0;
 }

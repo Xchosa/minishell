@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_codes_config.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:59:22 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/14 09:52:44 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/21 11:18:56 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	print_error_message(t_token **token_list, char *line)
 	if (error == cmd_not_found)
 		(printf("minishell: '%s': command not found \n", line));
 	if (error == syntax_error_token)
-		(printf("minishell: syntax error near unexpected token '%s' \n", line));
+		(printf("minishell: syntax error near unexpected token '%s' \n", line)); //in 2
 	clean_token_lst(*token_list);
 	free(line);
 }

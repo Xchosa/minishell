@@ -95,14 +95,15 @@ char	**ft_add_relative_path(t_cmd_node *cmd_node, char **envp)
 	path_array = ft_split(cmd_node->cmd[1], '/' );
 	while (path_array[i] != NULL)
 	{
-		if (ft_strncmp("~", path_array[0], 1) == 0)
-			envp = ft_add_tilde(envp); //wohl bloedsinn kommt so nicht als token?
-		else if (ft_strncmp("..", path_array[i], 2) == 0)
+		// if (ft_strncmp("~", path_array[0], 1) == 0)
+		// 	envp = ft_add_tilde(envp); //wohl bloedsinn kommt so nicht als token?
+		if (ft_strncmp("..", path_array[i], 2) == 0)
 			envp = ft_add_parent(cmd_node, envp);
 		else if (!(ft_strncmp(".", path_array[i], 1) == 0))
 			envp = ft_add_pwd(path_array[i], envp);
 		i++;
 	}
+	ft_free_array(path_array);
 	return (envp);
 }
 
@@ -115,11 +116,11 @@ void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp)
 	envp = ft_add_old_pwd(envp);
 	if (cmd_node->cmd[1] == NULL)
 		envp = ft_add_tilde(envp);
-	else if (ft_strncmp(get_home_path(envp), cmd_node->cmd[1], 100) == 0) //oder pauls strcmp ? wie funktioniert die? muessen sie gleich lang sein?
-		envp = ft_add_tilde(envp);
+	// else if (ft_strncmp(get_home_path(envp), cmd_node->cmd[1], 100) == 0) //oder pauls strcmp ? wie funktioniert die? muessen sie gleich lang sein?
+	// 	envp = ft_add_tilde(envp);
 	else if (ft_strncmp("/", cmd_node->cmd[1], 1) == 0)
 		envp = ft_add_absolute_path(cmd_node, envp); //do relative path
-	else 
+	else
 		envp = ft_add_relative_path(cmd_node, envp);
 /*	else if (ft_strncmp("..", cmd_node->cmd[1], 2) == 0)
 		envp = ft_add_parent(cmd_node, envp);
@@ -139,7 +140,7 @@ void	ft_cd(t_cmd_node *cmd_node, char **envp)
 		get_exit_codes()->last_exit_code = 0;
 		return ;
 	}
-	if (chdir(cmd_node->cmd[1]) != 0) //      ~/projects klappt hier nicht
+	if (chdir(cmd_node->cmd[1]) != 0)
 	{
 		get_exit_codes()->last_exit_code = 1;
 		perror("shell");

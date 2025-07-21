@@ -42,39 +42,10 @@ bool	there_is_env_var(char **envp, char *env_var)
 			i++;
 	}
 	if (i == j)
-	{
-	//	printf("i return false\n");
 		return (false);
-	}
 	else
-	{
-	//	printf("i return true\n");
 		return (true);
-	}
 }
-
-// bool	there_is_old_pwd(char **envp)
-// {
-// 	int	i;
-// 	int j;
-
-// 	i = 0;
-// 	j = 0;
-// 	while (envp[i] != NULL)
-// 	{
-// 		if (ft_strncmp(envp[i], "OLDPWD=", 7) != 0)
-// 		{
-// 			i++;
-// 			j++;
-// 		}
-// 		else
-// 			i++;
-// 	}
-// 	if (i == j)
-// 		return (false);
-// 	else
-// 		return (true);
-// }
 
 char	**ft_delete_old_pwd(char **envp)
 {
