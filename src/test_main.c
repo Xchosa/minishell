@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:29:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 09:26:56 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/21 13:26:41 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@
 // 	//atexit(leaks);
 // 	// char *line = <<1"; // leaked
 // 	char *original_line;
-//     // to do: tokeniser
-// 	line = ft_strdup("echo $?");
+//     char *new_line;
+// 	line = ft_strdup("exit_code ->$? user ->$USER home -> $HOME");
+// 	// ""$?""
 	
 
 // 	// malloc line to extend $XX

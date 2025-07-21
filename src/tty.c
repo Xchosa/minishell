@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 10:36:14 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/21 11:04:03 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void	interactive_shell_tty(char *line)
 			continue ;
 		cmd_lst = init_cmd_list(&token_lst, original_line);
 		init_signal(1);
-		// printf("\n cmd_list works:\n\n");
-		// iter_cmd_lst(cmd_lst, &print_cmd_lst);
+		printf("\n cmd_list works:\n\n");
+		iter_cmd_lst(cmd_lst, &print_cmd_lst);
 		ft_execute(cmd_lst, get_bash()->env);
 		//  if (ft_execute(cmd_lst, get_bash()->env) == false)
         // {

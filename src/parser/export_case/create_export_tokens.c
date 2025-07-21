@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:07:26 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/10 16:17:22 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/21 11:34:07 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_token	*create_token_equal_as_div(char **content)
 	else
 	{
 		new_token->token = get_token(content);
-		if(ft_strchr("\"\'", **content) != NULL)
+		if((**content) != '\0' && ft_strchr("\"\'", **content) != NULL)
 			new_token->token = append_export_var(new_token->token, content);
 		new_token->token_type = Export_var;
 	}
