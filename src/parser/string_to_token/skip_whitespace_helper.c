@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:08:33 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/14 10:48:25 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/21 09:23:44 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,22 @@ bool	skip_whitespace_and_check_for_eof(char **line)
 }
 
 
-bool	char_is_alpha_nbr_and_no_whitespace(char c)
-{
-	if (ft_isalnum(c) == true)
-		return (true);
-	if (ft_strnstr("\r\n\v\t ", &c, 1) != NULL)
-		return (true);
-	if (ft_strchr(".,;?!*$_", c) != NULL)
-		return (true);
-	if (ft_strncmp ("-", &c, 1) == 0)
-		return (true);
-	if (ft_strncmp ("/", &c, 1) == 0)
-		return (true);
-	if (ft_strncmp ("=", &c, 1) == 0)
-		return (true);
-	if (ft_strncmp ("~", &c, 1) == 0)
-		return (true);
-	return (false);
-}
+// bool	char_is_alpha_nbr_and_no_whitespace(char c)
+// {
+// 	if (ft_isalnum(c) == true)
+// 		return (true);
+// 	if (ft_strnstr("\r\n\v\t ", &c, 1) != NULL)
+// 		return (true);
+// 	if (ft_strchr(".,;?!*$_", c) != NULL)
+// 		return (true);
+// 	if (ft_strncmp ("-", &c, 1) == 0)
+// 		return (true);
+// 	if (ft_strncmp ("/", &c, 1) == 0)
+// 		return (true);
+// 	if (ft_strncmp ("=", &c, 1) == 0)
+// 		return (true);
+// 	if (ft_strncmp ("~", &c, 1) == 0)
+// 		return (true);
+// 	return (false);
+// }
 

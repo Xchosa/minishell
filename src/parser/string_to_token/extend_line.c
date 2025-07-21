@@ -1,8 +1,16 @@
-
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   extend_line.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/21 09:22:15 by poverbec          #+#    #+#             */
+/*   Updated: 2025/07/21 09:22:45 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "parser.h"
-
 
 // fuer $USER -> 'testcase' reinschreiben
 // letzter schritt erst mit env abgleichen 
@@ -33,8 +41,6 @@ char *extend_line(char **line)
 	free(original_line);
 	return(new_line);
 }
-
-
 
 //get_env_in_line iterates line up until a $var is done 
 char *d_qoutes_swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line)
@@ -123,24 +129,4 @@ char *swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line)
 		return (new_line);
 	}
 	return(new_line);
-}
-
-char *swap_exit_code_in_line(char *new_line, char *tmp_line, char **line)
-{
-	char *exit_code;
-	char *start_exit_code;
-
-	(*line) +=2;
-	exit_code = (ft_itoa(get_exit_codes()->last_exit_code));
-	start_exit_code = exit_code;
-	while((*exit_code) != '\0')
-	{
-		tmp_line = ft_charjoin(new_line, (*exit_code));
-		if (!tmp_line)
-			return (NULL);
-		new_line = tmp_line;
-		exit_code++;
-	}
-	free(start_exit_code);
-	return (new_line);
 }
