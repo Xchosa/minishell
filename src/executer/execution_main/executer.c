@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/22 15:44:39 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:18:25 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 {
-	if(cmd_node->cmd[0] == NULL)
-		return ;
+	if (cmd_node->cmd[0] == NULL)
+		exit (0);
 	if (cmd_node->cmd[0][0] == '/')
 	{
 		get_bash()->path = cmd_node->cmd[0]; //hier andere fehlermeldung aber gleicher code
@@ -113,15 +113,15 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 		ft_execution_loop(cmd_list, envp, fd);
 	reset_redir(&backup_stdin, &backup_stdout);
 	clean_cmd_lst(cmd_list);
-	int leaked = 0;
-	for (int i = 3; i < 1024; ++i) {
-		if (fcntl(i, F_GETFD) != -1) {
-			printf("FD %d is still open\n", i);
-			leaked++;
-		}
-	}
-	if (leaked == 0)
-		printf("🎉 All file descriptors properly closed!\n");
+	// int leaked = 0;
+	// for (int i = 3; i < 1024; ++i) {
+	// 	if (fcntl(i, F_GETFD) != -1) {
+	// 		printf("FD %d is still open\n", i);
+	// 		leaked++;
+	// 	}
+	// }
+	// if (leaked == 0)
+	// 	printf("🎉 All file descriptors properly closed!\n");
 }
 
 // echo ?! -> should return a new line 
