@@ -90,6 +90,7 @@ void 		ft_print_array(char **src);
 // get input 
 void		interactive_shell_tty(char *line);
 void		non_interactive_shell(char *line);
+bool		handle_line(char *line);
 
 //interrupt tty
 bool 		check_lexer_and_free(char *line);

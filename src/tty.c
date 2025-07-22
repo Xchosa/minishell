@@ -101,74 +101,84 @@ void	interactive_shell_tty(char *line)
 // iter_cmd_lst(cmd_lst, &print_cmd_lst)
 
 
-// void	non_interactive_shell(char *line)
-// {
-// 	char		*original_line;
-// 	char		*new_line;
-// 	t_token 	*token_lst;
-// 	t_cmd_list 	*cmd_lst;
 
-// 	line = get_next_line(STDIN_FILENO);
-// 	while (line != NULL)
-// 	{
-// 		cmd_lst = NULL;
-// 		if (check_lexer_and_free(line) == false)
-// 			break ;
-// 		new_line = extend_line(&line);
-// 		original_line = new_line;
-// 		if (check_lexer_and_free(new_line) == false)
-// 			break ;
-// 		token_lst = tokeniser(&new_line);
-// 		if (final_lexer(token_lst,original_line) == false)
-// 			break ;
-// 		cmd_lst = init_cmd_list(&token_lst, original_line);
-// 		init_signal(1);
-// 		ft_execute(cmd_lst, get_bash()->env);
-// 		init_signal(0);
-// 		reset_terminal_state();
-// 	}
-// 	clean_cmd_list_objects_tmp_files(cmd_lst);
-// 	rl_clear_history();
+
+// void non_interactive_shell(char *line)
+// {
+//     char        *original_line;
+//     char        *new_line;
+//     t_token     *token_lst;
+//     t_cmd_list  *cmd_lst;
+
+//     line = get_next_line(STDIN_FILENO);
+//     while (line != NULL)
+//     {
+//         cmd_lst = NULL;
+//         if (check_lexer_and_free(line) == false)
+//         {
+//             line = get_next_line(STDIN_FILENO); 
+//             continue;
+//         }
+//         new_line = extend_line(&line);
+//         original_line = new_line;
+//         if (check_lexer_and_free(new_line) == false)
+//         {
+//             line = get_next_line(STDIN_FILENO);
+//             continue;
+//         }
+//         token_lst = tokeniser(&new_line);
+//         if (final_lexer(token_lst, original_line) == false)
+//         {
+//             line = get_next_line(STDIN_FILENO);
+//             continue;
+//         }
+//         cmd_lst = init_cmd_list(&token_lst, original_line);
+//         init_signal(1);
+//         ft_execute(cmd_lst, get_bash()->env);
+//         init_signal(0);
+//         reset_terminal_state();
+//         clean_cmd_lst(cmd_lst);
+//         line = get_next_line(STDIN_FILENO);
+//     }
+// 	// clean_cmd_list_objects_tmp_files(cmd_lst);
+//     delete_tmp_files("/tmp");
+//     rl_clear_history();
 // }
 
-void non_interactive_shell(char *line)
+void	non_interactive_shell(void)
 {
-    char        *original_line;
+    char *line;
+
+    while ((line = get_next_line(STDIN_FILENO)) != NULL)
+    {
+        handle_line(line);
+    }
+    delete_tmp_files("/tmp");
+    rl_clear_history();
+}
+
+
+bool	handle_line(char *line)
+{
     char        *new_line;
+    char        *original_line;
     t_token     *token_lst;
     t_cmd_list  *cmd_lst;
 
-    line = get_next_line(STDIN_FILENO);
-    while (line != NULL)
-    {
-        cmd_lst = NULL;
-        if (check_lexer_and_free(line) == false)
-        {
-            line = get_next_line(STDIN_FILENO); 
-            continue;
-        }
-        new_line = extend_line(&line);
-        original_line = new_line;
-        if (check_lexer_and_free(new_line) == false)
-        {
-            line = get_next_line(STDIN_FILENO);
-            continue;
-        }
-        token_lst = tokeniser(&new_line);
-        if (final_lexer(token_lst, original_line) == false)
-        {
-            line = get_next_line(STDIN_FILENO);
-            continue;
-        }
-        cmd_lst = init_cmd_list(&token_lst, original_line);
-        init_signal(1);
-        ft_execute(cmd_lst, get_bash()->env);
-        init_signal(0);
-        reset_terminal_state();
-        clean_cmd_lst(cmd_lst);
-        line = get_next_line(STDIN_FILENO);
-    }
-	// clean_cmd_list_objects_tmp_files(cmd_lst);
-    delete_tmp_files("/tmp");
-    rl_clear_history();
+    if (!check_lexer_and_free(line))
+        return (false);
+    new_line = extend_line(&line);
+    original_line = new_line;
+    if (check_lexer_and_free(new_line)== false)
+        return (false);
+    token_lst = tokeniser(&new_line);
+    if (final_lexer(token_lst, original_line) == false)
+        return (false);
+    cmd_lst = init_cmd_list(&token_lst, original_line);
+    init_signal(1);
+    ft_execute(cmd_lst, get_bash()->env);
+    init_signal(0);
+    reset_terminal_state();
+    clean_cmd_lst(cmd_lst);
+    return (true);
 }
