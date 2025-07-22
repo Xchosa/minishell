@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:54:16 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/14 09:28:13 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:30:17 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	handle_special_cases(t_token **curr_token, t_cmd_node *cmd_node)
 		if (curr_token && *curr_token
 			&& (*curr_token)->token_type == CALL_SAVED_VAR)
 			(*curr_token)->token_type = TEXT;
-		if (curr_token && *curr_token && (*curr_token)->token_type == EXPORT)
+		if (curr_token && *curr_token && 
+			((*curr_token)->token_type == EXPORT || (*curr_token)->token_type == Mix_Export_var))
 			(*curr_token)->token_type = TEXT;
 		if (curr_token && *curr_token
 			&& (*curr_token)->token_type == Export_var)

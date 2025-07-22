@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:00:04 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/08 13:35:21 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/22 09:36:28 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,18 @@ void	clean_cmd_list_objects_tmp_files(t_cmd_list *cmd_list)
 	clean_bash_env();
 	clean_exit_codes();
 	delete_tmp_files("/tmp");
+	rl_clear_history();
 }
+
+// void	clean_minishell(void)
+// {
+// 	clean_bash_env();
+// 	clean_exit_codes();
+// 	delete_tmp_files("/tmp");
+// 	rl_clear_history();
+// 	clean_cmd_lst(cmd_list);
+// }
+
 // cmd_list, token_list, line, bash_env und exit_codes
 
 void	clean_file_lst(t_file_list *file_list)

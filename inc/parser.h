@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 14:21:46 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 09:38:02 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void 		ft_print_array(char **src);
 
 // get input 
 void		interactive_shell_tty(char *line);
-void		non_interactive_shell(char *line);
+void		non_interactive_shell(void);
 bool		handle_line(char *line);
 
 //interrupt tty

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 16:48:17 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 09:48:13 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,12 @@ void	interactive_shell_tty(char *line)
 			continue ;
 		cmd_lst = init_cmd_list(&token_lst, original_line);
 		init_signal(1);
-		// printf("\n cmd_list works:\n\n");
-		// iter_cmd_lst(cmd_lst, &print_cmd_lst);
 		ft_execute(cmd_lst, get_bash()->env);
 		init_signal(0);
 		reset_terminal_state();
 		clean_cmd_lst(cmd_lst);
 	}
 	clean_cmd_list_objects_tmp_files(cmd_lst);
-	rl_clear_history();
 }
 
 
@@ -101,6 +98,45 @@ void	interactive_shell_tty(char *line)
 // iter_cmd_lst(cmd_lst, &print_cmd_lst)
 
 
+void	non_interactive_shell(void)
+{
+    char *line;
+
+    while ((line = get_next_line(STDIN_FILENO)) != NULL)
+    {
+        handle_line(line);
+    }
+	clean_bash_env();
+	clean_exit_codes();
+	delete_tmp_files("/tmp");
+    rl_clear_history();
+}
+
+
+bool	handle_line(char *line)
+{
+    char        *new_line;
+    char        *original_line;
+    t_token     *token_lst;
+    t_cmd_list  *cmd_lst;
+
+    if (!check_lexer_and_free(line))
+        return (false);
+    new_line = extend_line(&line);
+    original_line = new_line;
+    if (check_lexer_and_free(new_line)== false)
+        return (false);
+    token_lst = tokeniser(&new_line);
+    if (final_lexer(token_lst, original_line) == false)
+        return (false);
+    cmd_lst = init_cmd_list(&token_lst, original_line);
+    init_signal(1);
+    ft_execute(cmd_lst, get_bash()->env);
+    init_signal(0);
+    reset_terminal_state();
+    clean_cmd_lst(cmd_lst);
+    return (true);
+}
 
 
 // void non_interactive_shell(char *line)
@@ -144,41 +180,3 @@ void	interactive_shell_tty(char *line)
 //     delete_tmp_files("/tmp");
 //     rl_clear_history();
 // }
-
-void	non_interactive_shell(void)
-{
-    char *line;
-
-    while ((line = get_next_line(STDIN_FILENO)) != NULL)
-    {
-        handle_line(line);
-    }
-    delete_tmp_files("/tmp");
-    rl_clear_history();
-}
-
-
-bool	handle_line(char *line)
-{
-    char        *new_line;
-    char        *original_line;
-    t_token     *token_lst;
-    t_cmd_list  *cmd_lst;
-
-    if (!check_lexer_and_free(line))
-        return (false);
-    new_line = extend_line(&line);
-    original_line = new_line;
-    if (check_lexer_and_free(new_line)== false)
-        return (false);
-    token_lst = tokeniser(&new_line);
-    if (final_lexer(token_lst, original_line) == false)
-        return (false);
-    cmd_lst = init_cmd_list(&token_lst, original_line);
-    init_signal(1);
-    ft_execute(cmd_lst, get_bash()->env);
-    init_signal(0);
-    reset_terminal_state();
-    clean_cmd_lst(cmd_lst);
-    return (true);
-}

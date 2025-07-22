@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:29:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 16:00:10 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:32:18 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // 	// char *line = <<1"; // leaked
 // 	char *original_line;
 //     char *new_line;
-// 	line = ft_strdup("echo $HOME|grep poverbec");
+// 	line = ft_strdup("echo \'\'\'\'\'\'\'\'\'\'$USER\'\'\'\'\'\'\'\'\'\'");
 // 	// line = ft_strdup("echo \" '\"$?\" '\"");
 	
 
