@@ -3,10 +3,10 @@ NAME := minishell
 CC := cc
 
 #---------linux---------
-CFLAGS	= -Wall -Wextra  -g -fsanitize=address -I inc/ -ldl -lglfw -pthread -lm #-Werror
+CFLAGS	= -Wall -Wextra -Werror -g  -I inc/ -ldl -lglfw -pthread -lm # -fsanitize=address
 #CFLAGS	= -Wall -Wextra  -g -I inc/ -ldl -lglfw -pthread -lm #-Werror
 #----------mac ---------
-CFLAGS		= -Wall -Wextra -g -fsanitize=address -I inc/ #-Werror 
+CFLAGS		= -Wall -Werror -Wextra -g -fsanitize=address -I inc/
 #CFLAGS		= -Wall -Wextra -g -I inc/ #-Werror 
 
 

@@ -38,10 +38,12 @@ void	ft_exit(t_cmd_node *cmd_node)
 		{
 			ft_putendl_fd("shell: exit: numeric argument required", 2);
 			get_exit_codes()->last_exit_code = 255;
+			//cleanfunktion
 			exit(255);
 		}
 	}
 	get_exit_codes()->last_exit_code = re;
+	//clean funktion
 	exit(re);
 }
 
@@ -50,3 +52,5 @@ void	ft_exit(t_cmd_node *cmd_node)
 // directly and your ft_execute function to return the appropriate status.
 //  This change ensures that your shell's main loop remains in control of the program's 
 //  lifecycle and can perform all necessary cleanup before shutting down.
+
+//cmd list hier freen? oder command list doch ausserhalb vom execute loop freen?

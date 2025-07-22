@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:15:52 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/21 10:46:55 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:57:13 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	ft_manage_infile(char *infile)
 	if (dup2(in_fd, STDIN_FILENO) < 0)
 	{
 		ft_putstr_fd(" redirecting failed\n", STDERR_FILENO);
-		close (in_fd); //new
+		close (in_fd);
 		return (false);
 	}
 	close (in_fd);

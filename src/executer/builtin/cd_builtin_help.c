@@ -74,7 +74,7 @@ char	**ft_delete_old_pwd(char **envp)
 			i++;
 	}
 	newenvp[j] = NULL;
-	//envp = newenvp;
+	free(envp);
 	return (newenvp);
 }
 
@@ -99,7 +99,7 @@ char	**ft_add_old_pwd(char **envp)
 		i++;
 	}
 	newenvp[max + 1] = NULL;
-	//envp = newenvp;
+	free(envp);
 	return (newenvp);
 }
 

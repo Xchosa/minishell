@@ -18,7 +18,8 @@ char	**ft_add_absolute_path(t_cmd_node *cmd_node, char **envp)
 			envp[i] = re;
 			free(buf);
 			if (envp[i][ft_strlen(envp[i]) - 1] == '/')
-				envp[i][ft_strlen(envp[i]) - 1] = '\0'; //free here, maube break
+				envp[i][ft_strlen(envp[i]) - 1] = '\0';
+			break ;
 		}
 		i++;
 	}
@@ -29,27 +30,22 @@ char	**ft_add_parent(t_cmd_node *cmd_node, char **envp)
 {
 	int	i;
 	int	len;
-	//int	times;
 	(void)cmd_node;
 
 	i = 0;
-	//times = (ft_strlen(cmd_node->cmd[1]) + 1) / 3; //probably bad and should use split and while loop
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], "PWD", 3) == 0)
 		{
 			len = ft_strlen(envp[i]);
-			//while (times > 0)
-			//{
-				while (envp[i][len - 1] != '/') //can segfault if fals input, parten from root?
-					len--;
+			while (envp[i][len - 1] != '/') //can segfault if fals input, parten from root?
 				len--;
-			//	times--;
-			//}
+			len--;
 			if (len > 4)
 				envp[i] = ft_substr(envp[i], 0, len);
 			else
-				envp[i] = ft_strdup("PWD=/");
+				envp[i] = ft_substr(envp[i], 0, 5);
+			//	envp[i] = ft_strdup("PWD=/");
 		}
 		i++;
 	}
@@ -61,27 +57,26 @@ char	**ft_add_tilde(char **envp)
 	int		j;
 	char	*newpwd;
 	char	*home;
+	char	*buf;
 
 	j = 0;
-//	newpwd = malloc(sizeof(char *));
-//	if (newpwd == NULL) 
-//		return (NULL);		nicht noetig? aber malloc check unten
 	while (envp[j] != NULL)
 	{
-		if (ft_strncmp(envp[j], "PWD", 3) == 0)
-		{
-		//	free(envp[j]); //maybe
+		if (ft_strncmp(envp[j], "PWD=", 4) == 0)
 			break ;
-		}
 		j++;
 	}
+	buf = envp[j];
 	home = get_home_path(envp);
 	if (home == NULL)
 		ft_putendl_fd("shell: cd: HOME not set", 2); // and return NULL and check for it
 	else
 	{
 		newpwd = ft_strjoin("PWD=", home);
+		if (newpwd == NULL)
+			return (NULL);
 		envp[j] = newpwd;
+		free(buf);
 	}
 	return (envp);
 }
@@ -95,8 +90,6 @@ char	**ft_add_relative_path(t_cmd_node *cmd_node, char **envp)
 	path_array = ft_split(cmd_node->cmd[1], '/' );
 	while (path_array[i] != NULL)
 	{
-		// if (ft_strncmp("~", path_array[0], 1) == 0)
-		// 	envp = ft_add_tilde(envp); //wohl bloedsinn kommt so nicht als token?
 		if (ft_strncmp("..", path_array[i], 2) == 0)
 			envp = ft_add_parent(cmd_node, envp);
 		else if (!(ft_strncmp(".", path_array[i], 1) == 0))
@@ -109,25 +102,24 @@ char	**ft_add_relative_path(t_cmd_node *cmd_node, char **envp)
 
 void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp)
 {
+	char	**re;
+
+	re = NULL;
 	if (there_is_env_var(envp, "OLDPWD=") == true)
-		envp = ft_delete_old_pwd(envp);
-	if (envp == NULL)
+		re = ft_delete_old_pwd(envp);
+	if (re == NULL)
 		return ;
-	envp = ft_add_old_pwd(envp);
+	envp = re;
+	re = ft_add_old_pwd(envp);
+	if (re == NULL)
+		return ;
+	envp = re;
 	if (cmd_node->cmd[1] == NULL)
 		envp = ft_add_tilde(envp);
-	// else if (ft_strncmp(get_home_path(envp), cmd_node->cmd[1], 100) == 0) //oder pauls strcmp ? wie funktioniert die? muessen sie gleich lang sein?
-	// 	envp = ft_add_tilde(envp);
 	else if (ft_strncmp("/", cmd_node->cmd[1], 1) == 0)
-		envp = ft_add_absolute_path(cmd_node, envp); //do relative path
+		envp = ft_add_absolute_path(cmd_node, envp);
 	else
 		envp = ft_add_relative_path(cmd_node, envp);
-/*	else if (ft_strncmp("..", cmd_node->cmd[1], 2) == 0)
-		envp = ft_add_parent(cmd_node, envp);
-	else if (ft_strncmp(get_home_path(envp), cmd_node->cmd[1], 1) == 0)
-		envp = ft_add_tilde(envp);
-	else if (!(ft_strncmp(".", cmd_node->cmd[1], 10) == 0))
-		envp = ft_add_pwd(cmd_node, envp); */
 	get_bash()->env = envp; //und free die alte envp
 }
 
