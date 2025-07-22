@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 11:25:41 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 14:58:12 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	bool	tty_shell;
 	char	*line;
 
 	(void)argv;
-	tty_shell = false;
 	line = NULL;
 
 	if (init_bash(env, argc) == false || (init_exit_codes(argc) == false))

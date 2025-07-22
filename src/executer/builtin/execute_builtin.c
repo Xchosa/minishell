@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_builtin.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/22 14:10:12 by tschulle          #+#    #+#             */
+/*   Updated: 2025/07/22 14:26:35 by tschulle         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "executer.h"
 
@@ -7,7 +18,6 @@ char	*ft_strtolower(char *input)
 	int		i;
 
 	i = 0;
-	
 	output = malloc(ft_strlen(input) + 1);
 	if (output == NULL)
 	{
@@ -24,7 +34,7 @@ char	*ft_strtolower(char *input)
 	return (output);
 }
 
-void	ft_execute_builtin(t_cmd_node *cmd_node, char **envp)
+void	ft_execute_builtin(t_cmd_list *cmd_list, t_cmd_node *cmd_node, char **envp)
 {
 	cmd_node->cmd[0] = ft_strtolower(cmd_node->cmd[0]);
 	if (cmd_node->cmd[0] == NULL)
@@ -39,11 +49,11 @@ void	ft_execute_builtin(t_cmd_node *cmd_node, char **envp)
 	if (ft_strcmp("env", cmd_node->cmd[0]) == true)
 		ft_env(envp);
 	if (ft_strcmp("cd", cmd_node->cmd[0]) == true)
-		ft_cd(cmd_node, envp); // wenn der path nicht existiert failt es, hier drin error message, unten exit
+		ft_cd(cmd_node, envp);
 	if (ft_strcmp("export", cmd_node->cmd[0]) == true)
 		ft_export(cmd_node, envp);
 	if (ft_strcmp("exit", cmd_node->cmd[0]) == true)
-		ft_exit(cmd_node);
+		ft_exit(cmd_list, cmd_node);
 	if (ft_strcmp("unset", cmd_node->cmd[0]) == true)
 		ft_unset(cmd_node, envp);
 }

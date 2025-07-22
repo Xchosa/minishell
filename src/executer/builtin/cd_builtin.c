@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd_builtin.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/22 13:31:57 by tschulle          #+#    #+#             */
+/*   Updated: 2025/07/22 14:00:50 by tschulle         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "executer.h"
 
 char	**ft_add_absolute_path(t_cmd_node *cmd_node, char **envp)
 {
-	int	i;
+	int		i;
 	char	*buf;
 	char	*re;
 
@@ -26,11 +38,10 @@ char	**ft_add_absolute_path(t_cmd_node *cmd_node, char **envp)
 	return (envp);
 }
 
-char	**ft_add_parent(t_cmd_node *cmd_node, char **envp)
+char	**ft_add_parent(char **envp)
 {
 	int	i;
 	int	len;
-	(void)cmd_node;
 
 	i = 0;
 	while (envp[i] != NULL)
@@ -38,14 +49,13 @@ char	**ft_add_parent(t_cmd_node *cmd_node, char **envp)
 		if (ft_strncmp(envp[i], "PWD", 3) == 0)
 		{
 			len = ft_strlen(envp[i]);
-			while (envp[i][len - 1] != '/') //can segfault if fals input, parten from root?
+			while (envp[i][len - 1] != '/')
 				len--;
 			len--;
 			if (len > 4)
 				envp[i] = ft_substr(envp[i], 0, len);
 			else
 				envp[i] = ft_substr(envp[i], 0, 5);
-			//	envp[i] = ft_strdup("PWD=/");
 		}
 		i++;
 	}
@@ -69,7 +79,7 @@ char	**ft_add_tilde(char **envp)
 	buf = envp[j];
 	home = get_home_path(envp);
 	if (home == NULL)
-		ft_putendl_fd("shell: cd: HOME not set", 2); // and return NULL and check for it
+		ft_putendl_fd("shell: cd: HOME not set", 2);
 	else
 	{
 		newpwd = ft_strjoin("PWD=", home);
@@ -91,7 +101,7 @@ char	**ft_add_relative_path(t_cmd_node *cmd_node, char **envp)
 	while (path_array[i] != NULL)
 	{
 		if (ft_strncmp("..", path_array[i], 2) == 0)
-			envp = ft_add_parent(cmd_node, envp);
+			envp = ft_add_parent(envp);
 		else if (!(ft_strncmp(".", path_array[i], 1) == 0))
 			envp = ft_add_pwd(path_array[i], envp);
 		i++;
@@ -100,7 +110,7 @@ char	**ft_add_relative_path(t_cmd_node *cmd_node, char **envp)
 	return (envp);
 }
 
-void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp)
+void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp) //bool??
 {
 	char	**re;
 
@@ -115,29 +125,10 @@ void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp)
 		return ;
 	envp = re;
 	if (cmd_node->cmd[1] == NULL)
-		envp = ft_add_tilde(envp);
+		envp = ft_add_tilde(envp); //kann failen? bool?
 	else if (ft_strncmp("/", cmd_node->cmd[1], 1) == 0)
 		envp = ft_add_absolute_path(cmd_node, envp);
 	else
 		envp = ft_add_relative_path(cmd_node, envp);
-	get_bash()->env = envp; //und free die alte envp
-}
-
-void	ft_cd(t_cmd_node *cmd_node, char **envp)
-{
-	if (cmd_node->cmd[1] == NULL)
-	{
-		chdir(get_home_path(envp));
-		ft_update_env_cd(cmd_node, envp);
-		get_exit_codes()->last_exit_code = 0;
-		return ;
-	}
-	if (chdir(cmd_node->cmd[1]) != 0)
-	{
-		get_exit_codes()->last_exit_code = 1;
-		perror("shell");
-		return ;
-	}
-	ft_update_env_cd(cmd_node, envp);
-	get_exit_codes()->last_exit_code = 0;
+	get_bash()->env = envp; //leaks hier? immer envp return vlaue checken
 }

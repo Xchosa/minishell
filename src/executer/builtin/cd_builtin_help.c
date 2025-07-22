@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd_builtin_help.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/22 13:43:09 by tschulle          #+#    #+#             */
+/*   Updated: 2025/07/22 14:09:34 by tschulle         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "executer.h"
 
 char	*get_home_path(char **envp)
@@ -15,7 +27,7 @@ char	*get_home_path(char **envp)
 	home = envp[i];
 	i = 0;
 	if (home == NULL)
-		return (NULL); // exitcode here maybe?
+		return (NULL);
 	while (i < 5)
 	{
 		home++;
@@ -27,7 +39,7 @@ char	*get_home_path(char **envp)
 bool	there_is_env_var(char **envp, char *env_var)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -67,11 +79,9 @@ char	**ft_delete_old_pwd(char **envp)
 		if (ft_strncmp(envp[i], "OLDPWD=", 7) != 0)
 		{
 			newenvp[j] = envp[i];
-			i++;
 			j++;
 		}
-		else
-			i++;
+		i++;
 	}
 	newenvp[j] = NULL;
 	free(envp);
@@ -122,7 +132,7 @@ char	**ft_add_pwd(char *dir, char **envp) //protect malloc
 			}
 			envp[i] = ft_strjoin(envp[i], dir);
 			if (envp[i][ft_strlen(envp[i]) - 1] == '/')
-			envp[i][ft_strlen(envp[i]) - 1] = '\0'; //can break maybe
+				envp[i][ft_strlen(envp[i]) - 1] = '\0';
 			free(buf);
 		}
 		i++;

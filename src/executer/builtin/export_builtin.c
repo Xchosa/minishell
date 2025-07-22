@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:02:00 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/21 14:37:31 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/22 14:50:07 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,13 @@ void	ft_export_print(char **envp)
 		j = ft_get_index(i, envp);
 		s = ft_split(envp[j], '=');
 		ft_printf("declare -x %s=\"%s\"\n", s[0], s[1]);
-	//	ft_printf("%d\n", j);
 		i++;
 		free(s);
-	}//diff: null, multiple =, oldpwd, _a.out;, kleinschreibung vor gross
+	}
 	get_exit_codes()->last_exit_code = 0;
 }
 
-char **	ft_export_variable(char *cmd_var, char **envp)
+char	**ft_export_variable(char *cmd_var, char **envp)
 {
 	int		max;
 	int		i;
@@ -84,7 +83,6 @@ char **	ft_export_variable(char *cmd_var, char **envp)
 	newenvp[i] = newvar;
 	newenvp[i + 1] = NULL;
 	free(envp);
-	get_exit_codes()->last_exit_code = 0; //vllt nicht hier weil auch fuer shlvl
 	return (newenvp);
 }
 
@@ -100,7 +98,7 @@ bool	ft_check_valid_identifier(char *var)
 
 void	ft_export(t_cmd_node *cmd_node, char **envp)
 {
-	int	i;
+	int		i;
 	char	**env_var;
 	bool	flag;
 
