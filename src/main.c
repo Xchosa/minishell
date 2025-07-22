@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 11:25:41 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 15:08:04 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	main(int argc, char **argv, char **env)
 // >tmp_out | echo 1 
 // seq fault
 
+// . 
+// -> saq fault 
 // cat << $USER
 
 // exit "-100"
