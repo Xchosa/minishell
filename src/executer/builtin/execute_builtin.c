@@ -7,6 +7,7 @@ char	*ft_strtolower(char *input)
 	int		i;
 
 	i = 0;
+	
 	output = malloc(ft_strlen(input) + 1);
 	if (output == NULL)
 	{

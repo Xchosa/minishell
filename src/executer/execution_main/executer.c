@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/21 14:01:37 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:23:05 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 {
+	if(cmd_node->cmd == NULL)
+		exit(0);
 	if (cmd_node->cmd[0][0] == '/')
 	{
 		get_bash()->path = cmd_node->cmd[0]; //hier andere fehlermeldung aber gleicher code

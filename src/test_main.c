@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:29:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 10:32:18 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:25:34 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 // 	// char *line = <<1"; // leaked
 // 	char *original_line;
 //     char *new_line;
-// 	line = ft_strdup("echo \'\'\'\'\'\'\'\'\'\'$USER\'\'\'\'\'\'\'\'\'\'");
+// 	line = ft_strdup(">hello | echo 1 ");
 // 	// line = ft_strdup("echo \" '\"$?\" '\"");
-	
+// 	// >outfile | echo 1
 
 // 	// malloc line to extend $XX
 // 	// char **temp_content = content;

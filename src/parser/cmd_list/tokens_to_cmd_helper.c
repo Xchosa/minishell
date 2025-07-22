@@ -7,6 +7,8 @@ void	check_cmd_builtin(t_cmd_node **cmd_node)
 {
 	if ((*cmd_node)->cmd_type == EXECUTE)
 	{
+		if((*cmd_node)->cmd[0] == NULL)
+			return ;
 		(*cmd_node)->cmd_type = correct_cmd_type(cmd_node);
 	}
 }
