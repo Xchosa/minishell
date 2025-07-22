@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 09:38:02 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 14:56:24 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ bool		lexer_error_chars(char *line);
 bool		wrong_use_pipe_and_redirection(char *line);
 bool		check_for_correct_double_divider(char *line);
 bool		check_for_correct_single_divider(char *line);
+bool		check_syntax_heredoc(char *heredoc_del);
 
 // lexer tokens
 bool		lexer_token(t_token *token_lst, char *original_line);
@@ -170,6 +171,7 @@ bool		not_single_divider(char c);
 bool		pipe_or_simec(char c);
 int 		special_char_no_divider(char c);
 int			special_char_no_divider_no_eq(char c);
+void		change_filename(char *new_tmp_file_name);
 
 // extend_line
 char 	*extend_line(char **line);

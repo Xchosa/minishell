@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:27:12 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 11:09:35 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 14:56:38 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ bool	check_correct_export_var(char *str)
 
 bool	check_syntax(t_token *token)
 {
+	//if(token->next 
 	if (token->next)
 	{
 		token = token->next;
@@ -37,11 +38,26 @@ bool	check_syntax(t_token *token)
 			return (false);
 		if (token->token_type == here_doc)
 			return (false);
+		if (check_syntax_heredoc(token->token) == false)
+			return (false);
 		if (token->token_type == PIPE)
 			return (false);
 		return (true);
 	}
 	return (false);
+}
+bool	check_syntax_heredoc(char *heredoc_del)
+{
+	int i;
+
+	i = 0;
+	while(heredoc_del[i])
+	{
+		if(ft_strchr(".!?-@#$^&*(){}", heredoc_del[i]) != NULL)
+			return (false);
+		i++;
+	}
+	return (true);
 }
 
 bool	check_for_cmd(t_token *token)
@@ -60,8 +76,10 @@ bool	check_for_cmd(t_token *token)
 bool	lexer_token(t_token *token_lst, char *original_line)
 {
 	t_token	*cur_token;
-
+	
+	(void)original_line;
 	cur_token = token_lst;
+	
 	while (cur_token)
 	{
 		if (check_for_cmd(cur_token) == true)
@@ -69,12 +87,14 @@ bool	lexer_token(t_token *token_lst, char *original_line)
 			if (check_syntax(cur_token) == false)
 			{
 				get_exit_codes()->last_exit_code = syntax_error_token;
-				print_error_message(&token_lst, original_line);
+				// token_lst = cur_token->head;
+				// print_error_message(&token_lst, original_line);
 				return (false);
 			}
 		}
 		cur_token = cur_token->next;
 	}
+	// token_lst = cur_token->head;
 	return (true);
 }
 
@@ -103,9 +123,15 @@ bool	lexer_correct_export_var(t_token *token_lst, char *original_line)
 bool	final_lexer(t_token *token_lst, char *original_line)
 {
 	if (lexer_token(token_lst, original_line) == false)
+	{
+		print_error_message(&token_lst, original_line);
 		return (false);
+	}
 	if (tokeniser_successful(token_lst, original_line) == false)
+	{
+		print_error_message(&token_lst, original_line);
 		return (false);
+	}
 	// if (lexer_correct_export_var(token_lst, original_line) == false)
 	// 	return (false);
 	return (true);

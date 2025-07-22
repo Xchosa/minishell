@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:29:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 11:25:34 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 15:07:53 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // 	// char *line = <<1"; // leaked
 // 	char *original_line;
 //     char *new_line;
-// 	line = ft_strdup(">hello | echo 1 ");
+// 	line = ft_strdup(".");
 // 	// line = ft_strdup("echo \" '\"$?\" '\"");
 // 	// >outfile | echo 1
 
@@ -94,12 +94,22 @@
 // 	// printf("\n append token\n\n");
 // 	// handle_export(token_lst);
 // 	// append_export_str(&token_lst);
-
-//     if (lexer_token(token_lst, original_line) == false)
-//     {
-// 		print_error_message(&token_lst, original_line);
+// 	if (final_lexer(token_lst, original_line) == false)
+// 	{
+// 		clean_bash_env();
+// 		clean_exit_codes();
+// 		delete_tmp_files("/tmp");
+// 		rl_clear_history();
 // 		return(1);
-//     }
+// 	}
+//     if (lexer_token(token_lst, original_line) == false)
+// 	{
+// 		clean_bash_env();
+// 		clean_exit_codes();
+// 		delete_tmp_files("/tmp");
+// 		rl_clear_history();
+// 		return(1);
+// 	}
 // 	iter_tokenlst(token_lst, &print_tokenlst);
 
 // 	printf("\ndo i come to cmd list? \n\n");

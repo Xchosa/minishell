@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:58:15 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 13:27:41 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 15:05:15 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,22 @@ bool	check_for_interactive_shell(void)
 
 // filename for tmp only allows alnum and _ -> needs to be changed to this format 
 // everything else will be _ 
+void	change_filename(char *new_tmp_file_name)
+{
+	int i;
+	i = 0;
+	while(new_tmp_file_name[i])
+	{
+		if(ft_strchr("!?-@#$^&*(){} ", new_tmp_file_name[i]) != NULL)
+		{
+			new_tmp_file_name[i] = '_';
+		}
+		i++;
+	}
+}
+
+
+
 int	save_here_doc_in_tmp(t_file_node **file_node)
 {
 	int			here_doc_fd;
@@ -80,6 +96,7 @@ int	save_here_doc_in_tmp(t_file_node **file_node)
 	suffix = ft_itoa(count);
 	count++;
 	new_tmp_file_name = ft_strjoin("/tmp/.here_doc_", (*file_node)->filename);
+	change_filename(new_tmp_file_name);
 	n_t_file_name_suf = ft_strjoin(new_tmp_file_name, suffix);
 	here_doc_fd = open(n_t_file_name_suf, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (here_doc_fd == -1)
