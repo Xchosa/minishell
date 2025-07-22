@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:13:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 16:28:08 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:12:27 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ bool	check_for_correct_single_divider(char *line)
 	}
 	return (true);
 }
+
 
 bool	wrong_use_pipe_and_redirection(char *line)
 {

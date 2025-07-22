@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 14:56:24 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:31:15 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ bool		find_error_chars(char *line);
 
 bool		final_lexer(t_token *token_lst, char *original_line);
 bool		lexer_correct_export_var(t_token *token_lst, char *original_line);
+bool		check_last_node_syntax(t_token *token_lst);
 
 // tokeniser
 void 		skip_whitespace(char **line);

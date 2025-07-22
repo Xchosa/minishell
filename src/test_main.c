@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:29:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 15:07:53 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:35:45 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // 	// char *line = <<1"; // leaked
 // 	char *original_line;
 //     char *new_line;
-// 	line = ft_strdup(".");
+// 	line = ft_strdup("hello |   ");
 // 	// line = ft_strdup("echo \" '\"$?\" '\"");
 // 	// >outfile | echo 1
 
@@ -74,7 +74,7 @@
 // 		printf("error tokeniser\n");
 // 		return (1);
 // 	}
-// 	// iter_tokenlst(token_lst, &print_tokenlst);
+// 	iter_tokenlst(token_lst, &print_tokenlst);
 
 // 	// printf("\nenv:\n");
 // 	// 	ft_print_array(bash->env);
@@ -110,7 +110,7 @@
 // 		rl_clear_history();
 // 		return(1);
 // 	}
-// 	iter_tokenlst(token_lst, &print_tokenlst);
+// 	// iter_tokenlst(token_lst, &print_tokenlst);
 
 // 	printf("\ndo i come to cmd list? \n\n");
 // 	cmd_lst = init_cmd_list(&token_lst, original_line);
