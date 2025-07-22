@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/22 15:37:04 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:18:25 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 {
-	if(cmd_node->cmd == NULL)
-		exit(0);
+	if (cmd_node->cmd[0] == NULL)
+		exit (0);
 	if (cmd_node->cmd[0][0] == '/')
 	{
 		get_bash()->path = cmd_node->cmd[0]; //hier andere fehlermeldung aber gleicher code
@@ -37,14 +37,14 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 	exit(errno);
 }
 
-void	manage_single_cmd_node(t_cmd_node *cmd_node, char **envp)
+void	manage_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *cmd_node, char **envp)
 {
 	if (ft_manage_redirections_multi(cmd_node->file_list) == false)
 	{
 		get_exit_codes()->last_exit_code = 1;
 		return ;
 	}
-	ft_execute_builtin(cmd_node, envp);
+	ft_execute_builtin(cmd_list, cmd_node, envp);
 }
 
 void	execution_node(t_cmd_list *cmd_list,
@@ -61,7 +61,7 @@ void	execution_node(t_cmd_list *cmd_list,
 		ft_execute_command(cmd_node, envp);
 	else if (cmd_node->cmd_type == BUILTIN)
 	{
-		ft_execute_builtin(cmd_node, envp);
+		ft_execute_builtin(cmd_list, cmd_node, envp);
 		exit (get_exit_codes()->last_exit_code);
 	}
 }
@@ -108,13 +108,11 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 		return ;
 	iter_cmd_lst(cmd_list, &print_cmd_lst);
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN)
-		manage_single_cmd_node(cmd_list->head, envp);
-	// else if (ft_strcmp("./minishell", cmd_list->head->cmd[0]) == true)
-	// 	ft_minishell_nested(envp);
+		manage_single_cmd_node(cmd_list, cmd_list->head, envp);
 	else
 		ft_execution_loop(cmd_list, envp, fd);
 	reset_redir(&backup_stdin, &backup_stdout);
-	//clean_cmd_list_objects_tmp_files(cmd_list); //callen wir 2 mal? hier ists gut
+	clean_cmd_lst(cmd_list);
 	// int leaked = 0;
 	// for (int i = 3; i < 1024; ++i) {
 	// 	if (fcntl(i, F_GETFD) != -1) {

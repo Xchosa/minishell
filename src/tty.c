@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tty.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 09:48:13 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:28:49 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	interactive_shell_tty(char *line)
 		ft_execute(cmd_lst, get_bash()->env);
 		init_signal(0);
 		reset_terminal_state();
-		clean_cmd_lst(cmd_lst);
 	}
 	clean_cmd_list_objects_tmp_files(cmd_lst);
 }

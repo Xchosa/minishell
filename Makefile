@@ -3,10 +3,10 @@ NAME := minishell
 CC := cc
 
 #---------linux---------
-CFLAGS	= -Wall -Wextra  -g -fsanitize=address -I inc/ -ldl -lglfw -pthread -lm #-Werror
+CFLAGS	= -Wall -Wextra -Werror -g  -I inc/ -ldl -lglfw -pthread -lm -fsanitize=address
 #CFLAGS	= -Wall -Wextra  -g -I inc/ -ldl -lglfw -pthread -lm #-Werror
 #----------mac ---------
-CFLAGS		= -Wall -Wextra -g -fsanitize=address -I inc/ #-Werror 
+CFLAGS		= -Wall -Werror -Wextra -g  -I inc/ -fsanitize=address
 #CFLAGS		= -Wall -Wextra -g -I inc/ #-Werror 
 
 
@@ -84,6 +84,7 @@ MY_SOURCES = \
 		manage_pipes.c \
 		pipex.c \
 		builtins.c \
+		cd.c \
 		cd_builtin.c \
 		cd_builtin_help.c \
 		unset_builtin.c \

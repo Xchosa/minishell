@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:27:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/21 09:36:03 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 13:30:51 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,18 @@ void	ft_echo(t_cmd_node *cmd_node) // muss auf write testen?
 	int	i;
 
 	i = 1;
-	while (cmd_node->cmd[i] != NULL && ft_strncmp("-n", cmd_node->cmd[i], 2) == 0)
+	while (cmd_node->cmd[i] != NULL && ft_strncmp("-n",
+			cmd_node->cmd[i], 2) == 0)
 		i++;
 	while (cmd_node->cmd[i] != NULL)
 	{
-		// if (ft_strncmp("$?", cmd_node->cmd[i], 2) == 0)
-		// 	ft_printf("%d", get_exit_codes()->last_exit_code);
-		// else
 		ft_printf("%s", cmd_node->cmd[i]);
 		if (cmd_node->cmd[i + 1] != NULL)
 			ft_printf(" ");
 		i++;
 	}
-	if (cmd_node->cmd[1] != NULL && !(ft_strncmp("-n", cmd_node->cmd[1], 2) == 0))
+	if (cmd_node->cmd[1] != NULL && !(ft_strncmp("-n",
+				cmd_node->cmd[1], 2) == 0))
 		ft_printf("\n");
 	get_exit_codes()->last_exit_code = 0;
 }

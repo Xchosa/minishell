@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit_builtin.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/22 14:12:28 by tschulle          #+#    #+#             */
+/*   Updated: 2025/07/22 14:42:46 by tschulle         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "executer.h"
 
@@ -16,7 +27,7 @@ int	ft_isnum(char *s)
 	return (0);
 }
 
-void	ft_exit(t_cmd_node *cmd_node)
+void	ft_exit(t_cmd_list *cmd_list, t_cmd_node *cmd_node)
 {
 	int	re;
 
@@ -37,16 +48,10 @@ void	ft_exit(t_cmd_node *cmd_node)
 		else
 		{
 			ft_putendl_fd("shell: exit: numeric argument required", 2);
-			get_exit_codes()->last_exit_code = 255;
+			clean_cmd_list_objects_tmp_files(cmd_list);
 			exit(255);
 		}
 	}
-	get_exit_codes()->last_exit_code = re;
+	clean_cmd_list_objects_tmp_files(cmd_list);
 	exit(re);
 }
-
-
-// You will also need to modify your exit builtin to stop calling exit() 
-// directly and your ft_execute function to return the appropriate status.
-//  This change ensures that your shell's main loop remains in control of the program's 
-//  lifecycle and can perform all necessary cleanup before shutting down.

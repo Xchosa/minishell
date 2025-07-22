@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell_nested.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/22 10:59:07 by tschulle          #+#    #+#             */
+/*   Updated: 2025/07/22 11:05:22 by tschulle         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "executer.h"
 #include "signal_tp.h"
 
@@ -14,11 +26,11 @@ void	ft_increase_shlvl(char **envp)
 	while (envp[i] != NULL)
 	{
 		if (strncmp("SHLVL=", envp[i], 6) == 0)
-			break;
+			break ;
 		i++;
 	}
-	if (envp[i] == NULL) //durchgelaufen und kein SHLVL in ENV gefunden
-		get_bash()->env = ft_export_variable("SHLVL=1", envp); //check this for 
+	if (envp[i] == NULL)
+		get_bash()->env = ft_export_variable("SHLVL=1", envp);
 	else
 	{
 		freeme = envp[i];
@@ -30,27 +42,10 @@ void	ft_increase_shlvl(char **envp)
 		newshlvl = ft_strjoin("SHLVL=", buf);
 		if (newshlvl == NULL)
 			return (free(buf));
-		envp[i] = newshlvl;	
+		envp[i] = newshlvl;
 		return (free(freeme), free(buf));
 	}
-	//printf("%s\n", ft_itoa(ft_atoi(envp[i]) + 1));
 }
-
-// int	ft_ask_shlvl(char **envp)
-// {
-// 	int	i;
-// 	int	re;
-
-// 	i = 0;
-// 	while (envp[i] != NULL)
-// 	{
-// 		if (strncmp("SHLVL=", envp[i], 6) == 0)
-// 			break ;
-// 		i++;
-// 	}
-// 	re = ft_atoi(&envp[i][6]);
-// 	return (re);
-//}
 
 char	*get_command_pointer(char *command, char **envp)
 {
@@ -61,7 +56,7 @@ char	*get_command_pointer(char *command, char **envp)
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		if (ft_strncmp("PWD", envp[i], 3) == 0)
+		if (ft_strncmp("PWD=", envp[i], 4) == 0)
 		{
 			pwd = envp[i];
 			break ;
@@ -71,7 +66,7 @@ char	*get_command_pointer(char *command, char **envp)
 	i = 0;
 	while (i < 4)
 	{
-		pwd++; //can break if PWD unset. important?
+		pwd++; //can break if PWD unset. important? 
 		i++;
 	}
 	command++;
@@ -79,42 +74,13 @@ char	*get_command_pointer(char *command, char **envp)
 	return (path);
 }
 
-// void	ft_minishell_nested(char **envp)
-// {
-// 	int		pid;
-// 	char	*path_to_mini;
-// 	int		status;
-
-// 	if ((ft_ask_shlvl(envp)) >= 9) // diese 4 zeilen muessen noch in die main oder so 
-// 	{
-// 		ft_putendl_fd("Shell level is restricted to max 9", 2);
-// 		return ;
-// 	}
-// 	path_to_mini = get_minishell_pointer(envp);
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		// some handler;
-// 		execve(path_to_mini, (char *[]){"minishell", NULL}, envp);
-// 		perror("shell: minishell"); //change exit code
-// 	}
-// 	free(path_to_mini);
-// 	wait(&status);
-// 	if (WIFEXITED(status))
-// 	{
-// 		get_exit_codes()->last_exit_code = WEXITSTATUS(status);
-// 	}
-// }
-
 char	*ft_execute_local(char *command, char **envp)
 {
-	char *path;
+	char	*path;
 
-	//ft_printf("do i get here\n");
 	path = get_command_pointer(command, envp);
-	//ft_printf("%s\n", path);
 	if (access(path, X_OK) == 0)
 		return (path);
-	else 
+	else
 		return (free (path), NULL);
 }

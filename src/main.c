@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 16:21:35 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:34:46 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 #include "executer.h"
 
 
-// int	main(int argc, char **argv, char **env)
-// {
-// 	bool	tty_shell;
-// 	char	*line;
+int	main(int argc, char **argv, char **env)
+{
+	char	*line;
 
-// 	(void)argv;
-// 	tty_shell = false;
-// 	line = NULL;
+	(void)argv;
+	line = NULL;
 
 // 	if (init_bash(env, argc) == false || (init_exit_codes(argc) == false))
 // 		return (1);
