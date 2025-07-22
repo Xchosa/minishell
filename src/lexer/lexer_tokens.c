@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:27:12 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 14:56:38 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:31:39 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ bool	lexer_token(t_token *token_lst, char *original_line)
 	t_token	*cur_token;
 	
 	(void)original_line;
+	if (check_last_node_syntax(token_lst) == false)
+		return (false);
 	cur_token = token_lst;
+	
 	
 	while (cur_token)
 	{
@@ -95,6 +98,19 @@ bool	lexer_token(t_token *token_lst, char *original_line)
 		cur_token = cur_token->next;
 	}
 	// token_lst = cur_token->head;
+	return (true);
+}
+
+bool	check_last_node_syntax(t_token *token_lst)
+{
+	t_token *last_token;
+	int		token_type;
+	
+	last_token = tokenlast(token_lst);
+	token_type = last_token->token_type;
+	if (token_type == Redirect_input || token_type == Redirect_output
+		|| token_type == Append || token_type == PIPE )
+			return (false);
 	return (true);
 }
 

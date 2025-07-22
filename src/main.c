@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 15:08:04 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:21:35 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,27 @@
 #include "executer.h"
 
 
-int	main(int argc, char **argv, char **env)
-{
-	bool	tty_shell;
-	char	*line;
+// int	main(int argc, char **argv, char **env)
+// {
+// 	bool	tty_shell;
+// 	char	*line;
 
-	(void)argv;
-	tty_shell = false;
-	line = NULL;
+// 	(void)argv;
+// 	tty_shell = false;
+// 	line = NULL;
 
-	if (init_bash(env, argc) == false || (init_exit_codes(argc) == false))
-		return (1);
+// 	if (init_bash(env, argc) == false || (init_exit_codes(argc) == false))
+// 		return (1);
 
-	if (isatty(STDIN_FILENO))
-	{
-		interactive_shell_tty(line);
-		rl_clear_history();
-	}
-	else
-		non_interactive_shell();
+// 	if (isatty(STDIN_FILENO))
+// 	{
+// 		interactive_shell_tty(line);
+// 		rl_clear_history();
+// 	}
+// 	else
+// 		non_interactive_shell();
 	
-}
+// }
 
 // >tmp_out | echo 1 
 // seq fault
