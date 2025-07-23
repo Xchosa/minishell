@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:59:22 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/23 13:31:21 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:51:44 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,19 @@ void	print_error_message(t_token **token_list, char *line)
 void	print_lexer_error_message(char *line)
 {
 	int	error;
+	(void)line;
 
 	error = get_exit_codes()->last_exit_code;
 	if (error == invalid_identifier)
-		(printf("minishell: '%s': not a valid identifier \n", line));
+		ft_putendl_fd("shell: not a valid identifier", 2);
+		//(printf("minishell: '%s': not a valid identifier \n", line));
 	if (error == syntax_failure)
-		(printf("minishell: '%s': syntax failure \n", line));
+		ft_putendl_fd("shell: syntax failure", 2);
+		//(printf("minishell: '%s': syntax failure \n", line));
 	if (error == cmd_not_found)
-		(printf("minishell: '%s': command not found \n", line));
+		ft_putendl_fd("shell: command not found", 2);
+		//(printf("minishell: '%s': command not found \n", line));
 	if (error == syntax_error_token)
-		(printf("minishell: syntax error near unexpected token '%s' \n", line));
+		ft_putendl_fd("shell: syntax error near unexpected token", 2);
+		//(printf("minishell: syntax error near unexpected token '%s' \n", line));
 }
