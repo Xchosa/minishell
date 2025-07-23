@@ -3,10 +3,10 @@ NAME := minishell
 CC := cc
 
 #---------linux---------
-CFLAGS	= -Wall -Wextra -Werror -g  -I inc/ -ldl -lglfw -pthread -lm #-fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -g  -I inc/ -ldl -lglfw -pthread -lm -fsanitize=address
 #CFLAGS	= -Wall -Wextra  -g -I inc/ -ldl -lglfw -pthread -lm #-Werror
 #----------mac ---------
-CFLAGS		= -Wall -Werror -Wextra -g  -I inc/ #-fsanitize=address
+CFLAGS		= -Wall -Werror -Wextra -g  -I inc/ -fsanitize=address
 #CFLAGS		= -Wall -Wextra -g -I inc/ #-Werror 
 
 
@@ -129,7 +129,7 @@ $(LIBFT):
 
 debug: -Wall -Wextra -Werror -g -I inc/ -fsanitize=
 
-# valgrind:
+# valgrind: --suppressions=readline.supp mit entsprechneder file und ohne fsanitise
 # 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./minishell
 
 .PHONY: re clean fclean all libft_fclean

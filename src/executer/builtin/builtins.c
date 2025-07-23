@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:27:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/22 13:30:51 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:29:45 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	ft_env(char **envp)
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		ft_printf("%s\n", envp[i]);
+		if (ft_strchr(envp[i], '=') != NULL)
+			ft_printf("%s\n", envp[i]);
 		i++;
 	}
 	get_exit_codes()->last_exit_code = 0;

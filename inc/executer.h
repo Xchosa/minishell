@@ -35,6 +35,7 @@ bool	create_pipes(int (**fd)[2], t_cmd_list *cmd_list);
 bool	there_is_env_var(char **envp, char *env_var);
 char	**ft_add_relative_path(t_cmd_node *cmd_node, char **envp);
 char	**ft_add_parent(char **envp);
+char	**ft_export_no_print(t_cmd_node *cmd_node, char **envp);
 
 
 bool	ft_manage_heredoc(char *tmp_filename);
@@ -59,6 +60,7 @@ int		ft_ask_shlvl(char **envp);
 char	*get_home_path(char **envp);
 char	*ft_execute_local(char *command, char **envp);
 char	*get_command_pointer(char *command, char **envp);
+char	*get_old_pwd(char **envp);
 
 //heredoc
 bool	check_for_interactive_shell(void);
