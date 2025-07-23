@@ -13,37 +13,6 @@
 #include "minishell.h"
 #include "parser.h"
 
-// static bool	check_for_div_export(char c)
-// {
-// 	if (ft_strncmp ("|", &c, 1) == 0)
-// 		return (true);
-// 	if (ft_strncmp (" ", &c, 1) == 0)
-// 		return (true);
-// 	if (ft_strncmp ("<", &c, 1) == 0)
-// 		return (true);
-// 	if (ft_strncmp (">", &c, 1) == 0)
-// 		return (true);
-// 	if (ft_strncmp (";", &c, 1) == 0)
-// 		return (true);
-// 	if (ft_strncmp ("\"", &c, 1) == 0)
-// 		return (true);
-// 	if (ft_strncmp ("\'", &c, 1) == 0)
-// 		return (true);
-// 	return (false);
-// }
-	// if (ft_strncmp ("=", &c, 1) == 0)
-	// 	return (true);
-
-bool	find_error_chars(char *line)
-{
-	while (line)
-	{
-		if (ft_strchr("\t\n\v\f\r+-!@#$^&*;()_={}", (*line)) == NULL)
-			return (false);
-		line++;
-	}
-	return (true);
-}
 
 t_token	*create_token_equal_as_div(char **content)
 {
@@ -60,11 +29,10 @@ t_token	*create_token_equal_as_div(char **content)
 	else
 	{
 		new_token->token = get_token(content);
-		if((**content) != '\0' && ft_strchr("\"\'", **content) != NULL)
+		if ((**content) != '\0' && ft_strchr("\"\'", **content) != NULL)
 			new_token->token = append_export_var(new_token->token, content);
 		new_token->token_type = Export_var;
 	}
-	// if no equal -> get_type 
 	new_token->next = NULL;
 	return (new_token);
 }
@@ -124,19 +92,18 @@ char	*add_char(char **content, char *tmp_token, char *new_token, int i)
 // }
 
 
-char *append_export_var(char *token_str, char **content)
+char	*append_export_var(char *token_str, char **content)
 {
-	char *appended_str;
-	char *next_token_str;
-
+	char	*appended_str;
+	char	*next_token_str;
 
 	next_token_str = get_export_token_in_quotes(content);
 	appended_str = ft_strjoin(token_str, next_token_str);
 	free(token_str);
-	return(appended_str);
+	return (appended_str);
 }
 
-char *get_export_token_in_quotes(char **content)
+char	*get_export_token_in_quotes(char **content)
 {
 	char	*new_token;
 	char	*tmp_token;
@@ -145,7 +112,7 @@ char *get_export_token_in_quotes(char **content)
 	tmp_token = NULL;
 	if (!new_token)
 		return (NULL);
-	if(ft_strchr("\"", **content) != NULL)
+	if (ft_strchr("\"", **content) != NULL)
 	{
 		skip_single_quotes(content);
 		while ((**content) != '\0' && ft_strchr("\"", **content) == NULL)

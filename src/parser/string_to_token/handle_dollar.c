@@ -80,15 +80,3 @@ t_token	*call_saved_export_var(char **line)
 	new_token->next = NULL;
 	return (new_token);
 }
-// sobald d_quote -> wird aufgeloest 
-
-// case "''$USER'' " -> wird ''poverbec'' 
-// besser token anhand der ersten quote tokenisen 
-
-// wenn "  & $ -> Call_SAVED_VAR
-// wenn bis $ kein "  -> CAll_SAVED_VAR
-// wenn bis $ kein " aber ' -> TEXT 
-
-// -> ''$USER'' -> wenn Dollar dann CALL_SAVED_VAR 
-
-// wenn '''"$USER"

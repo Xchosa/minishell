@@ -33,7 +33,7 @@ bool	init_bash(char **env, int argc)
 			return (false);
 	}
 	bash->path = NULL;
-	ft_increase_shlvl(bash->env); //soll bool und if false return false and free bash->env? kann bei malloc failen
+	ft_increase_shlvl(bash->env);
 	return (true);
 }
 

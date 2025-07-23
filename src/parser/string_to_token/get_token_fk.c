@@ -77,20 +77,20 @@ char	*get_token(char **content)
 		if (check_for_divider_without_space((**content)) == true)
 		{
 			new_token = tokenise_divider(content, new_token);
-			return(new_token);
+			return (new_token);
 		}
-		if(check_for_divider_with_space((**content))== false)
+		if (check_for_divider_with_space((**content)) == false)
 		{
-			while ((**content) != '\0' && check_for_divider_with_space((**content))== false)
-				new_token = add_single_char_to_line(new_token, tmp_token, content);
+			while ((**content) != '\0'
+				&& check_for_divider_with_space((**content)) == false)
+				new_token = add_single_char_to_line(new_token,
+						tmp_token, content);
 			return (new_token);
 		}
 		skip_whitespace(content);
 	}
 	return (new_token);
 }
-
-
 
 
 t_type	append_or_redirect_output(char *content)

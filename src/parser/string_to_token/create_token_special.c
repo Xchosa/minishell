@@ -25,26 +25,25 @@ t_token	*create_first_token(char **line)
 t_token	*create_token_with_quote_case(char **line, t_token *token)
 {
 	(void)token;
-	// skip_double_quotes(line);
 	if (ft_strncmp("\"", *line, 1) == 0)
 		return (d_quote_case(line));
 	if ((ft_strncmp("\'", *line, 1) == 0))
 		return (s_quote_case(line));
 	if (token->head->token_type == EXPORT)
-	 	return (create_token_equal_as_div(line));
+		return (create_token_equal_as_div(line));
 	else
 		return (create_token(line));
 }
 
-char *swap_exit_code_in_line(char *new_line, char *tmp_line, char **line)
+char	*swap_exit_code_in_line(char *new_line, char *tmp_line, char **line)
 {
-	char *exit_code;
-	char *start_exit_code;
+	char	*exit_code;
+	char	*start_exit_code;
 
-	(*line) +=2;
+	(*line) += 2;
 	exit_code = (ft_itoa(get_exit_codes()->last_exit_code));
 	start_exit_code = exit_code;
-	while((*exit_code) != '\0')
+	while ((*exit_code) != '\0')
 	{
 		tmp_line = ft_charjoin(new_line, (*exit_code));
 		if (!tmp_line)

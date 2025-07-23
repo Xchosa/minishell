@@ -14,12 +14,11 @@
 #include <termios.h>
 
 
-void parent_handler(int sig)
+void	parent_handler(int sig)
 {
-    if (sig == SIGINT)
+	if (sig == SIGINT)
 	{
 		get_exit_codes()->last_exit_code = 1;
-	// in readline mode then only print new line
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -36,12 +35,10 @@ void parent_handler(int sig)
 	}
 }
 
-void child_handler(int sig)
+void	child_handler(int sig)
 {
-	
-    if(sig == SIGINT)
-    {
-        // write(1, "\n",1);
+	if (sig == SIGINT)
+	{
 		get_exit_codes()->last_exit_code = 130; // sleep and then ctrl + C
 		write(STDOUT_FILENO, "\n", 1);
 	}
@@ -54,15 +51,15 @@ void child_handler(int sig)
 	return ;
 }
 
-void init_signal(int is_child)
+void	init_signal(int is_child)
 {
-    struct sigaction sa;
+	struct sigaction	sa;
 
 	// sa.sa_flags = SA_RESTART;
 	reset_terminal_state();
 	sigemptyset(&sa.sa_mask);// clear blocked signals
 	//changes signal action (replaces signal() for better control
-	if(is_child == 1)
+	if (is_child == 1)
 		sa.sa_handler = child_handler;
 	else
 		sa.sa_handler = parent_handler;
@@ -72,7 +69,6 @@ void init_signal(int is_child)
 	sigaction(SIGTERM, &sa, NULL);
 /// put only in if done 
 	// sigaction(SIGTSTP, &sa, NULL); // ignore ctrl + Z
-	
 	rl_catch_signals = 0;
 }
 

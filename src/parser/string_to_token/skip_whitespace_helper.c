@@ -40,7 +40,7 @@ bool	skip_whitespace_and_check_for_eof(char **line)
 		if (**line == '\0')
 			return (not_eof = false);
 		if (skip_double_quotes(line) == false)
-			break;
+			break ;
 	}
 	skip_whitespace(line);
 	if (**line == '\0')

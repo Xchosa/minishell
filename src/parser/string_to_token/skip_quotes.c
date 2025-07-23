@@ -14,25 +14,14 @@
 
 void	skip_quotes(char **line)
 {
-	// int	i;
-
-	// i = 0;
-	// if (skip_whitespace_and_check_for_eof(line) == false)
-	// 	return ;
-	// if (skip_d_quotes_and_following_quotes(line, i) == true)
-	// 	return ;
-	// if (skip_s_quotes_and_following_qutes(line, i) == true)
-	// 	return ;
 	skip_single_quotes(line);
-	// if((*line))
-	// 	(*line)++;
 }
 
-bool skip_double_quotes(char **content)
+bool	skip_double_quotes(char **content)
 {
-	if((ft_strchr("\"", **content) != NULL))
+	if ((ft_strchr("\"", **content) != NULL))
 	{
-		if((*content)[1] != '\0' && ft_strchr("\"", (*content)[1]) != NULL)
+		if ((*content)[1] != '\0' && ft_strchr("\"", (*content)[1]) != NULL)
 		{
 			(*content) += 2;
 			return (true);
@@ -40,7 +29,7 @@ bool skip_double_quotes(char **content)
 	}
 	else if ((ft_strchr("\'", **content) != NULL))
 	{
-		if((*content)[1] != '\0' && ft_strchr("\'", (*content)[1]) != NULL )
+		if ((*content)[1] != '\0' && ft_strchr("\'", (*content)[1]) != NULL )
 		{
 			(*content) += 2;
 			return (true);
@@ -88,7 +77,7 @@ void	skip_single_quotes(char **line)
 	int	i;
 
 	i = 0;
-	if(!(*line))
+	if (!(*line))
 		return ;
 	else if (((*line)[i] == '\'') && ((*line)[i +1 ] == '\0'))
 	{

@@ -99,6 +99,7 @@ MY_SOURCES = \
 		file_discriptor.c \
 		handler.c \
 		signal_main.c \
+		heredoc_signal.c \
 		find_heredoc.c \
 		iterate_cmd_file_list.c
 

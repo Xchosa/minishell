@@ -14,7 +14,7 @@
 
 void	print_tokenlst(t_token *data)
 {
-	printf("| token: '%s' | token_type: %u \n",data->token, data->token_type);
+	printf("| token: '%s' | token_type: %u \n", data->token, data->token_type);
 }
 
 void	iter_tokenlst(t_token *lst, void (*f)(t_token *))
@@ -28,7 +28,7 @@ void	iter_tokenlst(t_token *lst, void (*f)(t_token *))
 	{
 		f(cpy_token);
 		if (cpy_token->next == NULL)
-            break ;
+			break ;
 		cpy_token = cpy_token->next;
 	}
 	return ;

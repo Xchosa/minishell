@@ -58,7 +58,7 @@ t_token	*s_quote_case(char **line)
 	new_token->token = ft_strdup("");
 	if (!validate_token_str(&new_token))
 		return (NULL);
-	if(process_s_q_content_to_token(line, new_token) == false)
+	if (process_s_q_content_to_token(line, new_token) == false)
 	{
 		free_single_token(&new_token);
 		return (NULL);
