@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "signal_tp.h"
-#include <termios.h>
+
 
 
 void	parent_handler(int sig)
@@ -55,7 +55,7 @@ void	init_signal(int is_child)
 {
 	struct sigaction	sa;
 
-	// sa.sa_flags = SA_RESTART;
+	sa.sa_flags = SA_RESTART;
 	reset_terminal_state();
 	sigemptyset(&sa.sa_mask);// clear blocked signals
 	//changes signal action (replaces signal() for better control

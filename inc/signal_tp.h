@@ -17,6 +17,7 @@ void    reset_terminal_state(void);
 void    reset_sig_handler_to_parent(void);
 
 void	reset_sig_handler_to_child(void);
-void	heredoc_signal(int is_child); 
+void	heredoc_signal(int is_child);
 void	heredoc_handler(int sig);
+
 #endif
