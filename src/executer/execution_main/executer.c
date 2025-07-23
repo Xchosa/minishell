@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/22 16:18:25 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:08:06 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 	}
 	execve(get_bash()->path, cmd_node->cmd, envp);
 	perror("Execve failed");
-	exit(errno);
+	exit(errno); //stimmt evtl nicht
 }
 
 void	manage_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *cmd_node, char **envp)
@@ -106,7 +106,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	save_heredoc_files(&cmd_list->head);
 	if (create_pipes(&fd, cmd_list) != true)
 		return ;
-	iter_cmd_lst(cmd_list, &print_cmd_lst);
+//	iter_cmd_lst(cmd_list, &print_cmd_lst);
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN)
 		manage_single_cmd_node(cmd_list, cmd_list->head, envp);
 	else

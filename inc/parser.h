@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 16:31:15 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/22 18:08:00 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void 		ft_print_array(char **src);
 
 // get input 
 void		interactive_shell_tty(char *line);
+// void 	non_interactive_shell(char *line);
 void		non_interactive_shell(void);
 bool		handle_line(char *line);
 

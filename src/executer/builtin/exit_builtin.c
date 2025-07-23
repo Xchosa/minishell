@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 14:12:28 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/22 14:42:46 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:05:02 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_isnum(char *s)
 	int	i;
 
 	i = 0;
+	if (s[0] == '-' || s[0] == '+')
+		i++;
 	while (s[i] != '\0')
 	{
 		if (s[i] >= '0' && s[i] <= '9')
@@ -32,7 +34,7 @@ void	ft_exit(t_cmd_list *cmd_list, t_cmd_node *cmd_node)
 	int	re;
 
 	re = 0;
-	ft_printf("exit\n");
+	//ft_printf("exit\n"); muss wieder rein , nur fuer tester raus
 	if (cmd_node->cmd[1] != NULL)
 	{
 		if (ft_isnum(cmd_node->cmd[1]) == 0)
