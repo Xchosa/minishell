@@ -32,7 +32,6 @@ bool	init_exit_codes(int argc)
 	return (true);
 }
 
-// free exit codes
 void	clean_exit_codes(void)
 {
 	t_exit_codes	*exit_code;
@@ -49,16 +48,12 @@ void	print_error_message(t_token **token_list, char *line)
 	error = get_exit_codes()->last_exit_code;
 	if (error == invalid_identifier)
 		ft_putendl_fd("shell: not a valid indentifier", 2);
-		//(printf("shell: '%s': not a valid identifier \n", line));
 	if (error == syntax_failure)
 		ft_putendl_fd("shell: syntax failure", 2);
-		//(printf("shell: '%s': syntax failure \n", line));
 	if (error == cmd_not_found)
 		ft_putendl_fd("shell: command not found", 2);
-		//(printf("shell: '%s': command not found \n", line));
 	if (error == syntax_error_token)
 		ft_putendl_fd("shell: syntax error near unexpected token", 2);
-		//(printf("shell: syntax error near unexpected token '%s' \n", line));
 	clean_token_lst(*token_list);
 	free(line);
 }
@@ -66,19 +61,17 @@ void	print_error_message(t_token **token_list, char *line)
 void	print_lexer_error_message(char *line)
 {
 	int	error;
+
 	(void)line;
 
 	error = get_exit_codes()->last_exit_code;
 	if (error == invalid_identifier)
 		ft_putendl_fd("shell: not a valid identifier", 2);
-		//(printf("minishell: '%s': not a valid identifier \n", line));
+
 	if (error == syntax_failure)
 		ft_putendl_fd("shell: syntax failure", 2);
-		//(printf("minishell: '%s': syntax failure \n", line));
 	if (error == cmd_not_found)
 		ft_putendl_fd("shell: command not found", 2);
-		//(printf("minishell: '%s': command not found \n", line));
 	if (error == syntax_error_token)
 		ft_putendl_fd("shell: syntax error near unexpected token", 2);
-		//(printf("minishell: syntax error near unexpected token '%s' \n", line));
 }

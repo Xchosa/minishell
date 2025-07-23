@@ -17,12 +17,14 @@
 void	reset_sig_handler_to_parent(void)
 {
 	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	heredoc_signal(0);
 }
 
 void	reset_sig_handler_to_child(void)
 {
 	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	init_signal(1);
 }
 

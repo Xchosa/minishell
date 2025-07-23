@@ -33,6 +33,7 @@ static char	*read_terminal(void)
 	char	*line;
 	char	*trimmed_line;
 
+	reset_terminal_state();
 	init_signal(0);
 	if (isatty(fileno(stdin)))
 		line = readline("minishell:$ ");
@@ -47,11 +48,8 @@ static char	*read_terminal(void)
 	}
 	if (line && *line)
 		add_history(line);
-	// if (line == NULL)
-	// {
-	// 	printf("exit\n");
-	// 	//exit(get_exit_codes()->last_exit_code);
-	// }
+	if (!line)
+		exit_cleanup();
 	return (line);
 }
 
@@ -80,14 +78,25 @@ void	interactive_shell_tty(char *line)
 		if (final_lexer(token_lst, original_line) == false)
 			continue ;
 		cmd_lst = init_cmd_list(&token_lst, original_line);
-		init_signal(1);
+		init_signal(2);
 		ft_execute(cmd_lst, get_bash()->env);
-		init_signal(0);
-		reset_terminal_state();
 	}
 	clean_cmd_list_objects_tmp_files(cmd_lst);
 }
 
+
+void	exit_cleanup(void)
+{
+	int	exit_code;
+
+	exit_code = get_exit_codes()->last_exit_code;
+	printf("exit\n");
+	clean_bash_env();
+	clean_exit_codes();
+	delete_tmp_files("/tmp");
+	rl_clear_history();
+	exit(exit_code);
+}
 
 //// token_lst = extend_saved_export_var(&token_lst);
 // append_export_str(&token_lst);
@@ -99,50 +108,52 @@ void	interactive_shell_tty(char *line)
 
 void	non_interactive_shell(void)
 {
-    char	*line;
+	char	*line;
 	int		re;
 	char	*trimmed_line;
 
-    while ((line = get_next_line(STDIN_FILENO)) != NULL)
-    {
+	while ((line = get_next_line(STDIN_FILENO)) != NULL)
+	{
 		if (!line)
+		{
+			exit_cleanup();
 			return ;
+		}
 		trimmed_line = ft_strtrim(line, "\n");
 		free(line);
 		line = trimmed_line;
-        handle_line(line);
-    }
+		handle_line(line);
+	}
 	re = get_exit_codes()->last_exit_code;
 	clean_bash_env();
 	clean_exit_codes();
 	delete_tmp_files("/tmp");
-    rl_clear_history();
+	rl_clear_history();
 	exit(re);
 }
 
 bool	handle_line(char *line)
 {
-    char        *new_line;
-    char        *original_line;
-    t_token     *token_lst;
-    t_cmd_list  *cmd_lst;
+	char		*new_line;
+	char		*original_line;
+	t_token		*token_lst;
+	t_cmd_list	*cmd_lst;
 
-    if (!check_lexer_and_free(line))
-        return (false);
-    new_line = extend_line(&line);
-    original_line = new_line;
-    if (check_lexer_and_free(new_line)== false)
-        return (false);
-    token_lst = tokeniser(&new_line);
-    if (final_lexer(token_lst, original_line) == false)
-        return (false);
-    cmd_lst = init_cmd_list(&token_lst, original_line);
-    init_signal(1);
-    ft_execute(cmd_lst, get_bash()->env);
-    init_signal(0);
-    reset_terminal_state();
-    //clean_cmd_lst(cmd_lst);
-    return (true);
+	if (!check_lexer_and_free(line))
+		return (false);
+	new_line = extend_line(&line);
+	original_line = new_line;
+	if (check_lexer_and_free(new_line) == false)
+		return (false);
+	token_lst = tokeniser(&new_line);
+	if (final_lexer(token_lst, original_line) == false)
+		return (false);
+	cmd_lst = init_cmd_list(&token_lst, original_line);
+	init_signal(2);
+	ft_execute(cmd_lst, get_bash()->env);
+	init_signal(0);
+	reset_terminal_state();
+	return (true);
 }
 
 

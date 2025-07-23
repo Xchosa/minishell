@@ -67,6 +67,10 @@ bool	check_for_interactive_shell(void)
 	return (false);
 }
 
+
+
+
+
 int	save_here_doc_in_tmp(t_file_node **file_node)
 {
 	int			here_doc_fd;

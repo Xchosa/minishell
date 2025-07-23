@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include "signal_tp.h"
 #include "executer.h"
 
 void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
@@ -50,6 +50,7 @@ void	manage_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *cmd_node, char **e
 void	execution_node(t_cmd_list *cmd_list,
 	t_cmd_node *cmd_node, int fd[][2], char **envp)
 {
+	reset_sig_handler_to_child(); // test
 	if (cmd_list->size > 1)
 	{
 		if (ft_manage_pipes(cmd_list, cmd_node, fd) == false)

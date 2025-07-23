@@ -96,8 +96,8 @@ void	clean_file_lst(t_file_list *file_list)
 
 void	clean_cmd_lst(t_cmd_list *cmd_list)
 {
-    t_cmd_node	*cmd_node;
-    t_cmd_node	*tmp;
+	t_cmd_node	*cmd_node;
+	t_cmd_node	*tmp;
 
 	if (!cmd_list)
 		return ;

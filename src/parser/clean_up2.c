@@ -26,8 +26,8 @@ bool	check_lexer_token_and_free(t_token *token, char *line)
 
 bool	check_lexer_and_free(char *line)
 {
-	char *original_line;
-	
+	char	*original_line;
+
 	original_line = line;
 	if (line == NULL)
 		return (false);

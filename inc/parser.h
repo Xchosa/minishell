@@ -176,14 +176,14 @@ int			special_char_no_divider_no_eq(char c);
 void		change_filename(char *new_tmp_file_name);
 
 // extend_line
-char 	*extend_line(char **line);
-char 	*get_env_in_line( char **line);
-char 	*d_qoutes_swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line);
-char 	*swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line);
-char 	*add_single_char_to_line(char *new_line, char *tmp_line, char **line);
-char 	*add_s_quotes_str_to_line(char *new_line, char *tmp_line, char **line);
-char	*swap_exit_code_in_line(char *new_line, char *tmp_line, char **line);
-char	*extend_line_with_tilde(char *new_line, char *tmp_line, char **line);
+char 		*extend_line(char **line);
+char 		*get_env_in_line( char **line);
+char 		*d_qoutes_swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line);
+char 		*swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line);
+char 		*add_single_char_to_line(char *new_line, char *tmp_line, char **line);
+char 		*add_s_quotes_str_to_line(char *new_line, char *tmp_line, char **line);
+char		*swap_exit_code_in_line(char *new_line, char *tmp_line, char **line);
+char		*extend_line_with_tilde(char *new_line, char *tmp_line, char **line);
 
 //	get export saved variables
 char 		*append_export_var(char *token_str, char **content);
@@ -191,7 +191,7 @@ char		*get_export_token_in_quotes(char **content);
 
 t_token* 	extend_saved_export_var(t_token **token_lst);
 char**		extend_env_with_str(char** src, char *token);
-char* 		get_var_from_env(char **src, char *token_no_dollar);
+char*		get_var_from_env(char **src, char *token_no_dollar);
 char*		get_home_directory(char **src);
 char*		extract_var_value(char *env_str, int start_pos);
 void 		reset_token_get_var_from_env(t_token **token_lst, char **src);
@@ -217,14 +217,14 @@ char 		*skip_divider_without_space(char *line);
 void 		tokenise_muliple_tok_from_env(t_token **token_lst, t_token *prev_token);
 // cmd_list
 
-void	check_cmd_builtin(t_cmd_node **cmd_node);
-int		correct_cmd_type(t_cmd_node **cmd_node);
+void		check_cmd_builtin(t_cmd_node **cmd_node);
+int			correct_cmd_type(t_cmd_node **cmd_node);
 //print cmd_lst
-void	print_cmd_lst(t_cmd_node *cmd_nodes);
-void	iter_cmd_lst(t_cmd_list *cmd_lst, void (*f)(t_cmd_node*));
+void		print_cmd_lst(t_cmd_node *cmd_nodes);
+void		iter_cmd_lst(t_cmd_list *cmd_lst, void (*f)(t_cmd_node*));
 
-t_cmd_list*		init_cmd_list(t_token **token_list, char *line);
-t_cmd_node		*init_cmd_node_null(t_file_list *file_list);
+t_cmd_list*	init_cmd_list(t_token **token_list, char *line);
+t_cmd_node	*init_cmd_node_null(t_file_list *file_list);
 t_cmd_list*		cmd_list_to_null(void);
 t_file_list*	file_list_to_null(void);
 
@@ -240,6 +240,7 @@ bool			redir_token(t_token **token_list);
 void			process_redirect(t_token **curr_token, t_cmd_node *cmd_node);
 
 // clean up
+void	exit_cleanup(void);
 void	clean_token_lst(t_token *token_lst);
 void	clean_token_lst_and_line(t_token *token_lst, char *line);
 void	free_single_token(t_token **token);

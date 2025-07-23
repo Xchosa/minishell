@@ -47,7 +47,6 @@ int	main(int argc, char **argv, char **env)
 // exit ------
 // exit -12560
 // > out
-// awk 'BEGIN{for(i=1;i<=1000000;i++)print int(i)}' | awk '{sum+=$1} END {print sum/NR}'
 
 // "./""ls" 
 // .ls

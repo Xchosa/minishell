@@ -59,8 +59,6 @@
 
 // 	if (check_lexer_and_free(line) == false)
 // 		return (1);
-	
-
 
 // 	(void)bash;
 // 	printf("original line: %s \n" , line);
@@ -68,7 +66,7 @@
 // 	printf("New_line: %s \n" , new_line);
 //     original_line = new_line;
 // 	token_lst = tokeniser(&new_line);
-	
+
 // 	if (!token_lst)
 //     {
 // 		printf("error tokeniser\n");
@@ -78,7 +76,7 @@
 
 // 	// printf("\nenv:\n");
 // 	// 	ft_print_array(bash->env);
-	
+
 // 	// if(extend_env(token_lst)== true)
 // 	// 	return(1);
 
@@ -86,10 +84,10 @@
 // 	// extends $h to word if saved in env 
 // 	// token_lst = extend_saved_export_var(&token_lst);
 // 	// change_only tokenise if CALL_SAVED_VAR
-	
+
 // 	// iter_tokenlst(token_lst, &print_tokenlst);
 // 	// printf("\n multiple tokens split:\n\n");
-    
+
 // 	// splited saved_var erneut mit tokeniser
 // 	// printf("\n append token\n\n");
 // 	// handle_export(token_lst);
