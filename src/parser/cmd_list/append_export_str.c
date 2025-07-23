@@ -13,7 +13,6 @@
 #include "parser.h"
 #include "minishell.h"
 
-
 static bool equal_last(char *str)
 {
     int i;

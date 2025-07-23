@@ -111,7 +111,6 @@ void	non_interactive_shell(void)
     rl_clear_history();
 }
 
-
 bool	handle_line(char *line)
 {
     char        *new_line;

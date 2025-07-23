@@ -32,7 +32,6 @@ int	main(int argc, char **argv, char **env)
 	}
 	else
 		non_interactive_shell();
-	
 }
 
 // >tmp_out | echo 1 

@@ -17,6 +17,7 @@
 bool	execute_here_doc(char *filename, int here_doc_fd)
 {
 	char	*line;
+	char	*new_line;
 
 	reset_sig_handler_to_parent();
 	while (1)
@@ -27,15 +28,32 @@ bool	execute_here_doc(char *filename, int here_doc_fd)
 			line = get_next_line(STDIN_FILENO);
 		if (!line)
 			break ;
-		if (ft_strcmp(line, filename) == true) 
+		new_line = extend_line(&line);
+		if (ft_strcmp(new_line, filename) == true)
 			break ;
-		ft_putstr_fd(line, here_doc_fd);
+		ft_putstr_fd(new_line, here_doc_fd);
 		if (check_for_interactive_shell() == true)
 			ft_putstr_fd("\n", here_doc_fd);
+		free(new_line);
 	}
-	if (line)
-		free(line);
+	if (new_line)
+		free(new_line);
 	close(here_doc_fd);
 	reset_sig_handler_to_child();
 	return (true);
+}
+
+void	change_filename(char *new_tmp_file_name)
+{
+	int	i;
+
+	i = 0;
+	while (new_tmp_file_name[i])
+	{
+		if (ft_strchr("!?-@#$^&*(){} ", new_tmp_file_name[i]) != NULL)
+		{
+			new_tmp_file_name[i] = '_';
+		}
+		i++;
+	}
 }
