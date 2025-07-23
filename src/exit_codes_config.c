@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_codes_config.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:59:22 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 14:33:48 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:51:44 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,17 @@ void	print_error_message(t_token **token_list, char *line)
 
 	error = get_exit_codes()->last_exit_code;
 	if (error == invalid_identifier)
-		(printf("shell: '%s': not a valid identifier \n", line));
+		ft_putendl_fd("shell: not a valid indentifier", 2);
+		//(printf("shell: '%s': not a valid identifier \n", line));
 	if (error == syntax_failure)
-		(printf("shell: '%s': syntax failure \n", line));
+		ft_putendl_fd("shell: syntax failure", 2);
+		//(printf("shell: '%s': syntax failure \n", line));
 	if (error == cmd_not_found)
-		(printf("shell: '%s': command not found \n", line));
+		ft_putendl_fd("shell: command not found", 2);
+		//(printf("shell: '%s': command not found \n", line));
 	if (error == syntax_error_token)
-		(printf("shell: syntax error near unexpected token '%s' \n", line)); //in 2
+		ft_putendl_fd("shell: syntax error near unexpected token", 2);
+		//(printf("shell: syntax error near unexpected token '%s' \n", line));
 	clean_token_lst(*token_list);
 	free(line);
 }
@@ -62,14 +66,19 @@ void	print_error_message(t_token **token_list, char *line)
 void	print_lexer_error_message(char *line)
 {
 	int	error;
+	(void)line;
 
 	error = get_exit_codes()->last_exit_code;
 	if (error == invalid_identifier)
-		(printf("minishell: '%s': not a valid identifier \n", line));
+		ft_putendl_fd("shell: not a valid identifier", 2);
+		//(printf("minishell: '%s': not a valid identifier \n", line));
 	if (error == syntax_failure)
-		(printf("minishell: '%s': syntax failure \n", line));
+		ft_putendl_fd("shell: syntax failure", 2);
+		//(printf("minishell: '%s': syntax failure \n", line));
 	if (error == cmd_not_found)
-		(printf("minishell: '%s': command not found \n", line));
+		ft_putendl_fd("shell: command not found", 2);
+		//(printf("minishell: '%s': command not found \n", line));
 	if (error == syntax_error_token)
-		(printf("minishell: syntax error near unexpected token '%s' \n", line));
+		ft_putendl_fd("shell: syntax error near unexpected token", 2);
+		//(printf("minishell: syntax error near unexpected token '%s' \n", line));
 }

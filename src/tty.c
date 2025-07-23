@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 11:28:49 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:44:09 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,25 @@ void	interactive_shell_tty(char *line)
 
 void	non_interactive_shell(void)
 {
-    char *line;
+    char	*line;
+	int		re;
+	char	*trimmed_line;
 
     while ((line = get_next_line(STDIN_FILENO)) != NULL)
     {
+		if (!line)
+			return ;
+		trimmed_line = ft_strtrim(line, "\n");
+		free(line);
+		line = trimmed_line;
         handle_line(line);
     }
+	re = get_exit_codes()->last_exit_code;
 	clean_bash_env();
 	clean_exit_codes();
 	delete_tmp_files("/tmp");
     rl_clear_history();
+	exit(re);
 }
 
 bool	handle_line(char *line)
@@ -132,7 +141,7 @@ bool	handle_line(char *line)
     ft_execute(cmd_lst, get_bash()->env);
     init_signal(0);
     reset_terminal_state();
-    clean_cmd_lst(cmd_lst);
+    //clean_cmd_lst(cmd_lst);
     return (true);
 }
 
@@ -143,6 +152,7 @@ bool	handle_line(char *line)
 //     char        *new_line;
 //     t_token     *token_lst;
 //     t_cmd_list  *cmd_lst;
+// 	int	re;
 
 //     line = get_next_line(STDIN_FILENO);
 //     while (line != NULL)
@@ -171,10 +181,12 @@ bool	handle_line(char *line)
 //         ft_execute(cmd_lst, get_bash()->env);
 //         init_signal(0);
 //         reset_terminal_state();
-//         clean_cmd_lst(cmd_lst);
+//        // clean_cmd_lst(cmd_lst);
 //         line = get_next_line(STDIN_FILENO);
 //     }
+// 	re = get_exit_codes()->last_exit_code;
 // 	// clean_cmd_list_objects_tmp_files(cmd_lst);
 //     delete_tmp_files("/tmp");
 //     rl_clear_history();
+// 	exit (re);
 // }

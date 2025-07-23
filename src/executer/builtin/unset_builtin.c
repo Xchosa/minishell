@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset_builtin.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/22 16:35:42 by tschulle          #+#    #+#             */
+/*   Updated: 2025/07/22 16:36:33 by tschulle         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "executer.h"
 
 char	**ft_unset_var_by_index(char **envp, int j)
@@ -5,7 +17,7 @@ char	**ft_unset_var_by_index(char **envp, int j)
 	char	**newenvp;
 	int		size;
 	int		i;
-	
+
 	size = 0;
 	i = 0;
 	while (envp[size] != NULL)
@@ -35,7 +47,8 @@ char	**ft_unset_var_by_name(char **envp, char *env_var)
 	len = ft_strlen(env_var);
 	while (envp[j] != NULL)
 	{
-		if (ft_strncmp(envp[j], env_var, len) == 0 && ((envp[j][len] == '=') || envp[j][len] == '\0'))
+		if (ft_strncmp(envp[j], env_var, len) == 0
+			&& ((envp[j][len] == '=') || envp[j][len] == '\0'))
 		{
 			envp = ft_unset_var_by_index(envp, j);
 			if (envp == NULL)
@@ -53,7 +66,7 @@ char	**ft_unset_var_by_name(char **envp, char *env_var)
 
 void	ft_unset(t_cmd_node *cmd_node, char **envp)
 {
-	int	i;
+	int		i;
 	bool	flag;
 
 	flag = true;
