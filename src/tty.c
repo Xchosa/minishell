@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 16:08:27 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:39:29 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ void	non_interactive_shell(void)
 	int		re;
 	char	*trimmed_line;
 
-	while ((line = get_next_line(STDIN_FILENO)) != NULL)
+	line = get_next_line(STDIN_FILENO);
+	while (line != NULL)
 	{
 		if (!line)
 		{
@@ -123,6 +124,7 @@ void	non_interactive_shell(void)
 		free(line);
 		line = trimmed_line;
 		handle_line(line);
+		line = get_next_line(STDIN_FILENO);
 	}
 	re = get_exit_codes()->last_exit_code;
 	clean_bash_env();
