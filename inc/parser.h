@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 13:53:28 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:56:09 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@
 
 typedef struct s_bash
 {
-	char	**env;
-	char	*path;
+	char		**env;
+	char		*path;
+	t_cmd_list	*cmd_garbage;
 }	t_bash;
 
 typedef struct s_exit_codes
@@ -78,6 +79,7 @@ char			**cpychar_arr(char **src);
 bool			init_bash(char **env, int argc);
 t_bash			*get_bash(void);
 void			ft_print_array(char **src);
+void			set_heredoc_cmd_list(t_cmd_list *cmd_list);
 
 // get input 
 void			interactive_shell_tty(char *line);
@@ -106,11 +108,13 @@ bool			final_lexer(t_token *token_lst, char *original_line);
 bool			lexer_correct_export_var(t_token *token_lst,
 					char *original_line);
 bool			check_last_node_syntax(t_token *token_lst);
+bool			check_correct_export_var(char *str);
+bool			check_for_cmd(t_token *token);
 
 // tokeniser
-void 			skip_whitespace(char **line);
+void			skip_whitespace(char **line);
 bool			skip_whitespace_and_check_for_eof(char **line);
-void 			skip_quotes(char **line);
+void			skip_quotes(char **line);
 bool			skip_double_quotes(char **content);
 bool			skip_d_quotes_and_following_quotes(char **line, int i);
 bool			skip_s_quotes_and_following_qutes(char **line, int i);
@@ -119,80 +123,68 @@ bool			find_divider_until_whitespace_or_eof(char c);
 bool			char_is_alpha_nbr_and_no_whitespace(char c);
 int				process_content_to_token(char **line, t_token *token);
 
-t_token		*validate_token_str(t_token **token);
-t_token 	*tokeniser(char **line);
-char		*get_token(char **content);
-t_type		get_token_type(char *content);
-char		*tokenise_divider(char **content, char *new_token);
-t_token		*tokenlast(t_token *lst);
-bool		tokenadd_back(t_token **lst, t_token *new_token);
-char		*add_char(char **content, char *tmp_token, char *new_token, int i);
+t_token			*validate_token_str(t_token **token);
+t_token			*tokeniser(char **line);
+char			*get_token(char **content);
+t_type			get_token_type(char *content);
+char			*tokenise_divider(char **content, char *new_token);
+t_token			*tokenlast(t_token *lst);
+bool			tokenadd_back(t_token **lst, t_token *new_token);
+char			*add_char(char **content, char *tmp_token,
+					char *new_token, int i);
 
-void		set_last_node_null(t_token **lst);
-t_token		*create_token(char **content);
-t_token 	*create_first_token(char **line);
-t_token		*d_quote_case(char **line);
-t_token		*s_quote_case(char **line);
-t_token		*call_exit_token(char **line);
-t_token		*call_saved_export_var(char **line);
-t_token 	*create_token_with_quote_case(char **line, t_token *token);
-t_token		*tokenlstnew(char	**content);
-bool		check_for_divider_with_space(char c);
-bool		check_for_divider_without_space(char c);
-char		*skip_dollar_parameter(char *line);
-void 		free_token(t_token **token_list);
-void		define_token_type(t_token *new_token);
-bool		is_redirect(char *content);
+void			set_last_node_null(t_token **lst);
+t_token			*create_token(char **content);
+t_token			*create_first_token(char **line);
+t_token			*d_quote_case(char **line);
+t_token			*s_quote_case(char **line);
+t_token			*call_exit_token(char **line);
+t_token			*call_saved_export_var(char **line);
+t_token			*create_token_with_quote_case(char **line, t_token *token);
+t_token			*tokenlstnew(char	**content);
+bool			check_for_divider_with_space(char c);
+bool			check_for_divider_without_space(char c);
+void			free_token(t_token **token_list);
+void			define_token_type(t_token *new_token);
+bool			is_redirect(char *content);
 
 //update line
-char		*update_line(char *line, t_token *token);
-char 		*handle_special_characters(char *line);
-char 		*handle_regular_token(char *line);
-char		*update_line_unitl_d_quotes(char *line);
-char		*update_line_unitl_s_quotes(char *line);
-char		*update_line_until_space(char *line);
-void		iter_tokenlst(t_token *lst, void (*f)(t_token *));
-void		print_tokenlst(t_token *data);
+void			iter_tokenlst(t_token *lst, void (*f)(t_token *));
+void			print_tokenlst(t_token *data);
 
 //here_doc
-
-char		*cpy_str_space_deli(const char *src);
-bool		not_single_divider(char c);
-bool		pipe_or_simec(char c);
-int 		special_char_no_divider(char c);
-int			special_char_no_divider_no_eq(char c);
-void		change_filename(char *new_tmp_file_name);
+bool			not_single_divider(char c);
+void			change_filename(char *new_tmp_file_name);
 
 // extend_line
-char 		*extend_line(char **line);
-char 		*get_env_in_line( char **line);
-char 		*d_qoutes_swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line);
-char 		*swap_dollar_var_with_env_var(char *new_line, char *tmp_line, char **line);
-char 		*add_single_char_to_line(char *new_line, char *tmp_line, char **line);
-char 		*add_s_quotes_str_to_line(char *new_line, char *tmp_line, char **line);
-char		*swap_exit_code_in_line(char *new_line, char *tmp_line, char **line);
-char		*extend_line_with_tilde(char *new_line, char *tmp_line, char **line);
+char 			*extend_line(char **line);
+char 			*get_env_in_line( char **line);
+char			*d_qoutes_swap_dollar_var_with_env_var(char *new_line,
+					char *tmp_line, char **line);
+char 			*swap_dollar_var_with_env_var(char *new_line,
+					char *tmp_line, char **line);
+char 			*add_single_char_to_line(char *new_line,
+					char *tmp_line, char **line);
+char 			*add_s_quotes_str_to_line(char *new_line, char *tmp_line,
+					char **line);
+char			*swap_exit_code_in_line(char *new_line,
+					char *tmp_line, char **line);
+char			*extend_line_with_tilde(char *new_line,
+					char *tmp_line, char **line);
 
 //	get export saved variables
-char 		*append_export_var(char *token_str, char **content);
-char		*get_export_token_in_quotes(char **content);
-
-t_token* 	extend_saved_export_var(t_token **token_lst);
-char**		extend_env_with_str(char** src, char *token);
-char*		get_var_from_env(char **src, char *token_no_dollar);
-char*		get_home_directory(char **src);
-char*		extract_var_value(char *env_str, int start_pos);
-void 		reset_token_get_var_from_env(t_token **token_lst, char **src);
-void		reset_token_get_home_directory(t_token **token_lst, char **src);
+char 			*append_export_var(char *token_str, char **content);
+char			*get_export_token_in_quotes(char **content);
+char			*get_var_from_env(char **src, char *token_no_dollar);
+char			*get_home_directory(char **src);
+char			*extract_var_value(char *env_str, int start_pos);
+void			reset_token_get_var_from_env(t_token **token_lst, char **src);
+void			reset_token_get_home_directory(t_token **token_lst, char **src);
 // export tokenise 
-t_token*	equal_case(char **line);
-t_token*	split_token_in_sub_token(t_token *current_token, t_token *chain);
-t_token*	create_token_splited(char **content);
-char*		get_token_equal_as_div(char **content);
-t_token*	create_token_equal_as_div(char **content);
-void		handle_export(t_token *token_lst);
+t_token			*equal_case(char **line);
+t_token			*create_token_equal_as_div(char **content);
 
-char*		get_export_token(char **content);
+
 char*		update_export_line(char *line);
 t_token*	create_export_token(char **content);
 t_token*	create_token_q_case_and_export(char **line, t_token *token_lst);

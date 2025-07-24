@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:15:46 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 09:15:02 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:44:25 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ bool	execute_here_doc(char *filename, int here_doc_fd)
 {
 	char	*line;
 	char	*new_line;
-	
+
 	new_line = NULL;
 	while (1)
 	{

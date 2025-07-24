@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:29:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 13:55:56 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:06:14 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,13 +122,7 @@
 
 
 /*
- echo """"""""""$USER"""""""""""
 
- echo "$""$"
- // in skip double quote
-
- ""
- seq fault
-
- echo """"''""''""
+ls >./home
+// soll kein syntax error sein. durchreichen an thilo 
 */

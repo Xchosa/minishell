@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 09:22:15 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 09:22:45 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:20:21 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ char	*extend_line_with_tilde(char *new_line, char *tmp_line, char **line)
 			new_line = tmp_line;
 			env_str++;
 		}
+		free(env_str);
 		return (new_line);
 	}
 	return (new_line);
@@ -129,6 +130,7 @@ char	*swap_dollar_var_with_env_var(char *new_line,
 			new_line = tmp_line;
 			env_str++;
 		}
+		free(env_str); // freed env_str valgrind 
 		return (new_line);
 	}
 	return (new_line);
