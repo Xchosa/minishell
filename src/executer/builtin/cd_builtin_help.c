@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:43:09 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/23 14:53:50 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:18:17 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ char	**ft_delete_old_pwd(char **envp)
 			newenvp[j] = envp[i];
 			j++;
 		}
+		else
+			free(envp[i]);
 		i++;
 	}
 	newenvp[j] = NULL;

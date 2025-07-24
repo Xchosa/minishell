@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 16:35:42 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/24 09:57:52 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:50:01 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	**ft_unset_var_by_index(char **envp, int j)
 		i++;
 	}
 	newenvp[i] = NULL;
+	free(envp[j]);
 	free(envp);
 	return (newenvp);
 }
