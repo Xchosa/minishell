@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 11:59:28 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:53:28 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +228,7 @@ bool			redir_token(t_token **token_list);
 void			process_redirect(t_token **curr_token, t_cmd_node *cmd_node);
 
 // clean up
+void	clean_test_minishell(t_cmd_list *cmd_list);
 void	exit_cleanup(void);
 void	clean_token_lst(t_token *token_lst);
 void	exit_heredoc_clean(void);

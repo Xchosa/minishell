@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:00:04 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 11:56:47 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:53:08 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,16 @@ void	clean_cmd_list_objects_tmp_files(t_cmd_list *cmd_list)
 	rl_clear_history();
 }
 
-// void	clean_minishell(void)
-// {
-// 	clean_bash_env();
-// 	clean_exit_codes();
-// 	delete_tmp_files("/tmp");
-// 	rl_clear_history();
-// 	clean_cmd_lst(cmd_list);
-// }
+void	clean_test_minishell(t_cmd_list *cmd_list)
+{
+	(void)cmd_list;
+	if (cmd_list)
+		clean_cmd_lst(cmd_list);
+	clean_bash_env();
+	clean_exit_codes();
+	delete_tmp_files("/tmp");
+	rl_clear_history();
+}
 
 // cmd_list, token_list, line, bash_env und exit_codes
 
