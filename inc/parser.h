@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 14:40:08 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:56:09 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@
 
 typedef struct s_bash
 {
-	char	**env;
-	char	*path;
+	char		**env;
+	char		*path;
+	t_cmd_list	*cmd_garbage;
 }	t_bash;
 
 typedef struct s_exit_codes
@@ -78,6 +79,7 @@ char			**cpychar_arr(char **src);
 bool			init_bash(char **env, int argc);
 t_bash			*get_bash(void);
 void			ft_print_array(char **src);
+void			set_heredoc_cmd_list(t_cmd_list *cmd_list);
 
 // get input 
 void			interactive_shell_tty(char *line);

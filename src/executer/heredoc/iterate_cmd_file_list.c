@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:58:57 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 14:45:23 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:58:24 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,7 @@ void	save_heredoc_files(t_cmd_node **cmd_node)
 	}
 }
 
-// void change_incorrect_file_name
+void	set_heredoc_cmd_list(t_cmd_list *cmd_list)
+{
+	get_bash()->cmd_garbage = cmd_list;
+}

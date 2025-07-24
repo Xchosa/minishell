@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tty.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/23 12:44:09 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:08:27 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static char	*read_terminal(void)
 	char	*trimmed_line;
 
 	reset_terminal_state();
+	get_bash()->cmd_garbage = NULL;
 	init_signal(0);
 	if (isatty(fileno(stdin)))
 		line = readline("minishell:$ ");

@@ -6,13 +6,11 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 10:00:40 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 14:40:40 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:58:10 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signal_tp.h"
-
-static t_cmd_list *g_cmd_lst = NULL;
 
 void	heredoc_signal(int is_child)
 {
@@ -54,7 +52,7 @@ void	exit_heredoc_clean(void)
 {
 	int	exit_code;
 
-	clean_cmd_lst(g_cmd_lst);
+	clean_cmd_lst(get_bash()->cmd_garbage);
 	exit_code = get_exit_codes()->last_exit_code;
 	clean_bash_env();
 	clean_exit_codes();

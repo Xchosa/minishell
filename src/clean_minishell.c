@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:00:04 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 13:53:08 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:12:09 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	delete_tmp_files(const char *foldername)
 
 void	clean_cmd_list_objects_tmp_files(t_cmd_list *cmd_list)
 {
-	clean_cmd_lst(cmd_list);
+	(void)cmd_list;
 	clean_bash_env();
 	clean_exit_codes();
 	delete_tmp_files("/tmp");
@@ -64,8 +64,6 @@ void	clean_cmd_list_objects_tmp_files(t_cmd_list *cmd_list)
 void	clean_test_minishell(t_cmd_list *cmd_list)
 {
 	(void)cmd_list;
-	if (cmd_list)
-		clean_cmd_lst(cmd_list);
 	clean_bash_env();
 	clean_exit_codes();
 	delete_tmp_files("/tmp");
@@ -106,6 +104,7 @@ void	clean_cmd_lst(t_cmd_list *cmd_list)
 	if (!cmd_list->head)
 	{
 		free(cmd_list);
+		cmd_list = NULL;
 		return ;
 	}
 	cmd_node = cmd_list->head;
@@ -118,4 +117,5 @@ void	clean_cmd_lst(t_cmd_list *cmd_list)
 		cmd_node = tmp;
 	}
 	free(cmd_list);
+	cmd_list = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 10:57:23 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/08 16:15:45 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:11:30 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ bool	init_bash(char **env, int argc)
 			return (false);
 	}
 	bash->path = NULL;
+	bash->cmd_garbage = NULL;
 	ft_increase_shlvl(bash->env);
 	return (true);
 }
@@ -47,6 +48,13 @@ void	clean_bash_env(void)
 		ft_free_array(bash->env);
 	}
 	bash->env = NULL;
+	if (bash->path)
+		free(bash->path);
+	if (get_bash()->cmd_garbage)
+	{
+		clean_cmd_lst(get_bash()->cmd_garbage);
+		get_bash()->cmd_garbage = NULL;
+	}
 }
 
 char	**cpychar_arr(char **src)
@@ -58,20 +66,20 @@ char	**cpychar_arr(char **src)
 	rows = 0;
 	while (src[rows] != NULL)
 		rows++;
-	cpy_env = (char **)malloc(sizeof(char*) * (rows + 1));
+	cpy_env = (char **)malloc(sizeof(char *) * (rows + 1));
 	i = 0;
 	while (i < rows && src[i])
 	{
 		cpy_env[i] = ft_strdup(src[i]);
 		i++;
 	}
-	cpy_env[i]= NULL;
+	cpy_env[i] = NULL;
 	return (cpy_env);
 }
 
 void	ft_print_array(char **src)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (src[i])
