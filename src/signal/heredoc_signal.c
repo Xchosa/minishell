@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 10:00:40 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 15:58:10 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:27:40 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ void	exit_heredoc_clean(void)
 {
 	int	exit_code;
 
-	clean_cmd_lst(get_bash()->cmd_garbage);
+	if (get_bash()->cmd_garbage)
+	{
+		clean_cmd_lst(get_bash()->cmd_garbage);
+		get_bash()->cmd_garbage = NULL;
+	}
 	exit_code = get_exit_codes()->last_exit_code;
 	clean_bash_env();
 	clean_exit_codes();
