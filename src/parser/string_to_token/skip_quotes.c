@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 11:35:25 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 14:22:47 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:00:45 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ bool	skip_double_quotes(char **content)
 {
 	if ((ft_strchr("\"", **content) != NULL))
 	{
-		if ((*content)[1] != '\0' && ft_strchr("\"", (*content)[1]) != NULL)
+		if (content != NULL && *content != NULL && *content[0] != '\0'
+			&& (*content)[1] != '\0' && ft_strchr("\"", (*content)[1]) != NULL)
 		{
 			(*content) += 2;
 			return (true);
@@ -29,7 +30,8 @@ bool	skip_double_quotes(char **content)
 	}
 	else if ((ft_strchr("\'", **content) != NULL))
 	{
-		if ((*content)[1] != '\0' && ft_strchr("\'", (*content)[1]) != NULL )
+		if (content != NULL && *content != NULL && *content[0] != '\0'
+			&& (*content)[1] != '\0' && ft_strchr("\'", (*content)[1]) != NULL )
 		{
 			(*content) += 2;
 			return (true);

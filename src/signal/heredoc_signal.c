@@ -6,11 +6,13 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 10:00:40 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 10:00:45 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 12:02:03 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signal_tp.h"
+
+static t_cmd_list *g_cmd_lst = NULL;
 
 void	heredoc_signal(int is_child)
 {
@@ -35,7 +37,7 @@ void	heredoc_handler(int sig)
 	{
 		get_exit_codes()->last_exit_code = 130;
 		write(STDOUT_FILENO, "\n", 1);
-		exit(130);
+		exit_heredoc_clean();
 	}
 	else if (sig == SIGQUIT)
 	{
@@ -46,4 +48,17 @@ void	heredoc_handler(int sig)
 	{
 		get_exit_codes()->last_exit_code = EC_SUCESS;
 	}
+}
+
+void	exit_heredoc_clean(void)
+{
+	int	exit_code;
+
+	clean_cmd_lst(g_cmd_lst);
+	exit_code = get_exit_codes()->last_exit_code;
+	clean_bash_env();
+	clean_exit_codes();
+	delete_tmp_files("/tmp");
+	rl_clear_history();
+	exit(exit_code);
 }

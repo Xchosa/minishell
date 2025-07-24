@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:29:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 16:35:45 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:55:56 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // 	// char *line = <<1"; // leaked
 // 	char *original_line;
 //     char *new_line;
-// 	line = ft_strdup("hello |   ");
+// 	line = ft_strdup(" \"\" ");
 // 	// line = ft_strdup("echo \" '\"$?\" '\"");
 // 	// >outfile | echo 1
 
@@ -116,12 +116,19 @@
 //     printf("\nis it Thilos issue: \n\n");
 // 	ft_execute(cmd_lst, get_bash()->env);
 
-// 	clean_cmd_list_objects_tmp_files(cmd_lst);
+// 	// clean_cmd_list_objects_tmp_files(cmd_lst);
 
 // }
 
+
 /*
-ekligste testcases 
-echo $?dfdfd
--> print 0 and df
+ echo """"""""""$USER"""""""""""
+
+ echo "$""$"
+ // in skip double quote
+
+ ""
+ seq fault
+
+ echo """"''""''""
 */
