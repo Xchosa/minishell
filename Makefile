@@ -6,7 +6,7 @@ CC := cc
 CFLAGS	= -Wall -Wextra -Werror -g  -I inc/ -ldl -lglfw -pthread -lm -fsanitize=address
 #CFLAGS	= -Wall -Wextra  -g -I inc/ -ldl -lglfw -pthread -lm #-Werror
 #----------mac ---------
-CFLAGS		= -Wall -Werror -Wextra -g  -I inc/ #-fsanitize=address
+CFLAGS		= -Wall -Werror -Wextra -g  -I inc/ -fsanitize=address
 #CFLAGS		= -Wall -Wextra -g -I inc/ #-Werror 
 
 
