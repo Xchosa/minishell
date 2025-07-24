@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:43:09 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/22 14:09:34 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:53:50 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_home_path(char **envp)
 	return (home);
 }
 
-bool	there_is_env_var(char **envp, char *env_var)
+bool	there_is_env_var(char **envp, char *env_var) //needs to be called with = like USER=
 {
 	int	i;
 	int	j;

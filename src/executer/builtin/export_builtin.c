@@ -6,13 +6,13 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:02:00 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/22 14:50:07 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/24 09:54:47 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executer.h"
 
-int	ft_get_index(int i, char **envp)
+int	ft_get_index(int pos_to_print, char **envp)
 {
 	int	j;
 	int	k;
@@ -25,12 +25,12 @@ int	ft_get_index(int i, char **envp)
 	max = 0;
 	while (envp[max] != NULL)
 		max++;
-	while (j != max - i && l < max)
+	while (j != max - pos_to_print && l < max)
 	{
 		j = 0;
 		while (envp[k] != NULL)
 		{
-			if (ft_strncmp(envp[l], envp[k], 1024) < 0)
+			if (ft_strncmp(envp[l], envp[k], 1024) <= 0)
 				j++;
 			k++;
 		}
@@ -50,10 +50,15 @@ void	ft_export_print(char **envp)
 	while (envp[i] != NULL)
 	{
 		j = ft_get_index(i, envp);
-		s = ft_split(envp[j], '=');
-		ft_printf("declare -x %s=\"%s\"\n", s[0], s[1]);
+		if (ft_strchr(envp[j], '=') != NULL && *(ft_strchr(envp[j], '=') + 1) != '\0')
+		{
+			s = ft_split(envp[j], '=');
+			ft_printf("declare -x %s=\"%s\"\n", s[0], ft_strchr(envp[j], '=') + 1);
+			free(s);
+		}
+		else 
+			ft_printf("declare -x %s\n", envp[j]);
 		i++;
-		free(s);
 	}
 	get_exit_codes()->last_exit_code = 0;
 }
@@ -88,6 +93,21 @@ char	**ft_export_variable(char *cmd_var, char **envp)
 
 bool	ft_check_valid_identifier(char *var)
 {
+	char	**s;
+	int		i;
+
+	i = 0;
+	s = ft_split(var, '=');
+	while (s[0][i] != '\0')
+	{
+		if (strrchr("-+{}!@#*^.~", s[0][i]) != NULL)
+		{
+			ft_putendl_fd("shell: not a valid identifier", 2);
+			get_exit_codes()->last_exit_code = 1;
+			return (false);
+		}
+		i++;
+	}
 	if (ft_isalpha(var[0]) != 1 && var[0] != '_')
 	{
 		get_exit_codes()->last_exit_code = 1;

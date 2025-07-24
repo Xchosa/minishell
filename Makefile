@@ -130,7 +130,7 @@ $(LIBFT):
 
 debug: -Wall -Wextra -Werror -g -I inc/ -fsanitize=
 
-# valgrind:
+# valgrind: --suppressions=readline.supp mit entsprechneder file und ohne fsanitise
 # 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./minishell
 
 .PHONY: re clean fclean all libft_fclean

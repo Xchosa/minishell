@@ -6,20 +6,55 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:41:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/22 13:41:47 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:39:02 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executer.h"
 
+char	*get_old_pwd(char **envp)
+{
+	int		i;
+	char	*oldpwd;
+
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		if (strncmp("OLDPWD=", envp[i], 7) == 0)
+			break ;
+		i++;
+	}
+	oldpwd = envp[i];
+	i = 0;
+	if (oldpwd == NULL)
+	{
+		ft_putendl_fd("shell: OLDPWD not set", 2);
+		return (NULL);
+	}
+	while (i < 7)
+	{
+		oldpwd++;
+		i++;
+	}
+	return (oldpwd);
+}
+
 void	ft_cd(t_cmd_node *cmd_node, char **envp)
 {
+	char	*s;
 	if (cmd_node->cmd[1] == NULL)
 	{
 		chdir(get_home_path(envp));
 		ft_update_env_cd(cmd_node, envp);
 		get_exit_codes()->last_exit_code = 0;
 		return ;
+	}
+	if (strncmp(cmd_node->cmd[1], "-", 2) == 0)
+	{
+		free(cmd_node->cmd[1]);
+		s  = ft_strdup(get_old_pwd(envp));
+		cmd_node->cmd[1] = s;//segfault hier aber liegt glaube ich an ft_strlen oder strdup nullchecks
+		printf("%s\n", cmd_node->cmd[1]);
 	}
 	if (chdir(cmd_node->cmd[1]) != 0)
 	{
