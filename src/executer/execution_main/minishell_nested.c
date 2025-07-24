@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:59:07 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/22 11:05:22 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:54:51 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,12 @@ void	ft_increase_shlvl(char **envp)
 	char	*freeme;
 	char	*buf;
 
-	i = 0;
+	i = - 1;
 	j = 0;
-	while (envp[i] != NULL)
+	while (envp[++i] != NULL)
 	{
 		if (strncmp("SHLVL=", envp[i], 6) == 0)
 			break ;
-		i++;
 	}
 	if (envp[i] == NULL)
 		get_bash()->env = ft_export_variable("SHLVL=1", envp);
@@ -37,11 +36,7 @@ void	ft_increase_shlvl(char **envp)
 		while (j++ < 6)
 			envp[i]++;
 		buf = ft_itoa(ft_atoi(envp[i]) + 1);
-		if (buf == NULL)
-			return ;
 		newshlvl = ft_strjoin("SHLVL=", buf);
-		if (newshlvl == NULL)
-			return (free(buf));
 		envp[i] = newshlvl;
 		return (free(freeme), free(buf));
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extend_line_helper.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 09:22:06 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 15:58:15 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:22:59 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ char	*get_env_in_line( char **line)
 	if (!(*env_str))
 		return (env_str);
 	return_str = get_var_from_env(get_bash()->env, env_str);
+	free(env_str);
 	return (return_str);
 }
