@@ -1,6 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_signal.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/24 10:00:40 by poverbec          #+#    #+#             */
+/*   Updated: 2025/07/24 10:00:45 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "signal_tp.h"
-
 
 void	heredoc_signal(int is_child)
 {
@@ -29,11 +39,11 @@ void	heredoc_handler(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
-		get_exit_codes()->last_exit_code = ec_sucess;
+		get_exit_codes()->last_exit_code = EC_SUCESS;
 		exit(1);
 	}
 	else if (sig == SIGTSTP)
 	{
-		get_exit_codes()->last_exit_code = ec_sucess;
+		get_exit_codes()->last_exit_code = EC_SUCESS;
 	}
 }

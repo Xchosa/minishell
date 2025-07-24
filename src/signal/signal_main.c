@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:54:10 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/01 13:56:18 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 10:00:23 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void	parent_handler(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
-		get_exit_codes()->last_exit_code = ec_sucess;
+		get_exit_codes()->last_exit_code = EC_SUCESS;
 	}
 	else if (sig == SIGTSTP)
 	{
-		get_exit_codes()->last_exit_code = ec_sucess;
+		get_exit_codes()->last_exit_code = EC_SUCESS;
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_codes_config.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:59:22 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/23 13:51:44 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/24 10:00:08 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	init_exit_codes(int argc)
 	exit_code = get_exit_codes();
 	if (argc == 1)
 	{
-		exit_code->last_exit_code = ec_sucess;
+		exit_code->last_exit_code = EC_SUCESS;
 	}
 	return (true);
 }
@@ -44,15 +44,14 @@ void	print_error_message(t_token **token_list, char *line)
 {
 	int		error;
 
-
 	error = get_exit_codes()->last_exit_code;
-	if (error == invalid_identifier)
+	if (error == INVALID_IDENTIIER)
 		ft_putendl_fd("shell: not a valid indentifier", 2);
-	if (error == syntax_failure)
+	if (error == SYNTAX_FAILURE)
 		ft_putendl_fd("shell: syntax failure", 2);
-	if (error == cmd_not_found)
+	if (error == CMD_NOT_FOUND)
 		ft_putendl_fd("shell: command not found", 2);
-	if (error == syntax_error_token)
+	if (error == SYNTAX_ERROR_TOKEN)
 		ft_putendl_fd("shell: syntax error near unexpected token", 2);
 	clean_token_lst(*token_list);
 	free(line);
@@ -63,15 +62,13 @@ void	print_lexer_error_message(char *line)
 	int	error;
 
 	(void)line;
-
 	error = get_exit_codes()->last_exit_code;
-	if (error == invalid_identifier)
+	if (error == INVALID_IDENTIIER )
 		ft_putendl_fd("shell: not a valid identifier", 2);
-
-	if (error == syntax_failure)
+	if (error == SYNTAX_FAILURE)
 		ft_putendl_fd("shell: syntax failure", 2);
-	if (error == cmd_not_found)
+	if (error == CMD_NOT_FOUND)
 		ft_putendl_fd("shell: command not found", 2);
-	if (error == syntax_error_token)
+	if (error == SYNTAX_ERROR_TOKEN)
 		ft_putendl_fd("shell: syntax error near unexpected token", 2);
 }

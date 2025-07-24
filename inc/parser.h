@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 18:08:00 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/24 10:00:01 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,25 @@
 # include <stdlib.h>
 # include <dirent.h>
 
+// # define Syntax_failure 258,
+# define SYNTAX_FAILURE 258
+// #define syntax_error_token 2
+# define SYNTAX_ERROR_TOKEN 2
+//#define ec_sucess 0
+# define EC_SUCESS 0
+// #define ec_abort_z 146
+# define EC_ABORT_Z 146
+// #define invalid_identifier 1
+# define INVALID_IDENTIIER 1
+# define CMD_NOT_FOUND 127 
+// #define cmd_not_found 127
 
-#define syntax_failure 258
-#define syntax_error_token 2
-#define ec_sucess 0
-#define ec_abort_z 146
-// #define ec_failure 127
-#define invalid_identifier 1
-// control c -> 1
-#define stopped 148
-#define cmd_not_found 127
-
-
-// t_bash *get_bash(void);
 typedef struct s_bash
 {
 	char	**env;
 	char	*path;
 }	t_bash;
 
- // update after every runexit
 typedef struct s_exit_codes
 {
 	int	last_exit_code;
@@ -64,13 +63,7 @@ typedef enum s_type
 	CALL_SAVED_VAR = 12,
 	Error =13,
 	PIPE = 14,
-
 }	t_type;
-
-//from export hallo="ls -l" -> 'hallo' = Export_var  | ls -l normal TEXT
-// call exit $?
-// call_saved_var  $hello
-//
 
 typedef struct s_token
 {
@@ -80,56 +73,51 @@ typedef struct s_token
 	struct s_token	*head;
 }	t_token;
 
-
 // t_bash functions
-char		**cpychar_arr(char** src);
-bool		init_bash(char **env, int argc);
-t_bash		*get_bash(void);
-void 		ft_print_array(char **src);
+char			**cpychar_arr(char **src);
+bool			init_bash(char **env, int argc);
+t_bash			*get_bash(void);
+void			ft_print_array(char **src);
 
 // get input 
-void		interactive_shell_tty(char *line);
-// void 	non_interactive_shell(char *line);
-void		non_interactive_shell(void);
-bool		handle_line(char *line);
+void			interactive_shell_tty(char *line);
+void			non_interactive_shell(void);
+bool			handle_line(char *line);
 
 //interrupt tty
-bool 		check_lexer_and_free(char *line);
-bool 		check_lexer_token_and_free(t_token *token, char *line);
+bool			check_lexer_and_free(char *line);
+bool			check_lexer_token_and_free(t_token *token, char *line);
 
 // lexer
-bool		lexer(char *line);
-int			count_up_strings(char *line);
-bool		lexer_error_chars(char *line);
-bool		wrong_use_pipe_and_redirection(char *line);
-bool		check_for_correct_double_divider(char *line);
-bool		check_for_correct_single_divider(char *line);
-bool		check_syntax_heredoc(char *heredoc_del);
+bool			lexer(char *line);
+int				count_up_strings(char *line);
+bool			lexer_error_chars(char *line);
+bool			wrong_use_pipe_and_redirection(char *line);
+bool			check_for_correct_double_divider(char *line);
+bool			check_for_correct_single_divider(char *line);
+bool			check_syntax_heredoc(char *heredoc_del);
 
 // lexer tokens
-bool		lexer_token(t_token *token_lst, char *original_line);
-bool		tokeniser_successful(t_token *token_lst, char *original_line);
-
-void 		print_error_message(t_token **token_lst, char *line);
-void		print_lexer_error_message(char *line);
-bool		find_error_chars(char *line);
-
-bool		final_lexer(t_token *token_lst, char *original_line);
-bool		lexer_correct_export_var(t_token *token_lst, char *original_line);
-bool		check_last_node_syntax(t_token *token_lst);
+bool			lexer_token(t_token *token_lst, char *original_line);
+bool			tokeniser_successful(t_token *token_lst, char *original_line);
+void			print_error_message(t_token **token_lst, char *line);
+void			print_lexer_error_message(char *line);
+bool			final_lexer(t_token *token_lst, char *original_line);
+bool			lexer_correct_export_var(t_token *token_lst,
+					char *original_line);
+bool			check_last_node_syntax(t_token *token_lst);
 
 // tokeniser
-void 		skip_whitespace(char **line);
-bool		skip_whitespace_and_check_for_eof(char **line);
-void 		skip_quotes(char **line);
-bool		skip_double_quotes(char **content);
-bool		skip_d_quotes_and_following_quotes(char **line, int i);
-bool		skip_s_quotes_and_following_qutes(char **line, int i);
-void		skip_single_quotes(char **line);
-bool		find_divider_until_whitespace_or_eof(char c);
-bool		char_is_alpha_nbr_and_no_whitespace(char c);
-int			process_content_to_token(char **line, t_token *token);
-
+void 			skip_whitespace(char **line);
+bool			skip_whitespace_and_check_for_eof(char **line);
+void 			skip_quotes(char **line);
+bool			skip_double_quotes(char **content);
+bool			skip_d_quotes_and_following_quotes(char **line, int i);
+bool			skip_s_quotes_and_following_qutes(char **line, int i);
+void			skip_single_quotes(char **line);
+bool			find_divider_until_whitespace_or_eof(char c);
+bool			char_is_alpha_nbr_and_no_whitespace(char c);
+int				process_content_to_token(char **line, t_token *token);
 
 t_token		*validate_token_str(t_token **token);
 t_token 	*tokeniser(char **line);

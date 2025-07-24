@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executer.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/24 09:47:27 by poverbec          #+#    #+#             */
+/*   Updated: 2025/07/24 09:47:29 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EXECUTER_H
 # define EXECUTER_H
 
@@ -12,7 +24,8 @@ int		ft_isnum(char *s);
 void	ft_exit(t_cmd_list *cmd_list, t_cmd_node *cmd_node);
 void	ft_execute(t_cmd_list *cmd_list, char **envp);
 void	ft_execute_command(t_cmd_node *cmd_node, char **envp);
-void	ft_execute_builtin(t_cmd_list *cmd_list, t_cmd_node *cmd_node, char **envp);
+void	ft_execute_builtin(t_cmd_list *cmd_list, t_cmd_node *cmd_node,
+			char **envp);
 bool	ft_open_pipes(int fd[][2], t_cmd_list *cmd_list);
 bool	ft_first_node(int fd[][2]);
 bool	ft_middle_node(int fd[][2], t_cmd_list *cmd_list, t_cmd_node *cmd_node);
@@ -28,15 +41,14 @@ bool	ft_manage_infile(char *infile);
 bool	ft_manage_outfile(char *outfile);
 bool	ft_manage_append(char *appendfile);
 bool	ft_manage_redirections_multi(t_file_list *file_list);
-void	manage_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *cmd_node, char **envp);
+void	manage_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *cmd_node,
+			char **envp);
 void	ft_execution_loop(t_cmd_list *cmd_list, char **envp, int (*fd)[2]);
 bool	create_pipes(int (**fd)[2], t_cmd_list *cmd_list);
 //bool	there_is_old_pwd(char **envp);
 bool	there_is_env_var(char **envp, char *env_var);
 char	**ft_add_relative_path(t_cmd_node *cmd_node, char **envp);
 char	**ft_add_parent(char **envp);
-
-
 bool	ft_manage_heredoc(char *tmp_filename);
 
 int		ft_get_index(int i, char **envp);

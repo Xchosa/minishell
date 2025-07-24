@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:27:12 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 16:31:39 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 09:57:38 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ bool	lexer_token(t_token *token_lst, char *original_line)
 		{
 			if (check_syntax(cur_token) == false)
 			{
-				get_exit_codes()->last_exit_code = syntax_error_token;
+				get_exit_codes()->last_exit_code = SYNTAX_ERROR_TOKEN;
 				// token_lst = cur_token->head;
 				// print_error_message(&token_lst, original_line);
 				return (false);
@@ -126,7 +126,7 @@ bool	lexer_correct_export_var(t_token *token_lst, char *original_line)
 		{
 			if (check_correct_export_var(cur_token->token) == false)
 			{
-				get_exit_codes()->last_exit_code = invalid_identifier;
+				get_exit_codes()->last_exit_code = INVALID_IDENTIIER;
 				print_error_message(&token_lst, original_line);
 				return (false);
 			}
