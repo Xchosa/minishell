@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:02:00 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/23 17:05:37 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/24 09:54:47 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_get_index(int pos_to_print, char **envp)
 		j = 0;
 		while (envp[k] != NULL)
 		{
-			if (ft_strncmp(envp[l], envp[k], 1024) < 0)
+			if (ft_strncmp(envp[l], envp[k], 1024) <= 0)
 				j++;
 			k++;
 		}
@@ -53,7 +53,7 @@ void	ft_export_print(char **envp)
 		if (ft_strchr(envp[j], '=') != NULL && *(ft_strchr(envp[j], '=') + 1) != '\0')
 		{
 			s = ft_split(envp[j], '=');
-			ft_printf("declare -x %s=\"%s\"\n", s[0], s[1]);
+			ft_printf("declare -x %s=\"%s\"\n", s[0], ft_strchr(envp[j], '=') + 1);
 			free(s);
 		}
 		else 
