@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:41:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/23 16:39:02 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:45:26 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@ char	*get_old_pwd(char **envp)
 	oldpwd = envp[i];
 	i = 0;
 	if (oldpwd == NULL)
-	{
-		ft_putendl_fd("shell: OLDPWD not set", 2);
 		return (NULL);
-	}
 	while (i < 7)
 	{
 		oldpwd++;
@@ -51,6 +48,12 @@ void	ft_cd(t_cmd_node *cmd_node, char **envp)
 	}
 	if (strncmp(cmd_node->cmd[1], "-", 2) == 0)
 	{
+		if (there_is_env_var(envp, "OLDPWD") == false)
+		{
+			ft_putendl_fd("shell: cd : OLDPWD not set", 2);
+			get_exit_codes()->last_exit_code = 1;
+			return ;
+		}
 		free(cmd_node->cmd[1]);
 		s  = ft_strdup(get_old_pwd(envp));
 		cmd_node->cmd[1] = s;//segfault hier aber liegt glaube ich an ft_strlen oder strdup nullchecks
