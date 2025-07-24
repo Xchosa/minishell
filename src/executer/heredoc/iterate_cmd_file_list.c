@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:58:57 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 13:45:02 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:45:23 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int	find_here_doc_file_node(t_file_node **file_node)
 	{
 		if (cur_file_node->redir_type == HERE_DOC)
 		{
-			// hier int function mit signaling, damit mit ctrl + c 
-			// in den naechsten heredoc gesprungen wird. 
 			if (save_here_doc_in_tmp(&cur_file_node) != 0)
 				return (1);
 		}

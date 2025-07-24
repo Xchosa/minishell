@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:13:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 16:12:27 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:11:24 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static bool	correct_out_direction(char *line)
 	i = 0;
 	if (ft_strncmp (">", &line[i +1], 1) == 0)
 	{
-		if (check_for_divider_without_space(line[i+2]) == true)
+		if (check_for_divider_without_space(line[i + 2]) == true)
 			return (false);
 		return (true);
 	}
@@ -38,7 +38,7 @@ bool	check_for_correct_double_divider(char *line)
 	{
 		if (ft_strncmp ("<", &line[i +1], 1) == 0)
 		{
-			if (check_for_divider_without_space(line[i+2]) == true)
+			if (check_for_divider_without_space(line[i + 2]) == true)
 				return (false);
 			return (true);
 		}
@@ -87,11 +87,11 @@ bool	wrong_use_pipe_and_redirection(char *line)
 
 	i = 0;
 	if (line == NULL || *line == '\0')
-        return (true);
+		return (true);
 	if ((line[i] == '|') || (line[i] == '&') || (line[i] == ';'))
 		return (false);
 	size = ft_strlen(line);
 	if (size > 0 && line[size - 1] == '|')
-        return (false);
+		return (false);
 	return (true);
 }

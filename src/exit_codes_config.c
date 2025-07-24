@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:59:22 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 10:00:08 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:21:48 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	print_error_message(t_token **token_list, char *line)
 	if (error == SYNTAX_ERROR_TOKEN)
 		ft_putendl_fd("shell: syntax error near unexpected token", 2);
 	clean_token_lst(*token_list);
-	free(line);
+	if (line != NULL)
+		free(line);
 }
 
 void	print_lexer_error_message(char *line)
@@ -63,7 +64,7 @@ void	print_lexer_error_message(char *line)
 
 	(void)line;
 	error = get_exit_codes()->last_exit_code;
-	if (error == INVALID_IDENTIIER )
+	if (error == INVALID_IDENTIIER)
 		ft_putendl_fd("shell: not a valid identifier", 2);
 	if (error == SYNTAX_FAILURE)
 		ft_putendl_fd("shell: syntax failure", 2);

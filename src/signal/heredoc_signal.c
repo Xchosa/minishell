@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 10:00:40 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 12:02:03 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:40:40 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,7 @@ void	exit_heredoc_clean(void)
 	clean_exit_codes();
 	delete_tmp_files("/tmp");
 	rl_clear_history();
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	exit(exit_code);
 }

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:09:11 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/14 09:28:56 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:30:18 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ bool	tokeniser_successful(t_token *token_lst, char *line)
 	if (!token_lst)
 	{
 		free(line);
+		line = NULL;
 		return (false);
 	}
 	return (true);

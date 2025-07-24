@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:25:55 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/02 17:27:01 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:12:32 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,31 @@ bool	d_quote_case_no_div(char *line)
 		i++;
 	}
 	return (true);
+}
+
+bool	check_syntax_heredoc(char *heredoc_del)
+{
+	int	i;
+
+	i = 0;
+	while (heredoc_del[i])
+	{
+		if (ft_strchr(".!?-@#$^&*(){}", heredoc_del[i]) != NULL)
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+bool	check_for_cmd(t_token *token)
+{
+	if (token->token_type == Redirect_input)
+		return (true);
+	else if (token->token_type == Redirect_output)
+		return (true);
+	else if (token->token_type == Append)
+		return (true);
+	else if (token->token_type == here_doc)
+		return (true);
+	return (false);
 }
