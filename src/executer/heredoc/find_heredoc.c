@@ -67,10 +67,6 @@ bool	check_for_interactive_shell(void)
 	return (false);
 }
 
-
-
-
-
 int	save_here_doc_in_tmp(t_file_node **file_node)
 {
 	int			here_doc_fd;
@@ -87,7 +83,7 @@ int	save_here_doc_in_tmp(t_file_node **file_node)
 	here_doc_fd = open(n_t_file_name_suf, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (here_doc_fd == -1)
 		return (error_heredoc(n_t_file_name_suf, new_tmp_file_name, suffix), 1);
-	if (execute_here_doc((*file_node)->filename, here_doc_fd) == false)
+	if (handle_signal_in_heredoc((*file_node)->filename, here_doc_fd) == false)
 	{
 		unlink(n_t_file_name_suf);
 		free_heredoc_stoped(n_t_file_name_suf, new_tmp_file_name, suffix);

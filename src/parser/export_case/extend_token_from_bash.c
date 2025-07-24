@@ -44,31 +44,31 @@ void	reset_token_get_var_from_env(t_token **token_lst, char **src)
 	free(str_until_dollar);
 }
 
-t_token	*extend_saved_export_var(t_token **token_lst)
-{
-	t_bash	*bash;
-	t_token	*prev_token;
+// t_token	*extend_saved_export_var(t_token **token_lst)
+// {
+// 	t_bash	*bash;
+// 	t_token	*prev_token;
 
-	bash = get_bash();
-	prev_token = NULL;
-	while (token_lst)
-	{
-		if ((*token_lst)->token_type == Tilde)
-			reset_token_get_home_directory(token_lst, bash->env);
-		else if ((*token_lst)->token_type == CALL_SAVED_VAR)
-		{
-			reset_token_get_var_from_env(token_lst, bash->env);
-			tokenise_muliple_tok_from_env(token_lst, prev_token);
-		}
-		else if ((*token_lst)->token_type == Mix_Export_var)
-		{
-			reset_token_get_var_from_env(token_lst, bash->env);
-			tokenise_muliple_tok_from_env(token_lst, prev_token);
-		}
-		prev_token = (*token_lst);
-		if ((*token_lst)->next == NULL)
-			break ;
-		(*token_lst) = (*token_lst)->next;
-	}
-	return ((*token_lst)->head);
-}
+// 	bash = get_bash();
+// 	prev_token = NULL;
+// 	while (token_lst)
+// 	{
+// 		if ((*token_lst)->token_type == Tilde)
+// 			reset_token_get_home_directory(token_lst, bash->env);
+// 		else if ((*token_lst)->token_type == CALL_SAVED_VAR)
+// 		{
+// 			reset_token_get_var_from_env(token_lst, bash->env);
+// 			tokenise_muliple_tok_from_env(token_lst, prev_token);
+// 		}
+// 		else if ((*token_lst)->token_type == Mix_Export_var)
+// 		{
+// 			reset_token_get_var_from_env(token_lst, bash->env);
+// 			tokenise_muliple_tok_from_env(token_lst, prev_token);
+// 		}
+// 		prev_token = (*token_lst);
+// 		if ((*token_lst)->next == NULL)
+// 			break ;
+// 		(*token_lst) = (*token_lst)->next;
+// 	}
+// 	return ((*token_lst)->head);
+// }

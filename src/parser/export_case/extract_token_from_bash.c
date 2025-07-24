@@ -13,7 +13,6 @@
 #include "parser.h"
 #include "minishell.h"
 
-
 char	*extract_var_value(char *env_str, int start_pos)
 {
 	char	*tmp_token;
@@ -76,9 +75,9 @@ char	*get_home_directory(char **src)
 	return (ft_strdup(""));
 }
 
-char	*handle_mulit_token(char *line)
-{
-	while (*line && (ft_isalnum(*line) || special_char_no_divider_no_eq(*line)))
-		line++;
-	return (line);
-}
+// char	*handle_mulit_token(char *line)
+// {
+// 	while (*line && (ft_isalnum(*line) || special_char_no_divider_no_eq(*line)))
+// 		line++;
+// 	return (line);
+// }

@@ -19,5 +19,6 @@ void    reset_sig_handler_to_parent(void);
 void	reset_sig_handler_to_child(void);
 void	heredoc_signal(int is_child);
 void	heredoc_handler(int sig);
+bool	handle_signal_in_heredoc(char *filename, int here_doc_fd);
 
 #endif

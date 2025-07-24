@@ -14,17 +14,14 @@
 #include "parser.h"
 #include "executer.h"
 
-
 int	main(int argc, char **argv, char **env)
 {
 	char	*line;
 
 	(void)argv;
 	line = NULL;
-
 	if (init_bash(env, argc) == false || (init_exit_codes(argc) == false))
 		return (1);
-
 	if (isatty(STDIN_FILENO))
 	{
 		interactive_shell_tty(line);

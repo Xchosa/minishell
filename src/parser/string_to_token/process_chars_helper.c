@@ -35,7 +35,6 @@ int	process_content_to_token(char **line, t_token *token_node)
 	char	*tmp_token;
 
 	i = 0;
-
 	while ((*line)[i] && (*line)[i] != '\"')
 	{
 		tmp_token = ft_charjoin(token_node->token, (*line)[i]);
@@ -47,7 +46,6 @@ int	process_content_to_token(char **line, t_token *token_node)
 	(*line)++;
 	return (i);
 }
-
 
 bool	process_s_q_content_to_token(char **line, t_token *token_node)
 {

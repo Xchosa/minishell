@@ -62,7 +62,6 @@ char	*tokenise_divider(char **content, char *new_token)
 // 	return (new_token);
 // }
 
-
 char	*get_token(char **content)
 {
 	char	*new_token;
@@ -91,7 +90,6 @@ char	*get_token(char **content)
 	}
 	return (new_token);
 }
-
 
 t_type	append_or_redirect_output(char *content)
 {
@@ -129,7 +127,6 @@ t_type	get_token_type(char *content)
 	return (TEXT);
 }
 
-
 // compares the hole string not just a specific len
 bool	ft_strcmp(const char *s1, const char *s2)
 {
@@ -138,7 +135,6 @@ bool	ft_strcmp(const char *s1, const char *s2)
 	i = 0;
 	if ((s1[i] == '\0') && (s2[i] == '\0'))
 		return (true);
-
 	while (s1[i] != '\0' && s2[i] != '\0')
 	{
 		if (s1[i] != s2[i])

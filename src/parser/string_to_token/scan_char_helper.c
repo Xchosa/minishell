@@ -44,7 +44,6 @@ bool	check_for_divider_with_space(char c)
 	return (false);
 }
 
-
 bool	not_single_divider(char c)
 {
 	if (ft_strncmp ("<", &c, 1) == 0)
@@ -54,6 +53,14 @@ bool	not_single_divider(char c)
 	return (false);
 }
 
+void	set_last_node_null(t_token **lst)
+{
+	t_token	*last_node;
+
+	last_node = tokenlast(*lst);
+	last_node->next = NULL;
+	return ;
+}
 
 char	*ft_charjoin(char *dst, char src_char)
 {
@@ -77,11 +84,7 @@ char	*ft_charjoin(char *dst, char src_char)
 	}
 	newstr[i] = src_char;
 	newstr[i + 1] = '\0';
-
 	if (dst != NULL)
 		free(dst);
 	return (newstr);
 }
-
-
-

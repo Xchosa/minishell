@@ -10,20 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+// #include "parser.h"
 
-bool	check_for_space(char c)
-{
-	if (c == ' ')
-		return (true);
-	return (false);
-}
+// bool	check_for_space(char c)
+// {
+// 	if (c == ' ')
+// 		return (true);
+// 	return (false);
+// }
 
-char	*handle_regular_token(char *line)
-{
-	while (*line && (ft_isalnum(*line) || special_char_no_divider(*line)))
-	{
-		line++;
-	}
-	return (line);
-}
+// char	*handle_regular_token(char *line)
+// {
+// 	while (*line && (ft_isalnum(*line) || special_char_no_divider(*line)))
+// 	{
+// 		line++;
+// 	}
+// 	return (line);
+// }

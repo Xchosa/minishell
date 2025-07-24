@@ -31,8 +31,6 @@ bool	tokenadd_back(t_token **lst, t_token *new_token)
 	t_token	*last_node;
 	bool	tokeniser_worked;
 
-	// if(new_token->token = NULL)
-	// 	return(true);
 	if (new_token == NULL)
 		return (tokeniser_worked = false);
 	if (*lst == NULL)
@@ -49,15 +47,6 @@ bool	tokenadd_back(t_token **lst, t_token *new_token)
 		new_token->next = NULL;
 		return (true);
 	}
-}
-
-void	set_last_node_null(t_token **lst)
-{
-	t_token	*last_node;
-
-	last_node = tokenlast(*lst);
-	last_node->next = NULL;
-	return ;
 }
 
 t_token	*create_token(char **content)
@@ -78,9 +67,8 @@ t_token	*tokenlstnew(char	**content)
 	t_token	*token;
 
 	skip_whitespace(content);
-	if(skip_whitespace_and_check_for_eof(content) == false)
+	if (skip_whitespace_and_check_for_eof(content) == false)
 		return (NULL);
-	// skip_double_quotes(content);
 	if ((**content) == '\0')
 		return (NULL);
 	token = create_first_token(content);
@@ -90,8 +78,6 @@ t_token	*tokenlstnew(char	**content)
 	token->head = token;
 	return (token);
 }
-
-
 
 t_token	*tokeniser(char **line)
 {
@@ -112,11 +98,10 @@ t_token	*tokeniser(char **line)
 		if (tokenadd_back(&token_lst, new_token) == false)
 		{
 			if (new_token)
-                free_single_token(&new_token);
+				free_single_token(&new_token);
 			clean_token_lst(token_lst);
 			return (NULL);
 		}
 	}
 	return (token_lst);
 }
-

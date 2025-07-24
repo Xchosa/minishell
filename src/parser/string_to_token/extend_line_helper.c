@@ -12,7 +12,6 @@
 
 #include "parser.h"
 
-
 char	*add_single_char_to_line(char *new_line, char *tmp_line, char **line)
 {
 	if (**line != '\0')

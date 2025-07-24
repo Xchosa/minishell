@@ -1,7 +1,3 @@
-
-
-
-
 // in header declared as extern. value will be stored only one time
 // not variables of normal headers where everything will be copyed and stored
 
@@ -17,8 +13,6 @@
 
 // include this in heredoc 
 // signal(SIGINT,SIG_DFL) // in child process heredoc, if control c 
-
-
 
 // child 1
 // parent 0

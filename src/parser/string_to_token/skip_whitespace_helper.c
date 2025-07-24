@@ -29,7 +29,6 @@ bool	skip_whitespace_and_check_for_eof(char **line)
 	bool	not_eof;
 
 	not_eof = true;
-
 	if (**line == '\0')
 		return (not_eof = false);
 	skip_whitespace(line);
@@ -47,7 +46,6 @@ bool	skip_whitespace_and_check_for_eof(char **line)
 		return (not_eof = false);
 	return (not_eof);
 }
-
 
 // bool	char_is_alpha_nbr_and_no_whitespace(char c)
 // {
@@ -67,4 +65,3 @@ bool	skip_whitespace_and_check_for_eof(char **line)
 // 		return (true);
 // 	return (false);
 // }
-

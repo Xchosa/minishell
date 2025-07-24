@@ -105,7 +105,6 @@ void	exit_cleanup(void)
 // printf("\n cmd_list works:\n\n");
 // iter_cmd_lst(cmd_lst, &print_cmd_lst)
 
-
 void	non_interactive_shell(void)
 {
 	char	*line;
@@ -155,7 +154,6 @@ bool	handle_line(char *line)
 	reset_terminal_state();
 	return (true);
 }
-
 
 // void non_interactive_shell(char *line)
 // {

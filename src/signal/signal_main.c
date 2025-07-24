@@ -12,8 +12,6 @@
 
 #include "signal_tp.h"
 
-
-
 void	parent_handler(int sig)
 {
 	if (sig == SIGINT)
@@ -49,8 +47,6 @@ void	child_handler(int sig)
 	return ;
 }
 
-
-
 void	init_signal(int is_child)
 {
 	struct sigaction	sa;
@@ -73,10 +69,6 @@ void	init_signal(int is_child)
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 	sigaction(SIGTERM, &sa, NULL);
-/// put only in if done 
-	// sigaction(SIGTSTP, &sa, NULL); // ignore ctrl + Z
+	sigaction(SIGTSTP, &sa, NULL);
 	rl_catch_signals = 0;
 }
-
-
-

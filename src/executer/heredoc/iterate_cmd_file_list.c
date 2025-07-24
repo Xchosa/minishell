@@ -13,9 +13,6 @@
 #include "executer.h"
 #include "signal_tp.h"
 
-
-
-
 int	find_here_doc_file_node(t_file_node **file_node)
 {
 	t_file_node	*cur_file_node;
@@ -25,7 +22,8 @@ int	find_here_doc_file_node(t_file_node **file_node)
 	{
 		if (cur_file_node->redir_type == HERE_DOC)
 		{
-			// hiere change name, danach save heredoc
+			// hier int function mit signaling, damit mit ctrl + c 
+			// in den naechsten heredoc gesprungen wird. 
 			if (save_here_doc_in_tmp(&cur_file_node) != 0)
 				return (1);
 		}
@@ -37,7 +35,6 @@ int	find_here_doc_file_node(t_file_node **file_node)
 	return (0);
 }
 
-// head uebergeben // muss doppelpointer sein um die nodes zu veraendern
 void	save_heredoc_files(t_cmd_node **cmd_node)
 {
 	t_cmd_node	*cur_cmd_node;

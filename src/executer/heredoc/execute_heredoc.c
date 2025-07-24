@@ -23,7 +23,6 @@ bool	handle_signal_in_heredoc(char *filename, int here_doc_fd)
 	return_value = execute_here_doc(filename, here_doc_fd);
 	reset_sig_handler_to_child();
 	return (return_value);
-
 }
 
 // bool	handle_signal_in_heredoc(char *filename, int here_doc_fd)

@@ -79,4 +79,3 @@ t_token	*equal_case(char **line)
 	line++;
 	return (new_token);
 }
-

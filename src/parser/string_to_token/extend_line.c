@@ -55,7 +55,7 @@ char	*d_qoutes_swap_dollar_var_with_env_var(char *new_line,
 	{
 		(*line)++;
 		env_str = get_env_in_line(line);
-		while	((*env_str) != '\0')
+		while ((*env_str) != '\0')
 		{
 			tmp_line = ft_charjoin(new_line, (*env_str));
 			if (!tmp_line)
@@ -71,7 +71,6 @@ char	*d_qoutes_swap_dollar_var_with_env_var(char *new_line,
 		new_line = add_single_char_to_line(new_line, tmp_line, line);
 	return (new_line);
 }
-
 
 char	*add_s_quotes_str_to_line(char *new_line, char *tmp_line, char **line)
 {
