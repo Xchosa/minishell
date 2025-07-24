@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:02:00 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/24 09:54:47 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:00:15 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_export_print(char **envp)
 		{
 			s = ft_split(envp[j], '=');
 			ft_printf("declare -x %s=\"%s\"\n", s[0], ft_strchr(envp[j], '=') + 1);
-			free(s);
+			ft_free_array(s);
 		}
 		else 
 			ft_printf("declare -x %s\n", envp[j]);
@@ -97,6 +97,12 @@ bool	ft_check_valid_identifier(char *var)
 	int		i;
 
 	i = 0;
+	if (ft_isalpha(var[0]) != 1 && var[0] != '_')
+	{
+		ft_putendl_fd("shell: not a valid identifier", 2);
+		get_exit_codes()->last_exit_code = 1;
+		return (false);
+	}
 	s = ft_split(var, '=');
 	while (s[0][i] != '\0')
 	{
@@ -104,16 +110,11 @@ bool	ft_check_valid_identifier(char *var)
 		{
 			ft_putendl_fd("shell: not a valid identifier", 2);
 			get_exit_codes()->last_exit_code = 1;
-			return (false);
+			return (ft_free_array(s), false);
 		}
 		i++;
 	}
-	if (ft_isalpha(var[0]) != 1 && var[0] != '_')
-	{
-		get_exit_codes()->last_exit_code = 1;
-		return (false);
-	}
-	return (true);
+	return (ft_free_array(s), true);
 }
 
 void	ft_export(t_cmd_node *cmd_node, char **envp)
@@ -132,7 +133,7 @@ void	ft_export(t_cmd_node *cmd_node, char **envp)
 		{
 			env_var = ft_split(cmd_node->cmd[i], '=');
 			//malloc check
-			if (there_is_env_var(envp, env_var[0]) == true)
+			if (ft_check_valid_identifier(cmd_node->cmd[i]) == true && there_is_env_var(envp, env_var[0]) == true)
 			{
 				envp = ft_unset_var_by_name(envp, env_var[0]);
 				envp = ft_export_variable(cmd_node->cmd[i], envp);

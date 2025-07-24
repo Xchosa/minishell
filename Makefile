@@ -3,10 +3,10 @@ NAME := minishell
 CC := cc
 
 #---------linux---------
-CFLAGS	= -Wall -Wextra -Werror -g  -I inc/ -ldl -lglfw -pthread -lm -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -g  -I inc/ -ldl -lglfw -pthread -lm #-fsanitize=address
 #CFLAGS	= -Wall -Wextra  -g -I inc/ -ldl -lglfw -pthread -lm #-Werror
 #----------mac ---------
-CFLAGS		= -Wall -Werror -Wextra -g  -I inc/ -fsanitize=address
+CFLAGS		= -Wall -Werror -Wextra -g  -I inc/ #-fsanitize=address
 #CFLAGS		= -Wall -Wextra -g -I inc/ #-Werror 
 
 
@@ -140,6 +140,9 @@ libft_fclean:
 
 fclean: clean libft_fclean
 	@rm -f $(NAME)
+	@rm -rf $(OBJ_DIR)
+
+clean:
 	@rm -rf $(OBJ_DIR)
 
 re: fclean
