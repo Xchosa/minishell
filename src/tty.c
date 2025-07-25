@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/25 10:22:06 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:16:18 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,8 @@ bool	handle_line(char *line)
 	cmd_lst = init_cmd_list(&token_lst, original_line);
 	init_signal(2);
 	ft_execute(cmd_lst, get_bash()->env);
+	get_bash()->cmd_garbage = NULL;
+	cmd_lst = NULL;
 	init_signal(0);
 	reset_terminal_state();
 	return (true);
