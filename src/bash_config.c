@@ -56,11 +56,12 @@ void	clean_bash_env(void)
 		clean_cmd_lst(get_bash()->cmd_garbage);
 		get_bash()->cmd_garbage = NULL;
 	}
-	if (get_bash()->herdoc_filename)
-	{
-		free(get_bash()->herdoc_filename);
-		get_bash()->herdoc_filename = NULL;
-	}
+	// if (get_bash()->herdoc_filename)
+	// {
+	// 	free(get_bash()->herdoc_filename);
+	// 	get_bash()->herdoc_filename = NULL;
+	// }
+	get_bash()->herdoc_filename = NULL;
 }
 
 char	**cpychar_arr(char **src)

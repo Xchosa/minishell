@@ -84,7 +84,9 @@ void	clean_file_lst(t_file_list *file_list)
 	while (file_node)
 	{
 		tmp = file_node->next;
-		free(file_node->filename);
+		if (file_node->filename)
+			free(file_node->filename);
+		file_node->filename = NULL;
 		free(file_node);
 		file_node = tmp;
 	}
