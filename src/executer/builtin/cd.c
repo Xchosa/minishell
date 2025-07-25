@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:41:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/24 11:45:26 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:57:04 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_cd(t_cmd_node *cmd_node, char **envp)
 		}
 		free(cmd_node->cmd[1]);
 		s  = ft_strdup(get_old_pwd(envp));
-		cmd_node->cmd[1] = s;//segfault hier aber liegt glaube ich an ft_strlen oder strdup nullchecks
+		cmd_node->cmd[1] = s;
 		printf("%s\n", cmd_node->cmd[1]);
 	}
 	if (chdir(cmd_node->cmd[1]) != 0)

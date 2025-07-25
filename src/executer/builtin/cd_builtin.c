@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:31:57 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/22 14:00:50 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:57:57 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ char	**ft_add_absolute_path(t_cmd_node *cmd_node, char **envp)
 
 char	**ft_add_parent(char **envp)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		len;
+	char	*re;
 
 	i = 0;
 	while (envp[i] != NULL)
@@ -53,9 +54,11 @@ char	**ft_add_parent(char **envp)
 				len--;
 			len--;
 			if (len > 4)
-				envp[i] = ft_substr(envp[i], 0, len);
+				re = ft_substr(envp[i], 0, len);
 			else
-				envp[i] = ft_substr(envp[i], 0, 5);
+				re =  ft_substr(envp[i], 0, 5);
+			free (envp[i]);
+			envp[i] = re;
 		}
 		i++;
 	}
