@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bash_config.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 10:57:23 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 17:01:01 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:40:09 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	clean_bash_env(void)
 		free(bash->path);
 	if (get_bash()->cmd_garbage)
 	{
-		//clean_cmd_lst(get_bash()->cmd_garbage);
+		clean_cmd_lst(get_bash()->cmd_garbage);
 		get_bash()->cmd_garbage = NULL;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/25 11:25:02 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:38:52 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	save_heredoc_files(&cmd_list->head);
 	if (create_pipes(&fd, cmd_list) != true)
 		return ;
-	iter_cmd_lst(cmd_list, &print_cmd_lst);
+	//iter_cmd_lst(cmd_list, &print_cmd_lst);
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN)
 		manage_single_cmd_node(cmd_list, cmd_list->head, envp);
 	else

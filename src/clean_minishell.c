@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:00:04 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/25 10:21:49 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 12:19:19 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,10 @@ void	clean_file_lst(t_file_list *file_list)
 	tmp = NULL;
 	while (file_node)
 	{
-		if (!file_node->next)
-			tmp = file_node->next;
+		tmp = file_node->next;
 		free(file_node->filename);
 		free(file_node);
-		if (!tmp)
-			file_node = tmp;
+		file_node = tmp;
 	}
 	free(file_list);
 }
@@ -100,12 +98,12 @@ void	clean_cmd_lst(t_cmd_list *cmd_list)
 
 	if (!cmd_list)
 		return ;
-	if (!cmd_list->head)
-	{
-		free(cmd_list);
-		cmd_list = NULL;
-		return ;
-	}
+	// if (!cmd_list->head)
+	// {
+	// 	free(cmd_list);
+	// 	cmd_list = NULL;
+	// 	return ;
+	// }
 	cmd_node = cmd_list->head;
 	while (cmd_node)
 	{
