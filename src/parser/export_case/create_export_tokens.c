@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_export_tokens.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:07:26 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/25 10:41:50 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:45:32 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char	*append_export_var(char *token_str, char **content)
 	next_token_str = get_export_token_in_quotes(content);
 	appended_str = ft_strjoin(token_str, next_token_str);
 	free(token_str);
+	free(next_token_str); //thilo did this
 	return (appended_str);
 }
 

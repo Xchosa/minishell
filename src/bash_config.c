@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bash_config.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 10:57:23 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/25 14:33:21 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:08:15 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	clean_bash_env(void)
 	}
 	if (get_bash()->herdoc_filename)
 	{
-		free(get_bash()->herdoc_filename);
+//		free(get_bash()->herdoc_filename);
 		get_bash()->herdoc_filename = NULL;
 	}
 }

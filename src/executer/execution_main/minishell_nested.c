@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:59:07 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/25 11:24:13 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:54:44 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_increase_shlvl(char **envp)
 	char	*freeme;
 	char	*buf;
 
-	i = - 1;
+	i = -1;
 	j = 0;
 	while (envp[++i] != NULL)
 	{
@@ -61,7 +61,7 @@ char	*get_command_pointer(char *command, char **envp)
 	i = 0;
 	while (i < 4)
 	{
-		pwd++; //can break if PWD unset. important? 
+		pwd++;
 		i++;
 	}
 	command++;
@@ -74,9 +74,21 @@ char	*ft_execute_local(char *command, char **envp)
 	char	*path;
 
 	path = get_command_pointer(command, envp);
-	// if (access(path, X_OK) == 0)
-	// 	return (path);
-	// else
-	// 	return (free (path), NULL);
 	return (path);
+}
+
+void	ft_wait_for_all(int pid, t_cmd_list *cmd_list)
+{
+	int	status;
+	int	i;
+
+	i = 0;
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		get_exit_codes()->last_exit_code = WEXITSTATUS(status);
+	while (i < cmd_list->size - 1)
+	{
+		wait(NULL);
+		i++;
+	}
 }
