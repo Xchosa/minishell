@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 10:59:07 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/24 18:54:51 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:24:13 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,9 @@ char	*ft_execute_local(char *command, char **envp)
 	char	*path;
 
 	path = get_command_pointer(command, envp);
-	if (access(path, X_OK) == 0)
-		return (path);
-	else
-		return (free (path), NULL);
+	// if (access(path, X_OK) == 0)
+	// 	return (path);
+	// else
+	// 	return (free (path), NULL);
+	return (path);
 }

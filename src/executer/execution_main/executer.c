@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/24 14:50:49 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:25:02 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,18 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 		get_bash()->path = ft_execute_local(cmd_node->cmd[0], envp); //hier andere fehlermeldung aber gleicher code
 	else
 		get_bash()->path = ft_getpath(cmd_node->cmd[0], envp);
-	// if (get_bash()->path == NULL)
-	// {
-	// 	ft_putendl_fd("Shell: command not found\n", 2); // 2 exit codes bze fehlermeldunge, command not found und not a file or directory, ./bla /bla und bla und . und ..
-	// 	exit(127);
-	// }
+	if (get_bash()->path == NULL)
+	{
+		perror("shell ");
+	 	//ft_putendl_fd("Shell: command not found\n", 2); // 2 exit codes bze fehlermeldunge, command not found und not a file or directory, ./bla /bla und bla und . und ..
+	 	exit(127);
+	}
 	execve(get_bash()->path, cmd_node->cmd, envp);
-	// perror("Execve failed");
-	// exit(errno); //stimmt evtl nicht
+	perror("shell ");
+	if (errno ==  EACCES)
+		exit (126);
+	else
+		exit (127);
 }
 
 void	manage_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *cmd_node, char **envp)
@@ -113,7 +117,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	save_heredoc_files(&cmd_list->head);
 	if (create_pipes(&fd, cmd_list) != true)
 		return ;
-	//iter_cmd_lst(cmd_list, &print_cmd_lst);
+	iter_cmd_lst(cmd_list, &print_cmd_lst);
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN)
 		manage_single_cmd_node(cmd_list, cmd_list->head, envp);
 	else
