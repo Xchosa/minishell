@@ -6,12 +6,11 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:54:16 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 10:30:17 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:41:19 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
 
 void	append_token_char(t_cmd_node *cmd_node, t_token *curr_token)
 {
@@ -51,8 +50,9 @@ void	handle_special_cases(t_token **curr_token, t_cmd_node *cmd_node)
 		if (curr_token && *curr_token
 			&& (*curr_token)->token_type == CALL_SAVED_VAR)
 			(*curr_token)->token_type = TEXT;
-		if (curr_token && *curr_token && 
-			((*curr_token)->token_type == EXPORT || (*curr_token)->token_type == Mix_Export_var))
+		if (curr_token && *curr_token
+			&& ((*curr_token)->token_type == EXPORT
+				|| (*curr_token)->token_type == Mix_Export_var))
 			(*curr_token)->token_type = TEXT;
 		if (curr_token && *curr_token
 			&& (*curr_token)->token_type == Export_var)
@@ -64,10 +64,10 @@ void	handle_special_cases(t_token **curr_token, t_cmd_node *cmd_node)
 	(*curr_token) = passed_position;
 }
 
-void	process_token_type_Text(t_token **curr_token,t_cmd_node *cmd_node)
+void	process_token_type_text(t_token **curr_token, t_cmd_node *cmd_node)
 {
 	handle_special_cases(curr_token, cmd_node);
-	while (curr_token && *curr_token && (*curr_token)->token_type == TEXT )
+	while (curr_token && *curr_token && (*curr_token)->token_type == TEXT)
 	{
 		if (cmd_node->cmd_type == 0)
 		{

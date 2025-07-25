@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:29:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 15:06:14 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:35:05 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 // 	line = ft_strdup(" \"\" ");
 // 	// line = ft_strdup("echo \" '\"$?\" '\"");
 // 	// >outfile | echo 1
-
 // 	// malloc line to extend $XX
 // 	// char **temp_content = content;
 
@@ -41,12 +40,10 @@
 // 	// char *line = "echo $USER $? echo \"$?\"\"$USER\" echo \'$USER\' ";
 // 	//char *line = "echo test wc world >outfile test >outfile2 >outfile3";
 //     // line = "export var3=\"cat Makefile | grep <\"  ";
-//     // line = "export \"Var1\"=\"hello var1\"      var3=\"cat Makefile | grep <\"  var2=world  ";
+//     // line = "export \"Var1\"=\"hello var1\"   
+// var3=\"cat Makefile | grep <\"  var2=world  ";
 // 	//char *line = "export Var1=hello var=\"cat Makefile | grep <\" ";
-// 	//char *line = "   echo   $hello world >outfile  >out3file  \"wow hello\"   "; // muss wow hello an world hengen;
-// 	// char *line = "export split=\'hallo world\' welt echo world h=hallo w=bello welt";
-// 	// char *line = "ls -al| grep libft  |wc\"d d < ;p\">> hallo > outfile > out3file";
-// 	// char *line = "echo \"hello \'$USER\' Paul mein name ist\" >stand_out"; /// nicht funktioniert 
+
 // 	//char *line = "cat < infile > outfile > out3file";// sollte valid sein
 // 	//char *line = "\'hello \"< \'echo|hello << wow hello";// sollte valid sein
 // 	// char *line = "\"hello< echo|hello << wow hello"; // nicht valid

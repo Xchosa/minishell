@@ -6,12 +6,11 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 11:35:48 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/14 10:14:31 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:20:49 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
 
 t_token	*validate_token_str(t_token **new_token)
 {

@@ -6,13 +6,11 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:07:26 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 11:34:07 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:41:50 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "parser.h"
-
 
 t_token	*create_token_equal_as_div(char **content)
 {
@@ -61,37 +59,6 @@ char	*add_char(char **content, char *tmp_token, char *new_token, int i)
 	return (new_token);
 }
 
-// char	*get_token_equal_as_div(char **content)
-// {
-// 	int		i;
-// 	char	*new_token;
-// 	char	*tmp_token;
-
-// 	i = 0;
-// 	new_token = ft_strdup("");
-// 	if (!new_token)
-// 		return (NULL);
-// 	while ((*content)[i] != '\0'
-// 		&& check_for_div_export((*content)[i]) == false)
-// 	{
-// 		if (char_is_alpha_nbr_and_no_whitespace((*content)[i]))
-// 		{
-// 			tmp_token = ft_charjoin(new_token, (*content)[i]);
-// 			new_token = tmp_token;
-// 		}
-// 		if (check_for_div_export((*content)[i +1]) == true)
-// 		{
-// 			*content += i + 1;
-// 			return (new_token);
-// 		}
-// 		(*content)++;
-// 	}
-// 	while (check_for_divider_without_space((*content)[i]) == true)
-// 		new_token = add_char(content, tmp_token, new_token, i);
-// 	return (new_token);
-// }
-
-
 char	*append_export_var(char *token_str, char **content)
 {
 	char	*appended_str;
@@ -118,7 +85,7 @@ char	*get_export_token_in_quotes(char **content)
 		while ((**content) != '\0' && ft_strchr("\"", **content) == NULL)
 			new_token = add_single_char_to_line(new_token, tmp_token, content);
 	}
-	else if(ft_strchr("\'", **content) != NULL)
+	else if (ft_strchr("\'", **content) != NULL)
 	{
 		skip_single_quotes(content);
 		while ((**content) != '\0' && ft_strchr("\'", **content) == NULL)

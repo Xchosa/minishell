@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 09:47:27 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 10:03:55 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:40:23 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ bool	create_pipes(int (**fd)[2], t_cmd_list *cmd_list);
 bool	there_is_env_var(char **envp, char *env_var);
 char	**ft_add_relative_path(t_cmd_node *cmd_node, char **envp);
 char	**ft_add_parent(char **envp);
-char	**ft_export_no_print(t_cmd_node *cmd_node, char **envp);
-
-
 bool	ft_manage_heredoc(char *tmp_filename);
 
 int		ft_get_index(int i, char **envp);

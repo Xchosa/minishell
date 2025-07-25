@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:27:12 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 14:19:00 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:22:29 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ bool	check_correct_export_var(char *str)
 
 bool	check_syntax(t_token *token)
 {
-	//if(token->next 
 	if (token->next)
 	{
 		token = token->next;
@@ -84,5 +83,3 @@ bool	check_last_node_syntax(t_token *token_lst)
 		return (false);
 	return (true);
 }
-
-

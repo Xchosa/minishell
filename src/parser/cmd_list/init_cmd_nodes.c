@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:54:43 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/14 13:51:06 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:33:38 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_file_list	*file_list_to_null(void)
 
 t_cmd_node	*init_cmd_node_null(t_file_list *file_list)
 {
-	t_cmd_node 	*cmd_node;
+	t_cmd_node	*cmd_node;
 
 	cmd_node = malloc(sizeof(t_cmd_node));
 	if (!cmd_node)
@@ -77,7 +77,12 @@ t_cmd_list	*init_cmd_list(t_token **token_list, char *line_start)
 			cmd_list->size += 1;
 		}
 	}
-	clean_token_lst(token_head);
-	free(line_start);
+	clean_token_lst_and_readline(token_head, line_start);
 	return (cmd_list);
+}
+
+void	clean_token_lst_and_readline(t_token *token_list, char *line)
+{
+	clean_token_lst(token_list);
+	free(line);
 }

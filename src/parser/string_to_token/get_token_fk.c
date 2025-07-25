@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:52:50 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/21 09:22:56 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:22:02 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*tokenise_divider(char **content, char *new_token)
 	{
 		tmp_token = ft_charjoin(new_token, (**content));
 		if (!tmp_token)
-            return (NULL);
+			return (NULL);
 		new_token = tmp_token;
 		if (not_single_divider((**content)) == false)
 		{
@@ -31,36 +31,6 @@ char	*tokenise_divider(char **content, char *new_token)
 	}
 	return (new_token);
 }
-
-// char	*get_token(char **content)
-// {
-// 	char	*new_token;
-// 	char	*tmp_token;
-
-// 	new_token = ft_strdup("");
-// 	if (!new_token)
-// 		return (NULL);
-// 	while ((**content) != '\0'
-// 		&& check_for_divider_with_space((**content)) == false)
-// 	{
-// 		if (char_is_alpha_nbr_and_no_whitespace(**content))
-// 		{
-// 			tmp_token = ft_charjoin(new_token, (**content));
-// 			if (!tmp_token)
-//                 return (NULL);
-// 			new_token = tmp_token;
-// 		}
-// 		if (check_for_divider_with_space((*content)[1]) == true)
-// 		{
-// 			(*content)++;
-// 			return (new_token);
-// 		}
-// 		(*content)++;
-// 	}
-// 	if (check_for_divider_without_space((**content)) == true)
-// 		new_token = tokenise_divider(content, new_token);
-// 	return (new_token);
-// }
 
 char	*get_token(char **content)
 {
@@ -96,7 +66,7 @@ t_type	append_or_redirect_output(char *content)
 	int	i;
 
 	i = 0;
-	if (content[i+1] == '>')
+	if (content[i + 1] == '>')
 		return (Append);
 	else
 		return (Redirect_output);

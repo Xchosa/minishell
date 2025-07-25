@@ -6,13 +6,11 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:53:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/03 14:41:48 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:22:34 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signal_tp.h"
-#include <termios.h>
-
 
 void	reset_sig_handler_to_parent(void)
 {
@@ -44,7 +42,6 @@ void	reset_terminal_state(void)
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term);
-
 	tcflush(STDIN_FILENO, TCIFLUSH);
 }
 // fflush(stdout);
@@ -57,4 +54,3 @@ void	reset_terminal_state(void)
 // cat <<1<<1<<1
 // bei ctrl c soll aus allen heredocs raus
 // ctrol D nur aus eins - funktioniert 
-

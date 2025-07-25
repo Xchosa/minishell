@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 15:56:09 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:02:09 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,8 @@ char			*swap_exit_code_in_line(char *new_line,
 					char *tmp_line, char **line);
 char			*extend_line_with_tilde(char *new_line,
 					char *tmp_line, char **line);
-
+char			*extend_line_with_env_str(char *new_line,
+					char *tmp_line, char **line);
 //	get export saved variables
 char			*append_export_var(char *token_str, char **content);
 char			*get_export_token_in_quotes(char **content);
@@ -183,6 +184,8 @@ bool			d_quote_case_no_div(char *line);
 
 void			check_cmd_builtin(t_cmd_node **cmd_node);
 int				correct_cmd_type(t_cmd_node **cmd_node);
+void			process_token_type_text(t_token **curr_token,
+					t_cmd_node *cmd_node);
 //print cmd_lst
 void			print_cmd_lst(t_cmd_node *cmd_nodes);
 void			iter_cmd_lst(t_cmd_list *cmd_lst, void (*f)(t_cmd_node*));
@@ -196,7 +199,7 @@ t_cmd_node		*process_token(t_token **curr_token);
 bool			process_s_q_content_to_token(char **line, t_token *token_node);
 void			handle_special_cases(t_token **curr_token,
 					t_cmd_node *cmd_node);
-void			process_token_type_Text(t_token **curr_token,
+void			process_token_type_text(t_token **curr_token,
 					t_cmd_node *cmd_node);
 void			append_token_char(t_cmd_node *cmd_node, t_token *curr_token);
 char			**cpy_token_char(char *token);
@@ -220,6 +223,7 @@ void			clean_cmd_list_objects_tmp_files(t_cmd_list *cmd_list);
 void			clean_exit_codes(void);
 void			clean_bash_env(void);
 char			*ft_strtolower(char *input);
+void			clean_token_lst_and_readline(t_token *token_list, char *line);
 
 //fill_file_list
 t_file_node		*process_token_type_redir(t_token **curr_token);

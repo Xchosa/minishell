@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 11:35:25 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 14:00:45 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:21:36 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ void	skip_single_quotes(char **line)
 	i = 0;
 	if (!(*line))
 		return ;
-	else if (((*line)[i] == '\'') && ((*line)[i +1 ] == '\0'))
+	else if (((*line)[i] == '\'') && ((*line)[i + 1] == '\0'))
 	{
 		(*line)++;
 		return ;
 	}
-	else if (((*line)[i] == '\"') && ((*line)[i +1 ] == '\0'))
+	else if (((*line)[i] == '\"') && ((*line)[i + 1] == '\0'))
 	{
 		(*line)++;
 		return ;

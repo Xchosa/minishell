@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 16:39:29 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:22:06 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	interactive_shell_tty(char *line)
 	}
 	clean_cmd_list_objects_tmp_files(cmd_lst);
 }
-
 
 void	exit_cleanup(void)
 {

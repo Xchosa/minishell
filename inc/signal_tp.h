@@ -1,7 +1,18 @@
-#ifndef SIGNAL_tp_H
-# define SIGNAL_tp_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal_tp.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/25 10:26:29 by poverbec          #+#    #+#             */
+/*   Updated: 2025/07/25 10:27:16 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// # include "minishell.h"
+#ifndef SIGNAL_TP_H
+# define SIGNAL_TP_H
+
 # include "parser.h"
 # include <signal.h>
 # include <fcntl.h>

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extend_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 09:22:15 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 18:32:14 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:22:23 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*extend_line(char **line)
 		}
 		if (**line != '\0' && ft_strchr("\'", **line) != NULL)
 			new_line = add_s_quotes_str_to_line(new_line, tmp_line, line);
-		if (**line != '\0' && ft_strchr("$~", **line) != NULL) 
+		if (**line != '\0' && ft_strchr("$~", **line) != NULL)
 			new_line = swap_dollar_var_with_env_var(new_line, tmp_line, line);
 		else if (**line != '\0')
 			new_line = add_single_char_to_line(new_line, tmp_line, line);
@@ -47,25 +47,17 @@ char	*extend_line(char **line)
 char	*d_qoutes_swap_dollar_var_with_env_var(char *new_line,
 	char *tmp_line, char **line)
 {
-	char	*env_str;
-	char	*buf;
-
-	if (ft_strncmp("$?", (*line), 2) == 0)
+	if (ft_strncmp("$ ", (*line), 2) == 0)
+	{
+		new_line = add_single_char_to_line(new_line, tmp_line, line);
+		return (new_line);
+	}
+	else if (ft_strncmp("$?", (*line), 2) == 0)
 		new_line = swap_exit_code_in_line(new_line, tmp_line, line);
 	else if (ft_strchr("$", **line) != NULL)
 	{
-		(*line)++;
-		env_str = get_env_in_line(line);
-		buf = env_str;
-		while ((*env_str) != '\0')
-		{
-			tmp_line = ft_charjoin(new_line, (*env_str));
-			if (!tmp_line)
-				return (free(buf), NULL);
-			new_line = tmp_line;
-			env_str++;
-		}
-		return (free(buf), new_line);
+		new_line = extend_line_with_env_str(new_line, tmp_line, line);
+		return (new_line);
 	}
 	else if (**line != '\0')
 		new_line = add_single_char_to_line(new_line, tmp_line, line);
@@ -89,50 +81,32 @@ char	*add_s_quotes_str_to_line(char *new_line, char *tmp_line, char **line)
 	return (new_line);
 }
 
-char	*extend_line_with_tilde(char *new_line, char *tmp_line, char **line)
-{
-	char	*env_str;
-	char	*buf;
-
-	if (ft_strchr("~", **line) != NULL)
-	{
-		(*line)++;
-		env_str = get_home_directory(get_bash()->env);
-		buf = env_str;
-		while ((*env_str) != '\0')
-		{
-			tmp_line = ft_charjoin(new_line, (*env_str));
-			if (!tmp_line)
-			{
-				free(buf);
-				return (NULL);
-			}
-			new_line = tmp_line;
-			env_str++;
-		}
-		// if (env_str != NULL)
-		free(buf);
-		return (new_line);
-	}
-	return (new_line);
-}
-
 char	*swap_dollar_var_with_env_var(char *new_line,
 	char *tmp_line, char **line)
 {
-	char	*env_str;
-	char	*buf;
-
-	buf = NULL;
-	if (ft_strncmp("$?", (*line), 2) == 0)
+	if (ft_strncmp("$ ", (*line), 2) == 0)
+	{
+		new_line = add_single_char_to_line(new_line, tmp_line, line);
+		new_line = add_single_char_to_line(new_line, tmp_line, line);
+	}
+	else if (ft_strncmp("$?", (*line), 2) == 0)
 		new_line = swap_exit_code_in_line(new_line, tmp_line, line);
 	else if (ft_strncmp("~", (*line), 1) == 0)
 		new_line = extend_line_with_tilde(new_line, tmp_line, line);
 	else if (ft_strchr("$", **line) != NULL)
+		new_line = extend_line_with_env_str(new_line, tmp_line, line);
+	return (new_line);
+}
+
+char	*extend_line_with_env_str(char *new_line, char *tmp_line, char **line)
+{
+	char	*env_str;
+	char	*buf;
+
+	if (ft_strchr("$", **line) != NULL)
 	{
 		(*line)++;
 		env_str = get_env_in_line(line);
-		
 		buf = env_str;
 		while ((*env_str) != '\0')
 		{
@@ -145,9 +119,8 @@ char	*swap_dollar_var_with_env_var(char *new_line,
 			new_line = tmp_line;
 			env_str++;
 		}
-		free(buf); // freed env_str valgrind 
+		free(buf);
 		return (new_line);
 	}
-	free (buf);
 	return (new_line);
 }

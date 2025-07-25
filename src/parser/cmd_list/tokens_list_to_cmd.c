@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:54:22 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/07 15:26:53 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:05:22 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static	void	if_redirect_append_file_node(t_file_list *file_list,
 	(*file_node)->next = process_token_type_redir(token_lst);
 	*file_node = (*file_node)->next;
 	file_list->tail = *file_node;
-	file_list->size +=1;
+	file_list->size += 1;
 }
 
 t_cmd_node	*process_token(t_token **token_lst)
@@ -66,7 +66,7 @@ t_cmd_node	*process_token(t_token **token_lst)
 	cmd_node = init_cmd_node_null(file_list);
 	while (*token_lst)
 	{
-		process_token_type_Text(token_lst, cmd_node);
+		process_token_type_text(token_lst, cmd_node);
 		if (*token_lst == NULL)
 			break ;
 		if (pipe_token(token_lst) == true)

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:54:36 by poverbec          #+#    #+#             */
-/*   Updated: 2025/05/27 10:54:37 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:36:35 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_file_node	*create_append_file_node(t_token **curr_token)
 	new_file_node = malloc(sizeof(t_file_node));
 	if (!new_file_node)
 		return (NULL);
-	(*curr_token) =(*curr_token)->next;
+	(*curr_token) = (*curr_token)->next;
 	new_file_node->redir_type = APPEND;
 	new_file_node->filename = ft_strdup((*curr_token)->token);
 	new_file_node->next = NULL;

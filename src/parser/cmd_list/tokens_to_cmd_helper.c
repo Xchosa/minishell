@@ -1,5 +1,14 @@
-
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokens_to_cmd_helper.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/25 10:39:16 by poverbec          #+#    #+#             */
+/*   Updated: 2025/07/25 11:20:03 by poverbec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "parser.h"
 
@@ -7,7 +16,7 @@ void	check_cmd_builtin(t_cmd_node **cmd_node)
 {
 	if ((*cmd_node)->cmd_type == EXECUTE)
 	{
-		if((*cmd_node)->cmd[0] == NULL)
+		if ((*cmd_node)->cmd[0] == NULL)
 			return ;
 		(*cmd_node)->cmd_type = correct_cmd_type(cmd_node);
 	}
@@ -20,13 +29,12 @@ int	correct_cmd_type(t_cmd_node **cmd_node)
 
 	cmd_type = 0;
 	lower = ft_strtolower((*cmd_node)->cmd[0]);
-    (*cmd_node)->cmd[0] = lower;
+	(*cmd_node)->cmd[0] = lower;
 	cmd_type = (check_for_builtin(lower));
-    if (cmd_type != 0)
+	if (cmd_type != 0)
 		return (cmd_type);
 	return (cmd_type = EXECUTE);
 }
-
 
 char	**ft_cpy_array_str(char **arrays)
 {
@@ -77,5 +85,3 @@ char	**cpy_token_char(char *token)
 	cmd_array[i] = NULL;
 	return (cmd_array);
 }
-
-

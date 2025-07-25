@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:32:26 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 14:33:40 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:16:05 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ get some bash cmds to test
 // fucction to check if the single or double quotes are set correct  
 // /* 
 // missing: ddf>< or dfd <  > ->redirections stright afterwards or > | 
-
 
 bool	lexer(char *line)
 {
