@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/24 14:50:49 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:25:02 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 	if (cmd_node->cmd[0][0] == '/')
 	{
 		get_bash()->path = cmd_node->cmd[0]; //hier andere fehlermeldung aber gleicher code
-		if (access(get_bash()->path, X_OK) != 0)
-			get_bash()->path = NULL;
+		// if (access(get_bash()->path, X_OK) != 0)
+		// 	get_bash()->path = NULL;
 	}
 	else if (ft_strncmp("./", cmd_node->cmd[0], 2) == 0)
 		get_bash()->path = ft_execute_local(cmd_node->cmd[0], envp); //hier andere fehlermeldung aber gleicher code
@@ -29,12 +29,16 @@ void	ft_execute_command(t_cmd_node *cmd_node, char **envp)
 		get_bash()->path = ft_getpath(cmd_node->cmd[0], envp);
 	if (get_bash()->path == NULL)
 	{
-		ft_putendl_fd("Shell: command not found\n", 2); // 2 exit codes bze fehlermeldunge, command not found und not a file or directory, ./bla /bla und bla und . und ..
-		exit(127);
+		perror("shell ");
+	 	//ft_putendl_fd("Shell: command not found\n", 2); // 2 exit codes bze fehlermeldunge, command not found und not a file or directory, ./bla /bla und bla und . und ..
+	 	exit(127);
 	}
 	execve(get_bash()->path, cmd_node->cmd, envp);
-	perror("Execve failed");
-	exit(errno); //stimmt evtl nicht
+	perror("shell ");
+	if (errno ==  EACCES)
+		exit (126);
+	else
+		exit (127);
 }
 
 void	manage_single_cmd_node(t_cmd_list *cmd_list, t_cmd_node *cmd_node, char **envp)
@@ -81,11 +85,11 @@ void	ft_execution_loop(t_cmd_list *cmd_list, char **envp, int (*fd)[2])
 		pid = fork();
 		if (pid == 0)
 			execution_node(cmd_list, cur_cmd_node, fd, envp);
-		wait(&status);
+		//wait(&status);
 		free(get_bash()->path);
 		get_bash()->path = NULL;
-		if (WIFEXITED(status))
-			get_exit_codes()->last_exit_code = WEXITSTATUS(status);
+		// if (WIFEXITED(status))
+		// 	get_exit_codes()->last_exit_code = WEXITSTATUS(status);
 		cur_cmd_node = cur_cmd_node->next;
 		if (i < cmd_list->size - 1)
 			close(fd[i][1]);
@@ -93,6 +97,11 @@ void	ft_execution_loop(t_cmd_list *cmd_list, char **envp, int (*fd)[2])
 			close(fd[i - 1][0]);
 		i++;
 	}
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+			get_exit_codes()->last_exit_code = WEXITSTATUS(status);
+	for (int j = 0; j < cmd_list->size - 1; j++)
+		wait(NULL);
 	close_pipe_and_free_fd(fd, i, cmd_list->size);
 }
 
@@ -108,7 +117,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	save_heredoc_files(&cmd_list->head);
 	if (create_pipes(&fd, cmd_list) != true)
 		return ;
-	//iter_cmd_lst(cmd_list, &print_cmd_lst);
+	iter_cmd_lst(cmd_list, &print_cmd_lst);
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN)
 		manage_single_cmd_node(cmd_list, cmd_list->head, envp);
 	else
