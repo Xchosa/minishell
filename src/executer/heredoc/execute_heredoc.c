@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:15:46 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 14:44:25 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 14:39:07 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ bool	handle_signal_in_heredoc(char *filename, int here_doc_fd)
 	bool	return_value;
 
 	reset_sig_handler_to_parent();
+
 	return_value = execute_here_doc(filename, here_doc_fd);
 	reset_sig_handler_to_child();
 	return (return_value);

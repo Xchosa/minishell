@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 10:00:40 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 16:27:40 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 14:51:45 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,22 @@ void	exit_heredoc_clean(void)
 {
 	int	exit_code;
 
-	if (get_bash()->cmd_garbage)
-	{
-		clean_cmd_lst(get_bash()->cmd_garbage);
-		get_bash()->cmd_garbage = NULL;
-	}
+	restore_terminal_behavoir();
 	exit_code = get_exit_codes()->last_exit_code;
 	clean_bash_env();
 	clean_exit_codes();
 	delete_tmp_files("/tmp");
 	rl_clear_history();
+	exit(exit_code);
+}
+
+void	restore_terminal_behavoir(void)
+{
+	struct termios	term;
+
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	exit(exit_code);
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag |= (ECHO | ICANON | ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }

@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:00:04 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/25 12:19:19 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 13:38:00 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,6 @@ void	clean_cmd_lst(t_cmd_list *cmd_list)
 
 	if (!cmd_list)
 		return ;
-	// if (!cmd_list->head)
-	// {
-	// 	free(cmd_list);
-	// 	cmd_list = NULL;
-	// 	return ;
-	// }
 	cmd_node = cmd_list->head;
 	while (cmd_node)
 	{
