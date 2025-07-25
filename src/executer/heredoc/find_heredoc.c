@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:58:15 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/22 15:05:15 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 14:52:05 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,6 @@ static int	error_heredoc(char *new_tmp_file_name_suffix,
 	return (1);
 }
 
-static	void	free_heredoc_helper(char *new_tmp_file_name,
-	char *suffix, t_file_node **file_node)
-{
-	free(new_tmp_file_name);
-	free(suffix);
-	free((*file_node)->filename);
-}
-
-static	void	free_heredoc_stoped(char *new_tmp_file_name_suffix,
-	char *new_tmp_file_name, char *suffix)
-{
-	free(new_tmp_file_name_suffix);
-	free(new_tmp_file_name);
-	free(suffix);
-}
-
 bool	check_for_interactive_shell(void)
 {
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
@@ -83,13 +67,22 @@ int	save_here_doc_in_tmp(t_file_node **file_node)
 	here_doc_fd = open(n_t_file_name_suf, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (here_doc_fd == -1)
 		return (error_heredoc(n_t_file_name_suf, new_tmp_file_name, suffix), 1);
+	free_before_heredoc(new_tmp_file_name, suffix, n_t_file_name_suf);
 	if (handle_signal_in_heredoc((*file_node)->filename, here_doc_fd) == false)
 	{
 		unlink(n_t_file_name_suf);
-		free_heredoc_stoped(n_t_file_name_suf, new_tmp_file_name, suffix);
+		free(n_t_file_name_suf);
 		return (1);
 	}
-	free_heredoc_helper(new_tmp_file_name, suffix, file_node);
-	(*file_node)->filename = n_t_file_name_suf;
+	free((*file_node)->filename);
+	(*file_node)->filename = get_bash()->herdoc_filename ;
 	return (0);
+}
+
+void	free_before_heredoc(char *new_tmp_file_name, char *suffix,
+		char *n_t_file_name_suf )
+{
+	free(new_tmp_file_name);
+	free(suffix);
+	get_bash()->herdoc_filename = n_t_file_name_suf;
 }

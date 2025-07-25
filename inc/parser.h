@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/25 11:02:09 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 14:44:24 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_bash
 	char		**env;
 	char		*path;
 	t_cmd_list	*cmd_garbage;
+	char		*herdoc_filename;
 }	t_bash;
 
 typedef struct s_exit_codes
@@ -224,6 +225,8 @@ void			clean_exit_codes(void);
 void			clean_bash_env(void);
 char			*ft_strtolower(char *input);
 void			clean_token_lst_and_readline(t_token *token_list, char *line);
+void			free_before_heredoc(char *new_tmp_file_name, char *suffix,
+					char *n_t_file_name_suf);
 
 //fill_file_list
 t_file_node		*process_token_type_redir(t_token **curr_token);
