@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:31:57 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/24 18:57:57 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:17:40 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	**ft_add_parent(char **envp)
 			if (len > 4)
 				re = ft_substr(envp[i], 0, len);
 			else
-				re =  ft_substr(envp[i], 0, 5);
+				re = ft_substr(envp[i], 0, 5);
 			free (envp[i]);
 			envp[i] = re;
 		}
@@ -113,7 +113,7 @@ char	**ft_add_relative_path(t_cmd_node *cmd_node, char **envp)
 	return (envp);
 }
 
-void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp) //bool??
+void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp)
 {
 	char	**re;
 
@@ -128,10 +128,11 @@ void	ft_update_env_cd(t_cmd_node *cmd_node, char **envp) //bool??
 		return ;
 	envp = re;
 	if (cmd_node->cmd[1] == NULL)
-		envp = ft_add_tilde(envp); //kann failen? bool?
+		envp = ft_add_tilde(envp);
 	else if (ft_strncmp("/", cmd_node->cmd[1], 1) == 0)
 		envp = ft_add_absolute_path(cmd_node, envp);
 	else
 		envp = ft_add_relative_path(cmd_node, envp);
-	get_bash()->env = envp; //leaks hier? immer envp return vlaue checken
+	get_bash()->env = envp;
+	get_exit_codes()->last_exit_code = 0;
 }

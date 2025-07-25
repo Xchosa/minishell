@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 14:10:12 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/22 14:26:35 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:19:17 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ char	*ft_strtolower(char *input)
 	return (output);
 }
 
-void	ft_execute_builtin(t_cmd_list *cmd_list, t_cmd_node *cmd_node, char **envp)
+void	ft_execute_builtin(
+	t_cmd_list *cmd_list, t_cmd_node *cmd_node, char **envp)
 {
 	cmd_node->cmd[0] = ft_strtolower(cmd_node->cmd[0]);
 	if (cmd_node->cmd[0] == NULL)

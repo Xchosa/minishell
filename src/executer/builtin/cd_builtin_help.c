@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:43:09 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/24 14:18:17 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:19:00 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_home_path(char **envp)
 	return (home);
 }
 
-bool	there_is_env_var(char **envp, char *env_var) //needs to be called with = like USER=
+bool	there_is_env_var(char **envp, char *env_var)
 {
 	int	i;
 	int	j;
@@ -77,10 +77,7 @@ char	**ft_delete_old_pwd(char **envp)
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], "OLDPWD=", 7) != 0)
-		{
-			newenvp[j] = envp[i];
-			j++;
-		}
+			newenvp[j++] = envp[i];
 		else
 			free(envp[i]);
 		i++;

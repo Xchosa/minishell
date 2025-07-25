@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/25 11:25:02 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/25 14:56:41 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,26 @@ void	execution_node(t_cmd_list *cmd_list,
 	}
 }
 
+void	ft_wait_for_all(int pid, t_cmd_list *cmd_list)
+{
+	int	status;
+	int	i;
+
+	i = 0;
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		get_exit_codes()->last_exit_code = WEXITSTATUS(status);
+	while (i < cmd_list->size - 1)
+	{
+		//wait(NULL);
+		i++;
+	}
+	// for (int j = 0; j < cmd_list->size - 1; j++)
+	// 	wait(NULL);
+}
+
 void	ft_execution_loop(t_cmd_list *cmd_list, char **envp, int (*fd)[2])
 {
-	int			status;
 	int			pid;
 	int			i;
 	t_cmd_node	*cur_cmd_node;
@@ -97,11 +114,7 @@ void	ft_execution_loop(t_cmd_list *cmd_list, char **envp, int (*fd)[2])
 			close(fd[i - 1][0]);
 		i++;
 	}
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-			get_exit_codes()->last_exit_code = WEXITSTATUS(status);
-	for (int j = 0; j < cmd_list->size - 1; j++)
-		wait(NULL);
+	ft_wait_for_all(pid, cmd_list);
 	close_pipe_and_free_fd(fd, i, cmd_list->size);
 }
 
@@ -117,7 +130,7 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	save_heredoc_files(&cmd_list->head);
 	if (create_pipes(&fd, cmd_list) != true)
 		return ;
-	iter_cmd_lst(cmd_list, &print_cmd_lst);
+	//iter_cmd_lst(cmd_list, &print_cmd_lst);
 	if (cmd_list->size == 1 && cmd_list->head->cmd_type == BUILTIN)
 		manage_single_cmd_node(cmd_list, cmd_list->head, envp);
 	else

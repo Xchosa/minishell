@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:41:44 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/24 18:57:04 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:03:36 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,11 @@ char	*get_old_pwd(char **envp)
 void	ft_cd(t_cmd_node *cmd_node, char **envp)
 {
 	char	*s;
+
+	s = cmd_node->cmd[1];
 	if (cmd_node->cmd[1] == NULL)
-	{
-		chdir(get_home_path(envp));
-		ft_update_env_cd(cmd_node, envp);
-		get_exit_codes()->last_exit_code = 0;
-		return ;
-	}
-	if (strncmp(cmd_node->cmd[1], "-", 2) == 0)
+		s = get_home_path(envp);
+	else if (strncmp(cmd_node->cmd[1], "-", 2) == 0)
 	{
 		if (there_is_env_var(envp, "OLDPWD") == false)
 		{
@@ -55,16 +52,48 @@ void	ft_cd(t_cmd_node *cmd_node, char **envp)
 			return ;
 		}
 		free(cmd_node->cmd[1]);
-		s  = ft_strdup(get_old_pwd(envp));
-		cmd_node->cmd[1] = s;
+		cmd_node->cmd[1] = ft_strdup(get_old_pwd(envp));
+		s = cmd_node->cmd[1];
 		printf("%s\n", cmd_node->cmd[1]);
 	}
-	if (chdir(cmd_node->cmd[1]) != 0)
+	if (chdir(s) != 0)
 	{
 		get_exit_codes()->last_exit_code = 1;
 		perror("shell");
 		return ;
 	}
 	ft_update_env_cd(cmd_node, envp);
-	get_exit_codes()->last_exit_code = 0;
 }
+
+// void	ft_cd(t_cmd_node *cmd_node, char **envp)
+// {
+// 	char	*s;
+// 	if (cmd_node->cmd[1] == NULL)
+// 	{
+// 		chdir(get_home_path(envp));
+// 		ft_update_env_cd(cmd_node, envp);
+// 		get_exit_codes()->last_exit_code = 0;
+// 		return ;
+// 	}
+// 	if (strncmp(cmd_node->cmd[1], "-", 2) == 0)
+// 	{
+// 		if (there_is_env_var(envp, "OLDPWD") == false)
+// 		{
+// 			ft_putendl_fd("shell: cd : OLDPWD not set", 2);
+// 			get_exit_codes()->last_exit_code = 1;
+// 			return ;
+// 		}
+// 		free(cmd_node->cmd[1]);
+// 		s  = ft_strdup(get_old_pwd(envp));
+// 		cmd_node->cmd[1] = s;
+// 		printf("%s\n", cmd_node->cmd[1]);
+// 	}
+// 	if (chdir(cmd_node->cmd[1]) != 0)
+// 	{
+// 		get_exit_codes()->last_exit_code = 1;
+// 		perror("shell");
+// 		return ;
+// 	}
+// 	ft_update_env_cd(cmd_node, envp);
+// 	get_exit_codes()->last_exit_code = 0;
+// }

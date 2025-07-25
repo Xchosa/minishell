@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 09:47:27 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/25 10:40:23 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:26:26 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ char	*get_home_path(char **envp);
 char	*ft_execute_local(char *command, char **envp);
 char	*get_command_pointer(char *command, char **envp);
 char	*get_old_pwd(char **envp);
+char	**ft_export_var_valid(char **envp, char *var);
+void	ft_wait_for_all(int pid, t_cmd_list *cmd_list);
+bool	ft_check_valid_identifier(char *var);
 
 //heredoc
 bool	check_for_interactive_shell(void);
