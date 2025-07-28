@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:29:52 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/25 15:55:52 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/28 12:03:45 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,3 @@
 // 	// clean_cmd_list_objects_tmp_files(cmd_lst);
 
 // }
-
-/*
-
-ls >./home
-// soll kein syntax error sein. durchreichen an thilo 
-*/
