@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 16:35:42 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/24 14:50:01 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:26:47 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,32 @@ void	ft_unset(t_cmd_node *cmd_node, char **envp)
 	else
 		get_exit_codes()->last_exit_code = 1;
 	get_bash()->env = envp;
+}
+
+bool	ft_check_valid_identifier(char *var)
+{
+	char	**s;
+	int		i;
+
+	i = 0;
+	if (ft_isalpha(var[0]) != 1 && var[0] != '_')
+	{
+		ft_putstr_fd(var, 2);
+		ft_putendl_fd(": shell: not a valid identifier", 2);
+		get_exit_codes()->last_exit_code = 1;
+		return (false);
+	}
+	s = ft_split(var, '=');
+	while (s[0][i] != '\0')
+	{
+		if (strrchr("-+{}!@#*^.~", s[0][i]) != NULL)
+		{
+			ft_putstr_fd(var, 2);
+			ft_putendl_fd(": shell: not a valid identifier", 2);
+			get_exit_codes()->last_exit_code = 1;
+			return (ft_free_array(s), false);
+		}
+		i++;
+	}
+	return (ft_free_array(s), true);
 }

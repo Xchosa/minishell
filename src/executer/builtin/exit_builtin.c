@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 14:12:28 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/23 13:05:02 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:19:41 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_exit(t_cmd_list *cmd_list, t_cmd_node *cmd_node)
 	int	re;
 
 	re = 0;
-	//ft_printf("exit\n"); muss wieder rein , nur fuer tester raus
+	ft_printf("exit\n");
 	if (cmd_node->cmd[1] != NULL)
 	{
 		if (ft_isnum(cmd_node->cmd[1]) == 0)
