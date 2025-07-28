@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 10:57:23 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/28 10:38:21 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/28 11:26:57 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,30 @@ void	clean_bash_env(void)
 		clean_cmd_lst(get_bash()->cmd_garbage);
 		get_bash()->cmd_garbage = NULL;
 	}
-	// if (get_bash()->herdoc_filename)
-	// {
-	// 	free(get_bash()->herdoc_filename);
-	// 	get_bash()->herdoc_filename = NULL;
-	// }
+	if (get_bash()->herdoc_filename)
+	{
+		free(get_bash()->herdoc_filename);
+		get_bash()->herdoc_filename = NULL;
+	}
+}
+
+void	clean_bash_env_non_interactive(void)
+{
+	t_bash	*bash;
+
+	bash = get_bash();
+	if (bash->env)
+	{
+		ft_free_array(bash->env);
+	}
+	bash->env = NULL;
+	if (bash->path)
+		free(bash->path);
+	if (get_bash()->cmd_garbage)
+	{
+		clean_cmd_lst(get_bash()->cmd_garbage);
+		get_bash()->cmd_garbage = NULL;
+	}
 	get_bash()->herdoc_filename = NULL;
 }
 
@@ -82,16 +101,4 @@ char	**cpychar_arr(char **src)
 	}
 	cpy_env[i] = NULL;
 	return (cpy_env);
-}
-
-void	ft_print_array(char **src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i])
-	{
-		printf("%s\n", src[i]);
-		i++;
-	}
 }

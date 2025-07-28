@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:09:30 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/25 15:16:18 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/28 11:27:45 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	non_interactive_shell(void)
 		line = get_next_line(STDIN_FILENO);
 	}
 	re = get_exit_codes()->last_exit_code;
-	clean_bash_env();
+	clean_bash_env_non_interactive();
 	clean_exit_codes();
 	delete_tmp_files("/tmp");
 	rl_clear_history();
@@ -158,48 +158,3 @@ bool	handle_line(char *line)
 	reset_terminal_state();
 	return (true);
 }
-
-// void non_interactive_shell(char *line)
-// {
-//     char        *original_line;
-//     char        *new_line;
-//     t_token     *token_lst;
-//     t_cmd_list  *cmd_lst;
-// 	int	re;
-
-//     line = get_next_line(STDIN_FILENO);
-//     while (line != NULL)
-//     {
-//         cmd_lst = NULL;
-//         if (check_lexer_and_free(line) == false)
-//         {
-//             line = get_next_line(STDIN_FILENO); 
-//             continue;
-//         }
-//         new_line = extend_line(&line);
-//         original_line = new_line;
-//         if (check_lexer_and_free(new_line) == false)
-//         {
-//             line = get_next_line(STDIN_FILENO);
-//             continue;
-//         }
-//         token_lst = tokeniser(&new_line);
-//         if (final_lexer(token_lst, original_line) == false)
-//         {
-//             line = get_next_line(STDIN_FILENO);
-//             continue;
-//         }
-//         cmd_lst = init_cmd_list(&token_lst, original_line);
-//         init_signal(1);
-//         ft_execute(cmd_lst, get_bash()->env);
-//         init_signal(0);
-//         reset_terminal_state();
-//        // clean_cmd_lst(cmd_lst);
-//         line = get_next_line(STDIN_FILENO);
-//     }
-// 	re = get_exit_codes()->last_exit_code;
-// 	// clean_cmd_list_objects_tmp_files(cmd_lst);
-//     delete_tmp_files("/tmp");
-//     rl_clear_history();
-// 	exit (re);
-// }

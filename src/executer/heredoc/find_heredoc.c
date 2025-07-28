@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:58:15 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/25 14:52:05 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/28 11:12:19 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	save_here_doc_in_tmp(t_file_node **file_node)
 	{
 		unlink(n_t_file_name_suf);
 		free(n_t_file_name_suf);
+		get_bash()->herdoc_filename = NULL;
 		return (1);
 	}
 	free((*file_node)->filename);

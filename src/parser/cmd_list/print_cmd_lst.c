@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 09:57:58 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/25 15:24:12 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/28 11:28:49 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,16 @@ void	iter_cmd_lst(t_cmd_list *cmd_lst, void (*f)(t_cmd_node*))
 		printf("\n");
 	}
 	return ;
+}
+
+void	ft_print_array(char **src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i])
+	{
+		printf("%s\n", src[i]);
+		i++;
+	}
 }

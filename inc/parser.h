@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:41:44 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/25 14:44:24 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/28 11:20:56 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void			set_heredoc_cmd_list(t_cmd_list *cmd_list);
 void			interactive_shell_tty(char *line);
 void			non_interactive_shell(void);
 bool			handle_line(char *line);
-
+void			clean_bash_env_non_interactive(void);
 //interrupt tty
 bool			check_lexer_and_free(char *line);
 bool			check_lexer_token_and_free(t_token *token, char *line);

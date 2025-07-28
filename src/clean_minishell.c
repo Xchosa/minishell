@@ -6,7 +6,7 @@
 /*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:00:04 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/25 13:38:00 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/28 11:28:06 by poverbec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	clean_test_minishell(t_cmd_list *cmd_list)
 }
 
 // cmd_list, token_list, line, bash_env und exit_codes
-
 void	clean_file_lst(t_file_list *file_list)
 {
 	t_file_node	*file_node;
