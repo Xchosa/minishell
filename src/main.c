@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: poverbec <poverbec@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:22:38 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/24 13:55:50 by poverbec         ###   ########.fr       */
+/*   Updated: 2025/07/28 11:56:02 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ int	main(int argc, char **argv, char **env)
 	char	*line;
 
 	(void)argv;
+	if (argc > 1)
+	{
+		ft_putendl_fd(
+			"minishell: execute minishell wihtout arguments first", 2);
+		return (1);
+	}
 	line = NULL;
 	if (init_bash(env, argc) == false || (init_exit_codes(argc) == false))
 		return (1);
@@ -30,51 +36,3 @@ int	main(int argc, char **argv, char **env)
 	else
 		non_interactive_shell();
 }
-
-// >tmp_out | echo 1 
-// seq fault
-
-// . 
-// -> saq fault 
-// cat << $USER
-
-// exit "-100"
-// exit -9223372036854775805
-
-// exit ------
-// exit -12560
-// > out
-
-// "./""ls" 
-// .ls
-
-// ./ls
-
-// "./"ls
-
-// "./""ls"
-
-// "./"''"ls"
-
-// 3123
-
-// lsa
-
-// /ls
-
-// EechoE
-
-// /ls/
-
-// /bin/
-
-// /bin/cats
-
-// ./4242424242.sh
-
-// rm -f something
-
-// | echo -n oui
-
-// | | |
-// permission denied
