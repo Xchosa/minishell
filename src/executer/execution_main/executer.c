@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/25 17:07:27 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/28 11:42:56 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,3 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	reset_redir(&backup_stdin, &backup_stdout);
 	clean_cmd_lst(cmd_list);
 }
-
-// /root/42_minishell_tester/cmds/mand/8_syntax_errors.sh:100
-// /root/42_minishell_tester/cmds/mand/8_syntax_errors.sh:68
-// /root/42_minishell_tester/cmds/mand/8_syntax_errors.sh:49
-// /root/42_minishell_tester/cmds/mand/8_syntax_errors.sh:46
-// /root/42_minishell_tester/cmds/mand/8_syntax_errors.sh:43
-// /root/42_minishell_tester/cmds/mand/1_scmds.sh:19
-// /root/42_minishell_tester/cmds/mand/10_parsing_hell.sh:213
