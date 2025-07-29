@@ -82,6 +82,7 @@ bool	execute_here_doc(char *filename, int here_doc_fd);
 int		find_here_doc_file_node(t_file_node **file_node);
 int		save_here_doc_in_tmp(t_file_node **file_node);
 void	save_heredoc_files(t_cmd_node **cmd_node);
+void	reset_heredoc_in_bash(t_file_node **file_node, char *new_file_name);
 
 void	reset_redir(int *backupStdin, int *backupStdout);
 // void	set_up_backup_Stdout_Stdin(int *backupStdin, int *backupStdout);

@@ -16,7 +16,7 @@ void	parent_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		get_exit_codes()->last_exit_code = 1;
+		get_exit_codes()->last_exit_code = 130;
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
