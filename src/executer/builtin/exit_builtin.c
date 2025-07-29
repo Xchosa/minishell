@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 14:12:28 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/25 15:19:41 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/29 15:54:23 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,17 @@ void	ft_exit(t_cmd_list *cmd_list, t_cmd_node *cmd_node)
 	}
 	clean_cmd_list_objects_tmp_files(cmd_list);
 	exit(re);
+}
+
+void	ft_exit_and_close(int exit_code)
+{
+	int	i;
+
+	i = 0;
+	while (i <= 2)
+	{
+		close(i);
+		i++;
+	}
+	exit(exit_code);
 }
