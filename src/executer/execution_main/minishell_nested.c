@@ -81,11 +81,23 @@ void	ft_wait_for_all(int pid, t_cmd_list *cmd_list)
 {
 	int	status;
 	int	i;
+	int	sig;
 
 	i = 0;
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		get_exit_codes()->last_exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		sig = WTERMSIG(status);
+		if (sig == SIGINT)
+			get_exit_codes()->last_exit_code = 130;
+		else if (sig == SIGQUIT)
+		{
+			write(STDOUT_FILENO, "Quit: 3\n", 8);
+			get_exit_codes()->last_exit_code = 131;
+		}
+	}
 	while (i < cmd_list->size - 1)
 	{
 		wait(NULL);
