@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/29 12:58:18 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/07/29 14:00:31 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	ft_execution_loop(t_cmd_list *cmd_list, char **envp, int (*fd)[2])
 		pid = fork();
 		if (pid == 0)
 			execution_node(cmd_list, cur_cmd_node, fd, envp);
-		free(get_bash()->path); //only if not null? maybe not!
+		free(get_bash()->path);
 		get_bash()->path = NULL;
 		cur_cmd_node = cur_cmd_node->next;
 		if (i < cmd_list->size - 1)
@@ -89,7 +89,7 @@ void	ft_execution_loop(t_cmd_list *cmd_list, char **envp, int (*fd)[2])
 			close(fd[i - 1][0]);
 		i++;
 	}
-	ft_wait_for_all(pid, cmd_list); //only if not null?
+	ft_wait_for_all(pid, cmd_list);
 	close_pipe_and_free_fd(fd, i, cmd_list->size);
 }
 
@@ -99,7 +99,9 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 	int		backup_stdin;
 	int		(*fd)[2];
 
-	if ((cmd_list->head->cmd[0] != NULL && ft_strcmp("exit", cmd_list->head->cmd[0]) == false) || cmd_list->head->cmd[0] == NULL)
+	if ((cmd_list->head->cmd[0] != NULL && ft_strcmp("exit",
+				cmd_list->head->cmd[0]) == false)
+		|| cmd_list->head->cmd[0] == NULL)
 	{
 		backup_stdout = dup(STDOUT_FILENO);
 		backup_stdin = dup(STDIN_FILENO);
@@ -112,19 +114,15 @@ void	ft_execute(t_cmd_list *cmd_list, char **envp)
 		manage_single_cmd_node(cmd_list, cmd_list->head, envp);
 	else
 		ft_execution_loop(cmd_list, envp, fd);
-	// int max_fd = sysconf(_SC_OPEN_MAX);  // Get maximum possible FDs
-    // printf("Open file descriptors:\n");
-    // for (int fd = 0; fd < max_fd; ++fd) {
-    //     if (fcntl(fd, F_GETFD) != -1) {  // If fcntl doesn't return error, fd is open
-    //         printf("FD %d is open\n", fd);
-    //     }
-    // }
 	reset_redir(&backup_stdin, &backup_stdout);
 	clean_cmd_lst(cmd_list);
-    // printf("Open file descriptors:\n");
-    // for (int fd = 0; fd < max_fd; ++fd) {
-    //     if (fcntl(fd, F_GETFD) != -1) {  // If fcntl doesn't return error, fd is open
-    //         printf("FD %d is open\n", fd);
-    //     }
-    // }
 }
+
+// int max_fd = sysconf(_SC_OPEN_MAX);  // Get maximum possible FDs
+// printf("Open file descriptors:\n");
+// for (int fd = 0; fd < max_fd; ++fd) {
+// 	if (fcntl(fd, F_GETFD) != -1) {  // If fcntl doesn't return error,
+// fd is open
+// 		printf("FD %d is open\n", fd);
+// 	}
+// }
