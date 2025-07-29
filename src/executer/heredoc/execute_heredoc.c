@@ -25,36 +25,6 @@ bool	handle_signal_in_heredoc(char *filename, int here_doc_fd)
 	return (return_value);
 }
 
-// bool	handle_signal_in_heredoc(char *filename, int here_doc_fd)
-// {
-// 	pid_t	pid;
-// 	int		status;
-
-// 	init_signal(2);
-// 	pid = fork();
-// 	if (pid == -1)
-// 	{
-// 		perror("fork");
-// 		return (1);
-// 	}
-// 	if (pid == 0)
-//     {
-//         // Set child to use the heredoc signal handler, which exits on SIGINT
-//         heredoc_signal(0);
-//         if (execute_here_doc(filename, here_doc_fd) == false)
-//             exit(1); // Child exits with general error status
-//         exit(0);     // Child exits successfully
-//     }
-//     // Parent process waits for child
-// 	waitpid(pid, &status, 0);
-//     // Parent restores its interactive signal handlers
-// 	reset_sig_handler_to_parent();
-// 	init_signal(0);
-// 	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
-// 		return (130); // Return specific status for SIGINT
-// 	return (0);
-// }
-
 bool	execute_here_doc(char *filename, int here_doc_fd)
 {
 	char	*line;

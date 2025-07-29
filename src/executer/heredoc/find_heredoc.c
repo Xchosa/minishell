@@ -51,6 +51,13 @@ bool	check_for_interactive_shell(void)
 	return (false);
 }
 
+void	reset_heredoc_in_bash(t_file_node **file_node, char *new_file_name)
+{
+	free((*file_node)->filename);
+	(*file_node)->filename = new_file_name;
+	get_bash()->herdoc_filename = NULL;
+}
+
 int	save_here_doc_in_tmp(t_file_node **file_node)
 {
 	int			here_doc_fd;
@@ -75,8 +82,7 @@ int	save_here_doc_in_tmp(t_file_node **file_node)
 		get_bash()->herdoc_filename = NULL;
 		return (1);
 	}
-	free((*file_node)->filename);
-	(*file_node)->filename = get_bash()->herdoc_filename ;
+	reset_heredoc_in_bash(file_node, n_t_file_name_suf);
 	return (0);
 }
 
