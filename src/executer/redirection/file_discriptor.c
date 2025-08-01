@@ -6,25 +6,25 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 10:35:55 by poverbec          #+#    #+#             */
-/*   Updated: 2025/07/04 18:00:33 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/08/01 10:03:40 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executer.h"
 
-void	reset_redir(int *backupStdin, int *backupStdout)
+void	reset_redir(int *backup_stdin, int *backup_stdout)
 {
-	if (*backupStdin != -1)
+	if (*backup_stdin != -1)
 	{
-		dup2(*backupStdin, STDIN_FILENO);
-		close(*backupStdin);
-		*backupStdin = -1;
+		dup2(*backup_stdin, STDIN_FILENO);
+		close(*backup_stdin);
+		*backup_stdin = -1;
 	}
-	if (*backupStdout != -1)
+	if (*backup_stdout != -1)
 	{
-		dup2(*backupStdout, STDOUT_FILENO);
-		close(*backupStdout);
-		*backupStdout = -1;
+		dup2(*backup_stdout, STDOUT_FILENO);
+		close(*backup_stdout);
+		*backup_stdout = -1;
 	}
 }
 
