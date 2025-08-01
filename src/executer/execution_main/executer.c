@@ -6,7 +6,7 @@
 /*   By: tschulle <tschulle@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:13:15 by tschulle          #+#    #+#             */
-/*   Updated: 2025/07/29 15:57:19 by tschulle         ###   ########.fr       */
+/*   Updated: 2025/08/01 10:31:43 by tschulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ void	manage_single_cmd_node(
 
 	if ((cmd_list->head->cmd[0] != NULL && ft_strcmp("exit",
 				cmd_list->head->cmd[0]) == false)
+		|| (ft_strcmp("exit",
+				cmd_list->head->cmd[0]) == true
+			&&cmd_list->head->cmd[1] != NULL
+			&& ft_isnum(cmd_node->cmd[1]) == 0
+			&& cmd_node->cmd[2] != NULL)
 		|| cmd_list->head->cmd[0] == NULL)
 	{
 		backup_stdout = dup(STDOUT_FILENO);
